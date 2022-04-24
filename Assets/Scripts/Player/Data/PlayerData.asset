@@ -15,8 +15,21 @@ MonoBehaviour:
   movementVelocity: 10
   jumpVelocity: 20
   amountOfJumps: 1
+  wallJumpVelocity: {x: 15, y: 25}
+  wallJumpVelocityY: 25
+  wallJumpTime: 0.4
+  wallJumpAngle: {x: 1, y: 2}
   coyoteTime: 0.2
+  variableJumpHeightMultiplier: 0.5
   wallSlideVelocity: 3
+  dashCooldown: 0.5
+  maxHoldTime: 1
+  holdTimeScale: 0.5
+  dashTime: 0.2
+  dashVelocity: 30
+  drag: 10
+  dashEndYMultiplier: 0.2
+  distBetweenAfterImages: 0.5
   groundCheckRadius: 0.3
   wallCheckDistance: 1
   whatIsGround:
