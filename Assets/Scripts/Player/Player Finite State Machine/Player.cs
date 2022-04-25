@@ -65,7 +65,6 @@ public class Player : MonoBehaviour
         Anim = GetComponent<Animator>();
         InputHandler = GetComponent<PlayerInputHandler>();
         RB = GetComponent<Rigidbody2D>();
-        DashDirectionIndicator = transform.Find("DashDirectionIndicator");
 
         FacingDirection = 1;
 
@@ -90,13 +89,6 @@ public class Player : MonoBehaviour
     {
         angle.Normalize();
         workspace.Set(angle.x * velocity.x * direction, angle.y * velocity.y);
-        RB.velocity = workspace;
-        CurrentVelocity = workspace;
-    }
-
-    public void SetVelocity(float velocity, Vector2 direction)
-    {
-        workspace = direction * velocity;
         RB.velocity = workspace;
         CurrentVelocity = workspace;
     }

@@ -13,9 +13,8 @@ public class PlayerData : ScriptableObject
     public int amountOfJumps = 1;
 
     [Header("Wall Jump State")]
-    public Vector2 wallJumpVelocity = new Vector2(10, 25);
-    public float wallJumpVelocityY = 25;
-    public float wallJumpTime = 0.4f;
+    public Vector2 wallJumpVelocity = new Vector2(25, 25);
+    public float wallJumpTime = 0.2f;
     public Vector2 wallJumpAngle = new Vector2(1, 2);
 
     [Header("In Air State")]
@@ -26,14 +25,11 @@ public class PlayerData : ScriptableObject
     public float wallSlideVelocity = 3f;
 
     [Header("Dash State")]
-    public float dashCooldown = 0.5f;
-    public float maxHoldTime = 1f;
-    public float holdTimeScale = 0.25f;
+    public Vector2 dashVelocity = new Vector2(30, 0);
+    public Vector2 dashAngle = new Vector2(1, 0);
+    public float dashCooldown = 1.5f;
     public float dashTime = 0.2f;
-    public float dashVelocity = 30f;
-    public float drag = 10f;
     public float dashEndYMultiplier = 0.2f;
-    public float distBetweenAfterImages = 0.5f;
 
     [Header("Check Variables")]
     public float groundCheckRadius = 0.3f;

@@ -31,15 +31,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "DashDirection",
-                    "type": "Value",
-                    "id": "52718965-a053-40e8-b88b-2c02025c1e35",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -57,7 +48,7 @@
                 {
                     "name": "up",
                     "id": "1ac95b5c-c2b6-4b44-b2ec-2346d72d6e72",
-                    "path": "<Keyboard>/w",
+                    "path": "<Keyboard>/upArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
@@ -68,7 +59,7 @@
                 {
                     "name": "down",
                     "id": "48d873de-c0e3-475d-ba68-df0efd6fa56e",
-                    "path": "<Keyboard>/s",
+                    "path": "<Keyboard>/downArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
@@ -79,7 +70,7 @@
                 {
                     "name": "left",
                     "id": "5dc344d0-4a49-47dd-898a-690d45fad48c",
-                    "path": "<Keyboard>/a",
+                    "path": "<Keyboard>/leftArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
@@ -90,7 +81,7 @@
                 {
                     "name": "right",
                     "id": "0a4ab013-35aa-4ec3-89b9-a71d3c081725",
-                    "path": "<Keyboard>/d",
+                    "path": "<Keyboard>/rightArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
@@ -117,17 +108,6 @@
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "Dash",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "4e31b2c4-b119-4d4e-8c18-805a41dfab6d",
-                    "path": "<Mouse>/position",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "DashDirection",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
