@@ -31,10 +31,14 @@ public class PlayerData : ScriptableObject
     public float dashTime = 0.2f;
     public float dashEndYMultiplier = 0.2f;
 
-    [Header("Crouch States")]
+    [Header("Crouch State")]
     public float crouchMovementVelocity = 5f;
     public float crouchColliderHeight = 0.6f;
     public float standColliderHeight = 1.5f;
+
+    [Header("Attack State")]
+    public float[] attackMovementSpeed;
+    public float breakComboTime = 1.0f;
 
     [Header("Check Variables")]
     public float groundCheckRadius = 0.3f;

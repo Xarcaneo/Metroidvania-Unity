@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
     public PlayerWallJumpState WallJumpState { get; protected set; }
     public PlayerDashState DashState { get; protected set; }
     public PlayerCrouchIdleState CrouchIdleState { get; private set; }
-    public PlayerCrouchMoveState CrouchMoveState { get; private set; }
+    public PlayerAttackState AttackState { get; private set; }
 
     [SerializeField]
     private PlayerData playerData;
@@ -36,9 +36,6 @@ public class Player : MonoBehaviour
     private Transform groundCheck;
     [SerializeField]
     private Transform wallCheck;
-    [SerializeField]
-    private Transform ceilingCheck;
-
     #endregion
 
     #region Other Variables
@@ -62,7 +59,7 @@ public class Player : MonoBehaviour
         WallJumpState = new PlayerWallJumpState(this, StateMachine, playerData, "inAir");
         DashState = new PlayerDashState(this, StateMachine, playerData, "dash"); ;
         CrouchIdleState = new PlayerCrouchIdleState(this, StateMachine, playerData, "crouchIdle");
-        CrouchMoveState = new PlayerCrouchMoveState(this, StateMachine, playerData, "crouchMove");
+        AttackState = new PlayerAttackState(this, StateMachine, playerData, "attack");
     }
 
     private void Start()
@@ -121,10 +118,6 @@ public class Player : MonoBehaviour
     #endregion
 
     #region Check Functions
-    public bool CheckForCeiling()
-    {
-        return Physics2D.OverlapCircle(ceilingCheck.position, playerData.groundCheckRadius, playerData.whatIsGround);
-    }
     public bool CheckIfGrounded()
     {
         return Physics2D.OverlapCircle(groundCheck.position, playerData.groundCheckRadius, playerData.whatIsGround);

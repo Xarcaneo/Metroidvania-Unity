@@ -15,6 +15,7 @@ public class PlayerInputHandler : MonoBehaviour
     public bool JumpInputStop { get; private set; }
     public bool DashInput { get; private set; }
     public bool DashInputStop { get; private set; }
+    public bool AttackInput { get; set; }
 
     [SerializeField]
     private float inputHoldTime = 0.2f;
@@ -33,18 +34,24 @@ public class PlayerInputHandler : MonoBehaviour
         CheckDashInputHoldTime();
     }
 
+    public void OnAttackInput(InputAction.CallbackContext context)
+    {
+        
+        if (context.started)
+        {
+            AttackInput = true;
+        }
+
+        if (context.canceled)
+        {
+            AttackInput = false;
+        }
+    }
     public void OnMoveInput(InputAction.CallbackContext context)
     {
         RawMovementInput = context.ReadValue<Vector2>();
 
-        if (Mathf.Abs(RawMovementInput.x) > 0.5f)
-        {
-            NormInputX = (int)(RawMovementInput * Vector2.right).normalized.x;
-        }
-        else
-        {
-            NormInputX = 0;
-        }
+        NormInputX = Mathf.RoundToInt(RawMovementInput.x);
 
         if (Mathf.Abs(RawMovementInput.y) > 0.5f)
         {
