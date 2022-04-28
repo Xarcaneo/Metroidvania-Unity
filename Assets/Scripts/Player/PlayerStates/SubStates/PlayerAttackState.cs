@@ -12,6 +12,8 @@ public class PlayerAttackState : PlayerAbilityState
 
     private bool isGrounded;
 
+    private bool attackInput;
+
     public PlayerAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }
@@ -27,7 +29,9 @@ public class PlayerAttackState : PlayerAbilityState
     {
         base.Enter();
 
-        player.InputHandler.AttackInput = false;
+        attackInput = false;
+
+        player.InputHandler.UseAttackInput();
 
         ResetAttackCounter();
 
@@ -56,14 +60,24 @@ public class PlayerAttackState : PlayerAbilityState
     {
         base.LogicUpdate();
 
-        player.SetVelocityX(velocityToSet * player.FacingDirection);     
-    }
+        if(player.InputHandler.AttackInput)
+        {
+            attackInput = true;
+        }
 
-    public override void AnimationFinishTrigger()
-    {
-        base.AnimationFinishTrigger();
+        player.SetVelocityX(velocityToSet * player.FacingDirection);
 
-        isAbilityDone = true;
+        if (!isExitingState)
+        {
+            if (isAnimationFinished && attackInput)
+            {
+                stateMachine.ChangeState(player.AttackState);
+            }
+            else if (isAnimationFinished && !attackInput)
+            {
+                isAbilityDone = true;
+            }
+        }
     }
 
     private void ResetAttackCounter()

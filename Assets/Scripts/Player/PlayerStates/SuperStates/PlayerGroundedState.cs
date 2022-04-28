@@ -8,8 +8,9 @@ public class PlayerGroundedState : PlayerState
     protected int yInput;
 
     private bool JumpInput;
+    private bool attackInput;
+
     private bool isGrounded;
-    private bool isTouchingWall;
     private bool dashInput;
 
     public PlayerGroundedState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
@@ -21,7 +22,6 @@ public class PlayerGroundedState : PlayerState
         base.DoChecks();
 
         isGrounded = player.CheckIfGrounded();
-        isTouchingWall = player.CheckIfTouchingWall();
     }
 
     public override void Enter()
@@ -44,8 +44,9 @@ public class PlayerGroundedState : PlayerState
         yInput = player.InputHandler.NormInputY;
         JumpInput = player.InputHandler.JumpInput;
         dashInput = player.InputHandler.DashInput;
+        attackInput = player.InputHandler.AttackInput;
 
-        if (player.InputHandler.AttackInput)
+        if (attackInput)
         {
             stateMachine.ChangeState(player.AttackState);
         }
