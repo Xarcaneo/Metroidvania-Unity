@@ -22,7 +22,7 @@ public class PlayerAttackState : PlayerAbilityState
     {
         base.DoChecks();
 
-        isGrounded = player.CheckIfGrounded();
+        isGrounded = core.CollisionSenses.Ground;
     }
 
     public override void Enter()
@@ -48,7 +48,7 @@ public class PlayerAttackState : PlayerAbilityState
     {
         base.Exit();
 
-        player.SetVelocityX(0f);
+        core.Movement.SetVelocityX(0f);
         velocityToSet = 0;
 
         player.Anim.SetBool("attack", false);
@@ -65,7 +65,7 @@ public class PlayerAttackState : PlayerAbilityState
             attackInput = true;
         }
 
-        player.SetVelocityX(velocityToSet * player.FacingDirection);
+        core.Movement.SetVelocityX(velocityToSet * core.Movement.FacingDirection);
 
         if (!isExitingState)
         {

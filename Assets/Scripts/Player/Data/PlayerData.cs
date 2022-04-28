@@ -39,9 +39,4 @@ public class PlayerData : ScriptableObject
     [Header("Attack State")]
     public float[] attackMovementSpeed;
     public float breakComboTime = 1.0f;
-
-    [Header("Check Variables")]
-    public float groundCheckRadius = 0.3f;
-    public float wallCheckDistance = 0.5f;
-    public LayerMask whatIsGround;
 }
