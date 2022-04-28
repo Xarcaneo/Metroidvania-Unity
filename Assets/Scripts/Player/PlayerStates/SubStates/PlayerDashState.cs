@@ -17,23 +17,23 @@ public class PlayerDashState : PlayerAbilityState
 
         player.InputHandler.UseDashInput();
 
-        dashDirection = Vector2.right * player.FacingDirection;
+        dashDirection = Vector2.right * core.Movement.FacingDirection;
 
         startTime = Time.unscaledTime;
 
         float angle = Vector2.SignedAngle(Vector2.right, dashDirection);
 
         startTime = Time.time;
-        player.CheckIfShouldFlip(Mathf.RoundToInt(dashDirection.x));
+        core.Movement.CheckIfShouldFlip(Mathf.RoundToInt(dashDirection.x));
     }
 
     public override void Exit()
     {
         base.Exit();
 
-        if (player.CurrentVelocity.y > 0)
+        if (core.Movement.CurrentVelocity.y > 0)
         {
-            player.SetVelocityY(player.CurrentVelocity.y * playerData.dashEndYMultiplier);
+            core.Movement.SetVelocityY(core.Movement.CurrentVelocity.y * playerData.dashEndYMultiplier);
         }
     }
 
@@ -43,9 +43,9 @@ public class PlayerDashState : PlayerAbilityState
 
         if (!isExitingState)
         {
-            player.Anim.SetFloat("yVelocity", player.CurrentVelocity.y);
+            player.Anim.SetFloat("yVelocity", core.Movement.CurrentVelocity.y);
 
-            player.SetVelocity(playerData.dashVelocity, playerData.dashAngle, player.FacingDirection);
+            core.Movement.SetVelocity(playerData.dashVelocity, playerData.dashAngle, core.Movement.FacingDirection);
 
             if (Time.time >= startTime + playerData.dashTime)
             {

@@ -12,6 +12,8 @@ public class PlayerAttackState : PlayerAbilityState
 
     private bool isGrounded;
 
+    private bool attackInput;
+
     public PlayerAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }
@@ -20,14 +22,16 @@ public class PlayerAttackState : PlayerAbilityState
     {
         base.DoChecks();
 
-        isGrounded = player.CheckIfGrounded();
+        isGrounded = core.CollisionSenses.Ground;
     }
 
     public override void Enter()
     {
         base.Enter();
 
-        player.InputHandler.AttackInput = false;
+        attackInput = false;
+
+        player.InputHandler.UseAttackInput();
 
         ResetAttackCounter();
 
@@ -44,7 +48,7 @@ public class PlayerAttackState : PlayerAbilityState
     {
         base.Exit();
 
-        player.SetVelocityX(0f);
+        core.Movement.SetVelocityX(0f);
         velocityToSet = 0;
 
         player.Anim.SetBool("attack", false);
@@ -56,14 +60,24 @@ public class PlayerAttackState : PlayerAbilityState
     {
         base.LogicUpdate();
 
-        player.SetVelocityX(velocityToSet * player.FacingDirection);     
-    }
+        if(player.InputHandler.AttackInput)
+        {
+            attackInput = true;
+        }
 
-    public override void AnimationFinishTrigger()
-    {
-        base.AnimationFinishTrigger();
+        core.Movement.SetVelocityX(velocityToSet * core.Movement.FacingDirection);
 
-        isAbilityDone = true;
+        if (!isExitingState)
+        {
+            if (isAnimationFinished && attackInput)
+            {
+                stateMachine.ChangeState(player.AttackState);
+            }
+            else if (isAnimationFinished && !attackInput)
+            {
+                isAbilityDone = true;
+            }
+        }
     }
 
     private void ResetAttackCounter()
