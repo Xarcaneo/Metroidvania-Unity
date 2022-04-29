@@ -34,6 +34,8 @@ public class Player : MonoBehaviour
     #region Other Variables
 
     private Vector2 workspace;
+
+    [SerializeField] private Weapon weapon;
     #endregion
 
     #region Unity Callback Functions
@@ -92,6 +94,12 @@ public class Player : MonoBehaviour
     private void AnimationTrigger() => StateMachine.CurrentState.AnimationTrigger();
 
     private void AnimationFinishTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
+
+    private void AnimationActionTrigger() 
+    {
+        //Checks what IDamageable entities intersects with weapon collider and damage them
+        weapon.CheckMeleeAttack();
+    }
 
     #endregion
 }
