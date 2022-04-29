@@ -111,4 +111,9 @@ public class PlayerAttackState : PlayerAbilityState
             velocityToSet = 0;
         }
     }
+    public void AnimationActionTrigger()
+    {
+
+    }
 }
+
