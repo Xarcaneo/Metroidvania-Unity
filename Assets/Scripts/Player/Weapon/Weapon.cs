@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Weapon : MonoBehaviour
 {
@@ -38,7 +39,7 @@ public class Weapon : MonoBehaviour
 
     public void CheckMeleeAttack()
     {
-        foreach (IDamageable item in detectedDamageables)
+        foreach (IDamageable item in detectedDamageables.ToList())
         {
             item.Damage(10);
         }
