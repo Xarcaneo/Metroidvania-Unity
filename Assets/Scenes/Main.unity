@@ -204,6 +204,8 @@ MonoBehaviour:
   idleStateData: {fileID: 11400000, guid: cf835a46fd608cd40851b5f41c749b7e, type: 2}
   moveStateData: {fileID: 11400000, guid: 03b18609645b8534ea31a962c4c7fe63, type: 2}
   playerDetectedData: {fileID: 11400000, guid: c151caf69d9e4344ca8b60e2141aba25, type: 2}
+  chargeStateData: {fileID: 11400000, guid: 584dc0d1a59d3cc4882cb837dbada93c, type: 2}
+  lookForPlayerStateData: {fileID: 11400000, guid: 2805e1ed7499e89419bf3a5841d16aef, type: 2}
 --- !u!4 &52205481
 Transform:
   m_ObjectHideFlags: 0
@@ -79640,7 +79642,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1167875890}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.03, y: -0.41, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1577253906}
