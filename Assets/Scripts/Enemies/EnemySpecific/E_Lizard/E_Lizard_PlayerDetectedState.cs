@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class E_Lizard_IdleState : IdleState
+public class E_Lizard_PlayerDetectedState : PlayerDetectedState
 {
     private E_Lizard enemy;
-    public E_Lizard_IdleState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_IdleState stateData, E_Lizard enemy) : base(entity, stateMachine, animBoolName, stateData)
+
+    public E_Lizard_PlayerDetectedState(Entity etity, FiniteStateMachine stateMachine, string animBoolName, D_PlayerDetected stateData, E_Lizard enemy) : base(etity, stateMachine, animBoolName, stateData)
     {
         this.enemy = enemy;
     }
@@ -24,13 +25,10 @@ public class E_Lizard_IdleState : IdleState
     {
         base.LogicUpdate();
 
-        if (isPlayerInMinAgroRange)
+        if (!isPlayerInMaxAgroRange)
         {
-            stateMachine.ChangeState(enemy.playerDetectedState);
-        }
-        else if (isIdleTimeOver)
-        {
-            stateMachine.ChangeState(enemy.moveState);
+            enemy.idleState.SetFlipAfterIdle(false);
+            stateMachine.ChangeState(enemy.idleState);
         }
     }
 
