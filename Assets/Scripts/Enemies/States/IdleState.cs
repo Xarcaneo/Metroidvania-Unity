@@ -8,7 +8,7 @@ public class IdleState : State
 
     protected bool flipAfterIdle;
     protected bool isIdleTimeOver;
-    protected bool isPlayerInMinAgroRange;
+    protected bool isPlayerDetected;
     
     protected float idleTime;
 
@@ -21,7 +21,7 @@ public class IdleState : State
     {
         base.DoChecks();
 
-        isPlayerInMinAgroRange = entity.CheckPlayerInMaxAgroRange();
+        isPlayerDetected = entity.playerDetector.GetPlayerDetected();
     }
 
     public override void Enter()

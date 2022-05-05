@@ -30,17 +30,10 @@ public class E1_ChargeState : ChargeState
     {
         base.LogicUpdate();
 
-        if (!isDectectingLedge || isDetectingWall)
+        if (!isDectectingLedge || isDetectingWall || !isPlayerDetected )
         {
-            stateMachine.ChangeState(enemy.lookForPlayerState);
-        }
-        else if (isChargeTimeOver)
-        {
-            if (isPlayerInMinAgroRange)
-            {
-                stateMachine.ChangeState(enemy.playerDetectedState);
-            }
-        }
+            stateMachine.ChangeState(enemy.idleState);
+        }  
     }
 
     public override void PhysicsUpdate()

@@ -6,10 +6,11 @@ public class ChargeState : State
 {
     protected D_ChargeState stateData;
 
-    protected bool isPlayerInMinAgroRange;
+    protected bool isPlayerDetected;
     protected bool isDectectingLedge;
     protected bool isDetectingWall;
-    protected bool isChargeTimeOver;
+
+    protected int playerDirection;
 
     public ChargeState(Entity etity, FiniteStateMachine stateMachine, string animBoolName, D_ChargeState stateData) : base(etity, stateMachine, animBoolName)
     {
@@ -20,17 +21,17 @@ public class ChargeState : State
     {
         base.DoChecks();
 
-        isPlayerInMinAgroRange = entity.CheckPlayerInMinAgroRange();
+        isPlayerDetected = entity.playerDetector.GetPlayerDetected();
         isDectectingLedge = entity.CheckLedge();
         isDetectingWall = entity.CheckWall();
+        playerDirection = entity.playerDetector.CheckFlipDirectionTowardsPlayer();
     }
 
     public override void Enter()
     {
         base.Enter();
-
-        isChargeTimeOver = false;
-        entity.SetVelocity(stateData.chargeSpeed);
+        DoChecks();
+        entity.SetFacingTowardsPlayer(playerDirection);
     }
 
     public override void Exit()
@@ -41,15 +42,18 @@ public class ChargeState : State
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-
-        if (Time.time >= startTime + stateData.chargeTime)
-        {
-            isChargeTimeOver = true;
-        }
+        DoChecks();
     }
 
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
+
+        entity.SetFacingTowardsPlayer(playerDirection);
+
+        if (isDectectingLedge)
+        {
+            entity.SetVelocity(stateData.chargeSpeed);
+        }
     }
 }

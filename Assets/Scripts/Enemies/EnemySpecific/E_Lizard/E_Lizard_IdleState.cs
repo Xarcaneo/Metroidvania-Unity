@@ -24,13 +24,14 @@ public class E_Lizard_IdleState : IdleState
     {
         base.LogicUpdate();
 
-        if (isPlayerInMinAgroRange)
-        {
-            stateMachine.ChangeState(enemy.playerDetectedState);
-        }
-        else if (isIdleTimeOver)
+
+        if (isIdleTimeOver)
         {
             stateMachine.ChangeState(enemy.moveState);
+        }
+        else if (isPlayerDetected)
+        {
+            stateMachine.ChangeState(enemy.chargeState);
         }
     }
 
