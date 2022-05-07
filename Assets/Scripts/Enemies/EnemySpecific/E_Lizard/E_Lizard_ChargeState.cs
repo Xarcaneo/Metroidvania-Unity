@@ -30,7 +30,7 @@ public class E1_ChargeState : ChargeState
     {
         base.LogicUpdate();
 
-        if (!isDectectingLedge || isDetectingWall || !isPlayerDetected )
+        if (!isDectectingLedge || isDetectingWall)
         {
             stateMachine.ChangeState(enemy.idleState);
         }  

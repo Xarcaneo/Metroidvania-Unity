@@ -21,9 +21,9 @@ public class ChargeState : State
     {
         base.DoChecks();
 
-        isPlayerDetected = entity.playerDetector.GetPlayerDetected();
-        isDectectingLedge = entity.CheckLedge();
-        isDetectingWall = entity.CheckWall();
+        isPlayerDetected = entity.playerDetector.GetEntityDetected();
+        isDectectingLedge = core.CollisionSenses.LedgeVertical;
+        isDetectingWall = core.CollisionSenses.WallFront;
         playerDirection = entity.playerDetector.CheckFlipDirectionTowardsPlayer();
     }
 
@@ -31,7 +31,7 @@ public class ChargeState : State
     {
         base.Enter();
         DoChecks();
-        entity.SetFacingTowardsPlayer(playerDirection);
+        core.Movement.SetFlip(playerDirection);
     }
 
     public override void Exit()
@@ -49,11 +49,11 @@ public class ChargeState : State
     {
         base.PhysicsUpdate();
 
-        entity.SetFacingTowardsPlayer(playerDirection);
+        core.Movement.SetFlip(playerDirection);
 
-        if (isDectectingLedge)
+        if (isDectectingLedge && !isDetectingWall)
         {
-            entity.SetVelocity(stateData.chargeSpeed);
+            core.Movement.SetVelocityX(stateData.chargeSpeed * core.Movement.FacingDirection);
         }
     }
 }

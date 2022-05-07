@@ -19,7 +19,7 @@ public class PlayerDetectedState : State
     {
         base.DoChecks();
 
-        isPlayerDetected = entity.playerDetector.GetPlayerDetected();
+        isPlayerDetected = entity.playerDetector.GetEntityDetected();
         playerDirection = entity.playerDetector.CheckFlipDirectionTowardsPlayer();
     }
 
@@ -28,9 +28,9 @@ public class PlayerDetectedState : State
         base.Enter();
 
         performLongRangeAction = false;
-        entity.SetVelocity(0f);
+        core.Movement.SetVelocityX(0f);
         DoChecks();
-        entity.SetFacingTowardsPlayer(playerDirection);
+        core.Movement.SetFlip(playerDirection);
     }
 
     public override void Exit()

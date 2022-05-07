@@ -17,6 +17,13 @@ public class CollisionSenses : CoreComponent
         private set => wallCheck = value;
     }
 
+    public Transform LedgeCheckVertical
+    {
+        get => GenericNotImplementedError<Transform>.TryGet(ledgeCheckVertical, core.transform.parent.name);
+        private set => ledgeCheckVertical = value;
+    }
+
+
     public float GroundCheckRadius { get => groundCheckRadius; set => groundCheckRadius = value; }
     public float WallCheckDistance { get => wallCheckDistance; set => wallCheckDistance = value; }
     public LayerMask WhatIsGround { get => whatIsGround; set => whatIsGround = value; }
@@ -25,6 +32,7 @@ public class CollisionSenses : CoreComponent
     [SerializeField] private Transform groundCheck;
     [SerializeField] private Transform wallCheck;
 
+    [SerializeField] private Transform ledgeCheckVertical;
     [SerializeField] private float groundCheckRadius;
     [SerializeField] private float wallCheckDistance;
 
@@ -45,5 +53,9 @@ public class CollisionSenses : CoreComponent
     public bool WallBack
     {
         get => Physics2D.Raycast(WallCheck.position, Vector2.right * -core.Movement.FacingDirection, wallCheckDistance, whatIsGround);
+    }
+    public bool LedgeVertical
+    {
+        get => Physics2D.Raycast(ledgeCheckVertical.position, Vector2.down, wallCheckDistance, whatIsGround);
     }
 }

@@ -61,10 +61,19 @@ public class Movement : CoreComponent
         }
     }
 
-    private void Flip()
+    public void Flip()
     {
         FacingDirection *= -1;
-        RB.transform.Rotate(0.0f, 180.0f, 0.0f);
+        RB.transform.localScale = new Vector3(FacingDirection, 1, 1);
+    }
+
+    public void SetFlip(int direction)
+    {
+        if (direction != 0)
+        {
+            FacingDirection = direction;
+            RB.transform.localScale = new Vector3(direction, 1, 1);
+        }
     }
 
     #endregion

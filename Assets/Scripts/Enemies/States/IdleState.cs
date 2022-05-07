@@ -21,14 +21,14 @@ public class IdleState : State
     {
         base.DoChecks();
 
-        isPlayerDetected = entity.playerDetector.GetPlayerDetected();
+        isPlayerDetected = entity.playerDetector.GetEntityDetected();
     }
 
     public override void Enter()
     {
         base.Enter();
 
-        entity.SetVelocity(0f);
+        core.Movement.SetVelocityX(0f);
         isIdleTimeOver = false;
         SetRandomIdleTime();
     }
@@ -39,7 +39,7 @@ public class IdleState : State
 
         if (flipAfterIdle)
         {
-            entity.Flip();
+            core.Movement.Flip();
         }
     }
 

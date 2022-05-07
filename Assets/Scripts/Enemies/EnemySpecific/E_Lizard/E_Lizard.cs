@@ -15,9 +15,9 @@ public class E_Lizard : Entity
     [SerializeField]
     private D_ChargeState chargeStateData;
 
-    public override void Start()
+    public override void Awake()
     {
-        base.Start();
+        base.Awake();
 
         moveState = new E_Lizard_MoveState(this, stateMachine, "move", moveStateData, this);
         idleState = new E_Lizard_IdleState(this, stateMachine, "idle", idleStateData, this);
