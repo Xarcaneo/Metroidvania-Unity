@@ -27,15 +27,11 @@ public class Player : MonoBehaviour
     public Core Core { get; private set; }
     public Animator Anim { get; private set; }
     public PlayerInputHandler InputHandler { get; private set; }
-    public Rigidbody2D RB { get; private set; }
     public BoxCollider2D MovementCollider { get; private set; }
     #endregion
 
     #region Other Variables
-
     private Vector2 workspace;
-
-    [SerializeField] private Weapon weapon;
     #endregion
 
     #region Unity Callback Functions
@@ -61,7 +57,6 @@ public class Player : MonoBehaviour
     {
         Anim = GetComponent<Animator>();
         InputHandler = GetComponent<PlayerInputHandler>();
-        RB = GetComponent<Rigidbody2D>();
         MovementCollider = GetComponent<BoxCollider2D>();
 
         StateMachine.Initialize(IdleState);
@@ -98,7 +93,7 @@ public class Player : MonoBehaviour
     private void AnimationActionTrigger() 
     {
         //Checks what IDamageable entities intersects with weapon collider and damage them
-        weapon.CheckMeleeAttack();
+        Core.Weapon.CheckMeleeAttack();
     }
 
     #endregion

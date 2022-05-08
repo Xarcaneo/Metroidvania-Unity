@@ -19,17 +19,22 @@ public class Core : MonoBehaviour
         get => GenericNotImplementedError<Combat>.TryGet(combat, transform.parent.name);
         private set => combat = value;
     }
-
     public Stats Stats
     {
         get => GenericNotImplementedError<Stats>.TryGet(stats, transform.parent.name);
         private set => stats = value;
+    }
+    public Weapon Weapon
+    {
+        get => GenericNotImplementedError<Weapon>.TryGet(weapon, transform.parent.name);
+        private set => weapon = value;
     }
 
     private Movement movement;
     private CollisionSenses collisionSenses;
     private Combat combat;
     private Stats stats;
+    private Weapon weapon;
 
     private void Awake()
     {
@@ -37,6 +42,7 @@ public class Core : MonoBehaviour
         CollisionSenses = GetComponentInChildren<CollisionSenses>();
         Combat = GetComponentInChildren<Combat>();
         Stats = GetComponentInChildren<Stats>();
+        Weapon = GetComponentInChildren<Weapon>();
     }
 
     public void LogicUpdate()
