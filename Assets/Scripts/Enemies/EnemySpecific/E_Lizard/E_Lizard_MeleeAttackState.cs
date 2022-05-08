@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class E_Lizard_ChargeState : ChargeState
+public class E_Lizard_MeleeAttackState : MeleeAttackState
 {
     private E_Lizard enemy;
 
-    public E_Lizard_ChargeState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_ChargeState stateData, E_Lizard enemy) : base(entity, stateMachine, animBoolName, stateData)
+    public E_Lizard_MeleeAttackState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, E_Lizard enemy) : base(entity, stateMachine, animBoolName)
     {
         this.enemy = enemy;
     }
@@ -26,22 +26,28 @@ public class E_Lizard_ChargeState : ChargeState
         base.Exit();
     }
 
+    public override void FinishAttack()
+    {
+        base.FinishAttack();
+    }
+
     public override void LogicUpdate()
     {
         base.LogicUpdate();
 
-        if (!isDectectingLedge || isDetectingWall)
+        if (isAnimationFinished)
         {
-            stateMachine.ChangeState(enemy.idleState);
-        } 
-        else if(performCloseRangeAction)
-        {
-            stateMachine.ChangeState(enemy.meleeAttackState);
+           stateMachine.ChangeState(enemy.moveState);
         }
     }
 
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
+    }
+
+    public override void TriggerAttack()
+    {
+        base.TriggerAttack();
     }
 }

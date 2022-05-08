@@ -29,12 +29,24 @@ public class Core : MonoBehaviour
         get => GenericNotImplementedError<Weapon>.TryGet(weapon, transform.parent.name);
         private set => weapon = value;
     }
+    public EntityDetector EntityDetector
+    {
+        get => GenericNotImplementedError<EntityDetector>.TryGet(entityDetector, transform.parent.name);
+        private set => entityDetector = value;
+    }
+    public AIMeleeAttackDetector AIMeleeAttackDetector
+    {
+        get => GenericNotImplementedError<AIMeleeAttackDetector>.TryGet(aiMeleeAttackDetector, transform.parent.name);
+        private set => aiMeleeAttackDetector = value;
+    }
 
     private Movement movement;
     private CollisionSenses collisionSenses;
     private Combat combat;
     private Stats stats;
     private Weapon weapon;
+    private EntityDetector entityDetector;
+    private AIMeleeAttackDetector aiMeleeAttackDetector;
 
     private void Awake()
     {
@@ -43,6 +55,8 @@ public class Core : MonoBehaviour
         Combat = GetComponentInChildren<Combat>();
         Stats = GetComponentInChildren<Stats>();
         Weapon = GetComponentInChildren<Weapon>();
+        EntityDetector = GetComponentInChildren<EntityDetector>();
+        AIMeleeAttackDetector = GetComponentInChildren<AIMeleeAttackDetector>();
     }
 
     public void LogicUpdate()

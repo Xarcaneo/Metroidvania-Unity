@@ -6,7 +6,8 @@ public class E_Lizard : Entity
 {
     public E_Lizard_IdleState idleState { get; private set; }
     public E_Lizard_MoveState moveState { get; private set; }
-    public E1_ChargeState chargeState { get; private set; }
+    public E_Lizard_ChargeState chargeState { get; private set; }
+    public E_Lizard_MeleeAttackState meleeAttackState { get; private set; }
 
     [SerializeField]
     private D_IdleState idleStateData;
@@ -21,8 +22,9 @@ public class E_Lizard : Entity
 
         moveState = new E_Lizard_MoveState(this, stateMachine, "move", moveStateData, this);
         idleState = new E_Lizard_IdleState(this, stateMachine, "idle", idleStateData, this);
-        chargeState = new E1_ChargeState(this, stateMachine, "charge", chargeStateData, this);
-    
+        chargeState = new E_Lizard_ChargeState(this, stateMachine, "charge", chargeStateData, this);
+        meleeAttackState = new E_Lizard_MeleeAttackState(this, stateMachine, "attack", this);
+
         stateMachine.Initialize(moveState);
 
     }

@@ -8,6 +8,8 @@ public class State
     protected Entity entity;
     protected Core core;
 
+    protected bool isAnimationFinished;
+
     protected float startTime;
 
     protected string animBoolName;
@@ -46,4 +48,8 @@ public class State
     {
 
     }
+
+    public virtual void AnimationTrigger() { }
+
+    public virtual void AnimationFinishTrigger() => isAnimationFinished = true;
 }

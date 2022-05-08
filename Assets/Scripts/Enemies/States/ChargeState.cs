@@ -10,6 +10,9 @@ public class ChargeState : State
     protected bool isDectectingLedge;
     protected bool isDetectingWall;
 
+    protected bool performLongRangeAction;
+    protected bool performCloseRangeAction;
+
     protected int playerDirection;
 
     public ChargeState(Entity etity, FiniteStateMachine stateMachine, string animBoolName, D_ChargeState stateData) : base(etity, stateMachine, animBoolName)
@@ -21,10 +24,11 @@ public class ChargeState : State
     {
         base.DoChecks();
 
-        isPlayerDetected = entity.playerDetector.GetEntityDetected();
+        isPlayerDetected = core.EntityDetector.GetEntityDetected();
         isDectectingLedge = core.CollisionSenses.LedgeVertical;
         isDetectingWall = core.CollisionSenses.WallFront;
-        playerDirection = entity.playerDetector.CheckFlipDirectionTowardsPlayer();
+        playerDirection = core.EntityDetector.CheckFlipDirectionTowardsEntity();
+        performCloseRangeAction = core.AIMeleeAttackDetector.GetEntityDetected();
     }
 
     public override void Enter()

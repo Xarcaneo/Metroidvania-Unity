@@ -21,7 +21,7 @@ public class IdleState : State
     {
         base.DoChecks();
 
-        isPlayerDetected = entity.playerDetector.GetEntityDetected();
+        isPlayerDetected = core.EntityDetector.GetEntityDetected();
     }
 
     public override void Enter()

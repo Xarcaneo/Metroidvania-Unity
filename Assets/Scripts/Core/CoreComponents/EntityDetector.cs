@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class EntityDetector : MonoBehaviour
+public class EntityDetector : CoreComponent
 {
     [field: SerializeField]
     public bool EntityDetected { get; private set; }
@@ -67,7 +67,7 @@ public class EntityDetector : MonoBehaviour
         return EntityDetected;
     }
 
-    public int CheckFlipDirectionTowardsPlayer()
+    public int CheckFlipDirectionTowardsEntity()
     {
         if (target != null)
         {

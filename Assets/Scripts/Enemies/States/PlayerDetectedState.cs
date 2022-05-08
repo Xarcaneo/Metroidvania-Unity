@@ -19,8 +19,8 @@ public class PlayerDetectedState : State
     {
         base.DoChecks();
 
-        isPlayerDetected = entity.playerDetector.GetEntityDetected();
-        playerDirection = entity.playerDetector.CheckFlipDirectionTowardsPlayer();
+        isPlayerDetected = core.EntityDetector.GetEntityDetected();
+        playerDirection = core.EntityDetector.CheckFlipDirectionTowardsEntity();
     }
 
     public override void Enter()

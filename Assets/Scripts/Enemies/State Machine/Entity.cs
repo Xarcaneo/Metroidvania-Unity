@@ -11,10 +11,6 @@ public class Entity : MonoBehaviour, IDamageable
     public Animator anim { get; private set; }
     public Core Core { get; private set; }
 
-    public EntityDetector playerDetector;
-
-    private Vector2 velocityWorkspace;
-
     public virtual void Awake()
     {
         Core = GetComponentInChildren<Core>();
@@ -36,5 +32,14 @@ public class Entity : MonoBehaviour, IDamageable
     public virtual void FixedUpdate()
     {
         stateMachine.currentState.PhysicsUpdate();
+    }
+    private void AnimationTrigger() => stateMachine.currentState.AnimationTrigger();
+
+    private void AnimationFinishTrigger() => stateMachine.currentState.AnimationFinishTrigger();
+
+    private void AnimationActionTrigger()
+    {
+        //Checks what IDamageable entities intersects with weapon collider and damage them
+        Core.Weapon.CheckMeleeAttack();
     }
 }

@@ -21,7 +21,7 @@ public class MoveState : State
 
         isDetectingLedge = core.CollisionSenses.LedgeVertical;
         isDetectingWall = core.CollisionSenses.WallFront;
-        isPlayerDetected = entity.playerDetector.GetEntityDetected();
+        isPlayerDetected = core.EntityDetector.GetEntityDetected();
     }
 
     public override void Enter()
