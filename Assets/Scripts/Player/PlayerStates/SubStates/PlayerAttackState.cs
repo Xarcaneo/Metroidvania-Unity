@@ -39,8 +39,6 @@ public class PlayerAttackState : PlayerAbilityState
 
         SettAttackVelocity();
 
-        player.Anim.SetBool("attack", true);
-
         player.Anim.SetInteger("attackCounter", attackCounter);
     }
 
@@ -50,8 +48,6 @@ public class PlayerAttackState : PlayerAbilityState
 
         core.Movement.SetVelocityX(0f);
         velocityToSet = 0;
-
-        player.Anim.SetBool("attack", false);
 
         attackCounter++;
     }
@@ -110,10 +106,6 @@ public class PlayerAttackState : PlayerAbilityState
         {
             velocityToSet = 0;
         }
-    }
-    public void AnimationActionTrigger()
-    {
-
     }
 }
 

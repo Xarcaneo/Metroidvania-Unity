@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class Weapon : MonoBehaviour
+public class Weapon : CoreComponent
 {
     private List<IDamageable> detectedDamageables = new List<IDamageable>();
 
