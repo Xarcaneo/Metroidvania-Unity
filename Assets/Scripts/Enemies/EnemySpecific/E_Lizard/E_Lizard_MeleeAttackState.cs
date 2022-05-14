@@ -6,7 +6,7 @@ public class E_Lizard_MeleeAttackState : MeleeAttackState
 {
     private E_Lizard enemy;
 
-    public E_Lizard_MeleeAttackState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, E_Lizard enemy) : base(entity, stateMachine, animBoolName)
+    public E_Lizard_MeleeAttackState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_MeleeAttack stateData, E_Lizard enemy) : base(entity, stateMachine, animBoolName, stateData)
     {
         this.enemy = enemy;
     }
@@ -37,7 +37,9 @@ public class E_Lizard_MeleeAttackState : MeleeAttackState
 
         if (isAnimationFinished)
         {
-           stateMachine.ChangeState(enemy.moveState);
+            enemy.idleState.SetFlipAfterIdle(false);
+            enemy.idleState.SetIdleTime(stateData.attackSpeed);
+            stateMachine.ChangeState(enemy.idleState);
         }
     }
 

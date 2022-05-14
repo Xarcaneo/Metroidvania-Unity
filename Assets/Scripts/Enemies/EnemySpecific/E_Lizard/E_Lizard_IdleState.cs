@@ -1,4 +1,4 @@
-using System.Collections;
+ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,14 +24,25 @@ public class E_Lizard_IdleState : IdleState
     {
         base.LogicUpdate();
 
-
         if (isIdleTimeOver)
         {
-            stateMachine.ChangeState(enemy.moveState);
-        }
-        else if (isPlayerDetected)
-        {
-            stateMachine.ChangeState(enemy.chargeState);
+            if (!isPlayerDetected)
+            {
+                if (!isDectectingLedge && !flipAfterIdle)
+                {
+                    core.Movement.Flip();
+                }
+
+                stateMachine.ChangeState(enemy.moveState);
+            }
+            else if (isEnemyInRangeDetected && isIdleTimeOver)
+            {
+                stateMachine.ChangeState(enemy.meleeAttackState);
+            }
+            else if (isPlayerDetected && isDectectingLedge && !isEnemyInRangeDetected)
+            {
+                stateMachine.ChangeState(enemy.chargeState);
+            }
         }
     }
 

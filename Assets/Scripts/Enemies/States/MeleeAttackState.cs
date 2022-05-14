@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class MeleeAttackState : AttackState
 {
-    public MeleeAttackState(Entity etity, FiniteStateMachine stateMachine, string animBoolName) : base(etity, stateMachine, animBoolName)
+    protected D_MeleeAttack stateData;
+
+    public MeleeAttackState(Entity etity, FiniteStateMachine stateMachine, string animBoolName, D_MeleeAttack stateData) : base(etity, stateMachine, animBoolName)
     {
+        this.stateData = stateData;
     }
 
     public override void DoChecks()

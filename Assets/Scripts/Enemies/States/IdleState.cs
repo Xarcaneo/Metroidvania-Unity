@@ -9,7 +9,10 @@ public class IdleState : State
     protected bool flipAfterIdle;
     protected bool isIdleTimeOver;
     protected bool isPlayerDetected;
-    
+    protected bool isDectectingLedge;
+    protected bool isEnemyInRangeDetected;
+    protected int playerDirection;
+
     protected float idleTime;
 
     public IdleState(Entity etity, FiniteStateMachine stateMachine, string animBoolName, D_IdleState stateData) : base(etity, stateMachine, animBoolName)
@@ -22,6 +25,9 @@ public class IdleState : State
         base.DoChecks();
 
         isPlayerDetected = core.EntityDetector.GetEntityDetected();
+        isDectectingLedge = core.CollisionSenses.LedgeVertical;
+        isEnemyInRangeDetected = core.AIMeleeAttackDetector.GetEntityDetected();
+        playerDirection = core.EntityDetector.CheckFlipDirectionTowardsEntity();
     }
 
     public override void Enter()
@@ -30,7 +36,11 @@ public class IdleState : State
 
         core.Movement.SetVelocityX(0f);
         isIdleTimeOver = false;
-        SetRandomIdleTime();
+
+        if( idleTime == 0.0f)
+        {
+            SetRandomIdleTime();
+        }
     }
 
     public override void Exit()
@@ -41,6 +51,8 @@ public class IdleState : State
         {
             core.Movement.Flip();
         }
+
+        idleTime = 0.0f;
     }
 
     public override void LogicUpdate()
@@ -56,6 +68,11 @@ public class IdleState : State
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
+
+        if(isPlayerDetected)
+        {
+            core.Movement.SetFlip(playerDirection);
+        }
     }
 
     public void SetFlipAfterIdle(bool flip)
@@ -63,8 +80,13 @@ public class IdleState : State
         flipAfterIdle = flip;
     }
 
-    private void SetRandomIdleTime()
+    public void SetRandomIdleTime()
     {
         idleTime = Random.Range(stateData.minIdleTime, stateData.maxIdleTime);
+    }
+
+    public void SetIdleTime(float idleTime)
+    {
+        this.idleTime = idleTime;
     }
 }

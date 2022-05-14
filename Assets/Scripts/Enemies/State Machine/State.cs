@@ -26,6 +26,7 @@ public class State
     {
         startTime = Time.time;
         entity.anim.SetBool(animBoolName, true);
+        isAnimationFinished = false;
         DoChecks();
     }
 

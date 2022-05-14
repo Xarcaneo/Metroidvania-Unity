@@ -15,6 +15,8 @@ public class E_Lizard : Entity
     private D_MoveState moveStateData;
     [SerializeField]
     private D_ChargeState chargeStateData;
+    [SerializeField]
+    private D_MeleeAttack meleeAttackData;
 
     public override void Awake()
     {
@@ -23,7 +25,7 @@ public class E_Lizard : Entity
         moveState = new E_Lizard_MoveState(this, stateMachine, "move", moveStateData, this);
         idleState = new E_Lizard_IdleState(this, stateMachine, "idle", idleStateData, this);
         chargeState = new E_Lizard_ChargeState(this, stateMachine, "charge", chargeStateData, this);
-        meleeAttackState = new E_Lizard_MeleeAttackState(this, stateMachine, "attack", this);
+        meleeAttackState = new E_Lizard_MeleeAttackState(this, stateMachine, "attack", meleeAttackData, this);
 
         stateMachine.Initialize(moveState);
 

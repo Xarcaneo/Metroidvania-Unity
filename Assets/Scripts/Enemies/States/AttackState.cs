@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AttackState : State
 {
-    protected bool isEnemyDetected;
+    protected bool isEnemyInRangeDetected;
 
     public AttackState(Entity entity, FiniteStateMachine stateMachine, string animBoolName) : base(entity, stateMachine, animBoolName)
     {
@@ -14,7 +14,7 @@ public class AttackState : State
     {
         base.DoChecks();
 
-        isEnemyDetected = core.AIMeleeAttackDetector.GetEntityDetected();
+        isEnemyInRangeDetected = core.AIMeleeAttackDetector.GetEntityDetected();
     }
 
     public override void Enter()
