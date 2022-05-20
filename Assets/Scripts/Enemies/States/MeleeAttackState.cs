@@ -26,11 +26,6 @@ public class MeleeAttackState : AttackState
         base.Exit();
     }
 
-    public override void FinishAttack()
-    {
-        base.FinishAttack();
-    }
-
     public override void LogicUpdate()
     {
         base.LogicUpdate();

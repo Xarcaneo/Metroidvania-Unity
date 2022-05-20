@@ -26,30 +26,19 @@ public class E_Lizard_MeleeAttackState : MeleeAttackState
         base.Exit();
     }
 
-    public override void FinishAttack()
-    {
-        base.FinishAttack();
-    }
-
     public override void LogicUpdate()
     {
         base.LogicUpdate();
 
         if (isAnimationFinished)
         {
-            enemy.idleState.SetFlipAfterIdle(false);
-            enemy.idleState.SetIdleTime(stateData.attackSpeed);
-            stateMachine.ChangeState(enemy.idleState);
+            enemy.afterAttackState.SetStateDurationTime(stateData.attackSpeed);
+            stateMachine.ChangeState(enemy.afterAttackState);
         }
     }
 
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
-    }
-
-    public override void TriggerAttack()
-    {
-        base.TriggerAttack();
     }
 }

@@ -9,6 +9,7 @@ public class State
     protected Core core;
 
     protected bool isAnimationFinished;
+    protected bool isExitingState;
 
     protected float startTime;
 
@@ -27,12 +28,15 @@ public class State
         startTime = Time.time;
         entity.anim.SetBool(animBoolName, true);
         isAnimationFinished = false;
+        isExitingState = false;
+        Debug.Log(animBoolName);
         DoChecks();
     }
 
     public virtual void Exit()
     {
         entity.anim.SetBool(animBoolName, false);
+        isExitingState = true;
     }
 
     public virtual void LogicUpdate()

@@ -36,11 +36,7 @@ public class IdleState : State
 
         core.Movement.SetVelocityX(0f);
         isIdleTimeOver = false;
-
-        if( idleTime == 0.0f)
-        {
-            SetRandomIdleTime();
-        }
+        SetRandomIdleTime();
     }
 
     public override void Exit()
@@ -63,30 +59,20 @@ public class IdleState : State
         {
             isIdleTimeOver = true;
         }
-    }
 
-    public override void PhysicsUpdate()
-    {
-        base.PhysicsUpdate();
-
-        if(isPlayerDetected)
+        if (isPlayerDetected)
         {
             core.Movement.SetFlip(playerDirection);
         }
     }
 
-    public void SetFlipAfterIdle(bool flip)
+    public override void PhysicsUpdate()
     {
-        flipAfterIdle = flip;
+        base.PhysicsUpdate();
     }
 
-    public void SetRandomIdleTime()
+    private void SetRandomIdleTime()
     {
         idleTime = Random.Range(stateData.minIdleTime, stateData.maxIdleTime);
-    }
-
-    public void SetIdleTime(float idleTime)
-    {
-        this.idleTime = idleTime;
     }
 }
