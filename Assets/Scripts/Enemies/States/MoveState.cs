@@ -9,7 +9,8 @@ public class MoveState : State
     protected bool isDetectingWall;
     protected bool isDetectingLedge;
     protected bool isPlayerDetected;
-     
+    protected bool isPlayerInSight; 
+
     public MoveState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_MoveState stateData) : base(entity, stateMachine, animBoolName)
     {
         this.stateData = stateData;
@@ -22,6 +23,7 @@ public class MoveState : State
         isDetectingLedge = core.CollisionSenses.LedgeVertical;
         isDetectingWall = core.CollisionSenses.WallFront;
         isPlayerDetected = core.EntityDetector.GetEntityDetected();
+        isPlayerInSight = core.AIRaycast.CheckRaycastCollision();
     }
 
     public override void Enter()

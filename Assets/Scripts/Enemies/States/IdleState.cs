@@ -7,11 +7,14 @@ public class IdleState : State
     protected D_IdleState stateData;
 
     protected bool flipAfterIdle;
+    protected int playerDirection;
+
     protected bool isIdleTimeOver;
     protected bool isPlayerDetected;
     protected bool isDectectingLedge;
+    protected bool isDetectingWall;
     protected bool isEnemyInRangeDetected;
-    protected int playerDirection;
+    protected bool isPlayerInSight;
 
     protected float idleTime;
 
@@ -25,9 +28,11 @@ public class IdleState : State
         base.DoChecks();
 
         isPlayerDetected = core.EntityDetector.GetEntityDetected();
+        isDetectingWall = core.CollisionSenses.WallFront;
         isDectectingLedge = core.CollisionSenses.LedgeVertical;
         isEnemyInRangeDetected = core.AIMeleeAttackDetector.GetEntityDetected();
         playerDirection = core.EntityDetector.CheckFlipDirectionTowardsEntity();
+        isPlayerInSight = core.AIRaycast.CheckRaycastCollision();
     }
 
     public override void Enter()
