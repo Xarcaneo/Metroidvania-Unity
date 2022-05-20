@@ -39,6 +39,11 @@ public class Core : MonoBehaviour
         get => GenericNotImplementedError<AIMeleeAttackDetector>.TryGet(aiMeleeAttackDetector, transform.parent.name);
         private set => aiMeleeAttackDetector = value;
     }
+    public AIRaycast AIRaycast
+    {
+        get => GenericNotImplementedError<AIRaycast>.TryGet(aiRaycast, transform.parent.name);
+        private set => aiRaycast = value;
+    }
 
     private Movement movement;
     private CollisionSenses collisionSenses;
@@ -47,6 +52,7 @@ public class Core : MonoBehaviour
     private Weapon weapon;
     private EntityDetector entityDetector;
     private AIMeleeAttackDetector aiMeleeAttackDetector;
+    private AIRaycast aiRaycast;
 
     private void Awake()
     {
@@ -57,6 +63,7 @@ public class Core : MonoBehaviour
         Weapon = GetComponentInChildren<Weapon>();
         EntityDetector = GetComponentInChildren<EntityDetector>();
         AIMeleeAttackDetector = GetComponentInChildren<AIMeleeAttackDetector>();
+        AIRaycast = GetComponentInChildren<AIRaycast>();
     }
 
     public void LogicUpdate()
