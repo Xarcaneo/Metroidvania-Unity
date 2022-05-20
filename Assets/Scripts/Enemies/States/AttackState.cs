@@ -38,14 +38,4 @@ public class AttackState : State
     {
         base.PhysicsUpdate();
     }
-
-    public virtual void TriggerAttack()
-    {
-
-    }
-
-    public virtual void FinishAttack()
-    {
-        isAnimationFinished = true;
-    }
 }

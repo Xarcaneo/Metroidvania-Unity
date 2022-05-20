@@ -28,21 +28,20 @@ public class E_Lizard_IdleState : IdleState
         {
             if (!isPlayerDetected)
             {
-                if (!isDectectingLedge && !flipAfterIdle)
-                {
-                    core.Movement.Flip();
-                }
-
+                flipAfterIdle = true;
                 stateMachine.ChangeState(enemy.moveState);
             }
-            else if (isEnemyInRangeDetected && isIdleTimeOver)
-            {
-                stateMachine.ChangeState(enemy.meleeAttackState);
-            }
-            else if (isPlayerDetected && isDectectingLedge && !isEnemyInRangeDetected)
-            {
-                stateMachine.ChangeState(enemy.chargeState);
-            }
+        }
+
+        if (isEnemyInRangeDetected)
+        {
+            flipAfterIdle = false;
+            stateMachine.ChangeState(enemy.meleeAttackState);
+        }
+        else if (isPlayerDetected && isDectectingLedge && !isEnemyInRangeDetected)
+        {
+            flipAfterIdle = false;
+            stateMachine.ChangeState(enemy.chargeState);
         }
     }
 

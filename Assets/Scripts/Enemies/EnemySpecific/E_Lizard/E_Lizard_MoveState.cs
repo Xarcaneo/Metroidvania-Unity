@@ -27,7 +27,6 @@ public class E_Lizard_MoveState : MoveState
 
         if (isDetectingWall || !isDetectingLedge)
         {
-            enemy.idleState.SetFlipAfterIdle(true);
             stateMachine.ChangeState(enemy.idleState);
         }
         else if(isPlayerDetected)

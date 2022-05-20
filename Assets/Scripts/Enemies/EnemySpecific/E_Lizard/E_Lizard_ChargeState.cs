@@ -30,13 +30,16 @@ public class E_Lizard_ChargeState : ChargeState
     {
         base.LogicUpdate();
 
-        if (!isDectectingLedge || isDetectingWall)
+        if (!isExitingState)
         {
-            stateMachine.ChangeState(enemy.idleState);
-        } 
-        else if(performCloseRangeAction)
-        {
-            stateMachine.ChangeState(enemy.meleeAttackState);
+            if (!isDectectingLedge || isDetectingWall)
+            {
+                stateMachine.ChangeState(enemy.idleState);
+            }
+            else if (performCloseRangeAction)
+            {
+                stateMachine.ChangeState(enemy.meleeAttackState);
+            }
         }
     }
 
