@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Entity : MonoBehaviour, IDamageable
+public class Entity : MonoBehaviour
 {
     public FiniteStateMachine stateMachine;
 
@@ -19,13 +19,9 @@ public class Entity : MonoBehaviour, IDamageable
         stateMachine = new FiniteStateMachine();
     }
 
-    public void Damage(float ammount)
-    {
-        Debug.Log(name + " Damaged!");
-    }
-
     public virtual void Update()
     {
+        Core.LogicUpdate();
         stateMachine.currentState.LogicUpdate();
     }
 
@@ -37,9 +33,5 @@ public class Entity : MonoBehaviour, IDamageable
 
     private void AnimationFinishTrigger() => stateMachine.currentState.AnimationFinishTrigger();
 
-    private void AnimationActionTrigger()
-    {
-        //Checks what IDamageable entities intersects with weapon collider and damage them
-        Core.Weapon.CheckMeleeAttack();
-    }
+    private void AnimationActionTrigger() => stateMachine.currentState.AnimationActionTrigger();
 }

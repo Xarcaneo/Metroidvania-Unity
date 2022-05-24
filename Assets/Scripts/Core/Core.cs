@@ -68,6 +68,7 @@ public class Core : MonoBehaviour
 
     public void LogicUpdate()
     {
+        Combat.LogicUpdate();
         Movement.LogicUpdate();
     }
 }

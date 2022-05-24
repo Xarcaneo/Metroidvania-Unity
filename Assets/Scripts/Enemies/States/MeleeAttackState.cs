@@ -35,4 +35,11 @@ public class MeleeAttackState : AttackState
     {
         base.PhysicsUpdate();
     }
+    public override void AnimationActionTrigger()
+    {
+        base.AnimationActionTrigger();
+
+        //Checks what IDamageable entities intersects with weapon collider and damage them
+        core.Weapon.CheckMeleeAttack();
+    }
 }

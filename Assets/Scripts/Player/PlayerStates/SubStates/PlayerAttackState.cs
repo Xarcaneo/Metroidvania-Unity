@@ -107,5 +107,13 @@ public class PlayerAttackState : PlayerAbilityState
             velocityToSet = 0;
         }
     }
+
+    public override void AnimationActionTrigger()
+    {
+        base.AnimationActionTrigger();
+      
+        //Checks what IDamageable entities intersects with weapon collider and damage them
+        core.Weapon.CheckMeleeAttack();       
+    }
 }
 
