@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class State 
+public class State
 {
     protected FiniteStateMachine stateMachine;
     protected Entity entity;
@@ -57,4 +57,6 @@ public class State
     public virtual void AnimationTrigger() { }
 
     public virtual void AnimationFinishTrigger() => isAnimationFinished = true;
+
+    public virtual void AnimationActionTrigger() { }
 }

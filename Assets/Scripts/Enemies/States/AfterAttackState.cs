@@ -29,6 +29,7 @@ public class AfterAttackState : State
     public override void Enter()
     {
         base.Enter();
+        core.Movement.SetVelocityX(0f);
         isStateTimeOver = false;
     }
 
@@ -42,6 +43,8 @@ public class AfterAttackState : State
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+
+        core.Movement.SetVelocityX(0f);
 
         if (Time.time >= startTime + stateDurationTime)
         {

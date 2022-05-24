@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class Player : MonoBehaviour, IDamageable
+public class Player : MonoBehaviour
 {
     #region State Variables
     public PlayerStateMachine StateMachine { get; private set; }
@@ -61,12 +61,6 @@ public class Player : MonoBehaviour, IDamageable
 
         StateMachine.Initialize(IdleState);
     }
-
-    public void Damage(float ammount)
-    {
-        Debug.Log("PLAYER_DAMAGED");
-    }
-
     private void Update()
     {
         Core.LogicUpdate();
@@ -95,11 +89,7 @@ public class Player : MonoBehaviour, IDamageable
 
     private void AnimationFinishTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
 
-    private void AnimationActionTrigger() 
-    {
-        //Checks what IDamageable entities intersects with weapon collider and damage them
-        Core.Weapon.CheckMeleeAttack();
-    }
+    private void AnimationActionTrigger() => StateMachine.CurrentState.AnimationActionTrigger();
 
     #endregion
 }
