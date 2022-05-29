@@ -19,18 +19,25 @@ public class E_Lizard_MeleeAttackState : MeleeAttackState
     public override void Enter()
     {
         base.Enter();
+
+        damageEventHandler = (amount) => { stateMachine.ChangeState(enemy.hurtState); };
+        healthZeroEventHandler = () => { stateMachine.ChangeState(enemy.deathState); };
+
+        SubscribeEvents();
     }
 
     public override void Exit()
     {
         base.Exit();
+
+        UnsubscribeEvents();
     }
 
     public override void LogicUpdate()
     {
         base.LogicUpdate();
 
-        if (isAnimationFinished)
+        if (isAnimationFinished && !isExitingState)
         {
             enemy.afterAttackState.SetStateDurationTime(stateData.attackSpeed);
             stateMachine.ChangeState(enemy.afterAttackState);

@@ -1,9 +1,15 @@
 using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class Combat : CoreComponent, IDamageable, IKnockbackable
 {
+    public event Action<float> OnDamage;
+
+    [Header("Set variables")]
+    [SerializeField] private bool isKnockable = true;
+    [SerializeField] private bool isDamagable = true;
+
     [Header("Knockback variables")]
     [SerializeField] private Vector2 knockbackAngle = new Vector2(1,0);
     [SerializeField] private float knockbackStrength = 2;
@@ -19,16 +25,24 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable
 
     public void Damage(float amount)
     {
-        Debug.Log(core.transform.parent.name + " Damaged!");
+        if (isDamagable)
+        {
+            core.Stats.DecreaseHealth(amount);
+
+            OnDamage?.Invoke(amount);
+        }
     }
 
     public void Knockback(int direction)
     {
-        Debug.Log(core.transform.parent.name + " Knockback!");
-        core.Movement.SetVelocity(knockbackStrength, knockbackAngle, direction);
-        core.Movement.CanSetVelocity = false;
-        isKnockbackActive = true;
-        knockbackStartTime = Time.time;
+        if (isKnockable)
+        {
+            Debug.Log(core.transform.parent.name + " Knockback!");
+            core.Movement.SetVelocity(knockbackStrength, knockbackAngle, direction);
+            core.Movement.CanSetVelocity = false;
+            isKnockbackActive = true;
+            knockbackStartTime = Time.time;
+        }
     }
 
     private void CheckKnockback()

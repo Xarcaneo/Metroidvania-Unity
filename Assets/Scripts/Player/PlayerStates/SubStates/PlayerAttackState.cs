@@ -63,13 +63,13 @@ public class PlayerAttackState : PlayerAbilityState
 
         core.Movement.SetVelocityX(velocityToSet * core.Movement.FacingDirection);
 
-        if (!isExitingState)
+        if (!isExitingState && isAnimationFinished)
         {
-            if (isAnimationFinished && attackInput)
+            if (attackInput)
             {
                 stateMachine.ChangeState(player.AttackState);
             }
-            else if (isAnimationFinished && !attackInput)
+            else
             {
                 isAbilityDone = true;
             }
@@ -78,21 +78,16 @@ public class PlayerAttackState : PlayerAbilityState
 
     private void ResetAttackCounter()
     {
-        if (isGrounded)
+        if (Time.time >= lastAttackTime + playerData.breakComboTime)
         {
-            if (Time.time >= lastAttackTime + playerData.breakComboTime)
-                attackCounter = 0;
-            else
-            {
-                if (attackCounter > 2)
-                {
-                    attackCounter = 0;
-                }
-            }
+            attackCounter = 0;
         }
         else
         {
-            attackCounter = 0;
+            if (attackCounter > 2)
+            {
+                attackCounter = 0;
+            }
         }
     }
 

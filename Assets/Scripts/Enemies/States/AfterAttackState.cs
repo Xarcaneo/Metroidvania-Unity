@@ -10,6 +10,8 @@ public class AfterAttackState : State
     protected bool isEnemyInRangeDetected;
     protected bool isPlayerDetected;
     protected bool isDectectingLedge;
+    protected bool isPlayerInSight;
+
     protected int playerDirection;
 
     public AfterAttackState(Entity entity, FiniteStateMachine stateMachine, string animBoolName) : base(entity, stateMachine, animBoolName)
@@ -24,6 +26,7 @@ public class AfterAttackState : State
         isPlayerDetected = core.EntityDetector.GetEntityDetected();
         isDectectingLedge = core.CollisionSenses.LedgeVertical;
         playerDirection = core.EntityDetector.CheckFlipDirectionTowardsEntity();
+        isPlayerInSight = core.AIRaycast.CheckRaycastCollision();
     }
 
     public override void Enter()

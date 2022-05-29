@@ -2,20 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class E_Lizard_MoveState : MoveState
+public class E_Lizard_HurtState : HurtState
 {
     private E_Lizard enemy;
 
-    public E_Lizard_MoveState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_MoveState stateData, E_Lizard enemy) : base(entity, stateMachine, animBoolName, stateData)
+    public E_Lizard_HurtState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, E_Lizard enemy) : base(entity, stateMachine, animBoolName)
     {
         this.enemy = enemy;
+    }
+
+    public override void DoChecks()
+    {
+        base.DoChecks();
     }
 
     public override void Enter()
     {
         base.Enter();
 
-        damageEventHandler = (amount) => { stateMachine.ChangeState(enemy.hurtState); };
         healthZeroEventHandler = () => { stateMachine.ChangeState(enemy.deathState); };
 
         SubscribeEvents();
@@ -32,13 +36,9 @@ public class E_Lizard_MoveState : MoveState
     {
         base.LogicUpdate();
 
-        if (isDetectingWall || !isDetectingLedge)
+        if (isAnimationFinished)
         {
-            stateMachine.ChangeState(enemy.idleState);
-        }
-        else if(isPlayerDetected && isPlayerInSight)
-        {
-            stateMachine.ChangeState(enemy.chargeState);
+            stateMachine.ChangeState(enemy.moveState);
         }
     }
 

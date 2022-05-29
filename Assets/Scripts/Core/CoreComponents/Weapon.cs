@@ -55,7 +55,7 @@ public class Weapon : CoreComponent
     {
         foreach (IDamageable item in detectedDamageables.ToList())
         {
-            item.Damage(10);
+            item.Damage(20);
         }
 
         foreach (IKnockbackable item in detectedKnockbackables.ToList())

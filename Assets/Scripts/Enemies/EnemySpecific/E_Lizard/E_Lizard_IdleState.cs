@@ -13,11 +13,18 @@ public class E_Lizard_IdleState : IdleState
     public override void Enter()
     {
         base.Enter();
+
+        damageEventHandler = (amount) => { stateMachine.ChangeState(enemy.hurtState); };
+        healthZeroEventHandler = () => { stateMachine.ChangeState(enemy.deathState); };
+
+        SubscribeEvents();
     }
 
     public override void Exit()
     {
         base.Exit();
+
+        UnsubscribeEvents();
     }
 
     public override void LogicUpdate()

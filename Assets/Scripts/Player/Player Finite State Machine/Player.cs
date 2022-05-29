@@ -18,6 +18,8 @@ public class Player : MonoBehaviour
     public PlayerDashState DashState { get; protected set; }
     public PlayerCrouchIdleState CrouchIdleState { get; private set; }
     public PlayerAttackState AttackState { get; private set; }
+    public PlayerHurtState HurtState { get; private set; }
+    public PlayerDeathState DeathState { get; private set; }
 
     [SerializeField]
     private PlayerData playerData;
@@ -51,6 +53,8 @@ public class Player : MonoBehaviour
         DashState = new PlayerDashState(this, StateMachine, playerData, "dash"); ;
         CrouchIdleState = new PlayerCrouchIdleState(this, StateMachine, playerData, "crouchIdle");
         AttackState = new PlayerAttackState(this, StateMachine, playerData, "attack");
+        HurtState = new PlayerHurtState(this, StateMachine, playerData, "hurt");
+        DeathState = new PlayerDeathState(this, StateMachine, playerData, "death");
     }
 
     private void Start()
