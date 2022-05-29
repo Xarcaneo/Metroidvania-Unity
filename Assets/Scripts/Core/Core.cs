@@ -44,6 +44,11 @@ public class Core : MonoBehaviour
         get => GenericNotImplementedError<AIRaycast>.TryGet(aiRaycast, transform.parent.name);
         private set => aiRaycast = value;
     }
+    public HurtEffect HurtEffect
+    {
+        get => GenericNotImplementedError<HurtEffect>.TryGet(hurtEffect, transform.parent.name);
+        private set => hurtEffect = value;
+    }
 
     private Movement movement;
     private CollisionSenses collisionSenses;
@@ -53,6 +58,7 @@ public class Core : MonoBehaviour
     private EntityDetector entityDetector;
     private AIMeleeAttackDetector aiMeleeAttackDetector;
     private AIRaycast aiRaycast;
+    private HurtEffect hurtEffect;
 
     private void Awake()
     {
@@ -64,6 +70,7 @@ public class Core : MonoBehaviour
         EntityDetector = GetComponentInChildren<EntityDetector>();
         AIMeleeAttackDetector = GetComponentInChildren<AIMeleeAttackDetector>();
         AIRaycast = GetComponentInChildren<AIRaycast>();
+        HurtEffect = GetComponentInChildren<HurtEffect>();
     }
 
     public void LogicUpdate()
