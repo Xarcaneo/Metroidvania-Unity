@@ -272,6 +272,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52b8561a32df37a4c9f112523c2e3c8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isKnockable: 1
+  isDamagable: 1
   knockbackAngle: {x: 1, y: 0}
   knockbackStrength: 2
   maxKnockbackTime: 0.2
@@ -79725,7 +79727,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e345a3e101e8bf1419b93eb05e3578b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 0
+  maxHealth: 100
 --- !u!1 &1347348741
 GameObject:
   m_ObjectHideFlags: 0
@@ -81756,16 +81758,6 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
-  - first: {x: -13, y: 16, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 0
-      m_TileSpriteIndex: 0
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 0
-      m_TileObjectToInstantiateIndex: 65535
-      dummyAlignment: 0
-      m_AllTileFlags: 1073741825
   - first: {x: 22, y: 16, z: 0}
     second:
       serializedVersion: 2
@@ -81827,16 +81819,6 @@ Tilemap:
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
   - first: {x: 34, y: 16, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 0
-      m_TileSpriteIndex: 0
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 0
-      m_TileObjectToInstantiateIndex: 65535
-      dummyAlignment: 0
-      m_AllTileFlags: 1073741825
-  - first: {x: -13, y: 17, z: 0}
     second:
       serializedVersion: 2
       m_TileIndex: 0
@@ -83058,21 +83040,21 @@ Tilemap:
       m_AllTileFlags: 1073741825
   m_AnimatedTiles: {}
   m_TileAssetArray:
-  - m_RefCount: 213
+  - m_RefCount: 211
     m_Data: {fileID: 11400000, guid: 1eb4ebc1101904443b87ea7f606ebac7, type: 2}
   - m_RefCount: 3
     m_Data: {fileID: 11400000, guid: 4bc8d30cd79cff74084f263546936a27, type: 2}
   - m_RefCount: 46
     m_Data: {fileID: 11400000, guid: ff601729f6bf21b43896b94a47907217, type: 2}
   m_TileSpriteArray:
-  - m_RefCount: 213
+  - m_RefCount: 211
     m_Data: {fileID: 8888797781180904794, guid: af2bac69c784d704787763ec79f4fef9, type: 3}
   - m_RefCount: 3
     m_Data: {fileID: 890519201211532806, guid: af2bac69c784d704787763ec79f4fef9, type: 3}
   - m_RefCount: 46
     m_Data: {fileID: 1663934300383340771, guid: af2bac69c784d704787763ec79f4fef9, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 262
+  - m_RefCount: 260
     m_Data:
       e00: 1
       e01: 0
@@ -83091,7 +83073,7 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 262
+  - m_RefCount: 260
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
@@ -83264,13 +83246,13 @@ CompositeCollider2D:
       - X: -119999900
         Y: 160000100
       - X: -119999900
-        Y: 180000041
+        Y: 159999959
       - X: -119999959
-        Y: 180000100
+        Y: 159999900
       - X: -130000041
-        Y: 180000100
+        Y: 159999900
       - X: -130000100
-        Y: 180000041
+        Y: 159999959
       - X: -130000100
         Y: 160000100
       - X: -229999900
@@ -83337,10 +83319,6 @@ CompositeCollider2D:
       - {x: -0.0000335, y: 12.99999}
       - {x: -5.99999, y: 13.00003}
       - {x: -6.0000253, y: 16.00001}
-      - {x: -11.99999, y: 16.00004}
-      - {x: -12.000026, y: 18.00001}
-      - {x: -13.00001, y: 17.999975}
-      - {x: -13.000039, y: 16.00001}
       - {x: -26.00001, y: 15.999974}
       - {x: -25.999975, y: 13.99999}
       - {x: -8.00001, y: 13.99996}
@@ -83887,6 +83865,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52b8561a32df37a4c9f112523c2e3c8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isKnockable: 1
+  isDamagable: 1
   knockbackAngle: {x: 1, y: 0}
   knockbackStrength: 2
   maxKnockbackTime: 0.2

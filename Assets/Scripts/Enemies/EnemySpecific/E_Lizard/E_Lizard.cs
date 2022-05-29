@@ -9,6 +9,8 @@ public class E_Lizard : Entity
     public E_Lizard_ChargeState chargeState { get; private set; }
     public E_Lizard_MeleeAttackState meleeAttackState { get; private set; }
     public E_Lizard_AfterAttackState afterAttackState { get; private set; }
+    public E_Lizard_HurtState hurtState { get; private set; }
+    public E_Lizard_DeathState deathState { get; private set; }
 
     [SerializeField]
     private D_IdleState idleStateData;
@@ -28,6 +30,8 @@ public class E_Lizard : Entity
         chargeState = new E_Lizard_ChargeState(this, stateMachine, "charge", chargeStateData, this);
         meleeAttackState = new E_Lizard_MeleeAttackState(this, stateMachine, "attack", meleeAttackData, this);
         afterAttackState = new E_Lizard_AfterAttackState(this, stateMachine, "afterAttack", this);
+        hurtState = new E_Lizard_HurtState(this, stateMachine, "hurt", this);
+        deathState = new E_Lizard_DeathState(this, stateMachine, "death", this);
 
         stateMachine.Initialize(moveState);
 

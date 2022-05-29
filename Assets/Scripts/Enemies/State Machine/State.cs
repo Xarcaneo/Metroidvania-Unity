@@ -1,12 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class State
 {
     protected FiniteStateMachine stateMachine;
     protected Entity entity;
     protected Core core;
+
+    //Events
+    protected Action<float> damageEventHandler;
+    protected Action healthZeroEventHandler;
 
     protected bool isAnimationFinished;
     protected bool isExitingState;
@@ -29,7 +34,7 @@ public class State
         entity.anim.SetBool(animBoolName, true);
         isAnimationFinished = false;
         isExitingState = false;
-        Debug.Log(animBoolName);
+
         DoChecks();
     }
 
@@ -59,4 +64,16 @@ public class State
     public virtual void AnimationFinishTrigger() => isAnimationFinished = true;
 
     public virtual void AnimationActionTrigger() { }
+
+    public void SubscribeEvents()
+    {
+        core.Combat.OnDamage += damageEventHandler;
+        core.Stats.HealthZero += healthZeroEventHandler;
+    }
+
+    public void UnsubscribeEvents()
+    {
+        core.Combat.OnDamage -= damageEventHandler;
+        core.Stats.HealthZero -= healthZeroEventHandler;
+    }
 }

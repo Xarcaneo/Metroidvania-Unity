@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using System;
 using UnityEngine;
 
 public class PlayerState
@@ -10,6 +11,10 @@ public class PlayerState
     protected Player player;
     protected PlayerStateMachine stateMachine;
     protected PlayerData playerData;
+
+    //Events
+    protected Action<float> damageEventHandler;
+    protected Action healthZeroEventHandler;
 
     protected bool isAnimationFinished;
     protected bool isExitingState;
@@ -32,7 +37,7 @@ public class PlayerState
         DoChecks();
         player.Anim.SetBool(animBoolName, true);
         startTime = Time.time;
-        //Debug.Log(animBoolName);
+        Debug.Log(animBoolName);
         isAnimationFinished = false;
         isExitingState = false;
     }
@@ -60,4 +65,16 @@ public class PlayerState
     public virtual void AnimationFinishTrigger() => isAnimationFinished = true;
 
     public virtual void AnimationActionTrigger() { }
+
+    public void SubscribeEvents()
+    {
+        core.Combat.OnDamage += damageEventHandler;
+        core.Stats.HealthZero += healthZeroEventHandler;
+    }
+
+    public void UnsubscribeEvents()
+    {
+        core.Combat.OnDamage -= damageEventHandler;
+        core.Stats.HealthZero -= healthZeroEventHandler;
+    }
 }

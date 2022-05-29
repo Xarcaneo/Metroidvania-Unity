@@ -36,11 +36,18 @@ public class PlayerTouchingWallState : PlayerState
     public override void Enter()
     {
         base.Enter();
+
+        damageEventHandler = (amount) => { stateMachine.ChangeState(player.HurtState); };
+        healthZeroEventHandler = () => { stateMachine.ChangeState(player.DeathState); };
+
+        SubscribeEvents();
     }
 
     public override void Exit()
     {
         base.Exit();
+
+        UnsubscribeEvents();
     }
 
     public override void LogicUpdate()

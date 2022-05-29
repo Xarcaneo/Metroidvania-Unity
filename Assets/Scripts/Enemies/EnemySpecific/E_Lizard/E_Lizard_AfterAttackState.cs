@@ -19,11 +19,18 @@ public class E_Lizard_AfterAttackState : AfterAttackState
     public override void Enter()
     {
         base.Enter();
+
+        damageEventHandler = (amount) => { stateMachine.ChangeState(enemy.hurtState); };
+        healthZeroEventHandler = () => { stateMachine.ChangeState(enemy.deathState); };
+
+        SubscribeEvents();
     }
 
     public override void Exit()
     {
         base.Exit();
+
+        UnsubscribeEvents();
     }
 
     public override void LogicUpdate()
@@ -32,9 +39,9 @@ public class E_Lizard_AfterAttackState : AfterAttackState
 
         core.Movement.SetFlip(playerDirection);
 
-        if (isStateTimeOver)
+        if (isStateTimeOver && !isExitingState)
         {
-            if(isEnemyInRangeDetected)
+            if(isEnemyInRangeDetected && isPlayerInSight)
             {
                 stateMachine.ChangeState(enemy.meleeAttackState);
             }

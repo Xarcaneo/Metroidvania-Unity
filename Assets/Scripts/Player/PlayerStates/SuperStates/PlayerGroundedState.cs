@@ -28,12 +28,19 @@ public class PlayerGroundedState : PlayerState
     {
         base.Enter();
 
+        damageEventHandler = (amount) => { stateMachine.ChangeState(player.HurtState); };
+        healthZeroEventHandler = () => { stateMachine.ChangeState(player.DeathState); };
+
+        SubscribeEvents();
+
         player.JumpState.ResetAmountOfJumpsLeft();
     }
 
     public override void Exit()
     {
         base.Exit();
+
+        UnsubscribeEvents();
     }
 
     public override void LogicUpdate()
