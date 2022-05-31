@@ -37,7 +37,7 @@ public class E_Lizard_AfterAttackState : AfterAttackState
     {
         base.LogicUpdate();
 
-        core.Movement.SetFlip(playerDirection);
+        core.Movement.Flip(playerDirection);
 
         if (isStateTimeOver && !isExitingState)
         {

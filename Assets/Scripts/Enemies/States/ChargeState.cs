@@ -35,7 +35,7 @@ public class ChargeState : State
     {
         base.Enter();
         DoChecks();
-        core.Movement.SetFlip(playerDirection);
+        core.Movement.Flip(playerDirection);
     }
 
     public override void Exit()
@@ -53,7 +53,7 @@ public class ChargeState : State
     {
         base.PhysicsUpdate();
 
-        core.Movement.SetFlip(playerDirection);
+        core.Movement.Flip(playerDirection);
 
         if (isDectectingLedge && !isDetectingWall)
         {

@@ -40,15 +40,18 @@ public class E_Lizard_IdleState : IdleState
             }
         }
 
-        if (isEnemyInRangeDetected && isPlayerInSight)
+        if (isPlayerInSight)
         {
-            flipAfterIdle = false;
-            stateMachine.ChangeState(enemy.meleeAttackState);
-        }
-        else if (isPlayerDetected && isDectectingLedge && !isDetectingWall && !isEnemyInRangeDetected && isPlayerInSight)
-        {
-            flipAfterIdle = false;
-            stateMachine.ChangeState(enemy.chargeState);
+            if (isEnemyInAttackRangeDetected)
+            {
+                flipAfterIdle = false;
+                stateMachine.ChangeState(enemy.meleeAttackState);
+            }
+            else if (isPlayerDetected && isDectectingLedge && !isDetectingWall)
+            {
+                flipAfterIdle = false;
+                stateMachine.ChangeState(enemy.chargeState);
+            }
         }
     }
 

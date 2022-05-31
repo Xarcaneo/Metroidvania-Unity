@@ -83,7 +83,7 @@ public class Movement : CoreComponent
         RB.transform.localScale = new Vector3(FacingDirection, 1, 1);
     }
 
-    public void SetFlip(int direction)
+    public void Flip(int direction)
     {
         if (direction != 0)
         {
