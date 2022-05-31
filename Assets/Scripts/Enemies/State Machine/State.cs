@@ -34,6 +34,7 @@ public class State
         entity.anim.SetBool(animBoolName, true);
         isAnimationFinished = false;
         isExitingState = false;
+        Debug.Log(animBoolName);
 
         DoChecks();
     }

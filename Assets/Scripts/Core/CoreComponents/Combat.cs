@@ -37,7 +37,6 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable
     {
         if (isKnockable)
         {
-            Debug.Log(core.transform.parent.name + " Knockback!");
             core.Movement.SetVelocity(knockbackStrength, knockbackAngle, direction);
             core.Movement.CanSetVelocity = false;
             isKnockbackActive = true;

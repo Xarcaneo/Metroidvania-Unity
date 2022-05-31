@@ -36,7 +36,7 @@ public class E_Lizard_MoveState : MoveState
         {
             stateMachine.ChangeState(enemy.idleState);
         }
-        else if(isPlayerDetected && isPlayerInSight)
+        else if(isPlayerDetected && isPlayerInSight && isDetectingLedge && !isDetectingWall)
         {
             stateMachine.ChangeState(enemy.chargeState);
         }
