@@ -7,6 +7,7 @@ namespace UnityCore
         public enum PageType
         {
             None,
+            Loading,
             Menu,
             Settings,
             Credits
