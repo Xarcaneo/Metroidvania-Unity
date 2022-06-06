@@ -9,7 +9,7 @@ namespace UnityCore
         {
             None,
             Menu,
-            Game,
+            Game
         }
     }
 }
