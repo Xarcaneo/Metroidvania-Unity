@@ -4,24 +4,35 @@ using UnityEngine;
 
 public class AIRaycast : CoreComponent
 {
-    [SerializeField]
     private Transform target;
     [SerializeField]
     private Transform raycastOrigin;
     [SerializeField]
     LayerMask collisionLayer;
 
+    private void Start()
+    {
+       target = Object.FindObjectOfType<Player>().transform;
+    }
+
     public bool CheckRaycastCollision()
     {
-        RaycastHit2D hit = Physics2D.Linecast(raycastOrigin.position, target.position, collisionLayer);
-
-        if (hit.collider)
+        if (target)
         {
-           return false;
+            RaycastHit2D hit = Physics2D.Linecast(raycastOrigin.position, target.position, collisionLayer);
+
+            if (hit.collider)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
         else
         {
-            return true;
+            return false;
         }
     }
 }
