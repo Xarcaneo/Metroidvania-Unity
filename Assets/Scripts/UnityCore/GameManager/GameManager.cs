@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Menu;
 
 namespace Game
 {
@@ -18,6 +19,9 @@ namespace Game
 
         [SerializeField]
         private int nextLevelIndex;
+
+        [SerializeField]
+        private int mainMenuIndex = 0;
 
         private static GameManager _instance;
 
@@ -46,53 +50,14 @@ namespace Game
             }
         }
 
-        // end the level
-        public void ExitLevel()
-        {
-/*            if (_player != null)
-            {
-                // disable the player controls
-                ThirdPersonUserControl thirdPersonControl =
-                    _player.GetComponent<ThirdPersonUserControl>();
-
-                if (thirdPersonControl != null)
-                {
-                    thirdPersonControl.enabled = false;
-                }
-
-                // remove any existing motion on the player
-                Rigidbody rbody = _player.GetComponent<Rigidbody>();
-                if (rbody != null)
-                {
-                    rbody.velocity = Vector3.zero;
-                }
-
-                // force the player to a stand still
-                _player.Move(Vector3.zero, false, false);
-            }*/
-
-            // check if we have set IsGameOver to true, only run this logic once
-            LoadLevel(nextLevelName);
-
-        }
-
         public void LoadLevel(string levelName)
         {
             SceneManager.LoadScene(levelName);
         }
 
         public void LoadLevel(int levelIndex)
-        {
+        { 
             SceneManager.LoadScene(levelIndex);
-        }
-
-        // check for the end game condition on each frame
-        private void Update()
-        {
-            if (_tansitionIsOn)
-            {
-                ExitLevel();
-            }
         }
     }
 }

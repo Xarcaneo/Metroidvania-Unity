@@ -13,22 +13,18 @@ namespace Menu
             {
                 GameManager.Instance.LoadLevel(1);
             }
+
+            GameMenu.Open();
         }
 
         public void OnSettingPressed()
         {
-            if (MenuManager.Instance != null && SettingsMenu.Instance != null)
-            {
-                MenuManager.Instance.OpenMenu(SettingsMenu.Instance);
-            }
+            SettingsMenu.Open();
         }
 
         public void OnCreditsPressed()
-        { 
-            if (MenuManager.Instance != null && CreditsScreen.Instance != null)
-            {
-                MenuManager.Instance.OpenMenu(CreditsScreen.Instance);
-            }
+        {
+            CreditsScreen.Open();
         }
 
         public override void OnBackPressed()
