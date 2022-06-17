@@ -1,19 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.InputSystem;
 
 namespace Menu
 {
     public class CreditsScreen : Menu<CreditsScreen>
     {
-        public override void OnBackPressed()
-        {
-            // or add extra logic here
-
-            base.OnBackPressed();
-
-            // add extra logic here
-        }
     }
 }

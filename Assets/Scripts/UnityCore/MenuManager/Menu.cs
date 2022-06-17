@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Game;
+using UnityEngine.InputSystem;
 
 namespace Menu
 {
@@ -27,11 +28,35 @@ namespace Menu
             _instance = null;
         }
 
+        public static void Open()
+        {
+            if (MenuManager.Instance != null && Instance != null)
+            {
+                MenuManager.Instance.OpenMenu(Instance);
+            }
+        }
+
     }
 
     [RequireComponent(typeof(Canvas))]
     public abstract class Menu : MonoBehaviour
     {
+        private PlayerInput playerInput;
+        public int ReturnInput { get; private set; }
+
+        private void Start()
+        {
+            playerInput = GetComponent<PlayerInput>();
+        }
+
+        public virtual void OnReturnInput(InputAction.CallbackContext context)
+        {
+            if (context.canceled)
+            {
+                OnBackPressed();
+            }
+        }
+
         public virtual void OnBackPressed()
         {
             if (MenuManager.Instance != null)

@@ -168,6 +168,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nextLevelName: Game
   nextLevelIndex: 1
+  mainMenuIndex: 0
 --- !u!1 &717373322
 GameObject:
   m_ObjectHideFlags: 0
@@ -196,9 +197,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 425013366}
-  - {fileID: 1303746777}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1132600103
 GameObject:
@@ -331,12 +331,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -361,7 +361,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -100
   m_TargetDisplay: 0
 --- !u!224 &1165033066
 RectTransform:
@@ -473,12 +473,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1303746776}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 294.8979, y: 141.70776, z: -178.67331}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 717373323}
-  m_RootOrder: 1
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1303746778
 MonoBehaviour:
@@ -495,6 +495,8 @@ MonoBehaviour:
   mainMenuPrefab: {fileID: 1192512469815428918, guid: 99b70cecb29b8a243b019640be06a28b, type: 3}
   settingsMenuPrefab: {fileID: 2677471436246255742, guid: 21885e8177b813d4d9826d07a83e073f, type: 3}
   creditsScreenPrefab: {fileID: 1924898573249161280, guid: f3098a9428def2a48a5792a6edc4d660, type: 3}
+  gameMenuPrefab: {fileID: 3488945135082086246, guid: 4b46719cb4368a7429649afc7dea6372, type: 3}
+  pauseMenuPrefab: {fileID: 8011963482466455185, guid: b274e63f346eb7a429b6256edae7e836, type: 3}
   _menuParent: {fileID: 0}
 --- !u!1 &1933533100
 GameObject:
