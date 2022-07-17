@@ -11,6 +11,12 @@ namespace Menu
         [SerializeField]
         private int mainMenuIndex = 0;
 
+        [SerializeField]
+        private float _playDelay = 0.5f;
+
+        [SerializeField]
+        private TransitionFader startTransitionPrefab;
+
         public override void OnReturnInput(InputAction.CallbackContext context)
         {
             if (context.canceled)
@@ -32,9 +38,15 @@ namespace Menu
 
         public void OnMainMenuPressed()
         {
+            StartCoroutine(OnMainMenuPressedRoutine());
             Time.timeScale = 1;
-            SceneManager.LoadScene(mainMenuIndex);
+        }
 
+        private IEnumerator OnMainMenuPressedRoutine()
+        {
+            TransitionFader.PlayTransition(startTransitionPrefab);
+            yield return new WaitForSeconds(_playDelay);
+            SceneManager.LoadScene(mainMenuIndex);
             MainMenu.Open();
         }
     }
