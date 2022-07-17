@@ -52,12 +52,24 @@ namespace Game
 
         public void LoadLevel(string levelName)
         {
-            SceneManager.LoadScene(levelName);
+            SceneManager.LoadSceneAsync(levelName);
         }
 
-        public void LoadLevel(int levelIndex)
-        { 
-            SceneManager.LoadScene(levelIndex);
+        public void LoadLevelAsync(int levelIndex)
+        {
+            StartCoroutine(LoadLevelAsyncRoutine(levelIndex));
+        }
+
+        private static IEnumerator LoadLevelAsyncRoutine(int levelIndex)
+        {
+            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(levelIndex);
+            while (!asyncLoad.isDone)
+            {
+                yield return null;
+            }
+
+            yield return null;
+            asyncLoad.allowSceneActivation = true;
         }
     }
 }

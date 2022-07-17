@@ -7,13 +7,22 @@ namespace Menu
 {
     public class MainMenu : Menu<MainMenu>
     {
+        [SerializeField]
+        private float _playDelay = 0.5f;
+
+        [SerializeField]
+        private TransitionFader startTransitionPrefab;
+
         public void OnPlayPressed()
         {
-            if (GameManager.Instance != null)
-            {
-                GameManager.Instance.LoadLevel(1);
-            }
+            StartCoroutine(OnPlayPressedRoutine());
+        }
 
+        private IEnumerator OnPlayPressedRoutine()
+        {
+            TransitionFader.PlayTransition(startTransitionPrefab);
+            yield return new WaitForSeconds(_playDelay);
+            GameManager.Instance.LoadLevelAsync(1);
             GameMenu.Open();
         }
 
