@@ -41,6 +41,8 @@ namespace Menu
     [RequireComponent(typeof(Canvas))]
     public abstract class Menu : MonoBehaviour
     {
+        [SerializeField] public GameObject buttonToFocus;
+
         private PlayerInput playerInput;
         public int ReturnInput { get; private set; }
 
