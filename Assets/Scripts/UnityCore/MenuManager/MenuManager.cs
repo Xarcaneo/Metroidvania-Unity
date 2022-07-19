@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Reflection;
+using UnityEngine.EventSystems;
 
 namespace Menu
 {
@@ -71,7 +72,7 @@ namespace Menu
                         menuInstance.gameObject.SetActive(false);
                     }
                     else
-                    {
+                    {  
                         OpenMenu(menuInstance);
                     }
                 }
@@ -94,6 +95,7 @@ namespace Menu
                 }
             }
 
+            EventSystem.current.SetSelectedGameObject(menuInstance.buttonToFocus, null);
             menuInstance.gameObject.SetActive(true);
             _menuStack.Push(menuInstance);
         }
@@ -112,6 +114,7 @@ namespace Menu
             if (_menuStack.Count > 0)
             {
                 Menu nextMenu = _menuStack.Peek();
+                EventSystem.current.SetSelectedGameObject(nextMenu.buttonToFocus, null);
                 nextMenu.gameObject.SetActive(true);
             }
         }

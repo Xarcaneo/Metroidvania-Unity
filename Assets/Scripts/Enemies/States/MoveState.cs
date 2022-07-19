@@ -19,11 +19,10 @@ public class MoveState : State
     public override void DoChecks()
     {
         base.DoChecks();
-
-        isDetectingLedge = core.CollisionSenses.LedgeVertical;
-        isDetectingWall = core.CollisionSenses.WallFront;
         isPlayerDetected = core.EntityDetector.GetEntityDetected();
         isPlayerInSight = core.AIRaycast.CheckRaycastCollision();
+        isDetectingLedge = core.CollisionSenses.LedgeVertical;
+        isDetectingWall = core.CollisionSenses.WallFront;
     }
 
     public override void Enter()
@@ -41,7 +40,7 @@ public class MoveState : State
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-
+ 
         core.Movement.SetVelocityX(stateData.movementSpeed * core.Movement.FacingDirection);
     }
 

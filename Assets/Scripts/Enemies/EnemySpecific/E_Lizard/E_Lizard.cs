@@ -32,8 +32,10 @@ public class E_Lizard : Entity
         afterAttackState = new E_Lizard_AfterAttackState(this, stateMachine, "afterAttack", this);
         hurtState = new E_Lizard_HurtState(this, stateMachine, "hurt", this);
         deathState = new E_Lizard_DeathState(this, stateMachine, "death", this);
+    }
 
+    private void Start()
+    {
         stateMachine.Initialize(moveState);
-
     }
 }
