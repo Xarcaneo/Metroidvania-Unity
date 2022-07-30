@@ -36,9 +36,25 @@ public class Player : MonoBehaviour
     private Vector2 workspace;
     #endregion
 
+    #region Instance Variables
+    private static Player _instance;
+
+    public static Player Instance { get { return _instance; } }
+    #endregion
+
     #region Unity Callback Functions
     private void Awake()
     {
+        if (_instance != null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            _instance = this;
+            Object.DontDestroyOnLoad(gameObject);
+        }
+
         Core = GetComponentInChildren<Core>();
 
         StateMachine = new PlayerStateMachine();
@@ -55,6 +71,14 @@ public class Player : MonoBehaviour
         AttackState = new PlayerAttackState(this, StateMachine, playerData, "attack");
         HurtState = new PlayerHurtState(this, StateMachine, playerData, "hurt");
         DeathState = new PlayerDeathState(this, StateMachine, playerData, "death");
+    }
+
+    private void OnDestroy()
+    {
+        if (_instance == this)
+        {
+            _instance = null;
+        }
     }
 
     private void Start()
