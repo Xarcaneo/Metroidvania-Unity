@@ -12,7 +12,7 @@ public class AIRaycast : CoreComponent
 
     private void Start()
     {
-       target = Object.FindObjectOfType<Player>().transform;
+        target = Player.Instance.transform;
     }
 
     public bool CheckRaycastCollision()

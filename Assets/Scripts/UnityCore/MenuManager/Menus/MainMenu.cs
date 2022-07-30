@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Game;
 
 namespace Menu
 {
@@ -22,7 +21,7 @@ namespace Menu
         {
             TransitionFader.PlayTransition(startTransitionPrefab);
             yield return new WaitForSeconds(_playDelay);
-            GameManager.Instance.LoadLevelAsync(1);
+            Game.LevelLoader.Instance.LoadLevelAsync(1);
             GameMenu.Open();
         }
 

@@ -45,6 +45,7 @@ namespace Menu
         private IEnumerator OnMainMenuPressedRoutine()
         {
             TransitionFader.PlayTransition(startTransitionPrefab);
+            Destroy(Player.Instance.gameObject);
             yield return new WaitForSeconds(_playDelay);
             SceneManager.LoadScene(mainMenuIndex);
             MainMenu.Open();

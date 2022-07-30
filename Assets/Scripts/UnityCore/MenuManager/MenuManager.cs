@@ -32,9 +32,13 @@ namespace Menu
             else
             {
                 _instance = this;
-                InitializeMenus();
                 Object.DontDestroyOnLoad(gameObject);
             }
+        }
+
+        private void Start()
+        {
+            if (_instance) InitializeMenus();
         }
 
         private void OnDestroy()
