@@ -16,7 +16,6 @@ public class PlayerWallJumpState : PlayerAbilityState
         player.InputHandler.UseJumpInput();
         player.JumpState.ResetAmountOfJumpsLeft();
         core.Movement.SetVelocity(playerData.wallJumpVelocity, playerData.wallJumpAngle, wallJumpDirection);
-        core.Movement.CheckIfShouldFlip(wallJumpDirection);
         player.JumpState.DecreaseAmountOfJumpsLeft();
     }
 
@@ -29,6 +28,7 @@ public class PlayerWallJumpState : PlayerAbilityState
         if (Time.time >= startTime + playerData.wallJumpTime)
         {
             isAbilityDone = true;
+            core.Movement.CheckIfShouldFlip(wallJumpDirection);
         }
     }
 
