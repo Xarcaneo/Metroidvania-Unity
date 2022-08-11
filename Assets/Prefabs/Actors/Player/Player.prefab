@@ -67,7 +67,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5445145940627070304}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.42, y: -0.08, z: 0}
+  m_LocalPosition: {x: 0.06, y: -0.24, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5445145942053450306}
@@ -97,7 +97,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5445145941035833276}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.06, z: 0}
+  m_LocalPosition: {x: -0.18, y: -1.51, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5445145942053450306}
@@ -115,7 +115,7 @@ GameObject:
   - component: {fileID: 5445145941382457704}
   m_Layer: 13
   m_Name: Stats
-  m_TagString: Untagged
+  m_TagString: PlayerStats
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -146,6 +146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e345a3e101e8bf1419b93eb05e3578b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthBarController: {fileID: 0}
   maxHealth: 100
 --- !u!1 &5445145941692919592
 GameObject:
@@ -173,7 +174,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5445145941692919592}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.11, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5445145941722871108}
@@ -568,6 +569,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: d5a9b1d6-22c3-4c11-a353-7223af68350e
     m_ActionName: Gameplay/Attack[/Keyboard/a]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 09764da6-47c8-41b3-9f0d-def1ff0629b9
+    m_ActionName: UI/Return[/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay
@@ -639,15 +644,15 @@ SpriteRenderer:
   m_SortingLayerID: 1302704177
   m_SortingLayer: 5
   m_SortingOrder: 0
-  m_Sprite: {fileID: -4473818463356163282, guid: c351d03bd9827154b81343e05c1046c2, type: 3}
+  m_Sprite: {fileID: -5879514480746932602, guid: 10c0632c5f3fcc0478e762d82bbec0bc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 4, y: 3}
+  m_Size: {x: 8.125, y: 4.375}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!95 &5445145942140402596
@@ -686,7 +691,7 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 7
   m_Material: {fileID: 6200000, guid: bcd65c658f11e504188f3672cb8f5174, type: 2}
-  m_Interpolate: 0
+  m_Interpolate: 2
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
@@ -703,16 +708,16 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.3}
+  m_Offset: {x: -0.11461258, y: -0.6637788}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 4, y: 3}
-    newSize: {x: 4, y: 3}
+    oldSize: {x: 8.125, y: 4.375}
+    newSize: {x: 8.125, y: 4.375}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1.5}
+  m_Size: {x: 1.2202454, y: 1.6730375}
   m_EdgeRadius: 0

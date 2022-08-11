@@ -17,6 +17,7 @@ public class PlayerWallJumpState : PlayerAbilityState
         player.JumpState.ResetAmountOfJumpsLeft();
         core.Movement.SetVelocity(playerData.wallJumpVelocity, playerData.wallJumpAngle, wallJumpDirection);
         player.JumpState.DecreaseAmountOfJumpsLeft();
+        core.Movement.CheckIfShouldFlip(wallJumpDirection);
     }
 
     public override void LogicUpdate()
@@ -28,7 +29,6 @@ public class PlayerWallJumpState : PlayerAbilityState
         if (Time.time >= startTime + playerData.wallJumpTime)
         {
             isAbilityDone = true;
-            core.Movement.CheckIfShouldFlip(wallJumpDirection);
         }
     }
 
