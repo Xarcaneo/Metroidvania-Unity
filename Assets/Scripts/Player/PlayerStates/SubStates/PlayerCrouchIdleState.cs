@@ -19,7 +19,6 @@ public class PlayerCrouchIdleState : PlayerGroundedState
     public override void Exit()
     {
         base.Exit();
-        player.SetColliderHeight(playerData.standColliderHeight);
     }
 
     public override void LogicUpdate()

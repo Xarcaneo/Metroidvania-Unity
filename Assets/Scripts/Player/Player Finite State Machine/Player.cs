@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
     public PlayerAttackState AttackState { get; private set; }
     public PlayerHurtState HurtState { get; private set; }
     public PlayerDeathState DeathState { get; private set; }
+    public PlayerLedgeClimbState LedgeClimbState { get; private set; }
 
     [SerializeField]
     private PlayerData playerData;
@@ -71,6 +72,7 @@ public class Player : MonoBehaviour
         AttackState = new PlayerAttackState(this, StateMachine, playerData, "attack");
         HurtState = new PlayerHurtState(this, StateMachine, playerData, "hurt");
         DeathState = new PlayerDeathState(this, StateMachine, playerData, "death");
+        LedgeClimbState = new PlayerLedgeClimbState(this, StateMachine, playerData, "ledgeClimbState");
     }
 
     private void OnDestroy()

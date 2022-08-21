@@ -21,6 +21,8 @@ MonoBehaviour:
   coyoteTime: 0.2
   variableJumpHeightMultiplier: 0.5
   wallSlideVelocity: 3
+  startOffset: {x: 0.5, y: 0.8}
+  stopOffset: {x: 1.3, y: 1.7}
   dashVelocity: {x: 30, y: 0}
   dashAngle: {x: 1, y: 0}
   dashCooldown: 1.5
@@ -28,7 +30,6 @@ MonoBehaviour:
   dashEndYMultiplier: 0.2
   crouchMovementVelocity: 5
   crouchColliderHeight: 0.6
-  standColliderHeight: 1.5
   attackMovementSpeed:
   - 1
   - 3
