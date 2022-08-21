@@ -20,6 +20,7 @@ public class PlayerInAirState : PlayerState
     private bool coyoteTime;
     private bool wallJumpCoyoteTime;
     private bool isJumping;
+    private bool isTouchingLedge;
 
     private float startWallJumpCoyoteTime;
 
@@ -37,6 +38,12 @@ public class PlayerInAirState : PlayerState
         isGrounded = core.CollisionSenses.Ground;
         isTouchingWall = core.CollisionSenses.WallFront;
         isTouchingWallBack = core.CollisionSenses.WallBack;
+        isTouchingLedge = core.CollisionSenses.LedgeHorizontal;
+
+        if (isTouchingWall && !isTouchingLedge)
+        {
+            player.LedgeClimbState.SetDetectedPosition(player.transform.position);
+        }
 
         if (!wallJumpCoyoteTime && !isTouchingWall && !isTouchingWallBack && (oldIsTouchingWall || oldIsTouchingWallBack))
         {
@@ -76,6 +83,10 @@ public class PlayerInAirState : PlayerState
         if (isGrounded && core.Movement.CurrentVelocity.y < 0.01f)
         {
             stateMachine.ChangeState(player.LandState);
+        }
+        else if (isTouchingWall && !isTouchingLedge && !isGrounded)
+        {
+            stateMachine.ChangeState(player.LedgeClimbState);
         }
         else if (jumpInput && (isTouchingWall || isTouchingWallBack || wallJumpCoyoteTime))
         {
