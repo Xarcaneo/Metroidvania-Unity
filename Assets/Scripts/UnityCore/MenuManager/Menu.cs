@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Game;
 using UnityEngine.InputSystem;
 
 namespace Menu
@@ -49,6 +48,10 @@ namespace Menu
         private void Start()
         {
             playerInput = GetComponent<PlayerInput>();
+        }
+
+        public virtual void OnOpenMenu()
+        {
         }
 
         public virtual void OnReturnInput(InputAction.CallbackContext context)
