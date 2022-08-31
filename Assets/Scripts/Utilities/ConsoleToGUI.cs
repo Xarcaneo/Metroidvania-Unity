@@ -6,6 +6,29 @@ public class ConsoleToGUI : MonoBehaviour
     string filename = "";
     bool doShow = false;
     int kChars = 700;
+
+    private static ConsoleToGUI _instance;
+    public static ConsoleToGUI Instance { get => _instance; }
+
+    private void Awake()
+    {
+        if (_instance != null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
+    }
+    private void OnDestroy()
+    {
+        if (_instance == this)
+        {
+            _instance = null;
+        }
+    }
+
     void OnEnable() { Application.logMessageReceived += Log; }
     void OnDisable() { Application.logMessageReceived -= Log; }
     void Update() { if (Input.GetKeyDown(KeyCode.Tab)) { doShow = !doShow; } }

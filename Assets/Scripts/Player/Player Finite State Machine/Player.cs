@@ -1,3 +1,4 @@
+using Audio;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -120,6 +121,12 @@ public class Player : MonoBehaviour
     private void AnimationFinishTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
 
     private void AnimationActionTrigger() => StateMachine.CurrentState.AnimationActionTrigger();
+
+    public void PlaySound(SfxClip sfxClip)
+    {
+        if (sfxClip != null)
+            sfxClip.AudioGroup.RaisePrimaryAudioEvent(sfxClip.AudioGroup.AudioSource, sfxClip, sfxClip.AudioConfiguration);
+    }
 
     #endregion
 }

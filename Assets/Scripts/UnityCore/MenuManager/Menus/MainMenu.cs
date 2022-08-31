@@ -1,19 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Audio;
 
 namespace Menu
 {
     public class MainMenu : Menu<MainMenu>
     {
-        [SerializeField]
-        private float _playDelay = 0.5f;
+        [SerializeField] SfxClip menuClip = default;
 
-        [SerializeField]
-        private TransitionFader startTransitionPrefab;
+        [SerializeField] private float _playDelay = 0.5f;
+
+        [SerializeField] private TransitionFader startTransitionPrefab;
+
+        public override void OnOpenMenu()
+        {
+            menuClip.AudioGroup.RaiseFadeInAudioEvent(menuClip.AudioGroup.AudioSource, menuClip, menuClip.AudioConfiguration);
+        }
 
         public void OnPlayPressed()
         {
+            menuClip.AudioGroup.RaiseStopAudioEvent(menuClip.AudioGroup.AudioSource);
             StartCoroutine(OnPlayPressedRoutine());
         }
 
