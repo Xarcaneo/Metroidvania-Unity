@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Audio;
+using PixelCrushers;
 
 namespace Menu
 {
@@ -9,26 +10,22 @@ namespace Menu
     {
         [SerializeField] SfxClip menuClip = default;
 
-        [SerializeField] private float _playDelay = 0.5f;
-
-        [SerializeField] private TransitionFader startTransitionPrefab;
-
         public override void OnOpenMenu()
         {
             menuClip.AudioGroup.RaiseFadeInAudioEvent(menuClip.AudioGroup.AudioSource, menuClip, menuClip.AudioConfiguration);
+            SaveSystem.sceneLoaded += OnSceneLoaded;
         }
 
         public void OnPlayPressed()
         {
-            menuClip.AudioGroup.RaiseStopAudioEvent(menuClip.AudioGroup.AudioSource);
-            StartCoroutine(OnPlayPressedRoutine());
+            //menuClip.AudioGroup.RaiseStopAudioEvent(menuClip.AudioGroup.AudioSource);
+            PlayMenu.Open();
+            //SaveSystem.LoadScene("Area 0@Spawn");
         }
 
-        private IEnumerator OnPlayPressedRoutine()
+        void OnSceneLoaded(string sceneName, int sceneIndex)
         {
-            TransitionFader.PlayTransition(startTransitionPrefab);
-            yield return new WaitForSeconds(_playDelay);
-            Game.LevelLoader.Instance.LoadLevelAsync(1);
+            SaveSystem.sceneLoaded -= OnSceneLoaded;
             GameMenu.Open();
         }
 

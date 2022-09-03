@@ -3,19 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
+using PixelCrushers;
 
 namespace Menu
 {
     public class PauseMenu : Menu<PauseMenu>
     {
-        [SerializeField]
-        private int mainMenuIndex = 0;
+        public override void OnOpenMenu()
+        {
+            SaveSystem.sceneLoaded += OnSceneLoaded;
+        }
 
-        [SerializeField]
-        private float _playDelay = 0.5f;
-
-        [SerializeField]
-        private TransitionFader startTransitionPrefab;
+        void OnSceneLoaded(string sceneName, int sceneIndex)
+        {
+            SaveSystem.sceneLoaded -= OnSceneLoaded;
+            MainMenu.Open();
+        }
 
         public override void OnReturnInput(InputAction.CallbackContext context)
         {
@@ -38,17 +41,8 @@ namespace Menu
 
         public void OnMainMenuPressed()
         {
-            StartCoroutine(OnMainMenuPressedRoutine());
+            SaveSystem.LoadScene("MainMenu");
             Time.timeScale = 1;
-        }
-
-        private IEnumerator OnMainMenuPressedRoutine()
-        {
-            TransitionFader.PlayTransition(startTransitionPrefab);
-            Destroy(Player.Instance.gameObject);
-            yield return new WaitForSeconds(_playDelay);
-            SceneManager.LoadScene(mainMenuIndex);
-            MainMenu.Open();
         }
     }
 }
