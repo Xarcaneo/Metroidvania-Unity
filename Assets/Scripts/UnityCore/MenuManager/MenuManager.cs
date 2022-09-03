@@ -13,6 +13,7 @@ namespace Menu
         [SerializeField] private CreditsScreen creditsScreenPrefab;
         [SerializeField] private GameMenu gameMenuPrefab;
         [SerializeField] private PauseMenu pauseMenuPrefab;
+        [SerializeField] private PlayMenu playMenuPrefab;
 
         [SerializeField]
         private Transform _menuParent;
