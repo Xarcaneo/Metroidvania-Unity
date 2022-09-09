@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerInputHandler : MonoBehaviour
 {
+    public Action<bool> interactPressed;
+
     private PlayerInput playerInput;
 
     public Vector2 RawMovementInput { get; private set; }
@@ -88,6 +91,18 @@ public class PlayerInputHandler : MonoBehaviour
         else if (context.canceled)
         {
             DashInputStop = true;
+        }
+    }
+
+    public void OnInteractInput(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            interactPressed?.Invoke(true);
+        }
+        else if (context.canceled)
+        {
+            interactPressed?.Invoke(false);
         }
     }
 

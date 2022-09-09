@@ -939,6 +939,5 @@ namespace PixelCrushers
         {
             return serializer.Deserialize<T>(s, data);
         }
-
     }
 }

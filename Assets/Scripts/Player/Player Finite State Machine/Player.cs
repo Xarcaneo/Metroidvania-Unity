@@ -54,7 +54,6 @@ public class Player : MonoBehaviour
         else
         {
             _instance = this;
-            Object.DontDestroyOnLoad(gameObject);
         }
 
         Core = GetComponentInChildren<Core>();
