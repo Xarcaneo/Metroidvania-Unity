@@ -13,20 +13,11 @@ namespace Menu
         public override void OnOpenMenu()
         {
             menuClip.AudioGroup.RaiseFadeInAudioEvent(menuClip.AudioGroup.AudioSource, menuClip, menuClip.AudioConfiguration);
-            SaveSystem.sceneLoaded += OnSceneLoaded;
         }
 
         public void OnPlayPressed()
         {
-            //menuClip.AudioGroup.RaiseStopAudioEvent(menuClip.AudioGroup.AudioSource);
             PlayMenu.Open();
-            //SaveSystem.LoadScene("Area 0@Spawn");
-        }
-
-        void OnSceneLoaded(string sceneName, int sceneIndex)
-        {
-            SaveSystem.sceneLoaded -= OnSceneLoaded;
-            GameMenu.Open();
         }
 
         public void OnSettingPressed()

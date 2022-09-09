@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3112323105412166876}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.197, y: 0.24, z: 0}
+  m_LocalPosition: {x: 0.06, y: 0.23, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -615,6 +615,26 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 09764da6-47c8-41b3-9f0d-def1ff0629b9
     m_ActionName: UI/Return[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5445145942140402602}
+        m_TargetAssemblyTypeName: PlayerInputHandler, Assembly-CSharp
+        m_MethodName: OnInteractInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 5ff4bea1-e8b1-455a-ad2b-0580302b1c78
+    m_ActionName: Gameplay/Interact[/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: dcac442b-f9d0-436f-b811-6fe8276a78f0
+    m_ActionName: UI/Delete[/Keyboard/x]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay
@@ -660,8 +680,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_key: 
   m_appendSaverTypeToKey: 0
-  m_saveAcrossSceneChanges: 1
-  m_restoreStateOnStart: 0
+  m_saveAcrossSceneChanges: 0
+  m_restoreStateOnStart: 1
   m_usePlayerSpawnpoint: 1
   m_multiscene: 0
 --- !u!212 &5445145942140402599
