@@ -193,8 +193,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonToFocus: {fileID: 3617593062253424763}
   menuClip: {fileID: 11400000, guid: cb0e4a26f372b3c40bec3ecef5f90ff5, type: 2}
-  _playDelay: 0.5
-  startTransitionPrefab: {fileID: 1092296915639837297, guid: e23832b9560ad4e4c844435288ce36c2, type: 3}
 --- !u!1 &3617593063433126368
 GameObject:
   m_ObjectHideFlags: 0
@@ -354,6 +352,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6094467527249545861, guid: 27d77dbb131b0ac4aace80d2617465d7, type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6094467527249545861, guid: 27d77dbb131b0ac4aace80d2617465d7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1192512469815428918}
@@ -466,6 +468,10 @@ PrefabInstance:
     - target: {fileID: 6094467527249545860, guid: 27d77dbb131b0ac4aace80d2617465d7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6094467527249545861, guid: 27d77dbb131b0ac4aace80d2617465d7, type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6094467527249545861, guid: 27d77dbb131b0ac4aace80d2617465d7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -582,6 +588,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6094467527249545861, guid: 27d77dbb131b0ac4aace80d2617465d7, type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6094467527249545861, guid: 27d77dbb131b0ac4aace80d2617465d7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1192512469815428918}
@@ -694,6 +704,10 @@ PrefabInstance:
     - target: {fileID: 6094467527249545860, guid: 27d77dbb131b0ac4aace80d2617465d7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6094467527249545861, guid: 27d77dbb131b0ac4aace80d2617465d7, type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6094467527249545861, guid: 27d77dbb131b0ac4aace80d2617465d7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target

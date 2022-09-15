@@ -30,7 +30,7 @@ public class Movement : CoreComponent
     #region Set Functions
     public void SetVelocityZero()
     {
-        RB.velocity = Vector2.zero;
+        workspace = Vector2.zero;
         SetFinalVelocity();
     }
 
