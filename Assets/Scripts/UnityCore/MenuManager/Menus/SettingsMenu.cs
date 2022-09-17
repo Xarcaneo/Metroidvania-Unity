@@ -6,6 +6,11 @@ namespace Menu
 {
     public class SettingsMenu : Menu<SettingsMenu>
     {
+        public void OnGamePressed()
+        {
+            GameSettingsMenu.Open();
+        }
+
         public override void OnBackPressed()
         {
             // or add extra logic here

@@ -42,12 +42,23 @@ namespace Menu
     {
         [SerializeField] public GameObject buttonToFocus;
 
-        private PlayerInput playerInput;
+        protected PlayerInput menuInput;
+
         public int ReturnInput { get; private set; }
 
         private void Start()
         {
-            playerInput = GetComponent<PlayerInput>();
+            menuInput = GetComponent<PlayerInput>();
+        }
+
+        private void Update()
+        {
+            OnReturnInput();
+        }
+
+        public virtual void OnReturnInput()
+        {
+            if (menuInput.actions["Return"].triggered) OnBackPressed();
         }
 
         public virtual void OnOpenMenu()

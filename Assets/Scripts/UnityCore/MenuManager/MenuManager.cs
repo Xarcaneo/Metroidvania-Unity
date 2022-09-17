@@ -14,6 +14,8 @@ namespace Menu
         [SerializeField] private GameMenu gameMenuPrefab;
         [SerializeField] private PauseMenu pauseMenuPrefab;
         [SerializeField] private PlayMenu playMenuPrefab;
+        [SerializeField] private GameSettingsMenu gameSettingsMenuPrefab;
+        [SerializeField] private ControlsMenu controlsMenuPrefab;
 
         [SerializeField]
         private Transform _menuParent;

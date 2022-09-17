@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3137564901227109406
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3137564901227109407}
+  - component: {fileID: 3137564901227109404}
+  m_Layer: 0
+  m_Name: MenuManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3137564901227109407
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3137564901227109406}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 294.8979, y: 141.70776, z: -178.67331}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3137564901227109404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3137564901227109406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 742a19e5dc45f9749aeccdc77af8895b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainMenuPrefab: {fileID: 1192512469815428918, guid: 99b70cecb29b8a243b019640be06a28b, type: 3}
+  settingsMenuPrefab: {fileID: 2677471436246255742, guid: 21885e8177b813d4d9826d07a83e073f, type: 3}
+  creditsScreenPrefab: {fileID: 1924898573249161280, guid: f3098a9428def2a48a5792a6edc4d660, type: 3}
+  gameMenuPrefab: {fileID: 3488945135082086246, guid: 4b46719cb4368a7429649afc7dea6372, type: 3}
+  pauseMenuPrefab: {fileID: 8011963482466455185, guid: b274e63f346eb7a429b6256edae7e836, type: 3}
+  playMenuPrefab: {fileID: 8033880925134065758, guid: da19b0f46571c544b824e2088fd302e3, type: 3}
+  gameSettingsMenuPrefab: {fileID: 8414178781327764311, guid: 63fc27f808a9e3f4aa0386391077bc6a, type: 3}
+  _menuParent: {fileID: 0}
