@@ -7,18 +7,13 @@ namespace Menu
 {
     public class GameMenu : Menu<GameMenu>
     {
-        public override void OnReturnInput(InputAction.CallbackContext context)
+        public override void OnReturnInput()
         {
-            if (context.canceled)
-            {
-                OnPausePressed();
-            }
+            if (menuInput.actions["Return"].triggered) OnPausePressed();
         }
 
         public void OnPausePressed()
         {
-            Time.timeScale = 0;
-
             PauseMenu.Open();
         }
     }

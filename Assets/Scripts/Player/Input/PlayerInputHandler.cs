@@ -28,7 +28,8 @@ public class PlayerInputHandler : MonoBehaviour
 
     private void Start()
     {
-        playerInput = GetComponent<PlayerInput>();
+        playerInput =  GetComponent<PlayerInput>();
+        GameManager.Instance.OnPaused += OnGamePaused;
     }
 
     private void Update()
@@ -62,7 +63,7 @@ public class PlayerInputHandler : MonoBehaviour
         else
         {
             NormInputY = 0;
-        }
+        } 
     }
 
     public void OnJumpInput(InputAction.CallbackContext context)
@@ -126,5 +127,11 @@ public class PlayerInputHandler : MonoBehaviour
         {
             DashInput = false;
         }
+    }
+
+    private void OnGamePaused(bool isPaused)
+    {
+        if (isPaused) playerInput.actions.Disable();
+        else playerInput.actions.Enable();
     }
 }

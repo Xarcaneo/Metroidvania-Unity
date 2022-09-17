@@ -1,0 +1,54 @@
+{
+    "name": "Menu",
+    "maps": [
+        {
+            "name": "Navigation",
+            "id": "fe4e8cf3-6f3c-4218-91ce-d909a22dea27",
+            "actions": [
+                {
+                    "name": "Return",
+                    "type": "Button",
+                    "id": "1aa1160b-e3a7-4af8-91ea-90922aed3065",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Delete",
+                    "type": "Button",
+                    "id": "450bfe6a-ed65-4686-b3c4-2b50acb4f740",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "83ae0437-695d-4332-a64e-31c11c68c57b",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Return",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "08e32706-2a18-44d0-af94-46fc8a825037",
+                    "path": "<Keyboard>/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Delete",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

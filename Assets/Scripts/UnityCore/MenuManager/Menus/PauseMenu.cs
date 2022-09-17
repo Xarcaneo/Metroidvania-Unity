@@ -11,6 +11,8 @@ namespace Menu
     {
         public override void OnOpenMenu()
         {
+            Time.timeScale = 0;
+            GameManager.Instance.isPaused = true;
             SaveSystem.sceneLoaded += OnSceneLoaded;
         }
 
@@ -20,17 +22,15 @@ namespace Menu
             MainMenu.Open();
         }
 
-        public override void OnReturnInput(InputAction.CallbackContext context)
+        public override void OnReturnInput()
         {
-            if (context.canceled)
-            {
-                OnResumePressed();
-            }
+            if (menuInput.actions["Return"].triggered) OnResumePressed();
         }
 
         public void OnResumePressed()
         {
             Time.timeScale = 1;
+            GameManager.Instance.isPaused = false;
             base.OnBackPressed();
         }
 
@@ -43,6 +43,7 @@ namespace Menu
         {
             SaveSystem.LoadScene("MainMenu");
             Time.timeScale = 1;
+            GameManager.Instance.isPaused = false;
         }
     }
 }
