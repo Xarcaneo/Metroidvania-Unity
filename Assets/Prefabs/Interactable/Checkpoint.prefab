@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7003887881509009644}
   - component: {fileID: 7003887881509009635}
   - component: {fileID: 7003887881509009645}
+  - component: {fileID: 1785640702637485217}
   m_Layer: 0
   m_Name: Checkpoint
   m_TagString: Untagged
@@ -72,15 +73,15 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1976142529
-  m_SortingLayer: 6
+  m_SortingLayerID: 1818695215
+  m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d23149a6051bf9b459750fc4efd085c7, type: 3}
+  m_Sprite: {fileID: 878770902, guid: 3f50a569dc88ef24fae8f54f0069eea8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2, y: 2.8125}
+  m_Size: {x: 5.5, y: 4.9375}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -98,6 +99,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 076699972ffd89348b9348e079a928c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &1785640702637485217
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7003887881509009633}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1c2a31f957ea8f04fae41b8941eadcf8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &618860525141684065
 PrefabInstance:
   m_ObjectHideFlags: 0

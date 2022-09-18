@@ -16,6 +16,11 @@ namespace Menu
             SaveSystem.sceneLoaded += OnSceneLoaded;
         }
 
+        private void OnDisable()
+        {
+            SaveSystem.sceneLoaded -= OnSceneLoaded;
+        }
+
         void OnSceneLoaded(string sceneName, int sceneIndex)
         {
             SaveSystem.sceneLoaded -= OnSceneLoaded;

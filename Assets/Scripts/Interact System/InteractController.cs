@@ -8,14 +8,17 @@ public class InteractController : MonoBehaviour
 
     private void CheckIfCanInteract(bool isInteracting)
     {
-        if (isInteracting) interactableObject.Interact();
+        bool isGrounded = Player.Instance.Core.CollisionSenses.Ground;
+
+        if (isInteracting && isGrounded) interactableObject.Interact();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
-        {
-            Player.Instance.InputHandler.interactPressed += CheckIfCanInteract;
+        { 
+            try { Player.Instance.InputHandler.interactPressed += CheckIfCanInteract; }
+            catch { }
         }
     }
 
@@ -23,7 +26,8 @@ public class InteractController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Player.Instance.InputHandler.interactPressed -= CheckIfCanInteract;
+            try { Player.Instance.InputHandler.interactPressed -= CheckIfCanInteract; }
+            catch { }
         }
     }
 }

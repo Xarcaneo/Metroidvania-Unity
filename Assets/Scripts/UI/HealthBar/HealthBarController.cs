@@ -15,8 +15,11 @@ public class HealthBarController : MonoBehaviour
 
     public Stats stats;
 
+    bool isInitializing = false;
+
     private void OnEnable()
     {
+        isInitializing = true;
         if(!stats) StartCoroutine(InitializeHealthBar());
         StartCoroutine(InitializeEvents());
     }
@@ -31,6 +34,8 @@ public class HealthBarController : MonoBehaviour
 
     private void Update()
     {
+        if (!stats && !isInitializing) OnEnable();
+
         health = Mathf.Clamp(health,0,maxHealth);
         UpdateHealthUI();
     }
@@ -94,5 +99,6 @@ public class HealthBarController : MonoBehaviour
         yield return new WaitUntil(() => stats != null);
 
         stats.Damaged += TakeDamage;
+        isInitializing = false;
     }
 }
