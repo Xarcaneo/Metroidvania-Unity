@@ -44,8 +44,6 @@ namespace Menu
 
         protected PlayerInput menuInput;
 
-        public int ReturnInput { get; private set; }
-
         private void Start()
         {
             menuInput = GetComponent<PlayerInput>();

@@ -29,7 +29,25 @@ public class PlayerInputHandler : MonoBehaviour
     private void Start()
     {
         playerInput =  GetComponent<PlayerInput>();
-        GameManager.Instance.OnPaused += OnGamePaused;
+   
+        try
+        {
+            GameManager.Instance.OnPaused += OnGamePaused;
+        }
+        catch
+        {
+        }
+    }
+
+    private void OnDestroy()
+    {
+        try
+        {
+            GameManager.Instance.OnPaused -= OnGamePaused;
+        }
+        catch
+        {
+        }
     }
 
     private void Update()

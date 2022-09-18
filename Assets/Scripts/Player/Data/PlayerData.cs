@@ -37,7 +37,7 @@ public class PlayerData : ScriptableObject
     public float dashEndYMultiplier = 0.2f;
 
     [Header("Crouch State")]
-    public float crouchMovementVelocity = 5f;
+    public float standColliderHeight = 1.87f;
     public float crouchColliderHeight = 0.6f;
 
     [Header("Attack State")]
