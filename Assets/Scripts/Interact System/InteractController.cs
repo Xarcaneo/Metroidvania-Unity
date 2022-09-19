@@ -10,7 +10,8 @@ public class InteractController : MonoBehaviour
     {
         bool isGrounded = Player.Instance.Core.CollisionSenses.Ground;
 
-        if (isInteracting && isGrounded) interactableObject.Interact();
+        if (Player.Instance.StateMachine.CurrentState == Player.Instance.IdleState)
+            if (isInteracting && isGrounded) interactableObject.Interact();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
