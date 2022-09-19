@@ -15,8 +15,10 @@ public class Checkpoint : Interactable
     public override void Interact()
     {
         base.Interact();
-
         SaveSystem.SaveToSlot(GameManager.Instance.currentSaveSlot);
+
+        Player.Instance.CheckpointInteractionState.SetDetectedPosition(this.transform.position.x);
+        Player.Instance.StateMachine.ChangeState(Player.Instance.CheckpointInteractionState);
         Anim.SetBool("activated", true);
     }
 

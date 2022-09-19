@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     public PlayerHurtState HurtState { get; private set; }
     public PlayerDeathState DeathState { get; private set; }
     public PlayerLedgeClimbState LedgeClimbState { get; private set; }
+    public PlayerCheckpointInteractionState CheckpointInteractionState { get; private set; }
 
     [SerializeField]
     private PlayerData playerData;
@@ -73,6 +74,7 @@ public class Player : MonoBehaviour
         HurtState = new PlayerHurtState(this, StateMachine, playerData, "hurt");
         DeathState = new PlayerDeathState(this, StateMachine, playerData, "death");
         LedgeClimbState = new PlayerLedgeClimbState(this, StateMachine, playerData, "ledgeClimbState");
+        CheckpointInteractionState = new PlayerCheckpointInteractionState(this, StateMachine, playerData, "checkpointInteraction");
     }
 
     private void OnDestroy()
