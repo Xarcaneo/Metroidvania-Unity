@@ -148,7 +148,6 @@ GameObject:
   - component: {fileID: 9130783093731871283}
   - component: {fileID: 954082561854676907}
   - component: {fileID: 5587275164140332510}
-  - component: {fileID: 2459438491131056415}
   m_Layer: 5
   m_Name: SaveSlot
   m_TagString: Untagged
@@ -272,8 +271,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 2459438491131056415}
-        m_TargetAssemblyTypeName: ButtonSoundController, Assembly-CSharp
+      - m_Target: {fileID: 5587275164140332510}
+        m_TargetAssemblyTypeName: MyButton, Assembly-CSharp
         m_MethodName: OnPressed
         m_Mode: 1
         m_Arguments:
@@ -296,26 +295,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a96db2fcd5254a4d99badbb6178c49f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  muteSound: 0
+  SFX_Button_Pressed: {fileID: 11400000, guid: 347899bad32c5ca418b732793227029e, type: 2}
+  SFX_Button_Focused: {fileID: 11400000, guid: c1e00735692340b4cb1b06b1c99aea9f, type: 2}
   SlotNumber: 3
   NoDataContent: {fileID: 3548149236538114383}
   HasDataContent: {fileID: 7735776340523449119}
   LocationText: {fileID: 1960679912386638173}
   SlotText: {fileID: 4865088656151526185}
---- !u!114 &2459438491131056415
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2964339761162594326}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50526be74904a0842aacb804b37d464a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  muteSound: 0
-  SFX_Button_Pressed: {fileID: 11400000, guid: 347899bad32c5ca418b732793227029e, type: 2}
-  SFX_Button_Focused: {fileID: 11400000, guid: c1e00735692340b4cb1b06b1c99aea9f, type: 2}
 --- !u!1 &3548149236538114383
 GameObject:
   m_ObjectHideFlags: 0

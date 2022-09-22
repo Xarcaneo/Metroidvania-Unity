@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-public class ButtonSoundController : MonoBehaviour, ISelectHandler
+public class MyButton : MonoBehaviour, ISelectHandler
 {
     [SerializeField] bool muteSound = false;
     [SerializeField] SfxClip SFX_Button_Pressed;
@@ -19,6 +19,12 @@ public class ButtonSoundController : MonoBehaviour, ISelectHandler
     public void OnPressed()
     {
         PlaySound(SFX_Button_Pressed);
+        OnPressedAction();
+    }
+
+    protected virtual void OnPressedAction()
+    {
+
     }
 
     public void PlaySound(SfxClip sfxClip)

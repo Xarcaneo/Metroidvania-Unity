@@ -16,6 +16,8 @@ namespace Menu
         [SerializeField] private PlayMenu playMenuPrefab;
         [SerializeField] private GameSettingsMenu gameSettingsMenuPrefab;
         [SerializeField] private ControlsMenu controlsMenuPrefab;
+        [SerializeField] private GraphicSettingsMenu graphicSettingsMenu;
+        [SerializeField] private ResolutionSettingsMenu resolutionSettingsMenu;
 
         [SerializeField]
         private Transform _menuParent;
@@ -76,6 +78,7 @@ namespace Menu
                     Menu menuInstance = Instantiate(prefab, _menuParent);
                     if (prefab != mainMenuPrefab)
                     {
+                        menuInstance.OnStart();
                         menuInstance.gameObject.SetActive(false);
                     }
                     else

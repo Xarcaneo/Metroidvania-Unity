@@ -31,4 +31,10 @@ public class InteractController : MonoBehaviour
             catch { }
         }
     }
+
+    private void OnDestroy()
+    {
+        try { Player.Instance.InputHandler.interactPressed -= CheckIfCanInteract; }
+        catch { }
+    }
 }
