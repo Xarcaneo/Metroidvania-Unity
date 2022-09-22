@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class SaveSlot : MonoBehaviour, ISelectHandler
+public class SaveSlot : MyButton, ISelectHandler
 {
     [SerializeField] private int SlotNumber;
 
@@ -38,8 +38,10 @@ public class SaveSlot : MonoBehaviour, ISelectHandler
         SaveSystem.DeleteSavedGameInSlot(slot);
     }
 
-    public void OnSelect(BaseEventData eventData)
+    protected override void OnPressedAction()
     {
+        base.OnPressedAction();
+
         GameManager.Instance.currentSaveSlot = SlotNumber;
     }
 

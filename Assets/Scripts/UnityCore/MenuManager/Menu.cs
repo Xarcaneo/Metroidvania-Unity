@@ -51,7 +51,13 @@ namespace Menu
 
         private void Update()
         {
+            CustomUpdate();
             OnReturnInput();
+        }
+
+        public virtual void OnStart()
+        {
+
         }
 
         public virtual void OnReturnInput()
@@ -61,6 +67,11 @@ namespace Menu
 
         public virtual void OnOpenMenu()
         {
+        }
+
+        public virtual void CustomUpdate()
+        {
+
         }
 
         public virtual void OnReturnInput(InputAction.CallbackContext context)

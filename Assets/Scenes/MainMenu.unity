@@ -367,6 +367,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11471062, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
 --- !u!1 &1933533100
@@ -570,6 +574,14 @@ PrefabInstance:
       propertyPath: controlsMenuPrefab
       value: 
       objectReference: {fileID: 7912072195383310810, guid: 985f3045cc8e28e41947ecd548a8c2bf, type: 3}
+    - target: {fileID: 3137564901227109404, guid: 645561fcbbb52b044be6a70a4d8a0f4d, type: 3}
+      propertyPath: graphicSettingsMenu
+      value: 
+      objectReference: {fileID: 7432303603603539630, guid: 797e9fa373f86b440bada800a03aa29e, type: 3}
+    - target: {fileID: 3137564901227109404, guid: 645561fcbbb52b044be6a70a4d8a0f4d, type: 3}
+      propertyPath: resolutionSettingsMenu
+      value: 
+      objectReference: {fileID: 2701183770396773496, guid: baa24514f8a7f9b46b843cd08cdeaf15, type: 3}
     - target: {fileID: 3137564901227109406, guid: 645561fcbbb52b044be6a70a4d8a0f4d, type: 3}
       propertyPath: m_Name
       value: MenuManager
