@@ -87,6 +87,9 @@ namespace Audio
             secondarySfxSource.SecondaryAudioEvent += PlayMusic;
             secondarySfxSource.StopAudioEvent += StopMusic;
 
+            primarySfxSource.PauseAudioEvent += PauseAudio;
+            primarySfxSource.UnPauseAudioEvent += UnPauseAudio;
+
             SetMainAudioSources();
         }
 
@@ -108,6 +111,9 @@ namespace Audio
             secondarySfxSource.PrimaryAudioEvent -= PlaySFX;
             secondarySfxSource.SecondaryAudioEvent -= PlayMusic;
             secondarySfxSource.StopAudioEvent -= StopMusic;
+
+            primarySfxSource.PauseAudioEvent -= PauseAudio;
+            primarySfxSource.UnPauseAudioEvent -= UnPauseAudio;
         }
 
         private void OnValidate()
@@ -163,6 +169,16 @@ namespace Audio
         public void StopMusic(AudioSource audioSource)
         {
             audioSource.Stop();
+        }
+
+        public void PauseAudio(AudioSource audioSource)
+        {
+            audioSource.Pause();
+        }
+
+        public void UnPauseAudio(AudioSource audioSource)
+        {
+            audioSource.UnPause();
         }
 
         public void SetVolume(string exposedParameter, float volume)

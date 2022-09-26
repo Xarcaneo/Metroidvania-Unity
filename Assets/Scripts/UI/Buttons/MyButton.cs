@@ -14,6 +14,7 @@ public class MyButton : MonoBehaviour, ISelectHandler
     public void OnSelect(BaseEventData eventData)
     {
         PlaySound(SFX_Button_Focused);
+        OnSelectAction();
     }
 
     public void OnPressed()
@@ -23,6 +24,10 @@ public class MyButton : MonoBehaviour, ISelectHandler
     }
 
     protected virtual void OnPressedAction()
+    {
+
+    }
+    protected virtual void OnSelectAction()
     {
 
     }

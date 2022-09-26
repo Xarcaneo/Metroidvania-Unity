@@ -15,7 +15,10 @@ namespace Audio
         public event UnityAction<AudioSource, SfxClip, AudioConfiguration> FadeInAudioEvent;
         public event UnityAction<AudioSource, SfxClip, AudioConfiguration> FadeOutAudioEvent;
 
-        public event UnityAction<AudioSource    > StopAudioEvent;
+        public event UnityAction<AudioSource> PauseAudioEvent;
+        public event UnityAction<AudioSource> UnPauseAudioEvent;
+
+        public event UnityAction<AudioSource> StopAudioEvent;
 
         [HideInInspector] public AudioSource AudioSource = null;
         #endregion
@@ -39,6 +42,16 @@ namespace Audio
         public void RaiseFadeOutAudioEvent(AudioSource audioSource, SfxClip audioClip, AudioConfiguration audioConfiguration)
         {
             FadeOutAudioEvent?.Invoke(audioSource, audioClip, audioConfiguration);
+        }
+
+        public void RaisePauseAudioEvent(AudioSource audioSource)
+        {
+            PauseAudioEvent?.Invoke(audioSource);
+        }
+
+        public void RaiseUnPauseAudioEvent(AudioSource audioSource)
+        {
+            UnPauseAudioEvent?.Invoke(audioSource);
         }
 
         public void RaiseStopAudioEvent(AudioSource audioSource)
