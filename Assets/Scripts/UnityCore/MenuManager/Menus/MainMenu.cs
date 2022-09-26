@@ -12,6 +12,7 @@ namespace Menu
 
         public override void OnOpenMenu()
         {
+            Time.timeScale = 1;
             menuClip.AudioGroup.RaiseFadeInAudioEvent(menuClip.AudioGroup.AudioSource, menuClip, menuClip.AudioConfiguration);
         }
 

@@ -4,14 +4,18 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 using PixelCrushers;
+using Audio;
 
 namespace Menu
 {
     public class PauseMenu : Menu<PauseMenu>
     {
+        [SerializeField] private SfxClip sfxClip;
+
         public override void OnOpenMenu()
         {
             Time.timeScale = 0;
+            sfxClip.AudioGroup.RaisePauseAudioEvent(sfxClip.AudioGroup.AudioSource);
             GameManager.Instance.isPaused = true;
             SaveSystem.sceneLoaded += OnSceneLoaded;
         }
@@ -35,6 +39,7 @@ namespace Menu
         public void OnResumePressed()
         {
             Time.timeScale = 1;
+            sfxClip.AudioGroup.RaiseUnPauseAudioEvent(sfxClip.AudioGroup.AudioSource);
             GameManager.Instance.isPaused = false;
             base.OnBackPressed();
         }
@@ -46,9 +51,10 @@ namespace Menu
 
         public void OnMainMenuPressed()
         {
+            AudioManager.Instance.gameObject.SetActive(false);
             SaveSystem.LoadScene("MainMenu");
-            Time.timeScale = 1;
             GameManager.Instance.isPaused = false;
+            AudioManager.Instance.gameObject.SetActive(true);
         }
     }
 }

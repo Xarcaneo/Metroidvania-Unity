@@ -33,12 +33,7 @@ public class SaveSlot : MyButton, ISelectHandler
         }
     }
 
-    public void DeleteSave(int slot)
-    {
-        SaveSystem.DeleteSavedGameInSlot(slot);
-    }
-
-    protected override void OnPressedAction()
+    protected override void OnSelectAction()
     {
         base.OnPressedAction();
 

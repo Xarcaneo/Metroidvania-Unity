@@ -126,6 +126,7 @@ namespace Menu
             {
                 Menu nextMenu = _menuStack.Peek();
                 EventSystem.current.SetSelectedGameObject(nextMenu.buttonToFocus, null);
+                nextMenu.OnOpenMenu();
                 nextMenu.gameObject.SetActive(true);
             }
         }
