@@ -32,7 +32,8 @@ public class PlayerInputHandler : MonoBehaviour
    
         try
         {
-            GameManager.Instance.OnPaused += OnGamePaused;
+            GameEvents.Instance.onPauseTrigger += EnableDisablePlayerInput;
+            GameEvents.Instance.onDialogueTrigger += EnableDisablePlayerInput;
         }
         catch
         {
@@ -43,7 +44,8 @@ public class PlayerInputHandler : MonoBehaviour
     {
         try
         {
-            GameManager.Instance.OnPaused -= OnGamePaused;
+            GameEvents.Instance.onPauseTrigger -= EnableDisablePlayerInput;
+            GameEvents.Instance.onDialogueTrigger -= EnableDisablePlayerInput;
         }
         catch
         {
@@ -147,7 +149,7 @@ public class PlayerInputHandler : MonoBehaviour
         }
     }
 
-    private void OnGamePaused(bool isPaused)
+    private void EnableDisablePlayerInput(bool isPaused)
     {
         if (isPaused) playerInput.actions.Disable();
         else playerInput.actions.Enable();

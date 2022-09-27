@@ -6,6 +6,11 @@ namespace Menu
 {
     public class SettingsMenu : Menu<SettingsMenu>
     {
+        public void OnAudioPressed()
+        {
+            AudioSettingsMenu.Open();
+        }
+
         public void OnGraphicPressed()
         {
             GraphicSettingsMenu.Open();
