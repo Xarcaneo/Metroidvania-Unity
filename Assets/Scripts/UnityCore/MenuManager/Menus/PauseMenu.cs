@@ -16,13 +16,8 @@ namespace Menu
         {
             Time.timeScale = 0;
             sfxClip.AudioGroup.RaisePauseAudioEvent(sfxClip.AudioGroup.AudioSource);
-            GameManager.Instance.isPaused = true;
+            GameEvents.Instance.PauseTrigger(true);
             SaveSystem.sceneLoaded += OnSceneLoaded;
-        }
-
-        private void OnDisable()
-        {
-            SaveSystem.sceneLoaded -= OnSceneLoaded;
         }
 
         void OnSceneLoaded(string sceneName, int sceneIndex)
@@ -33,14 +28,18 @@ namespace Menu
 
         public override void OnReturnInput()
         {
-            if (menuInput.actions["Return"].triggered) OnResumePressed();
+            if (menuInput.actions["Return"].triggered)
+            {
+                SaveSystem.sceneLoaded -= OnSceneLoaded;
+                OnResumePressed();
+            }
         }
 
         public void OnResumePressed()
         {
             Time.timeScale = 1;
             sfxClip.AudioGroup.RaiseUnPauseAudioEvent(sfxClip.AudioGroup.AudioSource);
-            GameManager.Instance.isPaused = false;
+            GameEvents.Instance.PauseTrigger(false);
             base.OnBackPressed();
         }
 
@@ -53,7 +52,7 @@ namespace Menu
         {
             AudioManager.Instance.gameObject.SetActive(false);
             SaveSystem.LoadScene("MainMenu");
-            GameManager.Instance.isPaused = false;
+            GameEvents.Instance.PauseTrigger(true);
             AudioManager.Instance.gameObject.SetActive(true);
         }
     }

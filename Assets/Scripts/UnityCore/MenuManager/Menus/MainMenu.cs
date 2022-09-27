@@ -16,6 +16,11 @@ namespace Menu
             menuClip.AudioGroup.RaiseFadeInAudioEvent(menuClip.AudioGroup.AudioSource, menuClip, menuClip.AudioConfiguration);
         }
 
+        public override void OnReturnInput()
+        {
+            return;
+        }
+
         public void OnPlayPressed()
         {
             PlayMenu.Open();

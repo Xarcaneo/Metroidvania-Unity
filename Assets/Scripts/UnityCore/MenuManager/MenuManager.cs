@@ -18,6 +18,7 @@ namespace Menu
         [SerializeField] private ControlsMenu controlsMenuPrefab;
         [SerializeField] private GraphicSettingsMenu graphicSettingsMenu;
         [SerializeField] private ResolutionSettingsMenu resolutionSettingsMenu;
+        [SerializeField] private AudioSettingsMenu audioSettingsMenu;
 
         [SerializeField]
         private Transform _menuParent;
@@ -126,7 +127,6 @@ namespace Menu
             {
                 Menu nextMenu = _menuStack.Peek();
                 EventSystem.current.SetSelectedGameObject(nextMenu.buttonToFocus, null);
-                nextMenu.OnOpenMenu();
                 nextMenu.gameObject.SetActive(true);
             }
         }
