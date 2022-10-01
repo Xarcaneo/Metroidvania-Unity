@@ -19,6 +19,7 @@ namespace Menu
         [SerializeField] private GraphicSettingsMenu graphicSettingsMenu;
         [SerializeField] private ResolutionSettingsMenu resolutionSettingsMenu;
         [SerializeField] private AudioSettingsMenu audioSettingsMenu;
+        [SerializeField] private LanguageSettingsMenu languageSettingsMenu;
 
         [SerializeField]
         private Transform _menuParent;

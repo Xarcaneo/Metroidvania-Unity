@@ -15,8 +15,8 @@ public class SaveSlot : MyButton, ISelectHandler
     [SerializeField] private TextMeshProUGUI LocationText;
     [SerializeField] private TextMeshProUGUI SlotText;
 
-    public void Update()
-    {   
+    private void OnEnable()
+    {
         bool is_empty = SaveSystem.HasSavedGameInSlot(SlotNumber);
 
         if (is_empty)

@@ -16,6 +16,7 @@ namespace Audio
         [SerializeField] private string MasterVolume = "MasterVolume";
         [SerializeField] private string MusicVolume = "MusicVolume";
         [SerializeField] private string SfxVolume = "SFXVolume";
+        [SerializeField] private string Sfx2Volume = "SFX2Volume";
 
         [Header("Music Channels")]
         [SerializeField] private GameAudioGroup musicSource = default;
@@ -31,9 +32,9 @@ namespace Audio
         [Header("Debug")]
         [SerializeField] private bool debugEnabled = false;
         [Space]
-        [Range(0f, 1f), SerializeField] private float masterVolume = 1f;
-        [Range(0f, 1f), SerializeField] private float musicVolume = 1f;
-        [Range(0f, 1f), SerializeField] private float sfxVolume = 1f;
+        [Range(0f, 1f), SerializeField] private float masterVolume = 0f;
+        [Range(0f, 1f), SerializeField] private float musicVolume = 0f;
+        [Range(0f, 1f), SerializeField] private float sfxVolume = 0f;
         [Space]
         [SerializeField] private bool updateSliders = false;
         [SerializeField] private bool saveData = false;
@@ -67,6 +68,7 @@ namespace Audio
 
         private void Start()
         {
+            managerData.Init();
             SetAudioData();
         }
 
@@ -207,6 +209,7 @@ namespace Audio
             SetVolume(MasterVolume, managerData.MasterVolume);
             SetVolume(MusicVolume, managerData.MusicVolume);
             SetVolume(SfxVolume, managerData.SFXVolume);
+            SetVolume(Sfx2Volume, managerData.SFXVolume);
         }
 
         public void SaveAudioData()
@@ -223,7 +226,6 @@ namespace Audio
             float currentTime = 0;
 
             float currentVolume = GetVolume(exposedParameters);
-
             SetVolume(exposedParameters, 0);
 
             audioSource.clip = music;

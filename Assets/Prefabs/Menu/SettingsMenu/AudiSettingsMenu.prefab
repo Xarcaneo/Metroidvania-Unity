@@ -291,6 +291,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonToFocus: {fileID: 8645670383198876826}
   audioMixer: {fileID: 24100000, guid: 9125b06d7e4eb0a46b29ed53466b4243, type: 2}
+  audioManagerData: {fileID: 11400000, guid: 93fb70660a207e64b80f1dd2a1b8b558, type: 2}
   masterVolumeSlider: {fileID: 6958029187250520513}
   musicVolumeSlider: {fileID: 8115232136241138594}
   sfxVolumeSlider: {fileID: 4909131397408514192}
@@ -523,6 +524,18 @@ PrefabInstance:
       value: SFXAudioSlider
       objectReference: {fileID: 0}
     - target: {fileID: 1644413518584111193, guid: 071dca8e4d204d8489bdcbff2cf0f7be, type: 3}
+      propertyPath: m_MaxValue
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1644413518584111193, guid: 071dca8e4d204d8489bdcbff2cf0f7be, type: 3}
+      propertyPath: m_MinValue
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1644413518584111193, guid: 071dca8e4d204d8489bdcbff2cf0f7be, type: 3}
+      propertyPath: m_WholeNumbers
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1644413518584111193, guid: 071dca8e4d204d8489bdcbff2cf0f7be, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 5401171395149296611}
@@ -700,6 +713,18 @@ PrefabInstance:
       value: MusicAudioSlider
       objectReference: {fileID: 0}
     - target: {fileID: 1644413518584111193, guid: 071dca8e4d204d8489bdcbff2cf0f7be, type: 3}
+      propertyPath: m_MaxValue
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1644413518584111193, guid: 071dca8e4d204d8489bdcbff2cf0f7be, type: 3}
+      propertyPath: m_MinValue
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1644413518584111193, guid: 071dca8e4d204d8489bdcbff2cf0f7be, type: 3}
+      propertyPath: m_WholeNumbers
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1644413518584111193, guid: 071dca8e4d204d8489bdcbff2cf0f7be, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 5401171395149296611}
@@ -875,6 +900,18 @@ PrefabInstance:
     - target: {fileID: 980330688205230731, guid: 071dca8e4d204d8489bdcbff2cf0f7be, type: 3}
       propertyPath: m_Name
       value: MasterAudioSlider
+      objectReference: {fileID: 0}
+    - target: {fileID: 1644413518584111193, guid: 071dca8e4d204d8489bdcbff2cf0f7be, type: 3}
+      propertyPath: m_MaxValue
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1644413518584111193, guid: 071dca8e4d204d8489bdcbff2cf0f7be, type: 3}
+      propertyPath: m_MinValue
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1644413518584111193, guid: 071dca8e4d204d8489bdcbff2cf0f7be, type: 3}
+      propertyPath: m_WholeNumbers
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1644413518584111193, guid: 071dca8e4d204d8489bdcbff2cf0f7be, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode

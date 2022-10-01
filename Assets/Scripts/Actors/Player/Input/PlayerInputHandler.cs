@@ -34,6 +34,7 @@ public class PlayerInputHandler : MonoBehaviour
         {
             GameEvents.Instance.onPauseTrigger += EnableDisablePlayerInput;
             GameEvents.Instance.onDialogueTrigger += EnableDisablePlayerInput;
+            Debug.Log("subscribed");
         }
         catch
         {
@@ -149,9 +150,10 @@ public class PlayerInputHandler : MonoBehaviour
         }
     }
 
-    private void EnableDisablePlayerInput(bool isPaused)
+    private void EnableDisablePlayerInput(bool disable)
     {
-        if (isPaused) playerInput.actions.Disable();
-        else playerInput.actions.Enable();
+        Debug.Log("enableds");
+        if (!disable) playerInput.actions.Enable();
+        else playerInput.actions.Disable();
     }
 }

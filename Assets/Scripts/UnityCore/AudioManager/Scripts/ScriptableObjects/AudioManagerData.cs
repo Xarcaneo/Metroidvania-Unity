@@ -18,6 +18,13 @@ namespace Audio
         public event UnityAction<string, float> SetVolume;
         public event UnityAction SaveData;
 
+        public void Init()
+        {
+            MasterVolume = PlayerPrefs.GetFloat("MasterVolume");
+            MusicVolume = PlayerPrefs.GetFloat("MusicVolume");
+            SFXVolume = PlayerPrefs.GetFloat("SFXVolume");
+        }
+
         public void RaiseSetVolumeEvent(string exposedParameter, float volume)
         {
             SetVolume?.Invoke(exposedParameter, volume);

@@ -6,6 +6,11 @@ namespace Menu
 {
     public class GameSettingsMenu : Menu<GameSettingsMenu>
     {
+        public void OnLanguagePressed()
+        {
+            LanguageSettingsMenu.Open();
+        }
+
         public void OnControlsPressed()
         {
             ControlsMenu.Open();
