@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6094467527249545914}
   - component: {fileID: 6094467527249545861}
   - component: {fileID: -3266938514495039997}
+  - component: {fileID: 4549505671524891352}
   m_Layer: 5
   m_Name: ResolutionButton
   m_TagString: Untagged
@@ -222,3 +223,17 @@ MonoBehaviour:
   SFX_Button_Focused: {fileID: 11400000, guid: c1e00735692340b4cb1b06b1c99aea9f, type: 2}
   text: 
   buttonIndex: 0
+--- !u!114 &4549505671524891352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6094467527249545863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7de41b4a04bc3284e8796e536bc4acbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_textTable: {fileID: 11400000, guid: 6e81d7d258335c64ebe2b9085326655e, type: 2}
+  m_fieldName: 

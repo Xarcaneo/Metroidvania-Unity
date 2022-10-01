@@ -118,6 +118,10 @@ GameObject:
   - component: {fileID: 33181040}
   - component: {fileID: 33181041}
   - component: {fileID: 865739397}
+  - component: {fileID: 2025597051}
+  - component: {fileID: 2025597052}
+  - component: {fileID: 2025597062}
+  - component: {fileID: 2025597063}
   m_Layer: 0
   m_Name: Dialogue Manager
   m_TagString: Untagged
@@ -413,6 +417,196 @@ MonoBehaviour:
   m_appendSaverTypeToKey: 0
   m_saveAcrossSceneChanges: 1
   m_restoreStateOnStart: 0
+--- !u!114 &2025597051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 125852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c593457cd8105e148906690e1707c592, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trigger: 2
+  condition:
+    luaConditions: []
+    questConditions: []
+    acceptedTags: []
+    acceptedGameObjects: []
+    luaWizardIndex: -1
+    lastEvaluationValue: 0
+  setQuestState: 1
+  questName: 
+  questState: 0
+  setQuestEntryState: 0
+  questEntryNumber: 1
+  questEntryState: 0
+  luaCode: 
+  sequence: 
+  sequenceSpeaker: {fileID: 0}
+  sequenceListener: {fileID: 0}
+  waitOneFrameOnStartOrEnable: 1
+  alertMessage: 
+  textTable: {fileID: 0}
+  alertDuration: 0
+  sendMessages: []
+  barkSource: 0
+  barkConversation: 
+  barkText: 
+  barkTextSequence: 
+  barker: {fileID: 0}
+  barkTarget: {fileID: 0}
+  barkOrder: 0
+  allowBarksDuringConversations: 0
+  skipBarkIfNoValidEntries: 0
+  cacheBarkLines: 0
+  conversation: 
+  conversationConversant: {fileID: 0}
+  conversationActor: {fileID: 0}
+  startConversationEntryID: -1
+  exclusive: 0
+  replace: 0
+  skipIfNoValidEntries: 0
+  stopConversationOnTriggerExit: 0
+  stopConversationIfTooFar: 0
+  maxConversationDistance: 5
+  monitorConversationDistanceFrequency: 1
+  showCursorDuringConversation: 0
+  pauseGameDuringConversation: 0
+  setActiveActions: []
+  setEnabledActions: []
+  setAnimatorStateActions: []
+  onExecute:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: GameEvents, Assembly-CSharp
+        m_MethodName: DialogueTrigger
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  useConversationTitlePicker: 1
+  useBarkTitlePicker: 1
+  useQuestNamePicker: 1
+  selectedDatabase: {fileID: 11400000, guid: c5bff3d04288d1b42abfebdba8c4d5c3, type: 2}
+--- !u!114 &2025597052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 125852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c593457cd8105e148906690e1707c592, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trigger: 16384
+  condition:
+    luaConditions: []
+    questConditions: []
+    acceptedTags: []
+    acceptedGameObjects: []
+    luaWizardIndex: -1
+    lastEvaluationValue: 0
+  setQuestState: 1
+  questName: 
+  questState: 0
+  setQuestEntryState: 0
+  questEntryNumber: 1
+  questEntryState: 0
+  luaCode: 
+  sequence: 
+  sequenceSpeaker: {fileID: 0}
+  sequenceListener: {fileID: 0}
+  waitOneFrameOnStartOrEnable: 1
+  alertMessage: 
+  textTable: {fileID: 0}
+  alertDuration: 0
+  sendMessages: []
+  barkSource: 0
+  barkConversation: 
+  barkText: 
+  barkTextSequence: 
+  barker: {fileID: 0}
+  barkTarget: {fileID: 0}
+  barkOrder: 0
+  allowBarksDuringConversations: 0
+  skipBarkIfNoValidEntries: 0
+  cacheBarkLines: 0
+  conversation: 
+  conversationConversant: {fileID: 0}
+  conversationActor: {fileID: 0}
+  startConversationEntryID: -1
+  exclusive: 0
+  replace: 0
+  skipIfNoValidEntries: 0
+  stopConversationOnTriggerExit: 0
+  stopConversationIfTooFar: 0
+  maxConversationDistance: 5
+  monitorConversationDistanceFrequency: 1
+  showCursorDuringConversation: 0
+  pauseGameDuringConversation: 0
+  setActiveActions: []
+  setEnabledActions: []
+  setAnimatorStateActions: []
+  onExecute:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: GameEvents, Assembly-CSharp
+        m_MethodName: DialogueTrigger
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  useConversationTitlePicker: 1
+  useBarkTitlePicker: 1
+  useQuestNamePicker: 1
+  selectedDatabase: {fileID: 11400000, guid: c5bff3d04288d1b42abfebdba8c4d5c3, type: 2}
+--- !u!114 &2025597062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 125852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e168378c6dd4b8408a51d7be3b9c422, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_currentLanguagePlayerPrefsKey: Language
+  m_textTable: {fileID: 11400000, guid: 6e81d7d258335c64ebe2b9085326655e, type: 2}
+  m_saveLanguageInPlayerPrefs: 1
+  m_alsoUpdateInactiveLocalizeUI: 1
+  m_useDefaultLanguageForBlankTranslations: 1
+--- !u!114 &2025597063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 125852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5770f28fa59fc64bbc27e1f1c966632, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_textTable: {fileID: 11400000, guid: 6e81d7d258335c64ebe2b9085326655e, type: 2}
 --- !u!1001 &1673115584
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -558,6 +752,14 @@ PrefabInstance:
     - target: {fileID: 1509689438892592660, guid: 1bb9ae154121b624b8bc77f545a12774, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1509689438892592665, guid: 1bb9ae154121b624b8bc77f545a12774, type: 3}
+      propertyPath: m_fontSize
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 1509689438892592665, guid: 1bb9ae154121b624b8bc77f545a12774, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 1509689438895742539, guid: 1bb9ae154121b624b8bc77f545a12774, type: 3}
       propertyPath: m_AnchorMax.y
@@ -751,12 +953,31 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7918651516599675260, guid: 1bb9ae154121b624b8bc77f545a12774, type: 3}
+      propertyPath: addEventSystemIfNeeded
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7918651516599793874, guid: 1bb9ae154121b624b8bc77f545a12774, type: 3}
+      propertyPath: typewriterEffect
+      value: 
+      objectReference: {fileID: 234692308}
     - target: {fileID: 7918651516609915660, guid: 1bb9ae154121b624b8bc77f545a12774, type: 3}
       propertyPath: m_Name
       value: MyDialogueUI
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1bb9ae154121b624b8bc77f545a12774, type: 3}
+--- !u!114 &234692308 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1509689438892592667, guid: 1bb9ae154121b624b8bc77f545a12774, type: 3}
+  m_PrefabInstance: {fileID: 1509689438981525711}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1360375efe462cd4ab520d1661206035, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8725668283199749059 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7918651516609915660, guid: 1bb9ae154121b624b8bc77f545a12774, type: 3}
