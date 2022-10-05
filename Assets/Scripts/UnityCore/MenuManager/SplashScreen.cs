@@ -21,6 +21,10 @@ public class SplashScreen : MonoBehaviour
 
     public virtual void OnReturnInput()
     {
-        if (menuInput.actions["Return"].triggered) SaveSystem.LoadScene("MainMenu");
+        if (menuInput.actions["Return"].triggered)
+        {
+            menuInput.DeactivateInput();
+            SaveSystem.LoadScene("MainMenu");
+        }
     }
 }

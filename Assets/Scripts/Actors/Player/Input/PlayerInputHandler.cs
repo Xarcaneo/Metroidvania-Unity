@@ -6,8 +6,6 @@ using UnityEngine.InputSystem;
 
 public class PlayerInputHandler : MonoBehaviour
 {
-    public Action<bool> interactPressed;
-
     private PlayerInput playerInput;
 
     public Vector2 RawMovementInput { get; private set; }
@@ -34,7 +32,6 @@ public class PlayerInputHandler : MonoBehaviour
         {
             GameEvents.Instance.onPauseTrigger += EnableDisablePlayerInput;
             GameEvents.Instance.onDialogueTrigger += EnableDisablePlayerInput;
-            Debug.Log("subscribed");
         }
         catch
         {
@@ -120,11 +117,11 @@ public class PlayerInputHandler : MonoBehaviour
     {
         if (context.started)
         {
-            interactPressed?.Invoke(true);
+            GameEvents.Instance.InteractTrigger(true);
         }
         else if (context.canceled)
         {
-            interactPressed?.Invoke(false);
+            GameEvents.Instance.InteractTrigger(false);
         }
     }
 
@@ -152,7 +149,6 @@ public class PlayerInputHandler : MonoBehaviour
 
     private void EnableDisablePlayerInput(bool disable)
     {
-        Debug.Log("enableds");
         if (!disable) playerInput.actions.Enable();
         else playerInput.actions.Disable();
     }

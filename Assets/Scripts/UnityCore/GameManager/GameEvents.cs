@@ -38,4 +38,13 @@ public class GameEvents : MonoBehaviour
             onDialogueTrigger(isDialogueActive);
         }
     }
+
+    public event Action<bool> onPlayerInteractTrigger;
+    public void InteractTrigger(bool isInteracting)
+    {
+        if (onPlayerInteractTrigger != null)
+        {
+            onPlayerInteractTrigger(isInteracting);
+        }
+    }
 }

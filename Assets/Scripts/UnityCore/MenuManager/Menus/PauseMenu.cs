@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 using PixelCrushers;
 using Audio;
+using UnityEngine.EventSystems;
 
 namespace Menu
 {
@@ -50,6 +51,7 @@ namespace Menu
 
         public void OnMainMenuPressed()
         {
+            EventSystem.current.SetSelectedGameObject(null, null);
             AudioManager.Instance.gameObject.SetActive(false);
             SaveSystem.LoadScene("MainMenu");
             GameEvents.Instance.PauseTrigger(true);
