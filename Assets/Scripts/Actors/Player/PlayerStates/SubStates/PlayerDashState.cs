@@ -47,11 +47,11 @@ public class PlayerDashState : PlayerAbilityState
 
             core.Movement.SetVelocity(playerData.dashVelocity, playerData.dashAngle, core.Movement.FacingDirection);
 
-            if (Time.time >= startTime + playerData.dashTime)
+            if (Time.time >= startTime + playerData.dashTime || isTouchingWall  || isTouchingLedge || core.Movement.CurrentVelocity.x == 0)
             {
                 isAbilityDone = true;
                 lastDashTime = Time.time;
-            }   
+            }
         }
     }
 
