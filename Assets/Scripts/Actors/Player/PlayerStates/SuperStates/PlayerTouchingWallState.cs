@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class PlayerTouchingWallState : PlayerState
 {
+    private float touchingWallTime = 0.0f;
+    private bool canWallJump = false;
+
     protected bool isGrounded;
     protected bool isTouchingWall;
-    protected bool grabInput;
     protected bool jumpInput;
     protected int xInput;
     protected int yInput;
@@ -37,6 +39,8 @@ public class PlayerTouchingWallState : PlayerState
     {
         base.Enter();
 
+        touchingWallTime = Time.time;
+
         damageEventHandler = (amount) => { stateMachine.ChangeState(player.HurtState); };
         healthZeroEventHandler = () => { stateMachine.ChangeState(player.DeathState); };
 
@@ -58,19 +62,27 @@ public class PlayerTouchingWallState : PlayerState
         yInput = player.InputHandler.NormInputY;
         jumpInput = player.InputHandler.JumpInput;
 
-        if (jumpInput)
+        CheckIfCanWallJump();
+
+        if (!isTouchingWall || xInput != core.Movement.FacingDirection)
+        {
+            stateMachine.ChangeState(player.InAirState);
+        }
+        else if (jumpInput && canWallJump)
         {
             player.WallJumpState.DetermineWallJumpDirection(isTouchingWall);
             stateMachine.ChangeState(player.WallJumpState);
         }
-        else if (isGrounded && !grabInput)
+        else if (isGrounded)
         {
             stateMachine.ChangeState(player.IdleState);
         }
-        else if (!isTouchingWall || xInput != core.Movement.FacingDirection)
-        {
-            stateMachine.ChangeState(player.InAirState);
-        }
+    }
+
+    private void CheckIfCanWallJump()
+    {
+        if (Time.time > touchingWallTime + playerData.wallTouchTime) canWallJump = true;
+        else canWallJump = false;
     }
 
     public override void PhysicsUpdate()

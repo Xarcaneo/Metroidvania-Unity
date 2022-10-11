@@ -81,7 +81,7 @@ public class PlayerLedgeClimbState : PlayerState
             core.Movement.SetVelocityZero();
             player.transform.position = startPos;
 
-            if (xInput == core.Movement.FacingDirection && isHanging && !isClimbing)
+            if (yInput == 1 && isHanging && !isClimbing)
             {
                 isClimbing = true;
                 player.Anim.SetBool("climbLedge", true);
@@ -89,11 +89,6 @@ public class PlayerLedgeClimbState : PlayerState
             else if (yInput == -1 && isHanging && !isClimbing)
             {
                 stateMachine.ChangeState(player.InAirState);
-            }
-            else if (jumpInput && !isClimbing)
-            {
-                player.WallJumpState.DetermineWallJumpDirection(true);
-                stateMachine.ChangeState(player.WallJumpState);
             }
         }
 
