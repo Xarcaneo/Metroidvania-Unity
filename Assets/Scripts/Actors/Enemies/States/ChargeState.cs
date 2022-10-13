@@ -15,6 +15,16 @@ public class ChargeState : State
 
     protected int playerDirection;
 
+    private Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
+    private CollisionSenses CollisionSenses { get => collisionSenses ?? core.GetCoreComponent(ref collisionSenses); }
+    private EntityDetector EntityDetector { get => entityDetector ?? core.GetCoreComponent(ref entityDetector); }
+    private AIMeleeAttackDetector AIMeleeAttackDetector { get => aIMeleeAttackDetector ?? core.GetCoreComponent(ref aIMeleeAttackDetector); }
+
+    private Movement movement;
+    private CollisionSenses collisionSenses;
+    private EntityDetector entityDetector;
+    private AIMeleeAttackDetector aIMeleeAttackDetector;
+
     public ChargeState(Entity etity, FiniteStateMachine stateMachine, string animBoolName, D_ChargeState stateData) : base(etity, stateMachine, animBoolName)
     {
         this.stateData = stateData;
@@ -24,18 +34,29 @@ public class ChargeState : State
     {
         base.DoChecks();
 
-        isPlayerDetected = core.EntityDetector.GetEntityDetected();
-        isDectectingLedge = core.CollisionSenses.LedgeVertical;
-        isDetectingWall = core.CollisionSenses.WallFront;
-        playerDirection = core.EntityDetector.CheckFlipDirectionTowardsEntity();
-        performCloseRangeAction = core.AIMeleeAttackDetector.GetEntityDetected();
+        if (CollisionSenses)
+        {
+            isDectectingLedge = CollisionSenses.LedgeVertical;
+            isDetectingWall = CollisionSenses.WallFront;
+        }
+
+        if (EntityDetector)
+        {
+            isPlayerDetected = EntityDetector.GetEntityDetected();
+            playerDirection = EntityDetector.CheckFlipDirectionTowardsEntity();
+        }
+
+        if (AIMeleeAttackDetector)
+        {
+            performCloseRangeAction = AIMeleeAttackDetector.GetEntityDetected();
+        }
     }
 
     public override void Enter()
     {
         base.Enter();
         DoChecks();
-        core.Movement.Flip(playerDirection);
+        Movement?.Flip(playerDirection);
     }
 
     public override void Exit()
@@ -53,11 +74,11 @@ public class ChargeState : State
     {
         base.PhysicsUpdate();
 
-        core.Movement.Flip(playerDirection);
+        Movement?.Flip(playerDirection);
 
         if (isDectectingLedge && !isDetectingWall)
         {
-            core.Movement.SetVelocityX(stateData.chargeSpeed * core.Movement.FacingDirection);
+            Movement?.SetVelocityX(stateData.chargeSpeed * Movement.FacingDirection);
         }
     }
 }

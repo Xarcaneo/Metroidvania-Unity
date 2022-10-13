@@ -11,6 +11,12 @@ public class PlayerAbilityState : PlayerState
     protected bool isTouchingWall;
     protected bool isTouchingLedge;
 
+    protected Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
+    protected CollisionSenses CollisionSenses { get => collisionSenses ?? core.GetCoreComponent(ref collisionSenses); }
+
+    private Movement movement;
+    private CollisionSenses collisionSenses;
+
     public PlayerAbilityState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }
@@ -19,9 +25,12 @@ public class PlayerAbilityState : PlayerState
     {
         base.DoChecks();
 
-        isGrounded = core.CollisionSenses.Ground;
-        isTouchingWall = core.CollisionSenses.WallFront;
-        isTouchingLedge = core.CollisionSenses.LedgeHorizontal;
+        if (CollisionSenses)
+        {
+            isGrounded = CollisionSenses.Ground;
+            isTouchingWall = CollisionSenses.WallFront;
+            isTouchingLedge = CollisionSenses.LedgeHorizontal;
+        }
     }
 
     public override void Enter()
@@ -50,7 +59,7 @@ public class PlayerAbilityState : PlayerState
         //Check conditions to change state
         if (isAbilityDone)
         {
-            if (isGrounded && core.Movement.CurrentVelocity.y < 0.01f)
+            if (isGrounded && Movement?.CurrentVelocity.y < 0.01f)
             {
                 stateMachine.ChangeState(player.IdleState);
             }

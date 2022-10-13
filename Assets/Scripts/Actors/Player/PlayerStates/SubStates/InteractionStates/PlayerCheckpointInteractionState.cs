@@ -5,6 +5,10 @@ using UnityEngine;
 public class PlayerCheckpointInteractionState : PlayerState
 {
     private float checkpointPosX;
+
+    private Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
+    private Movement movement;
+
     public PlayerCheckpointInteractionState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }
@@ -13,7 +17,7 @@ public class PlayerCheckpointInteractionState : PlayerState
     {
         base.Enter();
 
-        checkpointPosX = checkpointPosX + playerData.checkpointActivationOffset * player.Core.Movement.FacingDirection;
+        checkpointPosX = checkpointPosX + playerData.checkpointActivationOffset * Movement.FacingDirection;
 
         player.transform.position = new Vector2(checkpointPosX, player.transform.position.y);
     }

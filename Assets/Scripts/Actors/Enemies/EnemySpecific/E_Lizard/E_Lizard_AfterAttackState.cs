@@ -5,6 +5,9 @@ using UnityEngine;
 public class E_Lizard_AfterAttackState : AfterAttackState
 {
     private E_Lizard enemy;
+    private Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
+    private Movement movement;
+
 
     public E_Lizard_AfterAttackState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, E_Lizard enemy) : base(entity, stateMachine, animBoolName)
     {
@@ -37,7 +40,7 @@ public class E_Lizard_AfterAttackState : AfterAttackState
     {
         base.LogicUpdate();
 
-        core.Movement.Flip(playerDirection);
+        Movement?.Flip(playerDirection);
 
         if (isStateTimeOver && !isExitingState)
         {

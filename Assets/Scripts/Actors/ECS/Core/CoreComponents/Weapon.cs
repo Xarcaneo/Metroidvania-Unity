@@ -5,6 +5,9 @@ using System.Linq;
 
 public class Weapon : CoreComponent
 {
+    private Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
+    private Movement movement;
+
     private List<IDamageable> detectedDamageables = new List<IDamageable>();
     private List<IKnockbackable> detectedKnockbackables = new List<IKnockbackable>();
     public void AddToDetected(Collider2D collision)
@@ -60,7 +63,7 @@ public class Weapon : CoreComponent
 
         foreach (IKnockbackable item in detectedKnockbackables.ToList())
         {
-            item.Knockback(core.Movement.FacingDirection);
+            item.Knockback(Movement.FacingDirection);
         }
     }
 }

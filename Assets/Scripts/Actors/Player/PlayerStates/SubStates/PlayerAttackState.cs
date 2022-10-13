@@ -5,14 +5,13 @@ using UnityEngine;
 public class PlayerAttackState : PlayerAbilityState
 {
     private int attackCounter;
-
     private float velocityToSet;
-
     private float lastAttackTime;
-
     private bool isGrounded;
-
     private bool attackInput;
+
+    private Weapon Weapon { get => weapon ?? core.GetCoreComponent(ref weapon); }
+    private Weapon weapon;
 
     public PlayerAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
@@ -22,7 +21,7 @@ public class PlayerAttackState : PlayerAbilityState
     {
         base.DoChecks();
 
-        isGrounded = core.CollisionSenses.Ground;
+        isGrounded = CollisionSenses.Ground;
     }
 
     public override void Enter()
@@ -46,7 +45,7 @@ public class PlayerAttackState : PlayerAbilityState
     {
         base.Exit();
 
-        core.Movement.SetVelocityX(0f);
+        Movement?.SetVelocityX(0f);
         velocityToSet = 0;
 
         attackCounter++;
@@ -61,7 +60,7 @@ public class PlayerAttackState : PlayerAbilityState
             attackInput = true;
         }
 
-        core.Movement.SetVelocityX(velocityToSet * core.Movement.FacingDirection);
+        Movement?.SetVelocityX(velocityToSet * Movement.FacingDirection);
 
         if (!isExitingState && isAnimationFinished)
         {
@@ -108,7 +107,7 @@ public class PlayerAttackState : PlayerAbilityState
         base.AnimationActionTrigger();
       
         //Checks what IDamageable entities intersects with weapon collider and damage them
-        core.Weapon.CheckMeleeAttack();       
+        Weapon?.CheckMeleeAttack();       
     }
 }
 

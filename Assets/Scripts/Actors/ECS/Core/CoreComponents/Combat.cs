@@ -18,7 +18,13 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable
     private bool isKnockbackActive;
     private float knockbackStartTime;
 
-    public void LogicUpdate()
+    private Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
+    private Stats Stats { get => stats ?? core.GetCoreComponent(ref stats); }
+
+    private Movement movement;
+    private Stats stats;
+
+    public override void LogicUpdate()
     {
         CheckKnockback();
     }
@@ -27,7 +33,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable
     {
         if (isDamagable)
         {
-            core.Stats.DecreaseHealth(amount);
+            Stats?.DecreaseHealth(amount);
 
             OnDamage?.Invoke(amount);
         }
@@ -37,8 +43,8 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable
     {
         if (isKnockable)
         {
-            core.Movement.SetVelocity(knockbackStrength, knockbackAngle, direction);
-            core.Movement.CanSetVelocity = false;
+            Movement?.SetVelocity(knockbackStrength, knockbackAngle, direction);
+            Movement.CanSetVelocity = false;
             isKnockbackActive = true;
             knockbackStartTime = Time.time;
         }
@@ -49,7 +55,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable
         if (isKnockbackActive && Time.time >= knockbackStartTime + maxKnockbackTime)
         {
             isKnockbackActive = false;
-            core.Movement.CanSetVelocity = true;
+            Movement.CanSetVelocity = true;
         }
     }
 }

@@ -7,6 +7,12 @@ public class PlayerHurtState : PlayerState
     //Checks
     private bool isGrounded;
 
+    private Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
+    private CollisionSenses CollisionSenses { get => collisionSenses ?? core.GetCoreComponent(ref collisionSenses); }
+
+    private Movement movement;
+    private CollisionSenses collisionSenses;
+
     public PlayerHurtState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }
@@ -15,14 +21,17 @@ public class PlayerHurtState : PlayerState
     {
         base.DoChecks();
 
-        isGrounded = core.CollisionSenses.Ground;
+        if (CollisionSenses)
+        {
+            isGrounded = CollisionSenses.Ground;
+        }
     }
 
     public override void Enter()
     {
         base.Enter();
 
-        core.Movement.SetVelocityX(0f);
+        Movement?.SetVelocityX(0f);
     }
 
     public override void Exit()
@@ -34,11 +43,11 @@ public class PlayerHurtState : PlayerState
     {
         base.LogicUpdate();
 
-        core.Movement.SetVelocityX(0f);
+        Movement?.SetVelocityX(0f);
 
         if (isAnimationFinished && !isExitingState)
         {
-            if (isGrounded && core.Movement.CurrentVelocity.y < 0.01f)
+            if (isGrounded && Movement?.CurrentVelocity.y < 0.01f)
             {
                 stateMachine.ChangeState(player.LandState);
             }

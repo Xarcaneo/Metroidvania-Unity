@@ -6,6 +6,8 @@ public class MeleeAttackState : AttackState
 {
     protected D_MeleeAttack stateData;
 
+    private Weapon Weapon { get => weapon ?? core.GetCoreComponent(ref weapon); }
+    private Weapon weapon;
     public MeleeAttackState(Entity etity, FiniteStateMachine stateMachine, string animBoolName, D_MeleeAttack stateData) : base(etity, stateMachine, animBoolName)
     {
         this.stateData = stateData;
@@ -40,6 +42,6 @@ public class MeleeAttackState : AttackState
         base.AnimationActionTrigger();
 
         //Checks what IDamageable entities intersects with weapon collider and damage them
-        core.Weapon.CheckMeleeAttack();
+        Weapon?.CheckMeleeAttack();
     }
 }
