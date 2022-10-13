@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class HurtState : State
 {
+    private Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
+    private Movement movement;
+
     public HurtState(Entity entity, FiniteStateMachine stateMachine, string animBoolName) : base(entity, stateMachine, animBoolName)
     {
     }
@@ -17,7 +20,7 @@ public class HurtState : State
     {
         base.Enter();
 
-        core.Movement.SetVelocityX(0f);
+        Movement?.SetVelocityX(0f);
     }
 
     public override void Exit()
@@ -29,7 +32,7 @@ public class HurtState : State
     {
         base.LogicUpdate();
 
-        core.Movement.SetVelocityX(0f);
+        Movement?.SetVelocityX(0f);
     }
 
     public override void PhysicsUpdate()

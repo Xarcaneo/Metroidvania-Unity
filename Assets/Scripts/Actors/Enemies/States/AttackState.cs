@@ -6,6 +6,12 @@ public class AttackState : State
 {
     protected bool isEnemyInRangeDetected;
 
+    private Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
+    private AIMeleeAttackDetector AIMeleeAttackDetector { get => aIMeleeAttackDetector ?? core.GetCoreComponent(ref aIMeleeAttackDetector); }
+
+    private Movement movement;
+    private AIMeleeAttackDetector aIMeleeAttackDetector;
+
     public AttackState(Entity entity, FiniteStateMachine stateMachine, string animBoolName) : base(entity, stateMachine, animBoolName)
     {
     }
@@ -14,14 +20,17 @@ public class AttackState : State
     {
         base.DoChecks();
 
-        isEnemyInRangeDetected = core.AIMeleeAttackDetector.GetEntityDetected();
+        if (AIMeleeAttackDetector)
+        {
+            isEnemyInRangeDetected = AIMeleeAttackDetector.GetEntityDetected();
+        }
     }
 
     public override void Enter()
     {
         base.Enter();
 
-        core.Movement.SetVelocityX(0f);
+        Movement?.SetVelocityX(0f);
     }
 
     public override void Exit()
@@ -33,7 +42,7 @@ public class AttackState : State
     {
         base.LogicUpdate();
 
-        core.Movement.SetVelocityX(0f);
+        Movement?.SetVelocityX(0f);
     }
 
     public override void PhysicsUpdate()

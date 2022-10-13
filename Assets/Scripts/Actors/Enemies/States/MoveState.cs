@@ -9,7 +9,17 @@ public class MoveState : State
     protected bool isDetectingWall;
     protected bool isDetectingLedge;
     protected bool isPlayerDetected;
-    protected bool isPlayerInSight; 
+    protected bool isPlayerInSight;
+
+    private Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
+    private CollisionSenses CollisionSenses { get => collisionSenses ?? core.GetCoreComponent(ref collisionSenses); }
+    private EntityDetector EntityDetector { get => entityDetector ?? core.GetCoreComponent(ref entityDetector); }
+    private AIRaycast AIRaycast { get => aIRaycast ?? core.GetCoreComponent(ref aIRaycast); }
+
+    private Movement movement;
+    private CollisionSenses collisionSenses;
+    private EntityDetector entityDetector;
+    private AIRaycast aIRaycast;
 
     public MoveState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_MoveState stateData) : base(entity, stateMachine, animBoolName)
     {
@@ -19,17 +29,29 @@ public class MoveState : State
     public override void DoChecks()
     {
         base.DoChecks();
-        isPlayerDetected = core.EntityDetector.GetEntityDetected();
-        isPlayerInSight = core.AIRaycast.CheckRaycastCollision();
-        isDetectingLedge = core.CollisionSenses.LedgeVertical;
-        isDetectingWall = core.CollisionSenses.WallFront;
+
+        if (EntityDetector)
+        {
+            isPlayerDetected = EntityDetector.GetEntityDetected();
+        }
+
+        if (AIRaycast)
+        {
+            isPlayerInSight = AIRaycast.CheckRaycastCollision();
+        }
+
+        if (CollisionSenses)
+        {
+            isDetectingLedge = CollisionSenses.LedgeVertical;
+            isDetectingWall = CollisionSenses.WallFront;
+        }
     }
 
     public override void Enter()
     {
         base.Enter();
 
-        core.Movement.SetVelocityX(stateData.movementSpeed * core.Movement.FacingDirection);
+        Movement?.SetVelocityX(stateData.movementSpeed * Movement.FacingDirection);
     }
 
     public override void Exit()
@@ -41,7 +63,7 @@ public class MoveState : State
     {
         base.LogicUpdate();
  
-        core.Movement.SetVelocityX(stateData.movementSpeed * core.Movement.FacingDirection);
+        Movement?.SetVelocityX(stateData.movementSpeed * Movement.FacingDirection);
     }
 
     public override void PhysicsUpdate()

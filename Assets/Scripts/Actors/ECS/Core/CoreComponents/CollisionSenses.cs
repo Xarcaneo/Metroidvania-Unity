@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class CollisionSenses : CoreComponent
 {
+    private Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
+    private Movement movement;
+
     #region Check Transforms
 
     public Transform GroundCheck
@@ -51,12 +54,12 @@ public class CollisionSenses : CoreComponent
 
     public bool WallFront
     {
-        get => Physics2D.Raycast(WallCheck.position, Vector2.right * core.Movement.FacingDirection, wallCheckDistance, whatIsGround);
+        get => Physics2D.Raycast(WallCheck.position, Vector2.right * Movement.FacingDirection, wallCheckDistance, whatIsGround);
     }
 
     public bool WallBack
     {
-        get => Physics2D.Raycast(WallCheck.position, Vector2.right * -core.Movement.FacingDirection, wallCheckDistance, whatIsGround);
+        get => Physics2D.Raycast(WallCheck.position, Vector2.right * -Movement.FacingDirection, wallCheckDistance, whatIsGround);
     }
     public bool LedgeVertical
     {
@@ -64,6 +67,6 @@ public class CollisionSenses : CoreComponent
     }
     public bool LedgeHorizontal
     {
-        get => Physics2D.Raycast(LedgeCheckHorizontal.position, Vector2.right * core.Movement.FacingDirection, wallCheckDistance, whatIsGround);
+        get => Physics2D.Raycast(LedgeCheckHorizontal.position, Vector2.right * Movement.FacingDirection, wallCheckDistance, whatIsGround);
     }
 }

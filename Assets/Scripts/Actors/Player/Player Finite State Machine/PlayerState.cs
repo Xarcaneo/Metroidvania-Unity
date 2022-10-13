@@ -23,6 +23,11 @@ public class PlayerState
 
     private string animBoolName;
 
+    private Stats Stats { get => stats ?? core.GetCoreComponent(ref stats); }
+    private Combat Combat { get => combat ?? core.GetCoreComponent(ref combat); }
+
+    private Stats stats;
+    private Combat combat;
     public PlayerState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName)
     {
         this.player = player;
@@ -68,13 +73,13 @@ public class PlayerState
 
     public void SubscribeEvents()
     {
-        core.Combat.OnDamage += damageEventHandler;
-        core.Stats.HealthZero += healthZeroEventHandler;
+        Combat.OnDamage += damageEventHandler;
+        Stats.HealthZero += healthZeroEventHandler;
     }
 
     public void UnsubscribeEvents()
     {
-        core.Combat.OnDamage -= damageEventHandler;
-        core.Stats.HealthZero -= healthZeroEventHandler;
+        Combat.OnDamage -= damageEventHandler;
+        Stats.HealthZero -= healthZeroEventHandler;
     }
 }

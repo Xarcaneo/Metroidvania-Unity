@@ -14,6 +14,18 @@ public class AfterAttackState : State
 
     protected int playerDirection;
 
+    private Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
+    private CollisionSenses CollisionSenses { get => collisionSenses ?? core.GetCoreComponent(ref collisionSenses); }
+    private EntityDetector EntityDetector { get => entityDetector ?? core.GetCoreComponent(ref entityDetector); }
+    private AIMeleeAttackDetector AIMeleeAttackDetector { get => aIMeleeAttackDetector ?? core.GetCoreComponent(ref aIMeleeAttackDetector); }
+    private AIRaycast AIRaycast { get => aIRaycast ?? core.GetCoreComponent(ref aIRaycast); }
+
+    private Movement movement;
+    private CollisionSenses collisionSenses;
+    private EntityDetector entityDetector;
+    private AIMeleeAttackDetector aIMeleeAttackDetector;
+    private AIRaycast aIRaycast;
+
     public AfterAttackState(Entity entity, FiniteStateMachine stateMachine, string animBoolName) : base(entity, stateMachine, animBoolName)
     {
     }
@@ -22,17 +34,32 @@ public class AfterAttackState : State
     {
         base.DoChecks();
 
-        isEnemyInRangeDetected = core.AIMeleeAttackDetector.GetEntityDetected();
-        isPlayerDetected = core.EntityDetector.GetEntityDetected();
-        isDectectingLedge = core.CollisionSenses.LedgeVertical;
-        playerDirection = core.EntityDetector.CheckFlipDirectionTowardsEntity();
-        isPlayerInSight = core.AIRaycast.CheckRaycastCollision();
+        if (CollisionSenses)
+        {
+            isDectectingLedge = CollisionSenses.LedgeVertical;
+        }
+
+        if (EntityDetector)
+        {
+            isPlayerDetected = EntityDetector.GetEntityDetected();
+            playerDirection = EntityDetector.CheckFlipDirectionTowardsEntity();
+        }
+
+        if (aIMeleeAttackDetector)
+        {
+            isEnemyInRangeDetected = AIMeleeAttackDetector.GetEntityDetected();
+        }
+
+        if (AIRaycast)
+        {
+            isPlayerInSight = AIRaycast.CheckRaycastCollision();
+        }
     }
 
     public override void Enter()
     {
         base.Enter();
-        core.Movement.SetVelocityX(0f);
+        Movement?.SetVelocityX(0f);
         isStateTimeOver = false;
     }
 
@@ -47,7 +74,7 @@ public class AfterAttackState : State
     {
         base.LogicUpdate();
 
-        core.Movement.SetVelocityX(0f);
+        Movement?.SetVelocityX(0f);
 
         if (Time.time >= startTime + stateDurationTime)
         {

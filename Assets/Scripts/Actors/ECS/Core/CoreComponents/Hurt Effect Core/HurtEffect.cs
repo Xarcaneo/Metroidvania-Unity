@@ -4,7 +4,9 @@ using System;
 using UnityEngine;
 
 public class HurtEffect : CoreComponent
-{
+{   
+    protected Action<float> damageEventHandler;
+
     [Tooltip("The SpriteRenderer that should flash.")]
     protected SpriteRenderer spriteRenderer;
 
@@ -14,18 +16,20 @@ public class HurtEffect : CoreComponent
     // The currently running coroutine.
     protected Coroutine effectRoutine;
 
-    protected Action<float> damageEventHandler;
+    private Combat Combat { get => combat ?? core.GetCoreComponent(ref combat); }
+
+    private Combat combat;
 
     private void Start()
     {
         spriteRenderer = core.transform.parent.GetComponent<SpriteRenderer>();
         damageEventHandler = (amount) => { TurnOnEffect(); };
-        core.Combat.OnDamage += damageEventHandler;
+        Combat.OnDamage += damageEventHandler;
     }
 
     private void OnDisable()
     {
-        core.Combat.OnDamage -= damageEventHandler;
+        Combat.OnDamage -= damageEventHandler;
     }
     public void TurnOnEffect()
     {

@@ -20,6 +20,12 @@ public class State
 
     protected string animBoolName;
 
+    private Stats Stats { get => stats ?? core.GetCoreComponent(ref stats); }
+    private Combat Combat { get => combat ?? core.GetCoreComponent(ref combat); }
+
+    private Stats stats;
+    private Combat combat;
+
     public State(Entity entity, FiniteStateMachine stateMachine, string animBoolName)
     {
         this.entity = entity;
@@ -67,13 +73,13 @@ public class State
 
     public void SubscribeEvents()
     {
-        core.Combat.OnDamage += damageEventHandler;
-        core.Stats.HealthZero += healthZeroEventHandler;
+        Combat.OnDamage += damageEventHandler;
+        Stats.HealthZero += healthZeroEventHandler;
     }
 
     public void UnsubscribeEvents()
     {
-        core.Combat.OnDamage -= damageEventHandler;
-        core.Stats.HealthZero -= healthZeroEventHandler;
+        Combat.OnDamage -= damageEventHandler;
+        Stats.HealthZero -= healthZeroEventHandler;
     }
 }

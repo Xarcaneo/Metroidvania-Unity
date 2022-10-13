@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerDeathState : PlayerState
 {
+    private Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
+    private Movement movement;
+
     public PlayerDeathState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }
@@ -17,7 +20,7 @@ public class PlayerDeathState : PlayerState
     {
         base.Enter();
 
-        core.Movement.SetVelocityX(0f);
+        Movement?.SetVelocityX(0f);
     }
 
     public override void Exit()
@@ -29,7 +32,7 @@ public class PlayerDeathState : PlayerState
     {
         base.LogicUpdate();
 
-        core.Movement.SetVelocityX(0f);
+        Movement?.SetVelocityX(0f);
     }
 
     public override void PhysicsUpdate()

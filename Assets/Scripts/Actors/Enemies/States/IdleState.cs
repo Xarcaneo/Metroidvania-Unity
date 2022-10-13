@@ -18,6 +18,18 @@ public class IdleState : State
 
     protected float idleTime;
 
+    private Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
+    private CollisionSenses CollisionSenses { get => collisionSenses ?? core.GetCoreComponent(ref collisionSenses); }
+    private EntityDetector EntityDetector { get => entityDetector ?? core.GetCoreComponent(ref entityDetector); }
+    private AIMeleeAttackDetector AIMeleeAttackDetector { get => aIMeleeAttackDetector ?? core.GetCoreComponent(ref aIMeleeAttackDetector); }
+    private AIRaycast AIRaycast { get => aIRaycast ?? core.GetCoreComponent(ref aIRaycast); }
+
+    private Movement movement;
+    private CollisionSenses collisionSenses;
+    private EntityDetector entityDetector;
+    private AIMeleeAttackDetector aIMeleeAttackDetector;
+    private AIRaycast aIRaycast;
+
     public IdleState(Entity etity, FiniteStateMachine stateMachine, string animBoolName, D_IdleState stateData) : base(etity, stateMachine, animBoolName)
     {
         this.stateData = stateData;
@@ -27,19 +39,34 @@ public class IdleState : State
     {
         base.DoChecks();
 
-        isPlayerDetected = core.EntityDetector.GetEntityDetected();
-        isDetectingWall = core.CollisionSenses.WallFront;
-        isDectectingLedge = core.CollisionSenses.LedgeVertical;
-        isEnemyInAttackRangeDetected = core.AIMeleeAttackDetector.GetEntityDetected();
-        playerDirection = core.EntityDetector.CheckFlipDirectionTowardsEntity();
-        isPlayerInSight = core.AIRaycast.CheckRaycastCollision();
+        if (CollisionSenses)
+        {
+            isDetectingWall = CollisionSenses.WallFront;
+            isDectectingLedge = CollisionSenses.LedgeVertical;
+        }
+
+        if (EntityDetector)
+        {
+            playerDirection = EntityDetector.CheckFlipDirectionTowardsEntity();
+            isPlayerDetected = EntityDetector.GetEntityDetected();
+        }
+
+        if (AIMeleeAttackDetector)
+        {
+            isEnemyInAttackRangeDetected = AIMeleeAttackDetector.GetEntityDetected();
+        }
+
+        if (aIRaycast)
+        {
+            isPlayerInSight = AIRaycast.CheckRaycastCollision();
+        }
     }
 
     public override void Enter()
     {
         base.Enter();
 
-        core.Movement.SetVelocityX(0f);
+        Movement?.SetVelocityX(0f);
         isIdleTimeOver = false;
         SetRandomIdleTime();
     }
@@ -50,7 +77,7 @@ public class IdleState : State
 
         if (flipAfterIdle)
         {
-            core.Movement.Flip();
+            Movement?.Flip();
         }
 
         idleTime = 0.0f;
@@ -60,7 +87,7 @@ public class IdleState : State
     {
         base.LogicUpdate();
 
-        core.Movement.SetVelocityX(0f);
+        Movement?.SetVelocityX(0f);
 
         if (Time.time >= startTime + idleTime)
         {

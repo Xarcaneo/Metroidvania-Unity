@@ -17,23 +17,23 @@ public class PlayerDashState : PlayerAbilityState
 
         player.InputHandler.UseDashInput();
 
-        dashDirection = Vector2.right * core.Movement.FacingDirection;
+        dashDirection = Vector2.right * Movement.FacingDirection;
 
         startTime = Time.unscaledTime;
 
         float angle = Vector2.SignedAngle(Vector2.right, dashDirection);
 
         startTime = Time.time;
-        core.Movement.CheckIfShouldFlip(Mathf.RoundToInt(dashDirection.x));
+        Movement?.CheckIfShouldFlip(Mathf.RoundToInt(dashDirection.x));
     }
 
     public override void Exit()
     {
         base.Exit();
 
-        if (core.Movement.CurrentVelocity.y > 0)
+        if (Movement?.CurrentVelocity.y > 0)
         {
-            core.Movement.SetVelocityY(core.Movement.CurrentVelocity.y * playerData.dashEndYMultiplier);
+            Movement?.SetVelocityY(Movement.CurrentVelocity.y * playerData.dashEndYMultiplier);
         }
     }
 
@@ -43,11 +43,11 @@ public class PlayerDashState : PlayerAbilityState
 
         if (!isExitingState)
         {
-            player.Anim.SetFloat("yVelocity", core.Movement.CurrentVelocity.y);
+            player.Anim.SetFloat("yVelocity", Movement.CurrentVelocity.y);
 
-            core.Movement.SetVelocity(playerData.dashVelocity, playerData.dashAngle, core.Movement.FacingDirection);
+            Movement?.SetVelocity(playerData.dashVelocity, playerData.dashAngle, Movement.FacingDirection);
 
-            if (Time.time >= startTime + playerData.dashTime || isTouchingWall  || isTouchingLedge || core.Movement.CurrentVelocity.x == 0)
+            if (Time.time >= startTime + playerData.dashTime || isTouchingWall  || isTouchingLedge || Movement?.CurrentVelocity.x == 0)
             {
                 isAbilityDone = true;
                 lastDashTime = Time.time;
