@@ -15,13 +15,18 @@ public class HealthBarController : MonoBehaviour
 
     public Stats stats;
 
-    bool isInitializing = false;
+    private void OnPlayerSpawned()
+    {
+        stats = Player.Instance.Core.GetCoreComponent<Stats>();
+        SetMaxHealth(stats.GetMaxHealth());
+        health = maxHealth;
+
+        stats.Damaged += TakeDamage;
+    }
 
     private void OnEnable()
     {
-        isInitializing = true;
-        if(!stats) StartCoroutine(InitializeHealthBar());
-        StartCoroutine(InitializeEvents());
+        GameEvents.Instance.onPlayerSpawned += OnPlayerSpawned;
     }
 
     private void OnDisable()
@@ -30,12 +35,12 @@ public class HealthBarController : MonoBehaviour
         {
             stats.Damaged -= TakeDamage;
         }
+
+        GameEvents.Instance.onPlayerSpawned -= OnPlayerSpawned;
     }
 
     private void Update()
     {
-        if (!stats && !isInitializing) OnEnable();
-
         health = Mathf.Clamp(health,0,maxHealth);
         UpdateHealthUI();
     }
@@ -82,23 +87,5 @@ public class HealthBarController : MonoBehaviour
     private void SetMaxHealth(float newMaxHealth)
     {
         maxHealth = newMaxHealth;
-    }
-
-    IEnumerator InitializeHealthBar()
-    {
-        yield return new WaitUntil(() => GameObject.FindGameObjectWithTag("PlayerStats") != null);
-
-        stats = GameObject.FindGameObjectWithTag("PlayerStats").GetComponent<Stats>();
-        SetMaxHealth(stats.GetMaxHealth());
-        health = maxHealth;
-       
-    }
-
-    IEnumerator InitializeEvents()
-    {
-        yield return new WaitUntil(() => stats != null);
-
-        stats.Damaged += TakeDamage;
-        isInitializing = false;
     }
 }

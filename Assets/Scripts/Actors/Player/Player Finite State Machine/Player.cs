@@ -92,6 +92,8 @@ public class Player : MonoBehaviour
         MovementCollider = GetComponent<BoxCollider2D>();
 
         StateMachine.Initialize(IdleState);
+
+        GameEvents.Instance.PlayerSpawned();
     }
     private void Update()
     {
