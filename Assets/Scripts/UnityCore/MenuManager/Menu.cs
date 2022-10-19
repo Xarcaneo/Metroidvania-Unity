@@ -42,17 +42,23 @@ namespace Menu
     {
         [SerializeField] public GameObject buttonToFocus;
 
-        protected PlayerInput menuInput;
-
-        private void Start()
-        {
-            menuInput = GetComponent<PlayerInput>();
-        }
-
         private void Update()
         {
             CustomUpdate();
-            OnReturnInput();
+        }
+
+        private void OnEnable()
+        {
+            InputManager.Instance.OnMenuReturn += OnReturnInput;
+            InputManager.Instance.OnMenuPlayerMenu += OnPlayerMenuInput;
+            InputManager.Instance.OnMenuDelete += OnPlayerDeleteInput;
+        }
+
+        private void OnDisable()
+        {
+            InputManager.Instance.OnMenuReturn -= OnReturnInput;
+            InputManager.Instance.OnMenuPlayerMenu -= OnPlayerMenuInput;
+            InputManager.Instance.OnMenuDelete -= OnPlayerDeleteInput;
         }
 
         public virtual void OnStart()
@@ -60,10 +66,9 @@ namespace Menu
 
         }
 
-        public virtual void OnReturnInput()
-        {
-            if (menuInput.actions["Return"].triggered) OnBackPressed();
-        }
+        public virtual void OnReturnInput() => OnBackPressed();
+        public virtual void OnPlayerMenuInput() { }
+        public virtual void OnPlayerDeleteInput() { }
 
         public virtual void OnOpenMenu()
         {

@@ -10,7 +10,6 @@ namespace Menu
         public override void CustomUpdate()
         {
             base.CustomUpdate();
-            OnPlayerMenuInput();
         }
 
         public override void OnOpenMenu()
@@ -20,21 +19,8 @@ namespace Menu
             GameEvents.Instance.PauseTrigger(true);
         }
 
-        public override void OnReturnInput()
-        {
-            if (menuInput.actions["Return"].triggered)
-            {
-                OnResumePressed();
-            }
-        }
-
-        private void OnPlayerMenuInput()
-        {
-            if (menuInput.actions["PlayerMenu"].triggered)
-            {
-                OnResumePressed();
-            }
-        }
+        public override void OnReturnInput() => OnResumePressed();
+        public override void OnPlayerMenuInput() => OnResumePressed();
 
         public void OnResumePressed()
         {

@@ -46,12 +46,9 @@ namespace Menu
 
         public override void OnReturnInput()
         {
-            if (menuInput.actions["Return"].triggered)
-            {
-                audioManagerData.RaiseSaveDataEvent();
-                SaveAudioSettings();
-                OnBackPressed();
-            }
+            audioManagerData.RaiseSaveDataEvent();
+            SaveAudioSettings();
+            OnBackPressed();
         }
 
         private void SaveAudioSettings()

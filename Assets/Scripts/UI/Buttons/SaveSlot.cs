@@ -17,6 +17,11 @@ public class SaveSlot : MyButton, ISelectHandler
 
     private void OnEnable()
     {
+        SetButtonContent();
+    }
+
+    public void SetButtonContent()
+    {
         bool is_empty = SaveSystem.HasSavedGameInSlot(SlotNumber);
 
         if (is_empty)
@@ -39,7 +44,6 @@ public class SaveSlot : MyButton, ISelectHandler
 
         GameManager.Instance.currentSaveSlot = SlotNumber;
     }
-
     private void UpdateContent()
     {
         var savedGameData = SaveSystem.storer.RetrieveSavedGameData(SlotNumber);

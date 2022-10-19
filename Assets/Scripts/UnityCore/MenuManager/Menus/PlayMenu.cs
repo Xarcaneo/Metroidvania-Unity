@@ -10,6 +10,7 @@ namespace Menu
     public class PlayMenu : Menu<PlayMenu>
     {
         [SerializeField] SfxClip menuClip = default;
+        public List<SaveSlot> saveSlots;
 
         public override void OnOpenMenu()
         {
@@ -39,10 +40,11 @@ namespace Menu
             }
         }
 
-        public void OnDeletePressed()
+        public override void OnPlayerDeleteInput()
         {
             int active_slot = GameManager.Instance.currentSaveSlot;
             SaveSystem.DeleteSavedGameInSlot(active_slot);
+            saveSlots[active_slot - 1].SetButtonContent();
         }
     }
 }

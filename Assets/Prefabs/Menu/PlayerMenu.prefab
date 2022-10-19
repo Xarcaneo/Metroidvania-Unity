@@ -555,7 +555,6 @@ GameObject:
   - component: {fileID: 1772486754306554505}
   - component: {fileID: 1772486754306554504}
   - component: {fileID: 1772486754306554503}
-  - component: {fileID: 1724439030361261965}
   - component: {fileID: 247148568258883016}
   m_Layer: 5
   m_Name: PlayerMenu
@@ -646,36 +645,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &1724439030361261965
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1772486754306554502}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: d7f13e266802caa4e91dd8bab45e7b96, type: 3}
-  m_NotificationBehavior: 0
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Navigation
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
 --- !u!114 &247148568258883016
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2112,7 +2081,6 @@ GameObject:
   - component: {fileID: 4281547505949412178}
   - component: {fileID: 2908425951689451297}
   - component: {fileID: 991708833502021001}
-  - component: {fileID: 9171234813377525685}
   m_Layer: 5
   m_Name: Tab Area
   m_TagString: Untagged
@@ -2229,57 +2197,6 @@ MonoBehaviour:
   - {fileID: 3153013900634716238}
   tabIdle: {fileID: 21300000, guid: 087d258ea7b0c5e4698e416e21be0fb0, type: 3}
   tabActive: {fileID: 21300000, guid: 1db76e2347f196144a5d00717f2562f6, type: 3}
-  selectedTab: {fileID: 828668186683248171}
---- !u!114 &9171234813377525685
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7921478188986603713}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: d7f13e266802caa4e91dd8bab45e7b96, type: 3}
-  m_NotificationBehavior: 2
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents:
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 1aa1160b-e3a7-4af8-91ea-90922aed3065
-    m_ActionName: Navigation/Return[/Keyboard/escape]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 450bfe6a-ed65-4686-b3c4-2b50acb4f740
-    m_ActionName: Navigation/Delete[/Keyboard/x]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: faf854cd-c5c5-4b49-a955-a3217c1ad2c8
-    m_ActionName: Navigation/PlayerMenu[/Keyboard/i]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 4a37b6ff-e955-4913-b86b-e414266e7df0
-    m_ActionName: Navigation/PreviousTab[/Keyboard/j]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: c205c0d5-7a56-4b41-ae53-b0f5cba92350
-    m_ActionName: Navigation/NextTab[/Keyboard/k]
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Navigation
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
 --- !u!1 &8229633039632076278
 GameObject:
   m_ObjectHideFlags: 0
