@@ -10,21 +10,10 @@ namespace Menu
         public override void CustomUpdate()
         {
             base.CustomUpdate();
-            OnPlayerMenuInput();
         }
 
-        public override void OnReturnInput()
-        {
-            if (menuInput.actions["Return"].triggered) OnPausePressed();
-        }
-
-        private void OnPlayerMenuInput()
-        {
-            if (menuInput.actions["PlayerMenu"].triggered)
-            {
-                PlayerMenu.Open();
-            }
-        }
+        public override void OnReturnInput() => OnPausePressed();
+        public override void OnPlayerMenuInput() => PlayerMenu.Open();
 
         public void OnPausePressed()
         {

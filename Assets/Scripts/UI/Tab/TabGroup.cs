@@ -14,30 +14,30 @@ public class TabGroup : MonoBehaviour
     private TabButton selectedTab;
     private int index;
 
-    protected PlayerInput menuInput;
+    private void OnEnable()
+    {
+        InputManager.Instance.OnMenuNextTab += NextTab;
+        InputManager.Instance.OnMenuPreviousTab += PreviousTab;
+    }
 
     private void OnDisable()
     {
         int startIndex = tabButtons.Count / 2;
         OnTabSelected(tabButtons[startIndex]);
+
+        InputManager.Instance.OnMenuNextTab -= NextTab;
+        InputManager.Instance.OnMenuPreviousTab -= PreviousTab;
     }
 
-    private void Start()
+    private void NextTab()
     {
-        menuInput = GetComponent<PlayerInput>();
+        if (index + 1 < tabButtons.Count) OnTabSelected(tabButtons[index + 1]);
+    }
+    private void PreviousTab()
+    {
+        if (index -1 >= 0)  OnTabSelected(tabButtons[index - 1]);
     }
 
-    private void Update()
-    {
-        if (menuInput.actions["PreviousTab"].triggered)
-        {
-            OnTabSelected(tabButtons[index - 1]);
-        }
-        else if (menuInput.actions["NextTab"].triggered)
-        {
-            OnTabSelected(tabButtons[index + 1]);
-        }
-    }
 
     public void Subscribe(TabButton button)
     {

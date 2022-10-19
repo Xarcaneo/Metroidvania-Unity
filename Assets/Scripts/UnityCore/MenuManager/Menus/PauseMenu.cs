@@ -29,11 +29,8 @@ namespace Menu
 
         public override void OnReturnInput()
         {
-            if (menuInput.actions["Return"].triggered)
-            {
-                SaveSystem.sceneLoaded -= OnSceneLoaded;
-                OnResumePressed();
-            }
+            SaveSystem.sceneLoaded -= OnSceneLoaded;
+            OnResumePressed();
         }
 
         public void OnResumePressed()
