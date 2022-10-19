@@ -47,4 +47,13 @@ public class GameEvents : MonoBehaviour
             onPlayerInteractTrigger(isInteracting);
         }
     }
+
+    public event Action onPlayerSpawned;
+    public void PlayerSpawned()
+    {
+        if (onPlayerSpawned != null)
+        {
+            onPlayerSpawned();
+        }
+    }
 }
