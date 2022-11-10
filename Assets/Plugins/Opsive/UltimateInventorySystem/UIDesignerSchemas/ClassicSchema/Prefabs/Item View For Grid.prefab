@@ -28,6 +28,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4237533657016742494}
   m_RootOrder: 0
@@ -60,6 +61,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -91,8 +93,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 10
+  m_fontSizeBase: 10
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -161,6 +163,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5256083001076740367}
   m_RootOrder: 3
@@ -193,6 +196,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -242,6 +246,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 657340730015301256}
   - {fileID: 1244311168395125945}
@@ -253,7 +258,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 120, y: 120}
+  m_SizeDelta: {x: 64, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5256083001076740365
 CanvasRenderer:
@@ -278,13 +283,13 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 7061801754131594114, guid: 12ab13dfdcd42254db7df2308b7102b1,
-    type: 3}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: fbccf31451efc7d438e519c2edbbe1df, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -324,8 +329,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Icon: {fileID: 6034409020695321849}
-  m_MissingIcon: {fileID: 3425014876571629422, guid: 12ab13dfdcd42254db7df2308b7102b1,
-    type: 3}
+  m_MissingIcon: {fileID: 3425014876571629422, guid: 12ab13dfdcd42254db7df2308b7102b1, type: 3}
   m_DisableOnClear: 1
 --- !u!114 &3504553963942889885
 MonoBehaviour:
@@ -358,14 +362,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Image: {fileID: 5256083001076740366}
-  m_Default: {fileID: 7061801754131594114, guid: 12ab13dfdcd42254db7df2308b7102b1,
-    type: 3}
-  m_Selected: {fileID: -7377819553374844296, guid: 12ab13dfdcd42254db7df2308b7102b1,
-    type: 3}
-  m_Equipped: {fileID: 2011003698090158011, guid: 12ab13dfdcd42254db7df2308b7102b1,
-    type: 3}
-  m_EquippedSelected: {fileID: -8417962246831464302, guid: 12ab13dfdcd42254db7df2308b7102b1,
-    type: 3}
+  m_Default: {fileID: 21300000, guid: fbccf31451efc7d438e519c2edbbe1df, type: 3}
+  m_Selected: {fileID: 21300000, guid: 49d3c5f328acb754eb04cbb33f3cede0, type: 3}
+  m_Equipped: {fileID: 21300000, guid: fbccf31451efc7d438e519c2edbbe1df, type: 3}
+  m_EquippedSelected: {fileID: 21300000, guid: 49d3c5f328acb754eb04cbb33f3cede0, type: 3}
   m_EquippedAttributeName: IsEquipped
   m_EquipmentCollectionID:
     m_Name: 
@@ -474,6 +474,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5256083001076740367}
   m_RootOrder: 1
@@ -481,7 +482,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 85, y: 85}
+  m_SizeDelta: {x: 64, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7550427817427204623
 CanvasRenderer:
@@ -506,12 +507,12 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1989100132555051953, guid: 12ab13dfdcd42254db7df2308b7102b1,
-    type: 3}
+  m_Sprite: {fileID: -1989100132555051953, guid: 12ab13dfdcd42254db7df2308b7102b1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -549,6 +550,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4298986145023900041}
   m_Father: {fileID: 5256083001076740367}
@@ -557,7 +559,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 54.24, y: 32.04}
+  m_SizeDelta: {x: 27.12, y: 16.02}
   m_Pivot: {x: 0, y: 0}
 --- !u!222 &3293829378334147757
 CanvasRenderer:
@@ -582,12 +584,12 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -4118346828941794905, guid: 12ab13dfdcd42254db7df2308b7102b1,
-    type: 3}
+  m_Sprite: {fileID: -4118346828941794905, guid: 12ab13dfdcd42254db7df2308b7102b1, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -625,6 +627,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5256083001076740367}
   m_RootOrder: 0
@@ -657,6 +660,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.19215687, g: 0.2, b: 1, a: 0.30588236}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:

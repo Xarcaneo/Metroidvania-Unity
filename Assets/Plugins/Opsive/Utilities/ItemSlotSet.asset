@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e9d0f19db9c7d949b5317a193f72cd0, type: 3}
+  m_Name: ItemSlotSet
+  m_EditorClassIdentifier: 
+  m_ItemSlots:
+  - m_Name: Chest
+    m_Category:
+      m_Name: Chest wear
+      m_ItemCategory: {fileID: 11400000, guid: 16e299484448ce34587dacc06f0c033f, type: 2}
+  - m_Name: Foot
+    m_Category:
+      m_Name: Foot wear
+      m_ItemCategory: {fileID: 11400000, guid: de9b7ffcbb6506646bd4bd9178c2b274, type: 2}
+  - m_Name: Gloves
+    m_Category:
+      m_Name: Gloves
+      m_ItemCategory: {fileID: 11400000, guid: e2ed83ea7e3f87b49983f4d85237d5db, type: 2}
+  - m_Name: Head
+    m_Category:
+      m_Name: Head wear
+      m_ItemCategory: {fileID: 11400000, guid: dc7bdc0cb17a52f4baf94ac7591499e5, type: 2}
+  - m_Name: Necklace
+    m_Category:
+      m_Name: Necklace
+      m_ItemCategory: {fileID: 11400000, guid: 21b5a65471a108443b359c420bfd58dd, type: 2}
+  - m_Name: Ring
+    m_Category:
+      m_Name: Ring
+      m_ItemCategory: {fileID: 11400000, guid: 559e08f033e6ce246a60d9967038785b, type: 2}
+  - m_Name: Ring
+    m_Category:
+      m_Name: Ring
+      m_ItemCategory: {fileID: 11400000, guid: 559e08f033e6ce246a60d9967038785b, type: 2}
