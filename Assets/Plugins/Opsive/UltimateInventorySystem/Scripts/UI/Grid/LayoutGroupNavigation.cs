@@ -144,7 +144,7 @@ namespace Opsive.UltimateInventorySystem.UI.Grid
         protected static Selectable VerticalNavigation(Selectable selectable, Selectable previous, bool setOthersToNull)
         {
             var navigation = selectable.navigation;
-            navigation.mode = Navigation.Mode.Explicit;
+            navigation.mode = Navigation.Mode.Automatic;
             
             navigation.selectOnUp = previous;
             
@@ -177,7 +177,7 @@ namespace Opsive.UltimateInventorySystem.UI.Grid
         protected static Selectable HorizontalNavigation(Selectable selectable, Selectable previous, bool setOthersToNull)
         {
             var navigation = selectable.navigation;
-            navigation.mode = Navigation.Mode.Explicit;
+            navigation.mode = Navigation.Mode.Automatic;
             
             navigation.selectOnLeft = previous;
 
@@ -253,7 +253,7 @@ namespace Opsive.UltimateInventorySystem.UI.Grid
                         if (noWrapY) { previousY = null; }
 
                         var navigation = selectable.navigation;
-                        navigation.mode = Navigation.Mode.Explicit;
+                        navigation.mode = Navigation.Mode.Automatic;
                         navigation.selectOnUp = previousY;
                         navigation.selectOnDown = null;
                         navigation.selectOnLeft = previousX;
@@ -309,7 +309,7 @@ namespace Opsive.UltimateInventorySystem.UI.Grid
                 var selectable = selectables[i];
 
                 var navigation = selectable.navigation;
-                navigation.mode = Navigation.Mode.Explicit;
+                navigation.mode = Navigation.Mode.Automatic;
                 navigation.selectOnUp = FindSelectable(selectable, Vector3.up, selectables);
                 navigation.selectOnDown = FindSelectable(selectable, Vector3.down, selectables);
                 navigation.selectOnLeft = FindSelectable(selectable, Vector3.left, selectables);

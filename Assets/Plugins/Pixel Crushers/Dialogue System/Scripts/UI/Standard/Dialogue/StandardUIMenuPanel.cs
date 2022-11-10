@@ -541,7 +541,7 @@ namespace PixelCrushers.DialogueSystem
                     : buttons[i + 1].GetComponent<UnityEngine.UI.Button>();
                 var navigation = new UnityEngine.UI.Navigation();
 
-                navigation.mode = UnityEngine.UI.Navigation.Mode.Explicit;
+                navigation.mode = UnityEngine.UI.Navigation.Mode.Automatic;
                 navigation.selectOnUp = above;
                 navigation.selectOnLeft = above;
                 navigation.selectOnDown = below;

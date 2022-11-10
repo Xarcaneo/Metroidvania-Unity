@@ -22,11 +22,14 @@ public class TabGroup : MonoBehaviour
 
     private void OnDisable()
     {
-        int startIndex = tabButtons.Count / 2;
-        OnTabSelected(tabButtons[startIndex]);
-
         InputManager.Instance.OnMenuNextTab -= NextTab;
         InputManager.Instance.OnMenuPreviousTab -= PreviousTab;
+    }
+
+    public void ResetPages()
+    {
+        int startIndex = tabButtons.Count / 2;
+        OnTabSelected(tabButtons[startIndex]);
     }
 
     private void NextTab()
