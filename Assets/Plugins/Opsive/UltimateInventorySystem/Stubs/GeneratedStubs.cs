@@ -18,10 +18,10 @@ namespace Opsive.UltimateInventorySystem.Stubs
 		public GeneratedStubs()
 		{
 #pragma warning disable 0618
+			new Opsive.UltimateInventorySystem.Core.AttributeSystem.Attribute<System.String>();
 			new Opsive.UltimateInventorySystem.Core.AttributeSystem.Attribute<System.Boolean>();
 			new Opsive.UltimateInventorySystem.Core.AttributeSystem.Attribute<System.Int32>();
 			new Opsive.UltimateInventorySystem.Core.AttributeSystem.Attribute<System.Single>();
-			new Opsive.UltimateInventorySystem.Core.AttributeSystem.Attribute<System.String>();
 			new Opsive.UltimateInventorySystem.Core.AttributeSystem.Attribute<UnityEngine.AnimationCurve>();
 			new Opsive.UltimateInventorySystem.Core.AttributeSystem.Attribute<UnityEngine.Bounds>();
 			new Opsive.UltimateInventorySystem.Core.AttributeSystem.Attribute<UnityEngine.Rect>();
@@ -35,8 +35,8 @@ namespace Opsive.UltimateInventorySystem.Stubs
 			new Opsive.UltimateInventorySystem.Core.AttributeSystem.Attribute<UnityEngine.LayerMask>();
 			new Opsive.UltimateInventorySystem.Core.AttributeSystem.Attribute<UnityEngine.Time>();
 			new Opsive.UltimateInventorySystem.Core.AttributeSystem.Attribute<UnityEngine.Input>();
-			new Opsive.UltimateInventorySystem.Core.AttributeSystem.Attribute<UnityEngine.RaycastHit>();
 			new Opsive.UltimateInventorySystem.Core.AttributeSystem.Attribute<UnityEngine.Physics>();
+			new Opsive.UltimateInventorySystem.Core.AttributeSystem.Attribute<UnityEngine.RaycastHit>();
 			new Opsive.UltimateInventorySystem.Core.AttributeSystem.Attribute<UnityEngine.Physics2D>();
 			new Opsive.UltimateInventorySystem.Core.AttributeSystem.Attribute<UnityEngine.RaycastHit2D>();
 			new Opsive.UltimateInventorySystem.Core.AttributeSystem.Attribute<Opsive.UltimateInventorySystem.UI.Item.ItemShape>();

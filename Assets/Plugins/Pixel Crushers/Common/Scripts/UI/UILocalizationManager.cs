@@ -2,6 +2,7 @@
 
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace PixelCrushers
 {
@@ -21,6 +22,14 @@ namespace PixelCrushers
         [SerializeField]
         private TextTable m_textTable = null;
 
+        [Tooltip("Any additional text tables.")]
+        [SerializeField]
+        private List<TextTable> m_additionalTextTables = null;
+
+        [Tooltip("Table of fonts to use for specific languages.")]
+        [SerializeField]
+        private LocalizedFonts m_localizedFonts;
+
         [Tooltip("When starting, set current language to value saved in PlayerPrefs.")]
         [SerializeField]
         private bool m_saveLanguageInPlayerPrefs = true;
@@ -34,6 +43,8 @@ namespace PixelCrushers
         private bool m_useDefaultLanguageForBlankTranslations = true;
 
         private string m_currentLanguage = string.Empty;
+
+        public LocalizedFonts localizedFonts { get { return m_localizedFonts; } set { m_localizedFonts = value; } }
 
         private static UILocalizationManager s_instance = null;
 
@@ -76,8 +87,17 @@ namespace PixelCrushers
         /// </summary>
         public TextTable textTable
         {
-            get { return (instance.m_textTable != null) ? instance.m_textTable : GlobalTextTable.textTable; }
-            set { instance.m_textTable = value; }
+            get { return (m_textTable != null) ? m_textTable : GlobalTextTable.textTable; }
+            set { m_textTable = value; }
+        }
+
+        /// <summary>
+        /// (Optional) Any additional text tables.
+        /// </summary>
+        public List<TextTable> additionalTextTables
+        {
+            get { return m_additionalTextTables; }
+            set { m_additionalTextTables = value; }
         }
 
         /// <summary>
@@ -139,6 +159,64 @@ namespace PixelCrushers
         {
             yield return new WaitForEndOfFrame(); // Wait for Text components to start.
             UpdateUIs(currentLanguage);
+        }
+
+        /// <summary>
+        /// Checks if text table(s) support the specified language.
+        /// </summary>
+        public bool HasLanguage(string language)
+        {
+            if (textTable != null && textTable.HasLanguage(language)) return true;
+            if (additionalTextTables != null)
+            {
+                foreach (TextTable additionalTable in additionalTextTables)
+                {
+                    if (additionalTable != null && additionalTable.HasLanguage(language)) return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Checks if text table(s) have a specified field.
+        /// </summary>
+        /// <param name="fieldName"></param>
+        /// <returns></returns>
+        public bool HasField(string fieldName)
+        {
+            if (textTable != null && textTable.HasField(fieldName)) return true;
+            if (additionalTextTables != null)
+            {
+                foreach (TextTable additionalTable in additionalTextTables)
+                {
+                    if (additionalTable != null && additionalTable.HasField(fieldName)) return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Returns the localized text for a field in a specified language.
+        /// </summary>
+        public string GetFieldTextForLanguage(string fieldName, string language)
+        {
+            if (textTable != null && textTable.HasField(fieldName)) return textTable.GetFieldTextForLanguage(fieldName, language);
+            if (additionalTextTables != null)
+            {
+                foreach (TextTable additionalTable in additionalTextTables)
+                {
+                    if (additionalTable != null && additionalTable.HasField(fieldName)) return additionalTable.GetFieldTextForLanguage(fieldName, language);
+                }
+            }
+            return string.Empty;
+        }
+
+        /// <summary>
+        /// Returns the localized text for a field in the current language.
+        /// </summary>
+        public string GetLocalizedText(string fieldName)
+        {
+            return GetFieldTextForLanguage(fieldName, GlobalTextTable.currentLanguage);
         }
 
         /// <summary>

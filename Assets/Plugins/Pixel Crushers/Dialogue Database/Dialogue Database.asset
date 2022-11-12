@@ -291,7 +291,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: GiveQuest("NPC" , "ExplorationQuest")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -370,14 +370,14 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: GiveQuest("NPC" , "Diamond Quest")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 30
-        y: 121
+        x: 28
+        y: 120
         width: 160
         height: 30
     - id: 3

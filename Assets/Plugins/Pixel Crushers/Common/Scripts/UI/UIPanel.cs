@@ -116,6 +116,16 @@ namespace PixelCrushers
             }
         }
 
+        private Animator m_animator = null;
+        private Animator myAnimator
+        {
+            get
+            { 
+                if (m_animator == null) m_animator = GetComponent<Animator>() ?? GetComponentInChildren<Animator>();
+                return m_animator;
+            }
+        }
+
         protected virtual void Start()
         {
             if (panelState == PanelState.Uninitialized)
@@ -217,6 +227,7 @@ namespace PixelCrushers
             panelState = PanelState.Opening;
             gameObject.SetActive(true);
             onOpen.Invoke();
+            if (myAnimator != null && myAnimator.isInitialized) myAnimator.ResetTrigger(hideAnimationTrigger);
             animatorMonitor.SetTrigger(showAnimationTrigger, OnVisible, waitForShowAnimation);
 
             // With quick panel changes, panel may not reach OnEnable/OnDisable before being reused.
@@ -227,10 +238,12 @@ namespace PixelCrushers
         public virtual void Close()
         {
             PopFromPanelStack();
+            if (gameObject == null) return;
             if (gameObject.activeInHierarchy) CancelInvoke();
             if (panelState == PanelState.Closed || panelState == PanelState.Closing) return;
             panelState = PanelState.Closing;
             onClose.Invoke();
+            if (myAnimator != null && myAnimator.isInitialized) myAnimator.ResetTrigger(showAnimationTrigger);
             animatorMonitor.SetTrigger(hideAnimationTrigger, OnHidden, true);
 
             // Deselect ours:
@@ -311,13 +324,22 @@ namespace PixelCrushers
             m_lastSelected = selectable;
             if (InputDeviceManager.autoFocus)
             {
-                UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
-                UIUtility.Select(m_lastSelected.GetComponent<UnityEngine.UI.Selectable>());
+                if (UnityEngine.EventSystems.EventSystem.current != null)
+                {
+                    UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
+                }
+                if (m_lastSelected != null)
+                {
+                    UIUtility.Select(m_lastSelected.GetComponent<UnityEngine.UI.Selectable>());
+                }
                 CheckFocus();
             }
             else
             {
-                UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(selectable);
+                if (UnityEngine.EventSystems.EventSystem.current != null)
+                {
+                    UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(selectable);
+                }
             }
         }
 

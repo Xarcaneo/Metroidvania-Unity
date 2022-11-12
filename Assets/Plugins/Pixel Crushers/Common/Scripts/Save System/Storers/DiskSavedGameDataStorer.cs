@@ -182,7 +182,9 @@ namespace PixelCrushers
         public override bool HasDataInSlot(int slotNumber)
         {
             var slotIndex = slotNumber;
-            return 0 <= slotIndex && slotIndex < savedGameInfo.Count && !string.IsNullOrEmpty(savedGameInfo[slotIndex].sceneName);
+            return 0 <= slotIndex && slotIndex < savedGameInfo.Count && 
+                !string.IsNullOrEmpty(savedGameInfo[slotIndex].sceneName) && 
+                File.Exists(GetSaveGameFilename(slotNumber));
         }
 
         public override void StoreSavedGameData(int slotNumber, SavedGameData savedGameData)
@@ -196,6 +198,7 @@ namespace PixelCrushers
         public override SavedGameData RetrieveSavedGameData(int slotNumber)
         {
             var s = ReadStringFromFile(GetSaveGameFilename(slotNumber));
+            if (string.IsNullOrEmpty(s)) return null;
             if (encrypt)
             {
                 string plainText;
@@ -243,6 +246,7 @@ namespace PixelCrushers
 
         public static string ReadStringFromFile(string filename)
         {
+            if (!File.Exists(filename)) return string.Empty;
             try
             {
                 using (StreamReader streamReader = new StreamReader(filename))
