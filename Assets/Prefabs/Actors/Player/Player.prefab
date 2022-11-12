@@ -563,6 +563,7 @@ GameObject:
   - component: {fileID: 877566683173418213}
   - component: {fileID: 8905105529812956775}
   - component: {fileID: 3949599921205077803}
+  - component: {fileID: 7323946926259781878}
   m_Layer: 13
   m_Name: Player
   m_TagString: Player
@@ -739,6 +740,7 @@ MonoBehaviour:
   m_appendSaverTypeToKey: 0
   m_saveAcrossSceneChanges: 0
   m_restoreStateOnStart: 1
+  m_target: {fileID: 0}
   m_usePlayerSpawnpoint: 1
   m_multiscene: 0
 --- !u!212 &5445145942140402599
@@ -985,3 +987,42 @@ MonoBehaviour:
   m_DisableCursor: 1
   m_EnableCursorWithEscape: 1
   m_PreventLookVectorChanges: 1
+--- !u!114 &7323946926259781878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5445145942140402601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e934de1a262c41478a844f227d499e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_key: 
+  m_appendSaverTypeToKey: 0
+  m_saveAcrossSceneChanges: 1
+  m_restoreStateOnStart: 0
+  m_forwardEventsToListeners: 1
+  m_includeInSavedGameData: 1
+  m_addNewQuestsSinceSavedGame: 0
+  m_questList:
+  - {fileID: 11400000, guid: 91a3c91723cfb9a4d8d34a0d8b10d559, type: 2}
+  m_deletedStaticQuests: []
+  m_id:
+    m_text: Player
+    m_stringAsset: {fileID: 0}
+    m_textTable: {fileID: 0}
+    m_textTableFieldID: 0
+  m_displayName:
+    m_text: 
+    m_stringAsset: {fileID: 0}
+    m_textTable: {fileID: 0}
+    m_textTableFieldID: 0
+  m_image: {fileID: 0}
+  m_questJournalUI: {fileID: 0}
+  m_questHUD: {fileID: 0}
+  m_rememberCompletedQuests: 1
+  m_onlyRememberHandwrittenQuests: 0
+  m_compressCompletedProcgenQuests: 0
+  m_onlyTrackOneQuestAtATime: 0

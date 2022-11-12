@@ -202,6 +202,12 @@ namespace PixelCrushers
                 GetInputAxis = DefaultGetAxis;
                 if (singleton)
                 {
+#if UNITY_EDITOR
+                    if (Application.isPlaying)
+                    { // If GameObject is hidden in Scene view, DontDestroyOnLoad will report (harmless) error.
+                        UnityEditor.SceneVisibilityManager.instance.Show(gameObject, true);
+                    }
+#endif
                     transform.SetParent(null);
                     DontDestroyOnLoad(gameObject);
                 }
@@ -247,7 +253,7 @@ namespace PixelCrushers
                 case InputDevice.Mouse:
                     var eventSystem = UnityEngine.EventSystems.EventSystem.current;
                     var currentSelectable = (eventSystem != null && eventSystem.currentSelectedGameObject != null) ? eventSystem.currentSelectedGameObject.GetComponent<UnityEngine.UI.Selectable>() : null;
-                    if (currentSelectable != null) currentSelectable.OnDeselect(null);
+                    if (currentSelectable != null && !autoFocus) currentSelectable.OnDeselect(null);
                     onUseMouse.Invoke();
                     break;
                 case InputDevice.Touch:

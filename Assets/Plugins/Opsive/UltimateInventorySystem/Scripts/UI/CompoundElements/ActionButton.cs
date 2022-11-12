@@ -175,7 +175,7 @@ namespace Opsive.UltimateInventorySystem.UI.CompoundElements
             
             // Prevent the base class from selecting the gameobject with any event system.
             var navigationTemp = navigation;
-            navigation = new Navigation(){mode = Navigation.Mode.Automatic};
+            navigation = new Navigation(){mode = Navigation.Mode.Explicit};
             base.OnPointerDown(eventData);
             navigation = navigationTemp;
         }

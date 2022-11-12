@@ -503,7 +503,7 @@ namespace Opsive.UltimateInventorySystem.UI.Grid
                     if (IsSlotAnchor(currentItemViewSlot) == false) { continue; }
 
                     var navigation = currentItemViewSlot.navigation;
-                    navigation.mode = Navigation.Mode.Automatic;
+                    navigation.mode = Navigation.Mode.Explicit;;
                     
                     navigation.selectOnUp =  GetAnchorSlotInDirection(Vector2Int.up,  j, i, horizontalStartAxis, gridSize, currentItemViewSlot);
                     navigation.selectOnDown =  GetAnchorSlotInDirection(Vector2Int.down, j, i, horizontalStartAxis, gridSize, currentItemViewSlot);
@@ -674,7 +674,7 @@ namespace Opsive.UltimateInventorySystem.UI.Grid
                         if (noWrapY) { previousY = null; }
 
                         var navigation = selectable.navigation;
-                        navigation.mode = Navigation.Mode.Automatic;
+                        navigation.mode = Navigation.Mode.Explicit;;
                         navigation.selectOnUp = previousY;
                         navigation.selectOnDown = null;
                         navigation.selectOnLeft = previousX;
