@@ -1,4 +1,5 @@
 using Audio;
+using PixelCrushers.QuestMachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -37,6 +38,7 @@ public class Player : MonoBehaviour
 
     #region Other Variables
     private Vector2 workspace;
+    public QuestJournal questJournal;
     #endregion
 
     #region Instance Variables
@@ -75,6 +77,8 @@ public class Player : MonoBehaviour
         DeathState = new PlayerDeathState(this, StateMachine, playerData, "death");
         LedgeClimbState = new PlayerLedgeClimbState(this, StateMachine, playerData, "ledgeClimbState");
         CheckpointInteractionState = new PlayerCheckpointInteractionState(this, StateMachine, playerData, "checkpointInteraction");
+
+        questJournal = GetComponent<QuestJournal>();
     }
 
     private void OnDestroy()

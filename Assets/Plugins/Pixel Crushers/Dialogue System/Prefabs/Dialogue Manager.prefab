@@ -115,13 +115,16 @@ GameObject:
   - component: {fileID: 33181037}
   - component: {fileID: 33181038}
   - component: {fileID: 33181039}
-  - component: {fileID: 33181040}
   - component: {fileID: 33181041}
   - component: {fileID: 865739397}
   - component: {fileID: 2025597051}
   - component: {fileID: 2025597052}
   - component: {fileID: 2025597062}
   - component: {fileID: 2025597063}
+  - component: {fileID: 936214803}
+  - component: {fileID: 936214804}
+  - component: {fileID: 936214818}
+  - component: {fileID: 936214819}
   m_Layer: 0
   m_Name: Dialogue Manager
   m_TagString: Untagged
@@ -349,22 +352,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_prettyPrint: 0
---- !u!114 &33181040
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 125852}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc03036aad05c334eab057a96938959a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_version: 0
-  m_saveCurrentScene: 1
-  m_framesToWaitBeforeApplyData: 1
-  m_debug: 0
 --- !u!114 &33181041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -381,7 +368,7 @@ MonoBehaviour:
   leaveSceneTransition:
     animator: {fileID: 1663818488}
     trigger: Show
-    animationDuration: 1
+    animationDuration: 0.5
     minTransitionDuration: 0
     onTransitionStart:
       m_PersistentCalls:
@@ -591,6 +578,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_currentLanguagePlayerPrefsKey: Language
   m_textTable: {fileID: 11400000, guid: 6e81d7d258335c64ebe2b9085326655e, type: 2}
+  m_additionalTextTables: []
+  m_localizedFonts: {fileID: 0}
   m_saveLanguageInPlayerPrefs: 1
   m_alsoUpdateInactiveLocalizeUI: 1
   m_useDefaultLanguageForBlankTranslations: 1
@@ -607,6 +596,63 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_textTable: {fileID: 11400000, guid: 6e81d7d258335c64ebe2b9085326655e, type: 2}
+--- !u!114 &936214803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 125852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c139516016bca084288d1ee836fc024b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_processQuestMachineTags: 1
+  m_overrideQuestLog: 1
+--- !u!114 &936214804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 125852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c54f930af957f4488bf65838d4ed623, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unregisterOnDisable: 0
+--- !u!114 &936214818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 125852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0ee63801adc86d47b70c5e1986398a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_key: 0
+  m_appendSaverTypeToKey: 0
+  m_saveAcrossSceneChanges: 1
+  m_restoreStateOnStart: 0
+  saveSlot: 0
+--- !u!114 &936214819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 125852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23c562989db583c41b601f8494118066, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unregisterOnDisable: 0
 --- !u!1001 &1673115584
 PrefabInstance:
   m_ObjectHideFlags: 0

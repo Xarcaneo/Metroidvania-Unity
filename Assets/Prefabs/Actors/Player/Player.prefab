@@ -564,6 +564,8 @@ GameObject:
   - component: {fileID: 8905105529812956775}
   - component: {fileID: 3949599921205077803}
   - component: {fileID: 7323946926259781878}
+  - component: {fileID: 9043924645541058074}
+  - component: {fileID: 6315207859231680510}
   m_Layer: 13
   m_Name: Player
   m_TagString: Player
@@ -711,6 +713,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerData: {fileID: 11400000, guid: b1fd76de2c584ba4eae9c60924841cbf, type: 2}
+  questJournal: {fileID: 0}
 --- !u!114 &5445145942140402602
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1026,3 +1029,34 @@ MonoBehaviour:
   m_onlyRememberHandwrittenQuests: 0
   m_compressCompletedProcgenQuests: 0
   m_onlyTrackOneQuestAtATime: 0
+--- !u!114 &9043924645541058074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5445145942140402601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64aad295103c33b428b4540f579aca10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Key: 
+  m_SaveOnApplicationQuit: 0
+  m_SaveOnDestroy: 0
+  m_LoadOnStart: 0
+  m_Inventory: {fileID: 1576395438499819846}
+  m_Additive: 0
+--- !u!114 &6315207859231680510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5445145942140402601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5766e057bb0c9214fa936c881eb2470f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_DisplayPanelManagerID: 1
