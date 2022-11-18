@@ -7,11 +7,9 @@ namespace Menu
 {
     public class GameMenu : Menu<GameMenu>
     {
-        public override void CustomUpdate()
-        {
-            base.CustomUpdate();
-        }
+        [SerializeField] private HealthBarController healthBarController;
 
+        public override void OnStart() => healthBarController.Initialize();
         public override void OnReturnInput() => OnPausePressed();
         public override void OnPlayerMenuInput() => PlayerMenu.Open();
 

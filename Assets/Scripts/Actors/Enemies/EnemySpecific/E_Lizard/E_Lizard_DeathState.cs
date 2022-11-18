@@ -14,11 +14,14 @@ public class E_Lizard_DeathState : DeathState
     public override void DoChecks()
     {
         base.DoChecks();
+       
     }
 
     public override void Enter()
     {
         base.Enter();
+
+        PixelCrushers.MessageSystem.SendMessage(this,"Killed","Knight");
     }
 
     public override void Exit()

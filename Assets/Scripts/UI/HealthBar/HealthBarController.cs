@@ -24,12 +24,9 @@ public class HealthBarController : MonoBehaviour
         stats.Damaged += TakeDamage;
     }
 
-    private void OnEnable()
-    {
-        GameEvents.Instance.onPlayerSpawned += OnPlayerSpawned;
-    }
+    public void Initialize() => GameEvents.Instance.onPlayerSpawned += OnPlayerSpawned;
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         if (stats)
         {

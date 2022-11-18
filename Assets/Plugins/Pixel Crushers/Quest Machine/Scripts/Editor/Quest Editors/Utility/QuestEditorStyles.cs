@@ -12,18 +12,18 @@ namespace PixelCrushers.QuestMachine
     public static class QuestEditorStyles
     {
 
-        public const string LogoImagePath = "Quest Machine/questMachineLogo.png";
-        public const string TitleImagePath = "Quest Machine/title.png";
-
-        public const string ConnectorImagePath = "Quest Machine/connector.png";
+        public const string LogoImagePath = "Assets/Plugins/Pixel Crushers/Editor Default Resources/Quest Machine/questMachineLogo.png";
+        public const string TitleImagePath = "Assets/Plugins/Pixel Crushers/Editor Default Resources/Quest Machine/title.png";
+        
+        public const string ConnectorImagePath = "Assets/Plugins/Pixel Crushers/Editor Default Resources/Quest Machine/connector.png";
         public const string PassthroughImagePath = "Quest Machine/passthrough.png";
 
-        public const string EntityImagePath = "Quest Machine/entity.png";
-        public const string FactionImagePath = "Quest Machine/faction.png";
-        public const string DriveImagePath = "Quest Machine/drive.png";
-        public const string ActionImagePath = "Quest Machine/action.png";
-        public const string UrgencyFunctionImagePath = "Quest Machine/urgencyFunction.png";
-        public const string DomainImagePath = "Quest Machine/domain.png";
+        public const string EntityImagePath = "Assets/Plugins/Pixel Crushers/Editor Default Resources/Quest Machine/entity.png";
+        public const string FactionImagePath = "Assets/Plugins/Pixel Crushers/Editor Default Resources/Quest Machine/faction.png";
+        public const string DriveImagePath = "Assets/Plugins/Pixel Crushers/Editor Default Resources/Quest Machine/drive.png";
+        public const string ActionImagePath = "Assets/Plugins/Pixel Crushers/Editor Default Resources/Quest Machine/action.png";
+        public const string UrgencyFunctionImagePath = "Assets/Plugins/Pixel Crushers/Editor Default Resources/Quest Machine/urgencyFunction.png";
+        public const string DomainImagePath = "Assets/Plugins/Pixel Crushers/Editor Default Resources/Quest Machine/domain.png";
 
 #if UNITY_2019_1_OR_NEWER
         public const string CollapsibleHeaderButtonStyleName = "Popup";
