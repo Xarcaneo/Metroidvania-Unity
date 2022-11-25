@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 namespace Menu
 {
@@ -42,9 +43,20 @@ namespace Menu
     {
         [SerializeField] public GameObject buttonToFocus;
 
+        private Canvas canvas;
+
         private void Update()
         {
+            if(canvas.worldCamera == null) canvas.worldCamera = Camera.main;
+
             CustomUpdate();
+        }
+
+        public virtual void OnStart() 
+        {
+            SceneManager.sceneLoaded += OnSceneLoaded;
+
+            SetCanvas(); 
         }
 
         private void OnEnable()
@@ -61,23 +73,20 @@ namespace Menu
             InputManager.Instance.OnMenuDelete -= OnPlayerDeleteInput;
         }
 
-        public virtual void OnStart()
-        {
+        private void OnSceneLoaded(Scene scene, LoadSceneMode mode) => SetCanvas();
 
+        public virtual void SetCanvas()
+        {
+            canvas = gameObject.GetComponent<Canvas>();
+            canvas.worldCamera = Camera.main;
         }
 
+        private void OnDestroy() => SceneManager.sceneLoaded -= OnSceneLoaded;
         public virtual void OnReturnInput() => OnBackPressed();
         public virtual void OnPlayerMenuInput() { }
         public virtual void OnPlayerDeleteInput() { }
-
-        public virtual void OnOpenMenu()
-        {
-        }
-
-        public virtual void CustomUpdate()
-        {
-
-        }
+        public virtual void OnOpenMenu() { }
+        public virtual void CustomUpdate() { }
 
         public virtual void OnReturnInput(InputAction.CallbackContext context)
         {

@@ -142,6 +142,7 @@ MonoBehaviour:
   pcImage: {fileID: 0}
   pcName:
     m_uiText: {fileID: 0}
+    m_textMeshProUGUI: {fileID: 0}
   usePortraitNativeSize: 0
   timerSlider: {fileID: 0}
   buttonAlignment: 0
@@ -445,6 +446,7 @@ MonoBehaviour:
     panel: {fileID: 114990652930337680}
     alertText:
       m_uiText: {fileID: 114463060637246050}
+      m_textMeshProUGUI: {fileID: 0}
     queueAlerts: 1
     dontQueueDuplicates: 1
     waitForHideAnimation: 1
@@ -524,8 +526,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 332.5, y: 0}
-  m_SizeDelta: {x: 665, y: 0}
+  m_AnchoredPosition: {x: 511.25006, y: 0}
+  m_SizeDelta: {x: 1022.5001, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &222484175214359078
 CanvasRenderer:
@@ -642,8 +644,10 @@ MonoBehaviour:
   portraitImage: {fileID: 114626288589027986}
   portraitName:
     m_uiText: {fileID: 0}
+    m_textMeshProUGUI: {fileID: 0}
   subtitleText:
     m_uiText: {fileID: 114879404919089724}
+    m_textMeshProUGUI: {fileID: 0}
   addSpeakerName: 0
   addSpeakerNameFormat: '{0}: {1}'
   accumulateText: 0
@@ -889,6 +893,7 @@ MonoBehaviour:
   button: {fileID: 114152943749944964}
   label:
     m_uiText: {fileID: 114650297671941986}
+    m_textMeshProUGUI: {fileID: 0}
   setLabelColor: 0
   defaultColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &114558991696147542
@@ -955,8 +960,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 336.5, y: 0}
-  m_SizeDelta: {x: 665, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &222668025422580316
 CanvasRenderer:
@@ -2119,8 +2124,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 332.5, y: 0}
-  m_SizeDelta: {x: 665, y: 0}
+  m_AnchoredPosition: {x: 511.25006, y: 0}
+  m_SizeDelta: {x: 1022.5001, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &222655124704972854
 CanvasRenderer:
@@ -2237,8 +2242,10 @@ MonoBehaviour:
   portraitImage: {fileID: 114926836595931658}
   portraitName:
     m_uiText: {fileID: 0}
+    m_textMeshProUGUI: {fileID: 0}
   subtitleText:
     m_uiText: {fileID: 114805141992970784}
+    m_textMeshProUGUI: {fileID: 0}
   addSpeakerName: 0
   addSpeakerNameFormat: '{0}: {1}'
   accumulateText: 0
