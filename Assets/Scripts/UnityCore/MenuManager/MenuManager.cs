@@ -79,9 +79,10 @@ namespace Menu
                 if (prefab != null)
                 {
                     Menu menuInstance = Instantiate(prefab, _menuParent);
+                    menuInstance.OnStart();
+  
                     if (prefab != mainMenuPrefab)
                     {
-                        menuInstance.OnStart();
                         menuInstance.gameObject.SetActive(false);
                     }
                     else

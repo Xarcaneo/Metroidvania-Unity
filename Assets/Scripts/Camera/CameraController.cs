@@ -5,11 +5,19 @@ using Cinemachine;
 
 public class CameraController : MonoBehaviour
 {
+    CinemachineVirtualCameraBase vcam;
+
     void Start()
     {
-        var vcam = GetComponent<CinemachineVirtualCameraBase>();
-        if (vcam != null)
+        vcam = GetComponent<CinemachineVirtualCameraBase>();
+
+        if (vcam != null && Player.Instance != null)
             vcam.LookAt = vcam.Follow = Player.Instance.transform;
     }
-        
+
+    private void Update()
+    {
+        if (vcam != null && Player.Instance != null)
+            vcam.LookAt = vcam.Follow = Player.Instance.transform;
+    }
 }

@@ -1,3 +1,4 @@
+using PixelCrushers.DialogueSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,8 +9,21 @@ namespace Menu
     public class GameMenu : Menu<GameMenu>
     {
         [SerializeField] private HealthBarController healthBarController;
+        [SerializeField] private StandardDialogueUI dialogueUI;
+        public override void OnStart()
+        {
+            base.OnStart();
 
-        public override void OnStart() => healthBarController.Initialize();
+            healthBarController.Initialize();
+        }
+
+        public override void SetCanvas()
+        {
+            base.SetCanvas();
+
+            DialogueManager.dialogueUI = dialogueUI;
+        }
+
         public override void OnReturnInput() => OnPausePressed();
         public override void OnPlayerMenuInput() => PlayerMenu.Open();
 
