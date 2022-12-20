@@ -10,6 +10,8 @@ public class PlayerInputHandler : MonoBehaviour
 
     public Vector2 RawMovementInput { get; private set; }
 
+    public bool DisableInput = false;
+
     public int NormInputX { get; private set; }
     public int NormInputY { get; private set; }
     public bool JumpInput { get; private set; }
@@ -57,71 +59,86 @@ public class PlayerInputHandler : MonoBehaviour
     }
 
     public void OnAttackInput(InputAction.CallbackContext context)
-    {     
-        if (context.started)
+    {
+        if (!DisableInput)
         {
-            AttackInput = true;
-        }
+            if (context.started)
+            {
+                AttackInput = true;
+            }
 
-        if (context.canceled)
-        {
-            AttackInput = false;
+            if (context.canceled)
+            {
+                AttackInput = false;
+            }
         }
     }
     public void OnMoveInput(InputAction.CallbackContext context)
     {
-        RawMovementInput = context.ReadValue<Vector2>();
-
-        NormInputX = Mathf.RoundToInt(RawMovementInput.x);
-
-        if (Mathf.Abs(RawMovementInput.y) > 0.5f)
+        if (!DisableInput)
         {
-            NormInputY = (int)(RawMovementInput * Vector2.up).normalized.y;
+            RawMovementInput = context.ReadValue<Vector2>();
+
+            NormInputX = Mathf.RoundToInt(RawMovementInput.x);
+
+            if (Mathf.Abs(RawMovementInput.y) > 0.5f)
+            {
+                NormInputY = (int)(RawMovementInput * Vector2.up).normalized.y;
+            }
+            else
+            {
+                NormInputY = 0;
+            }
         }
-        else
-        {
-            NormInputY = 0;
-        } 
     }
 
     public void OnJumpInput(InputAction.CallbackContext context)
     {
-        if (context.started)
+        if (!DisableInput)
         {
-            JumpInput = true;
-            JumpInputStop = false;
-            jumpInputStartTime = Time.time;
-        }
+            if (context.started)
+            {
+                JumpInput = true;
+                JumpInputStop = false;
+                jumpInputStartTime = Time.time;
+            }
 
-        if (context.canceled)
-        {
-            JumpInputStop = true;
+            if (context.canceled)
+            {
+                JumpInputStop = true;
+            }
         }
     }
 
     public void OnDashInput(InputAction.CallbackContext context)
     {
-        if (context.started)
+        if (!DisableInput)
         {
-            DashInput = true;
-            DashInputStop = false;
-            dashInputStartTime = Time.time;
-        }
-        else if (context.canceled)
-        {
-            DashInputStop = true;
+            if (context.started)
+            {
+                DashInput = true;
+                DashInputStop = false;
+                dashInputStartTime = Time.time;
+            }
+            else if (context.canceled)
+            {
+                DashInputStop = true;
+            }
         }
     }
 
     public void OnInteractInput(InputAction.CallbackContext context)
     {
-        if (context.started)
+        if (!DisableInput)
         {
-            GameEvents.Instance.InteractTrigger(true);
-        }
-        else if (context.canceled)
-        {
-            GameEvents.Instance.InteractTrigger(false);
+            if (context.started)
+            {
+                GameEvents.Instance.InteractTrigger(true);
+            }
+            else if (context.canceled)
+            {
+                GameEvents.Instance.InteractTrigger(false);
+            }
         }
     }
 
@@ -149,7 +166,7 @@ public class PlayerInputHandler : MonoBehaviour
 
     private void EnableDisablePlayerInput(bool disable)
     {
-        if (!disable) playerInput.actions.Enable();
-        else playerInput.actions.Disable();
+        DisableInput = disable;
+        if(!disable) NormInputX = 0;
     }
 }

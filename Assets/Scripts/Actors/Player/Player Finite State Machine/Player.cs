@@ -133,6 +133,7 @@ public class Player : MonoBehaviour
     {
         if (sfxClip != null)
             sfxClip.AudioGroup.RaisePrimaryAudioEvent(sfxClip.AudioGroup.AudioSource, sfxClip, sfxClip.AudioConfiguration);
+
     }
 
     #endregion
