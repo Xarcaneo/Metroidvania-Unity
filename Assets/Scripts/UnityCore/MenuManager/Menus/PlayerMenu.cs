@@ -5,8 +5,16 @@ namespace Menu
 {
     public class PlayerMenu : Menu<PlayerMenu>
     {
+        [SerializeField] private StatsPanel statsPanel;
         [SerializeField] private SfxClip sfxClip;
         [SerializeField] TabGroup tabGroup;
+
+        public override void OnStart()
+        {
+            base.OnStart();
+
+            statsPanel.Initialize();
+        }
 
         public override void CustomUpdate()
         {

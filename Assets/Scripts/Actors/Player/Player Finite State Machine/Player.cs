@@ -1,4 +1,5 @@
 using Audio;
+using Opsive.UltimateInventorySystem.Equipping;
 using PixelCrushers.QuestMachine;
 using System.Collections;
 using System.Collections.Generic;
@@ -39,6 +40,8 @@ public class Player : MonoBehaviour
     #region Other Variables
     private Vector2 workspace;
     public QuestJournal questJournal;
+    private IEquipper m_Equipper;
+    public IEquipper Equipper => m_Equipper;
     #endregion
 
     #region Instance Variables
@@ -60,6 +63,8 @@ public class Player : MonoBehaviour
         }
 
         Core = GetComponentInChildren<Core>();
+        m_Equipper = GetComponent<IEquipper>();
+        questJournal = GetComponent<QuestJournal>();
 
         StateMachine = new PlayerStateMachine();
 
@@ -77,8 +82,6 @@ public class Player : MonoBehaviour
         DeathState = new PlayerDeathState(this, StateMachine, playerData, "death");
         LedgeClimbState = new PlayerLedgeClimbState(this, StateMachine, playerData, "ledgeClimbState");
         CheckpointInteractionState = new PlayerCheckpointInteractionState(this, StateMachine, playerData, "checkpointInteraction");
-
-        questJournal = GetComponent<QuestJournal>();
     }
 
     private void OnDestroy()
