@@ -50,6 +50,7 @@ namespace Menu
         {
             EventSystem.current.SetSelectedGameObject(null, null);
             AudioManager.Instance.gameObject.SetActive(false);
+            AudioManager.Instance.Jukebox.gameObject.SetActive(false);
             SaveSystem.LoadScene("MainMenu");
             GameEvents.Instance.PauseTrigger(true);
             AudioManager.Instance.gameObject.SetActive(true);
