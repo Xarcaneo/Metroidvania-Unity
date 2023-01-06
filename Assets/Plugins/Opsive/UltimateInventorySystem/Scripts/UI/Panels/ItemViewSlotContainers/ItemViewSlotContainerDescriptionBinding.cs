@@ -25,6 +25,8 @@ namespace Opsive.UltimateInventorySystem.UI.Panels.ItemViewSlotContainers
         [SerializeField] protected bool m_DrawOnSelect = true;
         [Tooltip("Draw the description when an item view slot is clicked.")]
         [SerializeField] protected bool m_DrawOnClick = false;
+        [Tooltip("Draw the description when an item view slot container is redrawn?")]
+        [SerializeField] protected bool m_DrawOnContainerDraw = true;
         [Tooltip("Draw the description when an item view slot is clicked.")]
         [SerializeField] protected bool m_ClearOnDeselected = false;
         [Tooltip("Draw the description when an item view slot is clicked.")]
@@ -44,6 +46,7 @@ namespace Opsive.UltimateInventorySystem.UI.Panels.ItemViewSlotContainers
             m_ItemViewSlotsContainer.OnItemViewSlotSelected += HandleOnSelect;
             m_ItemViewSlotsContainer.OnItemViewSlotClicked += HandleOnClicked;
             m_ItemViewSlotsContainer.OnItemViewSlotDeselected += HandleOnDeselect;
+            m_ItemViewSlotsContainer.OnDraw += HandleOnSlotContainerDraw;
         }
 
         /// <summary>
@@ -54,6 +57,13 @@ namespace Opsive.UltimateInventorySystem.UI.Panels.ItemViewSlotContainers
             m_ItemViewSlotsContainer.OnItemViewSlotSelected -= HandleOnSelect;
             m_ItemViewSlotsContainer.OnItemViewSlotClicked -= HandleOnClicked;
             m_ItemViewSlotsContainer.OnItemViewSlotDeselected -= HandleOnDeselect;
+            m_ItemViewSlotsContainer.OnDraw -= HandleOnSlotContainerDraw;
+        }
+
+        private void HandleOnSlotContainerDraw()
+        {
+            if(m_DrawOnContainerDraw == false){ return;}
+            DrawDescriptionOfSelectedSlot();
         }
 
         protected virtual void HandleOnSelect(ItemViewSlotEventData sloteventdata)
@@ -95,10 +105,26 @@ namespace Opsive.UltimateInventorySystem.UI.Panels.ItemViewSlotContainers
         }
 
         /// <summary>
+        /// Draw the description.
+        /// </summary>
+        public void DrawDescriptionOfSelectedSlot()
+        {
+            var selectedSlot = m_ItemViewSlotsContainer?.GetSelectedSlot();
+            
+            var itemInfo = selectedSlot?.ItemView?.ItemInfo;
+            if (itemInfo.HasValue == false || itemInfo.Value.Item == null) {
+                ClearDescription();
+                return;
+            }
+
+            DrawDescription(itemInfo.Value);
+        }
+
+        /// <summary>
         /// Clear the description on the item.
         /// </summary>
         /// <param name="index">The index.</param>
-        private void ClearDescription()
+        public void ClearDescription()
         {
             if (m_ItemDescription == null) { return; }
             m_ItemDescription.Clear();

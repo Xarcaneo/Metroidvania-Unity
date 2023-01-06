@@ -625,7 +625,10 @@ namespace Opsive.UltimateInventorySystem.UI.Item
         /// <param name="index">The index.</param>
         public void SelectSlot(int index)
         {
-            if (index < 0 || index >= m_ItemViewSlots.Length) { return; }
+            if (index < 0 || index >= m_ItemViewSlots.Length) {
+                m_SelectedSlot = null;
+                return;
+            }
             m_ItemViewSlots[index].Select();
         }
 

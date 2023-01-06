@@ -1691,6 +1691,7 @@ MonoBehaviour:
   m_HideIfSelectedItemIsNull: 0
   m_DrawOnSelect: 1
   m_DrawOnClick: 0
+  m_DrawOnContainerDraw: 1
   m_ClearOnDeselected: 0
   m_HideOnDeselected: 0
 --- !u!114 &1575926700956359514
@@ -10822,6 +10823,7 @@ MonoBehaviour:
   m_HideIfSelectedItemIsNull: 0
   m_DrawOnSelect: 1
   m_DrawOnClick: 0
+  m_DrawOnContainerDraw: 1
   m_ClearOnDeselected: 0
   m_HideOnDeselected: 0
 --- !u!114 &3776029945333439094
@@ -17562,6 +17564,7 @@ MonoBehaviour:
   m_ResetDrawOnOpen: 1
   m_DrawOnOpen: 1
   m_SelectSlotOnOpen: 1
+  m_DeselectSlotOnClose: 1
   m_RememberSelectedSlot: 0
 --- !u!114 &7306838035637192866
 MonoBehaviour:
@@ -17583,6 +17586,7 @@ MonoBehaviour:
   m_ResetDrawOnOpen: 1
   m_DrawOnOpen: 1
   m_SelectSlotOnOpen: 0
+  m_DeselectSlotOnClose: 1
   m_RememberSelectedSlot: 0
 --- !u!1 &5169323480162156884
 GameObject:
