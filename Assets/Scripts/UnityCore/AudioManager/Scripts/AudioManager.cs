@@ -39,6 +39,8 @@ namespace Audio
         [SerializeField] private bool updateSliders = false;
         [SerializeField] private bool saveData = false;
 
+        [SerializeField] public Jukebox Jukebox;
+
         private static AudioManager _instance;
         public static AudioManager Instance { get => _instance; }
         #endregion

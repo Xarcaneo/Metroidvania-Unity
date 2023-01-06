@@ -130,6 +130,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 440032422127399622, guid: 592146c428350224590dcdab77a2f152, type: 3}
+      propertyPath: MusicClips.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 440032422127399622, guid: 592146c428350224590dcdab77a2f152, type: 3}
+      propertyPath: MusicClips.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 979ef8c145de6d44699cfaaa63210bb7, type: 2}
+    - target: {fileID: 440032422127399622, guid: 592146c428350224590dcdab77a2f152, type: 3}
+      propertyPath: MusicClips.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: dba8c8acf98a44f4abe8d225b1121938, type: 2}
+    - target: {fileID: 2495840527059272368, guid: 592146c428350224590dcdab77a2f152, type: 3}
+      propertyPath: Jukebox
+      value: 
+      objectReference: {fileID: 651968590}
     - target: {fileID: 2495840527059272370, guid: 592146c428350224590dcdab77a2f152, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -178,9 +194,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioManager
       objectReference: {fileID: 0}
-    - target: {fileID: 2495840527059272371, guid: 592146c428350224590dcdab77a2f152, type: 3}
-      propertyPath: m_TagString
-      value: AudioManager
+    - target: {fileID: 6466484091056403473, guid: 592146c428350224590dcdab77a2f152, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 592146c428350224590dcdab77a2f152, type: 3}
@@ -436,6 +452,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &651968590 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 440032422127399622, guid: 592146c428350224590dcdab77a2f152, type: 3}
+  m_PrefabInstance: {fileID: 55932109}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d7b9acabb1727143a576fd49c074b0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &657163955
 PrefabInstance:
   m_ObjectHideFlags: 0

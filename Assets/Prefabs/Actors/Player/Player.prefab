@@ -465,6 +465,9 @@ MonoBehaviour:
   wallCheckDistance: 1
   whatIsGround:
     serializedVersion: 2
+    m_Bits: 768
+  whatIsWall:
+    serializedVersion: 2
     m_Bits: 256
 --- !u!1 &5445145942118217303
 GameObject:
@@ -808,7 +811,7 @@ SpriteRenderer:
   m_SpriteSortPoint: 0
 --- !u!95 &5445145942140402596
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -825,7 +828,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!50 &5445145942140402597
 Rigidbody2D:
   serializedVersion: 4
@@ -1125,14 +1128,6 @@ MonoBehaviour:
     m_Category:
       m_Name: Necklace
       m_ItemCategory: {fileID: 11400000, guid: 21b5a65471a108443b359c420bfd58dd, type: 2}
-    m_IsSkinnedEquipment: 0
-    m_Transform: {fileID: 0}
-    m_ItemObject: {fileID: 0}
-    m_HideWhenWearingEquipment: []
-  - m_Name: 
-    m_Category:
-      m_Name: 
-      m_ItemCategory: {fileID: 0}
     m_IsSkinnedEquipment: 0
     m_Transform: {fileID: 0}
     m_ItemObject: {fileID: 0}
