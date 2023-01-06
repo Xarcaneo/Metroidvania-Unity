@@ -107,6 +107,17 @@ namespace Opsive.UltimateInventorySystem.UI
             }
         }
 
+        public override void OnClose()
+        {
+            base.OnClose();
+
+            if (m_SelectedPanelIndex < 0 || m_SelectedPanelIndex >= m_Panels.Count) {
+                return;
+            }
+            
+            m_Panels[m_SelectedPanelIndex].Panel.Close(false);
+        }
+
         /// <summary>
         /// Open the menu.
         /// </summary>

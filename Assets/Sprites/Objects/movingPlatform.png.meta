@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 20d1f56ce007da04e8b4e09270b2708c
+guid: 32c0ffc2efba95642b372e82c28d2993
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -63,14 +63,14 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
-  cookieLightType: 1
+  cookieLightType: 0
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -106,7 +106,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -117,13 +117,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: life2_0
+      name: movingPlatform_0
       rect:
         serializedVersion: 2
-        x: 105
-        y: 63
-        width: 73
-        height: 8
+        x: 0
+        y: 0
+        width: 64
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,20 +131,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a3e0bc7ce65504c4b9f4b44a566eaf78
-      internalID: -1361972498
+      spriteID: e6f71d04b48cf6b41a722777c91a73e1
+      internalID: -1113881436
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: life2_1
+      name: movingPlatform_1
       rect:
         serializedVersion: 2
-        x: 162
-        y: 54
-        width: 14
-        height: 6
+        x: 64
+        y: 0
+        width: 64
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -152,8 +152,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ce22042fb0e87cc4595c12d2ac7474b3
-      internalID: -233253428
+      spriteID: 5cf304b1ba985d64988c29034794a4dc
+      internalID: 1987242587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: movingPlatform_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 64
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2f11e63180aadd44964dca9e3f07c70
+      internalID: 565179816
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: movingPlatform_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 64
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b5349cc9cbffdc646bcd28bb73ad54c5
+      internalID: 1697398794
       vertices: []
       indices: 
       edges: []
@@ -169,8 +211,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      life2_1: -233253428
-      life2_0: -1361972498
+      movingPlatform_1: 1987242587
+      movingPlatform_2: 565179816
+      movingPlatform_0: -1113881436
+      movingPlatform_3: 1697398794
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

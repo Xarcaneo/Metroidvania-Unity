@@ -25,6 +25,8 @@ namespace Opsive.UltimateInventorySystem.UI.Panels.ItemViewSlotContainers
         [SerializeField] internal bool m_DrawOnOpen = true;
         [Tooltip("Select Button 0 on Open.")]
         [SerializeField] internal bool m_SelectSlotOnOpen = true;
+        [Tooltip("Deselect Button on Close.")]
+        [SerializeField] internal bool m_DeselectSlotOnClose = true;
         [Tooltip("Select Button 0 on Open.")]
         [SerializeField] internal bool m_RememberSelectedSlot = false;
 
@@ -124,6 +126,18 @@ namespace Opsive.UltimateInventorySystem.UI.Panels.ItemViewSlotContainers
 
             if (m_SelectSlotOnOpen) {
                 m_ItemViewSlotsContainer.SelectSlot(GetIndexToSelect());
+            }
+        }
+
+        public override void OnClose()
+        {
+            base.OnClose();
+            if (m_DeselectSlotOnClose) {
+                var selectedSlot = m_ItemViewSlotsContainer.GetSelectedSlot();
+                if (selectedSlot != null) {
+                    selectedSlot.OnDeselect(null);
+                }
+                m_ItemViewSlotsContainer.SelectSlot(-1);
             }
         }
 
