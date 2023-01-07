@@ -8,7 +8,7 @@ namespace Menu
 {
     public class GameMenu : Menu<GameMenu>
     {
-        [SerializeField] private HealthBarController healthBarController;
+        [SerializeField] private PlayerHealthBarController healthBarController;
         [SerializeField] private StandardDialogueUI dialogueUI;
         public override void OnStart()
         {

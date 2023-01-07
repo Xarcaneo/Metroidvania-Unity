@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class HealthBarController : MonoBehaviour
 {
-    private float health;
-    private float lerpTimer;
-    public float maxHealth = 100;
+    protected float health;
+    protected float lerpTimer;
+    protected float maxHealth = 100;
     public float chipSpeed = 2f;
 
     public Image frontHealthBar;
@@ -15,34 +15,24 @@ public class HealthBarController : MonoBehaviour
 
     public Stats stats;
 
-    private void OnPlayerSpawned()
-    {
-        stats = Player.Instance.Core.GetCoreComponent<Stats>();
-        SetMaxHealth(stats.GetMaxHealth());
-        health = maxHealth;
-
-        stats.Damaged += TakeDamage;
-    }
-
-    public void Initialize() => GameEvents.Instance.onPlayerSpawned += OnPlayerSpawned;
-
-    private void OnDestroy()
+    virtual public void OnDestroy()
     {
         if (stats)
         {
             stats.Damaged -= TakeDamage;
         }
-
-        GameEvents.Instance.onPlayerSpawned -= OnPlayerSpawned;
     }
 
     private void Update()
     {
-        health = Mathf.Clamp(health,0,maxHealth);
-        UpdateHealthUI();
+        if (stats)
+        {
+            health = Mathf.Clamp(health, 0, maxHealth);
+            UpdateHealthUI();
+        }
     }
 
-    public void UpdateHealthUI()
+    virtual public void UpdateHealthUI()
     {
         float fillF = frontHealthBar.fillAmount;
         float fillB = backHealthBar.fillAmount;
@@ -69,7 +59,7 @@ public class HealthBarController : MonoBehaviour
         }
     }
 
-    public void TakeDamage(float damage)
+    virtual public void TakeDamage(float damage)
     {
         health -= damage;
         lerpTimer = 0f;
@@ -81,7 +71,7 @@ public class HealthBarController : MonoBehaviour
         lerpTimer = 0f;
     }
 
-    private void SetMaxHealth(float newMaxHealth)
+    protected void SetMaxHealth(float newMaxHealth)
     {
         maxHealth = newMaxHealth;
     }
