@@ -1624,7 +1624,7 @@ MonoBehaviour:
     - {fileID: 716568340576935617}
     defaultMenuPanel: {fileID: 716568340576935617}
     useFirstResponseForMenuPortrait: 0
-    waitForClose: 1
+    waitForClose: 0
   QTEIndicatorElements:
     QTEIndicators:
     - {fileID: 0}
@@ -2054,7 +2054,7 @@ MonoBehaviour:
   refreshSelectablesFrequency: 0
   selectPreviousOnDisable: 0
   showAnimationTrigger: Show
-  hideAnimationTrigger: Hide
+  hideAnimationTrigger: 
   startState: 0
   waitForShowAnimationToSetOpen: 0
   m_deactivateOnHidden: 1
@@ -2162,7 +2162,7 @@ MonoBehaviour:
   usePortraitNativeSize: 0
   waitForOpen: 0
   waitForClose: 0
-  clearTextOnClose: 1
+  clearTextOnClose: 0
   clearTextOnConversationStart: 0
   scrollbarEnabler: {fileID: 8806150306144322450}
   onFocus:

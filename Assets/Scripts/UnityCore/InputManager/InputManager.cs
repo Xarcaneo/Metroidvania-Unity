@@ -25,6 +25,8 @@ public class InputManager : MonoBehaviour
     [SerializeField] private PlayerInput playerInput;
     [SerializeField] private PlayerInput menuInput;
 
+    public bool isInputActive = true;
+
     private void Update()
     {
         MenuInputUpdate();
@@ -38,10 +40,13 @@ public class InputManager : MonoBehaviour
 
     private void MenuInputUpdate()
     {
-        if (menuInput.actions["Return"].triggered) OnMenuReturn?.Invoke();
-        else if (menuInput.actions["PlayerMenu"].triggered) OnMenuPlayerMenu?.Invoke();
-        else if (menuInput.actions["PreviousTab"].triggered) OnMenuPreviousTab?.Invoke();
-        else if (menuInput.actions["NextTab"].triggered) OnMenuNextTab?.Invoke();
-        else if (menuInput.actions["Delete"].triggered) OnMenuDelete?.Invoke();
+        if (isInputActive)
+        {
+            if (menuInput.actions["Return"].triggered) OnMenuReturn?.Invoke();
+            else if (menuInput.actions["PlayerMenu"].triggered) OnMenuPlayerMenu?.Invoke();
+            else if (menuInput.actions["PreviousTab"].triggered) OnMenuPreviousTab?.Invoke();
+            else if (menuInput.actions["NextTab"].triggered) OnMenuNextTab?.Invoke();
+            else if (menuInput.actions["Delete"].triggered) OnMenuDelete?.Invoke();
+        }
     }
 }

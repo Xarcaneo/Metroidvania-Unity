@@ -26,6 +26,7 @@ namespace Menu
 
         public void OnSlotPressed()
         {
+            InputManager.Instance.isInputActive = false;
             int active_slot = GameManager.Instance.currentSaveSlot;
             EventSystem.current.SetSelectedGameObject(null, null);
             menuClip.AudioGroup.RaiseStopAudioEvent(menuClip.AudioGroup.AudioSource);

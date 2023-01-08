@@ -54,13 +54,14 @@ namespace Menu
 
         public virtual void OnStart() 
         {
-            SceneManager.sceneLoaded += OnSceneLoaded;
-
             SetCanvas(); 
         }
 
         private void OnEnable()
         {
+            InputManager.Instance.isInputActive = true;
+
+            SceneManager.sceneLoaded += OnSceneLoaded;
             InputManager.Instance.OnMenuReturn += OnReturnInput;
             InputManager.Instance.OnMenuPlayerMenu += OnPlayerMenuInput;
             InputManager.Instance.OnMenuDelete += OnPlayerDeleteInput;
@@ -68,6 +69,7 @@ namespace Menu
 
         private void OnDisable()
         {
+            SceneManager.sceneLoaded -= OnSceneLoaded;
             InputManager.Instance.OnMenuReturn -= OnReturnInput;
             InputManager.Instance.OnMenuPlayerMenu -= OnPlayerMenuInput;
             InputManager.Instance.OnMenuDelete -= OnPlayerDeleteInput;
@@ -75,26 +77,18 @@ namespace Menu
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode) => SetCanvas();
 
+
         public virtual void SetCanvas()
         {
             canvas = gameObject.GetComponent<Canvas>();
             canvas.worldCamera = Camera.main;
         }
 
-        private void OnDestroy() => SceneManager.sceneLoaded -= OnSceneLoaded;
         public virtual void OnReturnInput() => OnBackPressed();
         public virtual void OnPlayerMenuInput() { }
         public virtual void OnPlayerDeleteInput() { }
         public virtual void OnOpenMenu() { }
         public virtual void CustomUpdate() { }
-
-        public virtual void OnReturnInput(InputAction.CallbackContext context)
-        {
-            if (context.canceled)
-            {
-                OnBackPressed();
-            }
-        }
 
         public virtual void OnBackPressed()
         {

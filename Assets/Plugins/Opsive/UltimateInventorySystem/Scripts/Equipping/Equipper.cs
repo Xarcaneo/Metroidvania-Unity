@@ -38,6 +38,8 @@ namespace Opsive.UltimateInventorySystem.Equipping
         [Tooltip("The main root node used to bind Skinned Mesh Renderers at runtime using the bones hiearchy.")]
         [SerializeField] protected Transform m_MainRootNode;
 
+        private GameObject Container;
+
         protected ItemSlotCollection m_EquipmentItemCollection;
 
         public ItemSlotSet ItemSlotSet {
@@ -54,6 +56,8 @@ namespace Opsive.UltimateInventorySystem.Equipping
         /// </summary>
         protected virtual void Awake()
         {
+            Container = new GameObject("Equipper Container");
+
             ValidateSlots();
         }
 
@@ -142,6 +146,8 @@ namespace Opsive.UltimateInventorySystem.Equipping
         {
             EventHandler.UnregisterEvent<ItemInfo, ItemStack>(m_Inventory, EventNames.c_Inventory_OnAdd_ItemInfo_ItemStack, OnAddedItemToInventory);
             EventHandler.UnregisterEvent<ItemInfo>(m_Inventory, EventNames.c_Inventory_OnRemove_ItemInfo, OnRemovedItemFromInventory);
+
+            Destroy(Container.gameObject);
         }
 
         /// <summary>
@@ -211,27 +217,10 @@ namespace Opsive.UltimateInventorySystem.Equipping
             if (itemObject == null) { return false; }
 
             slot.SetItemObject(itemObject);
-            
-            PositionItemObject(itemObject, slot);
 
             EventHandler.ExecuteEvent(this, EventNames.c_Equipper_OnChange);
 
             return true;
-        }
-
-        /// <summary>
-        /// Position the item object after it was spawned.
-        /// </summary>
-        /// <param name="itemObject">The item object to place.</param>
-        /// <param name="slot">The slot in which to place it.</param>
-        protected virtual  void PositionItemObject(ItemObject itemObject, ItemObjectSlot slot)
-        {
-            var itemTransform = itemObject.transform;
-            itemTransform.SetParent(slot.Transform);
-
-            itemTransform.localRotation = Quaternion.identity;
-            itemTransform.localPosition = Vector3.zero;
-            itemTransform.localScale = Vector3.one;
         }
 
         /// <summary>
@@ -423,27 +412,10 @@ namespace Opsive.UltimateInventorySystem.Equipping
             m_Slots[index].SetItemObject(null);
 
 
-            ReturnItemObjectToPool(itemObject);
+            Destroy(itemObject.gameObject);
 
 
             EventHandler.ExecuteEvent(this, EventNames.c_Equipper_OnChange);
-        }
-
-        /// <summary>
-        /// Return the Item Object to the pool.
-        /// </summary>
-        /// <param name="itemObject">The itemObject to return.</param>
-        protected virtual void ReturnItemObjectToPool(ItemObject itemObject)
-        {
-            // The skinned mesh bones will stay linked to the character, since the pool is a sub the item will never to bound to other characters.
-            
-            // The itemObject could have children that are pooled object such as the equipment model.
-            for (int i = itemObject.transform.childCount - 1; i >= 0; i--) {
-                var child = itemObject.transform.GetChild(i);
-                if ((ObjectPoolBase.IsPooledObject(child.gameObject) == false)) { continue; }
-
-                ObjectPoolBase.Destroy(child.gameObject);
-            }
         }
 
         /// <summary>
@@ -475,10 +447,6 @@ namespace Opsive.UltimateInventorySystem.Equipping
             }
 
             var characterID = gameObject.GetInstanceID();
-            var equipmentGameObject = ObjectPoolBase.Instantiate(itemPrefab, characterID, usableItemGameObject.transform);
-            equipmentGameObject.transform.localPosition = Vector3.zero;
-            equipmentGameObject.transform.localRotation = Quaternion.identity;
-            equipmentGameObject.transform.localScale = itemPrefab.transform.localScale;
 
             return usableItemGameObject;
         }
@@ -497,6 +465,8 @@ namespace Opsive.UltimateInventorySystem.Equipping
             }
 
             var itemObject = new GameObject().AddComponent<ItemObject>();
+            itemObject.name = item.name;
+            itemObject.transform.SetParent(Container.transform);
 
             itemObject.SetItem(item);
 

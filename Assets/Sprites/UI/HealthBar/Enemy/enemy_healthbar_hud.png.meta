@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4bc084807ea313d47b30f1c9f6439c22
+guid: a11a9b6ef0339a245ac9e08049f76f13
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 16
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -117,22 +117,22 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: HUD ENEMY bar_1
+      name: enemy_healthbar_hud_0
       rect:
         serializedVersion: 2
         x: 12
-        y: 4
+        y: 5
         width: 29
-        height: 3
+        height: 2
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 420caeb32bcd103498d1116491356f44
-      internalID: 582435298
+      spriteID: 9b0b9aa16bc71f54890155db4a5e7854
+      internalID: 1444560711
       vertices: []
       indices: 
       edges: []
@@ -148,8 +148,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      HUD ENEMY bar_0: 614960641
-      HUD ENEMY bar_1: 582435298
+      enemy_healthbar_hud_0: 1444560711
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
