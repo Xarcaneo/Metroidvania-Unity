@@ -48,6 +48,7 @@ namespace Menu
 
         public void OnMainMenuPressed()
         {
+            InputManager.Instance.isInputActive = false;
             EventSystem.current.SetSelectedGameObject(null, null);
             AudioManager.Instance.gameObject.SetActive(false);
             AudioManager.Instance.Jukebox.gameObject.SetActive(false);
