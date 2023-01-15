@@ -16,4 +16,8 @@ public class CoreComponent : MonoBehaviour, ILogicUpdate
 
     public virtual void LogicUpdate() { }
 
+    virtual public void EnableDisableComponent( bool state )
+    {
+        this.gameObject.SetActive(state);
+    }
 }
