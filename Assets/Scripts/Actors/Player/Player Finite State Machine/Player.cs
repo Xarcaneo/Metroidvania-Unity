@@ -126,6 +126,12 @@ public class Player : MonoBehaviour
         MovementCollider.offset = center;
     }
 
+    public void SetColliderWidth(float width)
+    {
+        workspace.Set(width, MovementCollider.size.y);
+        MovementCollider.size = workspace;
+    }
+
     private void AnimationTrigger() => StateMachine.CurrentState.AnimationTrigger();
 
     private void AnimationFinishTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
