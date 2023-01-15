@@ -10,6 +10,16 @@ public class PlayerWallSlideState : PlayerTouchingWallState
     {
     }
 
+    public override void Enter()
+    {
+        base.Enter();
+
+        if(Movement.FacingDirection == 1)
+            player.SetColliderWidth(playerData.WallSlideColliderWidthRight);
+        else
+            player.SetColliderWidth(playerData.WallSlideColliderWidthLeft);
+    }
+
     public override void Exit()
     {
         base.Exit();
@@ -17,6 +27,8 @@ public class PlayerWallSlideState : PlayerTouchingWallState
         if (canWallJumpCoyoteTime) player.InAirState.StartWallJumpCoyoteTime();
 
         canWallJumpCoyoteTime = true;
+
+        player.SetColliderWidth(playerData.WallSlideColliderWidthBase);
     }
 
     public override void LogicUpdate()

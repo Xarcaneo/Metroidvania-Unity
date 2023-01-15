@@ -19,6 +19,11 @@ public class PlayerData : ScriptableObject
     public Vector2 wallJumpAngle = new Vector2(1, 2);
     public float wallTouchTime = 0.1f;
 
+    [Header("Wall Slide")]
+    public float WallSlideColliderWidthLeft = 1.7f;
+    public float WallSlideColliderWidthRight = 1.5f;
+    public float WallSlideColliderWidthBase = 0.92f;
+
     [Header("In Air State")]
     public float coyoteTime = 0.2f;
     public float variableJumpHeightMultiplier = 0.5f;
@@ -45,6 +50,6 @@ public class PlayerData : ScriptableObject
     public float[] attackMovementSpeed;
     public float breakComboTime = 1.0f;
 
-    [Header("Interaction Offsets")]
+    [Header("Checkpoint Interaction State")]
     public float checkpointActivationOffset = 1.0f;
 }
