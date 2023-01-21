@@ -83,8 +83,6 @@ public class Player : MonoBehaviour
         DeathState = new PlayerDeathState(this, StateMachine, playerData, "death");
         LedgeClimbState = new PlayerLedgeClimbState(this, StateMachine, playerData, "ledgeClimbState");
         CheckpointInteractionState = new PlayerCheckpointInteractionState(this, StateMachine, playerData, "checkpointInteraction");
-
-        CheckIfShouldFlip();
     }
 
     private void OnDestroy()
@@ -102,6 +100,8 @@ public class Player : MonoBehaviour
         MovementCollider = GetComponent<BoxCollider2D>();
 
         StateMachine.Initialize(IdleState);
+
+        CheckIfShouldFlip();
 
         GameEvents.Instance.PlayerSpawned();
     }
