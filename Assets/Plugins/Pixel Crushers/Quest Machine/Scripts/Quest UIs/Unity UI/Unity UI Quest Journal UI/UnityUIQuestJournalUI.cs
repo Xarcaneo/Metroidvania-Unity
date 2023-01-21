@@ -356,6 +356,12 @@ namespace PixelCrushers.QuestMachine
             m_mustSendCloseMessage = false;
         }
 
+        public void Redraw()
+        {
+            RefreshNow();
+            uiPanel.RefreshSelectablesList();
+        }
+
         private bool ShouldSendOpenCloseMessage()
         {
             switch (m_sendMessageOnOpen)

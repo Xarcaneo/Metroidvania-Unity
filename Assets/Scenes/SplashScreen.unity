@@ -305,6 +305,17 @@ MonoBehaviour:
   m_CropFrameX: 1
   m_CropFrameY: 1
   m_StretchFill: 0
+--- !u!114 &212503100 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3191145270977445136, guid: 61a58c39ade143e418ee0311e3bb4b15, type: 3}
+  m_PrefabInstance: {fileID: 4760970903010101468}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &481318927
 GameObject:
   m_ObjectHideFlags: 0
@@ -2428,6 +2439,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7918651516609915660, guid: 1bb9ae154121b624b8bc77f545a12774, type: 3}
     - target: {fileID: 11426072, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
+      propertyPath: displaySettings.inputSettings.cancel.key
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11426072, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
+      propertyPath: displaySettings.inputSettings.cancelConversation.key
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11426072, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
       propertyPath: displaySettings.subtitleSettings.showPCSubtitlesDuringLine
       value: 1
       objectReference: {fileID: 0}
@@ -2909,6 +2928,50 @@ PrefabInstance:
       propertyPath: m_Name
       value: EventSystem
       objectReference: {fileID: 0}
+    - target: {fileID: 4435197654466733201, guid: 0a9d6e3ad31e6dc4cb3b3c4fd3d64bcb, type: 3}
+      propertyPath: m_MoveAction
+      value: 
+      objectReference: {fileID: 6019229549943369397, guid: d7f13e266802caa4e91dd8bab45e7b96, type: 3}
+    - target: {fileID: 4435197654466733201, guid: 0a9d6e3ad31e6dc4cb3b3c4fd3d64bcb, type: 3}
+      propertyPath: m_PointAction
+      value: 
+      objectReference: {fileID: 7057385142781841947, guid: d7f13e266802caa4e91dd8bab45e7b96, type: 3}
+    - target: {fileID: 4435197654466733201, guid: 0a9d6e3ad31e6dc4cb3b3c4fd3d64bcb, type: 3}
+      propertyPath: m_ActionsAsset
+      value: 
+      objectReference: {fileID: -944628639613478452, guid: d7f13e266802caa4e91dd8bab45e7b96, type: 3}
+    - target: {fileID: 4435197654466733201, guid: 0a9d6e3ad31e6dc4cb3b3c4fd3d64bcb, type: 3}
+      propertyPath: m_CancelAction
+      value: 
+      objectReference: {fileID: -3313671463369240716, guid: d7f13e266802caa4e91dd8bab45e7b96, type: 3}
+    - target: {fileID: 4435197654466733201, guid: 0a9d6e3ad31e6dc4cb3b3c4fd3d64bcb, type: 3}
+      propertyPath: m_SubmitAction
+      value: 
+      objectReference: {fileID: -692510738899986184, guid: d7f13e266802caa4e91dd8bab45e7b96, type: 3}
+    - target: {fileID: 4435197654466733201, guid: 0a9d6e3ad31e6dc4cb3b3c4fd3d64bcb, type: 3}
+      propertyPath: m_LeftClickAction
+      value: 
+      objectReference: {fileID: -3456691843094456940, guid: d7f13e266802caa4e91dd8bab45e7b96, type: 3}
+    - target: {fileID: 4435197654466733201, guid: 0a9d6e3ad31e6dc4cb3b3c4fd3d64bcb, type: 3}
+      propertyPath: m_RightClickAction
+      value: 
+      objectReference: {fileID: -2032830717499736593, guid: d7f13e266802caa4e91dd8bab45e7b96, type: 3}
+    - target: {fileID: 4435197654466733201, guid: 0a9d6e3ad31e6dc4cb3b3c4fd3d64bcb, type: 3}
+      propertyPath: m_MiddleClickAction
+      value: 
+      objectReference: {fileID: -8632589132761523643, guid: d7f13e266802caa4e91dd8bab45e7b96, type: 3}
+    - target: {fileID: 4435197654466733201, guid: 0a9d6e3ad31e6dc4cb3b3c4fd3d64bcb, type: 3}
+      propertyPath: m_ScrollWheelAction
+      value: 
+      objectReference: {fileID: -3863989363984223372, guid: d7f13e266802caa4e91dd8bab45e7b96, type: 3}
+    - target: {fileID: 4435197654466733201, guid: 0a9d6e3ad31e6dc4cb3b3c4fd3d64bcb, type: 3}
+      propertyPath: m_TrackedDevicePositionAction
+      value: 
+      objectReference: {fileID: 1801445884294681449, guid: d7f13e266802caa4e91dd8bab45e7b96, type: 3}
+    - target: {fileID: 4435197654466733201, guid: 0a9d6e3ad31e6dc4cb3b3c4fd3d64bcb, type: 3}
+      propertyPath: m_TrackedDeviceOrientationAction
+      value: 
+      objectReference: {fileID: 4522377004506744943, guid: d7f13e266802caa4e91dd8bab45e7b96, type: 3}
     - target: {fileID: 4435197654466733202, guid: 0a9d6e3ad31e6dc4cb3b3c4fd3d64bcb, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -2962,10 +3025,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3191145270977445136, guid: 61a58c39ade143e418ee0311e3bb4b15, type: 3}
+      propertyPath: m_Actions
+      value: 
+      objectReference: {fileID: -944628639613478452, guid: d7f13e266802caa4e91dd8bab45e7b96, type: 3}
+    - target: {fileID: 3191145270977445136, guid: 61a58c39ade143e418ee0311e3bb4b15, type: 3}
+      propertyPath: m_DefaultActionMap
+      value: Navigation
+      objectReference: {fileID: 0}
     - target: {fileID: 5036824546632217601, guid: 61a58c39ade143e418ee0311e3bb4b15, type: 3}
       propertyPath: menuInput
       value: 
-      objectReference: {fileID: 4760970903010101471}
+      objectReference: {fileID: 212503100}
     - target: {fileID: 5036824546632217601, guid: 61a58c39ade143e418ee0311e3bb4b15, type: 3}
       propertyPath: playerInput
       value: 
@@ -3020,38 +3091,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 61a58c39ade143e418ee0311e3bb4b15, type: 3}
---- !u!1 &4760970903010101469 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 340150349977613762, guid: 61a58c39ade143e418ee0311e3bb4b15, type: 3}
-  m_PrefabInstance: {fileID: 4760970903010101468}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &4760970903010101471
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4760970903010101469}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: d7f13e266802caa4e91dd8bab45e7b96, type: 3}
-  m_NotificationBehavior: 0
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Navigation
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}

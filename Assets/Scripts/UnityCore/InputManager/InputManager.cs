@@ -22,10 +22,12 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    [SerializeField] private PlayerInput playerInput;
     [SerializeField] private PlayerInput menuInput;
 
     public bool isInputActive = true;
+
+    private void Start() => GameEvents.Instance.onDialogueTrigger += OnDialogueTrigger;
+    private void OnDestroy() => GameEvents.Instance.onDialogueTrigger -= OnDialogueTrigger;
 
     private void Update()
     {
@@ -48,5 +50,10 @@ public class InputManager : MonoBehaviour
             else if (menuInput.actions["NextTab"].triggered) OnMenuNextTab?.Invoke();
             else if (menuInput.actions["Delete"].triggered) OnMenuDelete?.Invoke();
         }
+    }
+
+    private void OnDialogueTrigger( bool dialogueState )
+    {
+        isInputActive = !dialogueState;
     }
 }

@@ -5,10 +5,15 @@ public class QuestJournalTab : MonoBehaviour
 {
     [SerializeField] private UnityUIQuestJournalUI unityUIQuestJournalUI;
 
+    private void Start()
+    {
+        QuestMachine.defaultQuestJournalUI = unityUIQuestJournalUI;
+    }
+
     private void OnEnable()
     {
-        if (QuestMachine.defaultQuestJournalUI == null) QuestMachine.defaultQuestJournalUI = unityUIQuestJournalUI;
-
         Player.Instance.questJournal.ShowJournalUI();
+        unityUIQuestJournalUI.Redraw();
     }
+
 }

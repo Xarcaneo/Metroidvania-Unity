@@ -54,14 +54,17 @@ namespace Menu
 
         public virtual void OnStart() 
         {
-            SetCanvas(); 
+            SetCanvas();
+
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
+
+        private void OnDestroy() => SceneManager.sceneLoaded -= OnSceneLoaded;
 
         private void OnEnable()
         {
             InputManager.Instance.isInputActive = true;
 
-            SceneManager.sceneLoaded += OnSceneLoaded;
             InputManager.Instance.OnMenuReturn += OnReturnInput;
             InputManager.Instance.OnMenuPlayerMenu += OnPlayerMenuInput;
             InputManager.Instance.OnMenuDelete += OnPlayerDeleteInput;
@@ -69,7 +72,6 @@ namespace Menu
 
         private void OnDisable()
         {
-            SceneManager.sceneLoaded -= OnSceneLoaded;
             InputManager.Instance.OnMenuReturn -= OnReturnInput;
             InputManager.Instance.OnMenuPlayerMenu -= OnPlayerMenuInput;
             InputManager.Instance.OnMenuDelete -= OnPlayerDeleteInput;
