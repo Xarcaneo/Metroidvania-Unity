@@ -19,6 +19,7 @@ public class Movement : CoreComponent
         RB = GetComponentInParent<Rigidbody2D>();
 
         FacingDirection = 1;
+
         CanSetVelocity = true;
     }
 

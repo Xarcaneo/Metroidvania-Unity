@@ -6,6 +6,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public int currentSaveSlot;
+    public bool shouldFlipPlayer = false;
 
     #region Instance variables
     private static GameManager _instance;
