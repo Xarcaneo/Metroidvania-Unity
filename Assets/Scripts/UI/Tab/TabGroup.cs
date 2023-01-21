@@ -1,3 +1,4 @@
+using PixelCrushers.QuestMachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,7 +6,7 @@ using UnityEngine.InputSystem;
 
 public class TabGroup : MonoBehaviour
 {
-    [SerializeField] List<GameObject> objectsToSwap;
+    [SerializeField] List<Tab> objectsToSwap;
     private List<TabButton> tabButtons;
 
     [SerializeField] private Sprite tabIdle;
@@ -68,11 +69,12 @@ public class TabGroup : MonoBehaviour
         {
             if (i == index)
             {
-                objectsToSwap[i].SetActive(true);
+                objectsToSwap[i].gameObject.SetActive(true);
+                objectsToSwap[i].OnActive();
             }
             else
             {
-                objectsToSwap[i].SetActive(false);
+                objectsToSwap[i].gameObject.SetActive(false);
             }
         }
     }

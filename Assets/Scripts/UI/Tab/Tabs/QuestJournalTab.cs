@@ -1,19 +1,21 @@
 using PixelCrushers.QuestMachine;
 using UnityEngine;
 
-public class QuestJournalTab : MonoBehaviour
+public class QuestJournalTab : Tab
 {
     [SerializeField] private UnityUIQuestJournalUI unityUIQuestJournalUI;
 
-    private void Start()
+    private void Awake()
     {
         QuestMachine.defaultQuestJournalUI = unityUIQuestJournalUI;
     }
 
-    private void OnEnable()
+    public override void OnActive()
     {
-        Player.Instance.questJournal.ShowJournalUI();
-        unityUIQuestJournalUI.Redraw();
+        base.OnActive();
+
+        if (QuestMachine.defaultQuestJournalUI != null)
+            unityUIQuestJournalUI.Redraw();
     }
 
 }

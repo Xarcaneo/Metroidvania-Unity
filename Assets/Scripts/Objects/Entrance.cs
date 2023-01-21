@@ -12,7 +12,13 @@ public class Entrance : MonoBehaviour
         scenePortal.onUsePortal.AddListener(EntranceEntered);
     }
 
-    void EntranceEntered() => InputManager.Instance.isInputActive = false;
+    void EntranceEntered()
+    {
+        InputManager.Instance.isInputActive = false;
+        
+        if(transform.localScale.x == -1)
+            GameManager.Instance.shouldFlipPlayer = true;
+    }
 
     private void OnDestroy() => InputManager.Instance.isInputActive = true;
 
