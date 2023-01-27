@@ -48,6 +48,9 @@ namespace Menu
 
         public void OnMainMenuPressed()
         {
+            if (Player.Instance.GetComponent<PlayerPositionSaver>().m_lastCheckpointPosition != new Vector3(0, 0, 0))
+                SaveSystem.SaveToSlot(GameManager.Instance.currentSaveSlot);
+
             InputManager.Instance.isInputActive = false;
             EventSystem.current.SetSelectedGameObject(null, null);
             AudioManager.Instance.gameObject.SetActive(false);

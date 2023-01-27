@@ -10,6 +10,8 @@ public class Checkpoint : Interactable
     public override void Interact()
     {
         isInteractionCompleted = false;
+
+        Player.Instance.GetComponent<PlayerPositionSaver>().m_lastCheckpointPosition = this.transform.position;
         SaveSystem.SaveToSlot(GameManager.Instance.currentSaveSlot);
 
         Player.Instance.CheckpointInteractionState.SetDetectedPosition(this.transform.position.x);
