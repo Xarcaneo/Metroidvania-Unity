@@ -22,7 +22,7 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    [SerializeField] private PlayerInput menuInput;
+    [SerializeField] public PlayerInput menuInput;
 
     public bool isInputActive = true;
 
@@ -39,6 +39,7 @@ public class InputManager : MonoBehaviour
     public event Action OnMenuPreviousTab;
     public event Action OnMenuNextTab;
     public event Action OnMenuDelete;
+    public event Action<Vector2> OnMenuNavigation;
 
     private void MenuInputUpdate()
     {
@@ -55,5 +56,10 @@ public class InputManager : MonoBehaviour
     private void OnDialogueTrigger( bool dialogueState )
     {
         isInputActive = !dialogueState;
+    }
+
+    public Vector2 GetNavigateValue()
+    {
+        return menuInput.actions["Navigate"].ReadValue<Vector2>();
     }
 }
