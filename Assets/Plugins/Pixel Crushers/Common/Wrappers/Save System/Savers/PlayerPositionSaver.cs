@@ -13,6 +13,9 @@ namespace PixelCrushers
         [Tooltip("Player last checkpoint position.")]
         public Vector3 m_lastCheckpointPosition = new Vector3(0,0,0);
 
+        [Tooltip("Player last checkpoint scene.")]
+        public int m_lastCheckpointScene = 0;
+
         [Tooltip("If set, save position of target. Otherwise save this GameObject's position.")]
         [SerializeField]
         private Transform m_target = null;
@@ -28,6 +31,7 @@ namespace PixelCrushers
         [Serializable]
         public class PositionData
         {
+            public string checkpointSceneName;
             public int scene = -1;
             public Vector3 position;
             public Quaternion rotation;
@@ -53,7 +57,9 @@ namespace PixelCrushers
             public List<ScenePositionData> positions = new List<ScenePositionData>();
         }
 
-        protected PositionData m_data;
+        public PositionData m_data;
+        public bool isCheckpoint;
+        public string previousCheckpointSceneName;
         protected MultiscenePositionData m_multisceneData;
         protected NavMeshAgent m_navMeshAgent;
 
@@ -81,33 +87,14 @@ namespace PixelCrushers
 
         public override string RecordData()
         {
-            var currentScene = SceneManager.GetActiveScene().buildIndex;
-            if (multiscene)
-            {
-                var found = false;
-                for (int i = 0; i < m_multisceneData.positions.Count; i++)
-                {
-                    if (m_multisceneData.positions[i].scene == currentScene)
-                    {
-                        found = true;
-                        m_multisceneData.positions[i].position = target.transform.position;
-                        m_multisceneData.positions[i].rotation = target.transform.rotation;
-                        break;
-                    }
-                }
-                if (!found)
-                {
-                    m_multisceneData.positions.Add(new ScenePositionData(currentScene, target.transform.position, target.transform.rotation));
-                }
-                return SaveSystem.Serialize(m_multisceneData);
-            }
-            else
-            {
-                m_data.scene = currentScene;
-                m_data.position = m_lastCheckpointPosition;
-                m_data.rotation = target.transform.rotation;
-                return SaveSystem.Serialize(m_data);
-            }
+            m_data.checkpointSceneName = isCheckpoint ? SceneManager.GetActiveScene().name : previousCheckpointSceneName;
+            previousCheckpointSceneName = m_data.checkpointSceneName;
+            m_data.position = m_lastCheckpointPosition;
+
+
+            isCheckpoint = false;
+
+            return SaveSystem.Serialize(m_data);     
         }
 
         public override void ApplyData(string s)

@@ -56,4 +56,13 @@ public class GameEvents : MonoBehaviour
             onPlayerSpawned();
         }
     }
+
+    public event Action<int> onLevelLoaded;
+    public void LevelLoaded(int levelID)
+    {
+        if (onLevelLoaded != null)
+        {
+            onLevelLoaded(levelID);
+        }
+    }
 }

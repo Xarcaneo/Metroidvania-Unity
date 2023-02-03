@@ -12341,6 +12341,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollRect: {fileID: 8417033113010522208}
+  m_worldMapManager: {fileID: 973309255106705950}
   moveSpeed: 400
 --- !u!1 &3155788131082323706
 GameObject:
@@ -26480,8 +26481,23 @@ PrefabInstance:
       propertyPath: m_Name
       value: WorldMap
       objectReference: {fileID: 0}
+    - target: {fileID: 3097563907167356325, guid: 10f9f310e58bf4f4c9680958d4825b2e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10f9f310e58bf4f4c9680958d4825b2e, type: 3}
+--- !u!114 &973309255106705950 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5086869290109244510, guid: 10f9f310e58bf4f4c9680958d4825b2e, type: 3}
+  m_PrefabInstance: {fileID: 5411588658978500160}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c9902569aeb6954abe0895869947078, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &6223096840690522161 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2109147716298012273, guid: 10f9f310e58bf4f4c9680958d4825b2e, type: 3}

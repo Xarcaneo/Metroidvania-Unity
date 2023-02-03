@@ -39,7 +39,6 @@ public class InputManager : MonoBehaviour
     public event Action OnMenuPreviousTab;
     public event Action OnMenuNextTab;
     public event Action OnMenuDelete;
-    public event Action<Vector2> OnMenuNavigation;
 
     private void MenuInputUpdate()
     {

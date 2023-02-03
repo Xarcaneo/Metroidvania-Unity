@@ -7,11 +7,12 @@ using UnityEngine;
 public class LevelManager : MonoBehaviour
 {
     [SerializeField] int ChapterNumber = 0;
-
+    [SerializeField] int m_roomID = 0;
     private void OnEnable()
     {
         AudioManager.Instance.Jukebox.SetAudioCollection(ChapterNumber);
         AudioManager.Instance.Jukebox.gameObject.SetActive(true);
+        GameEvents.Instance.LevelLoaded(m_roomID);
     }
 
     private void OnApplicationQuit()
