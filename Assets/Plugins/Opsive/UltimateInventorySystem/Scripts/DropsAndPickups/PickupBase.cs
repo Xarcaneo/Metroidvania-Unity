@@ -64,6 +64,8 @@ namespace Opsive.UltimateInventorySystem.DropsAndPickups
                 if(m_Interactable == null){ return; }
             }
             m_Interactable.SetIsInteractable(true);
+
+            UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(gameObject, UnityEngine.SceneManagement.SceneManager.GetActiveScene());
         }
 
         /// <summary>
