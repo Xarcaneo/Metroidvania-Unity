@@ -2530,6 +2530,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 33181041, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
+      propertyPath: enterSceneTransition.animationDuration
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 33181041, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
+      propertyPath: leaveSceneTransition.animationDuration
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 33181041, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
+      propertyPath: leaveSceneTransition.minTransitionDuration
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 221056644, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2577,6 +2589,10 @@ PrefabInstance:
     - target: {fileID: 234692315, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 936214820, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
+      propertyPath: m_framesToWaitBeforeApplyData
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2025597051, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
       propertyPath: onExecute.m_PersistentCalls.m_Calls.Array.data[0].m_Target

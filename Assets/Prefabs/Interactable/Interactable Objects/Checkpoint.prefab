@@ -89,7 +89,7 @@ SpriteRenderer:
   m_SpriteSortPoint: 0
 --- !u!95 &1785640702637485217
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -106,7 +106,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!114 &5309258156328020974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -184,6 +184,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1799607720511194779, guid: 55187ab96d3c4fa42b7efdbc97ee1486, type: 3}
+      propertyPath: m_Radius
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1799607720511194779, guid: 55187ab96d3c4fa42b7efdbc97ee1486, type: 3}
+      propertyPath: m_Offset.y
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 6149369864332334251, guid: 55187ab96d3c4fa42b7efdbc97ee1486, type: 3}
       propertyPath: m_Size.x
       value: 2.5625
@@ -204,9 +212,7 @@ PrefabInstance:
       propertyPath: interactableObject
       value: 
       objectReference: {fileID: 5309258156328020974}
-    m_RemovedComponents:
-    - {fileID: 6988817352765390500, guid: 55187ab96d3c4fa42b7efdbc97ee1486, type: 3}
-    - {fileID: 2195405035957763965, guid: 55187ab96d3c4fa42b7efdbc97ee1486, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 55187ab96d3c4fa42b7efdbc97ee1486, type: 3}
 --- !u!114 &432949348292597492 stripped
 MonoBehaviour:

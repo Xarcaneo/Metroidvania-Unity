@@ -59,7 +59,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1799607720511194776}
   - component: {fileID: 1799607720511194779}
-  - component: {fileID: 2195405035957763965}
   m_Layer: 28
   m_Name: InteractHandler
   m_TagString: Untagged
@@ -99,20 +98,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &2195405035957763965
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1799607720511194773}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0426415b3f73f0f49bbd1a178fba9df2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interactableObject: {fileID: 0}
-  pictogramHandler: {fileID: 1765511866684117848}
 --- !u!1 &4377400319162438217
 GameObject:
   m_ObjectHideFlags: 0
@@ -246,7 +231,7 @@ SpriteRenderer:
   m_SpriteSortPoint: 0
 --- !u!95 &519811041578516218
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -263,4 +248,4 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0

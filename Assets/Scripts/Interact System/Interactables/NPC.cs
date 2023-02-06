@@ -29,7 +29,6 @@ public class NPC : Interactable
 
     public override void Interact()
     {
-        isInteractionCompleted = false;
         DialogueManager.StartConversation("New Conversation 1");
     }
 
@@ -37,7 +36,6 @@ public class NPC : Interactable
     {
         if (!value)
         {
-            isInteractionCompleted = true;
             CallInteractionCompletedEvent(); 
         }
     }

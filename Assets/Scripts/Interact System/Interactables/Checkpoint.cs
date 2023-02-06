@@ -24,7 +24,6 @@ public class Checkpoint : Interactable
 
     public void AnimationFinished()
     {
-        isInteractionCompleted = true;
         CallInteractionCompletedEvent();
         Anim.SetBool("activated", false);
     }
