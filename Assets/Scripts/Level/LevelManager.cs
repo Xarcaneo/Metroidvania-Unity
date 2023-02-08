@@ -22,17 +22,14 @@ public class LevelManager : MonoBehaviour
 
     private void SpawnPlayer()
     {
-        var savedGameData = SaveSystem.storer.RetrieveSavedGameData(GameManager.Instance.currentSaveSlot);
-        var s = savedGameData.GetData("playerPositionKey");
-        if (!string.IsNullOrEmpty(s))
-        {
-            var positionData = SaveSystem.Deserialize<PositionSaver.PositionData>(s);
-            Instantiate(m_playerPref, positionData.position, Quaternion.identity);
-        }
-        else
+        if (GameObject.FindGameObjectWithTag("SpawnPoint"))
         {
             var position = GameObject.FindGameObjectWithTag("SpawnPoint").transform.position;
             Instantiate(m_playerPref, position, Quaternion.identity);
-        }    
+        }
+        else
+        {
+            Instantiate(m_playerPref, new Vector3(0, 0, 0), Quaternion.identity);
+        }
     }
 }

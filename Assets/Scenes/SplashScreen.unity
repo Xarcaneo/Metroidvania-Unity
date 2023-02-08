@@ -2531,16 +2531,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 33181041, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
+      propertyPath: pauseDuringTransition
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 33181041, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
       propertyPath: enterSceneTransition.animationDuration
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 33181041, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
       propertyPath: leaveSceneTransition.animationDuration
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 33181041, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
+      propertyPath: enterSceneTransition.minTransitionDuration
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 33181041, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
       propertyPath: leaveSceneTransition.minTransitionDuration
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 221056644, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
       propertyPath: m_AnchorMax.y
