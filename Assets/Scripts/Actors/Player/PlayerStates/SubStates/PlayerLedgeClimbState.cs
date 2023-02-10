@@ -14,6 +14,7 @@ public class PlayerLedgeClimbState : PlayerState
     private bool isClimbing;
 
     private int yInput;
+    private bool jumpInput;
 
     private Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
     private CollisionSenses CollisionSenses { get => collisionSenses ?? core.GetCoreComponent(ref collisionSenses); }
@@ -79,11 +80,12 @@ public class PlayerLedgeClimbState : PlayerState
         else
         {
             yInput = player.InputHandler.NormInputY;
+            jumpInput = player.InputHandler.JumpInput;
 
             Movement?.SetVelocityZero();
             player.transform.position = startPos;
 
-            if (yInput == 1 && isHanging && !isClimbing)
+            if (jumpInput && isHanging && !isClimbing)
             {
                 isClimbing = true;
                 player.Anim.SetBool("climbLedge", true);

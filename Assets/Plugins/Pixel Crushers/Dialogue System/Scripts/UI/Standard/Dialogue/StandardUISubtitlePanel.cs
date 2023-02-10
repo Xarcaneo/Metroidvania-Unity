@@ -131,7 +131,7 @@ namespace PixelCrushers.DialogueSystem
         private string m_accumulatedText = string.Empty;
         public string accumulatedText { get { return m_accumulatedText; } set { m_accumulatedText = value; } }
 
-        private Animator m_animator = null;
+        [System.NonSerialized] private Animator m_animator = null;
         protected virtual Animator animator { get { if (m_animator == null && portraitImage != null) m_animator = portraitImage.GetComponent<Animator>(); return m_animator; } set { m_animator = value; } }
 
         private Animator m_panelAnimator = null;

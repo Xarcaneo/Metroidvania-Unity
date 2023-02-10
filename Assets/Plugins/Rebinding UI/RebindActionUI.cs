@@ -201,6 +201,11 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
                     displayString = action.GetBindingDisplayString(bindingIndex, out deviceLayoutName, out controlPath, displayStringOptions);
             }
 
+            if (displayString == "Num 8") displayString = "Up";
+            else if (displayString == "Num 6") displayString = "Right";
+            else if(displayString == "Num 2") displayString = "Down";
+            else if (displayString == "Num 4") displayString = "Left";
+
             // Set on label (if any).
             if (m_BindingText != null)
                 m_BindingText.text = displayString;
@@ -216,12 +221,6 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
         {
             if (!ResolveActionAndBinding(out var action, out var bindingIndex))
                 return;
-
-            if (SwapResetBindings(action, bindingIndex))
-            {
-                UpdateBindingDisplay();
-                return;
-            }
 
             if (action.bindings[bindingIndex].isComposite)
             {
@@ -260,6 +259,8 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
 
         private void PerformInteractiveRebind(InputAction action, int bindingIndex, bool allCompositeParts = false)
         {
+            InputBinding originalBinding = action.bindings[bindingIndex];
+         
             m_RebindOperation?.Cancel(); // Will null out m_RebindOperation.
 
             void CleanUp()
@@ -268,26 +269,32 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
                 m_RebindOperation = null;
             }
 
+            action.Disable();
+
             // Configure the rebind.
             m_RebindOperation = action.PerformInteractiveRebinding(bindingIndex)
                 .WithCancelingThrough("<Keyboard>/escape")
                 .OnCancel(
                     operation =>
                     {
+                        action.Enable();
                         m_RebindStopEvent?.Invoke(this, operation);
                         m_RebindOverlay?.SetActive(false);
                         UpdateBindingDisplay();
                         CleanUp();
+                        rebindError = false;
                     })
                 .OnComplete(
                     operation =>
                     {
+                        action.Enable();
                         m_RebindOverlay?.SetActive(false);
                         m_RebindStopEvent?.Invoke(this, operation);
 
                         if (CheckDuplicateBindings(action, bindingIndex, allCompositeParts))
                         {
-                            action.RemoveBindingOverride(bindingIndex);
+                            rebindError = true;
+                            action.ApplyBindingOverride(bindingIndex, originalBinding);
                             CleanUp();
                             PerformInteractiveRebind(action, bindingIndex, allCompositeParts);
                             return;
@@ -295,6 +302,7 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
 
                         UpdateBindingDisplay();
                         CleanUp();
+                        rebindError = false;
 
                         // If there's more composite parts we should bind, initiate a rebind
                         // for the next part.
@@ -313,13 +321,15 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
 
             // Bring up rebind overlay, if we have one.
             m_RebindOverlay?.SetActive(true);
-            if (m_RebindText != null)
+            if (m_RebindText != null && !rebindError)
             {
                 var text = !string.IsNullOrEmpty(m_RebindOperation.expectedControlType)
                     ? $"{partName}Waiting for {m_RebindOperation.expectedControlType} input..."
                     : $"{partName}Waiting for input...";
                 m_RebindText.text = text;
             }
+            else
+                m_RebindText.text = "Error: Key already used";
 
             // If we have no rebind overlay and no callback but we have a binding text label,
             // temporarily set the binding text label to "<Waiting>".
@@ -332,33 +342,24 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
             m_RebindOperation.Start();
         }
 
-        private bool SwapResetBindings(InputAction action, int bindingIndex)
+        private bool CheckDuplicateBindings(InputAction action, int bindingIndex, bool allCompositeParts = false)
         {
-            // Cache a reference to the current binding.
             InputBinding newBinding = action.bindings[bindingIndex];
-            // Check all of the bindings in the current action map to make sure there are no duplicates.
-            for (int i = 0; i < action.actionMap.bindings.Count; ++i)
+
+            for (int i = 0; i < action.bindings.Count; i++)
             {
-                InputBinding binding = action.actionMap.bindings[i];
-                if (binding.action == newBinding.action)
-                {
+                InputBinding binding = action.bindings[i];
+          
+                if (i == bindingIndex)
+                { 
                     continue;
                 }
-                if (binding.effectivePath == newBinding.path)
+                if (binding.effectivePath == newBinding.effectivePath)
                 {
-                    Debug.Log("Duplicate binding found for reset to default: " + newBinding.effectivePath);
-                    // Swap the two actions.
-                    action.actionMap.FindAction(binding.action).ApplyBindingOverride(i, newBinding.overridePath);
-                    action.RemoveBindingOverride(bindingIndex);
                     return true;
                 }
             }
-            return false;
-        }
 
-        private bool CheckDuplicateBindings(InputAction action, int bindigIndex, bool allCompositeParts = false)
-        {
-            InputBinding newBinding = action.bindings[bindigIndex];
             foreach (InputBinding binding in action.actionMap.bindings)
             {
                 if (binding.action == newBinding.action)
@@ -368,13 +369,13 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
                 if (binding.effectivePath == newBinding.effectivePath)
                 {
                     return true;
-                }
+                } 
             }
 
             //check for duplicate composite bindings 
             if (allCompositeParts)
             {
-                for (int i = 1; i < bindigIndex; ++i)
+                for (int i = 1; i < bindingIndex; ++i)
                 {
                     if(action.bindings[i].effectivePath == newBinding.effectivePath)
                     {
@@ -476,6 +477,8 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
         [Tooltip("Event that is triggered when an interactive rebind is complete or has been aborted.")]
         [SerializeField]
         private InteractiveRebindEvent m_RebindStopEvent;
+
+        private bool rebindError = false;
 
         private InputActionRebindingExtensions.RebindingOperation m_RebindOperation;
 
