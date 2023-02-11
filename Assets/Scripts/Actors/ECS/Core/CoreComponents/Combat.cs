@@ -35,14 +35,22 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable
     {
         if (isDamagable)
         {
-            Stats?.DecreaseHealth(damageData.DamageAmount);
-
-            OnDamage?.Invoke(damageData.DamageAmount);
+            if (Block && Block.isBlocking && Block.IsBetween(damageData.Source))
+            {
+                return;
+            }
+            else
+            {
+                Stats?.DecreaseHealth(damageData.DamageAmount);
+                OnDamage?.Invoke(damageData.DamageAmount);
+            }
         }
     }
 
     public void Knockback(int direction)
     {
+        if (Block && Block.isBlocking) return;
+
         if (isKnockable)
         {
             Movement?.SetVelocity(knockbackStrength, knockbackAngle, direction);
