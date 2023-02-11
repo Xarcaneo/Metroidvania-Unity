@@ -10,6 +10,8 @@ public class PlayerAttackState : PlayerAbilityState
     private bool isGrounded;
     private bool attackInput;
 
+    private bool blockInput;
+
     private Weapon Weapon { get => weapon ?? core.GetCoreComponent(ref weapon); }
     private Weapon weapon;
 
@@ -62,7 +64,13 @@ public class PlayerAttackState : PlayerAbilityState
 
         Movement?.SetVelocityX(velocityToSet * Movement.FacingDirection);
 
-        if (!isExitingState && isAnimationFinished)
+        blockInput = player.InputHandler.BlockInput;
+
+        if(blockInput)
+        {
+            stateMachine.ChangeState(player.BlockState);
+        }
+        else if (!isExitingState && isAnimationFinished)
         {
             if (attackInput)
             {

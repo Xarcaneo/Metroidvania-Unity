@@ -7,6 +7,7 @@ using UnityEngine;
 public class Core : MonoBehaviour
 {
     private readonly List<CoreComponent> CoreComponents = new List<CoreComponent>();
+    [field: SerializeField] public GameObject Parent { get; private set; }
 
     public void LogicUpdate()
     {
