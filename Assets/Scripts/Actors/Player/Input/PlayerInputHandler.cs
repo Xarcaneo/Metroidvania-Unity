@@ -19,6 +19,7 @@ public class PlayerInputHandler : MonoBehaviour
     public bool DashInput { get; private set; }
     public bool DashInputStop { get; private set; }
     public bool AttackInput { get; private set; }
+    public bool BlockInput { get; private set; }
 
     [SerializeField]
     private float inputHoldTime = 0.2f;
@@ -70,6 +71,21 @@ public class PlayerInputHandler : MonoBehaviour
             if (context.canceled)
             {
                 AttackInput = false;
+            }
+        }
+    }
+    public void OnBlockInput(InputAction.CallbackContext context)
+    {
+        if (!DisableInput)
+        {
+            if (context.started)
+            {
+                BlockInput = true;
+            }
+
+            if (context.canceled)
+            {
+                BlockInput = false;
             }
         }
     }
@@ -147,6 +163,7 @@ public class PlayerInputHandler : MonoBehaviour
     public void UseDashInput() => DashInput = false;
 
     public void UseAttackInput() => AttackInput = false;
+    public void UseBlockInput() => BlockInput = false;
 
     private void CheckJumpInputHoldTime()
     {

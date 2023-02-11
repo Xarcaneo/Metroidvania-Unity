@@ -20,22 +20,24 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable
 
     private Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
     private Stats Stats { get => stats ?? core.GetCoreComponent(ref stats); }
+    private Block Block { get => block ?? core.GetCoreComponent(ref block); }
 
     private Movement movement;
     private Stats stats;
+    private Block block;
 
     public override void LogicUpdate()
     {
         CheckKnockback();
     }
 
-    public void Damage(float amount)
+    public void Damage(IDamageable.DamageData damageData)
     {
         if (isDamagable)
         {
-            Stats?.DecreaseHealth(amount);
+            Stats?.DecreaseHealth(damageData.DamageAmount);
 
-            OnDamage?.Invoke(amount);
+            OnDamage?.Invoke(damageData.DamageAmount);
         }
     }
 
