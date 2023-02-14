@@ -253,7 +253,6 @@ namespace Opsive.UltimateInventorySystem.UI.Menus.Shop
             if (price == null) {
                 multiCurrencyView.DrawEmptyCurrency();
                 return;
-
             }
             multiCurrencyView.DrawCurrency(m_TempCurrencyCollection);
         }

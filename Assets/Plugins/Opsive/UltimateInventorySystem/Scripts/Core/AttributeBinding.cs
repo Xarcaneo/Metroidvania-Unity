@@ -15,32 +15,68 @@ namespace Opsive.UltimateInventorySystem.Core
     /// <summary>
     /// Attribute Binding is a class used to bind an attribute to a property.
     /// </summary>
+    public interface IAttributeBinding
+    {
+        string AttributeName { get; set; }
+        string PropertyPath { get; set; }
+        object BoundObject { get; set; }
+
+        /// <summary>
+        /// Create the property delegates.
+        /// </summary>
+        void CreatePropertyDelegates();
+
+        /// <summary>
+        /// Create the property delegates.
+        /// </summary>
+        void CreatePropertyDelegates(object boundObject);
+        
+        /// <summary>
+        /// Bind the attribute.
+        /// </summary>
+        /// <param name="attribute">The attribute to bind.</param>
+        void BindAttribute(AttributeBase attribute);
+        
+        /// <summary>
+        /// Unbind an attribute.
+        /// </summary>
+        void UnBindAttribute();
+        
+        /// <summary>
+        /// Refresh the bound values.
+        /// </summary>
+        void Refresh();
+    }
+    
+    /// <summary>
+    /// The Attribute Binding class used to bind attributes to properties.
+    /// </summary>
+    /// <typeparam name="T">The attribute type.</typeparam>
+    public interface IAttributeBinding<T> : IAttributeBinding
+    {
+        Action<T> Setter { get; }
+        Func<T> Getter { get; }
+    }
+    
+    /// <summary>
+    /// Attribute Binding is a class used to bind an attribute to a property.
+    /// </summary>
     [Serializable]
-    public abstract class AttributeBinding
+    public abstract class AttributeBindingBase : IAttributeBinding
     {
         [Tooltip("The attribute name.")]
         [SerializeField] protected string m_AttributeName;
-        [Tooltip("The object bound to the attribute.")]
-        [SerializeField] protected Object m_BoundComponent;
         [Tooltip("The object path to the property bound to the attribute.")]
         [SerializeField] protected string m_PropertyPath;
 
         protected PropertyInfo m_Property;
+        protected object m_BoundObject;
 
-        public string AttributeName {
-            get => m_AttributeName;
-            set => m_AttributeName = value;
-        }
+        public string AttributeName { get => m_AttributeName; set => m_AttributeName = value; }
 
-        public Object BoundComponent {
-            get => m_BoundComponent;
-            set => m_BoundComponent = value;
-        }
-
-        public string PropertyPath {
-            get => m_PropertyPath;
-            set => m_PropertyPath = value;
-        }
+        public string PropertyPath { get => m_PropertyPath; set => m_PropertyPath = value; }
+        
+        public virtual object BoundObject { get=> m_BoundObject; set=> m_BoundObject = value; }
 
         /// <summary>
         /// Bind the attribute.
@@ -51,9 +87,21 @@ namespace Opsive.UltimateInventorySystem.Core
         /// <summary>
         /// Create the property delegates.
         /// </summary>
-        public void CreatePropertyDelegates()
+        public virtual void CreatePropertyDelegates()
         {
-            m_Property = m_BoundComponent?.GetType().GetProperty(m_PropertyPath);
+            m_Property = BoundObject?.GetType().GetProperty(m_PropertyPath);
+            if (m_Property == null) { return; }
+
+            CreatePropertyDelegatesInternal(m_Property);
+        }
+        
+        /// <summary>
+        /// Create the property delegates.
+        /// </summary>
+        public virtual void CreatePropertyDelegates(object boundObject)
+        {
+            BoundObject = boundObject;
+            m_Property = BoundObject?.GetType().GetProperty(m_PropertyPath);
             if (m_Property == null) { return; }
 
             CreatePropertyDelegatesInternal(m_Property);
@@ -69,6 +117,140 @@ namespace Opsive.UltimateInventorySystem.Core
         /// Unbind an attribute.
         /// </summary>
         public abstract void UnBindAttribute();
+
+
+        /// <summary>
+        /// Refresh the bound values.
+        /// </summary>
+        public abstract void Refresh();
+    }
+    
+    /// <summary>
+    /// The Attribute Binding class used to bind attributes to properties.
+    /// </summary>
+    /// <typeparam name="T">The attribute type.</typeparam>
+    [Serializable]
+    public class GenericAttributeBinding<T> : AttributeBindingBase, IAttributeBinding<T>
+    {
+        [NonSerialized] protected Attribute<T> m_Attribute;
+        [NonSerialized] protected Action<T> m_Setter;
+        [NonSerialized] protected Func<T> m_Getter;
+
+        public Action<T> Setter => m_Setter;
+        public Func<T> Getter => m_Getter;
+
+        /// <summary>
+        /// Default Constructor.
+        /// </summary>
+        public GenericAttributeBinding()
+        {
+        }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="name">Attribute name.</param>
+        /// <param name="boundObject">The object to bind.</param>
+        /// <param name="path">The path of the property to bind.</param>
+        public GenericAttributeBinding(string name, object boundObject, string path)
+        {
+            m_AttributeName = name;
+            m_BoundObject = boundObject;
+            m_PropertyPath = path;
+        }
+
+        /// <summary>
+        /// Create the property delegates.
+        /// </summary>
+        /// <param name="property">The property.</param>
+        protected override void CreatePropertyDelegatesInternal(PropertyInfo property)
+        {
+            var setMethod = property.GetSetMethod(false);
+            if (setMethod != null) {
+                m_Setter = (Action<T>)Delegate.CreateDelegate(typeof(Action<T>), BoundObject, setMethod);
+            }
+
+            var getMethod = property.GetGetMethod(false);
+            if (getMethod != null) {
+                m_Getter = (Func<T>)Delegate.CreateDelegate(typeof(Func<T>), BoundObject, getMethod);
+            }
+        }
+
+        /// <summary>
+        /// The attribute to bind
+        /// </summary>
+        /// <param name="attribute">The attribute.</param>
+        public override void BindAttribute(AttributeBase attribute)
+        {
+            if (m_Property == null) { return; }
+            BindAttribute(attribute as Attribute<T>);
+        }
+
+        /// <summary>
+        /// Bind the attribute.
+        /// </summary>
+        /// <param name="attribute">The attribute to bind.</param>
+        public void BindAttribute(Attribute<T> attribute)
+        {
+            if (m_Property == null) { return; }
+            if (attribute == null) {
+                UnBindAttribute();
+                return;
+            }
+            m_Attribute = attribute;
+            m_Attribute.Bind(this);
+            Refresh();
+        }
+
+        /// <summary>
+        /// Unbind an attribute.
+        /// </summary>
+        public override void UnBindAttribute()
+        {
+            if (m_Attribute == null) { return; }
+            m_Attribute.Unbind(true);
+            m_Attribute = null;
+        }
+
+        /// <summary>
+        /// Refresh.
+        /// </summary>
+        public override void Refresh()
+        {
+            if (m_Attribute == null) {
+                return;
+            }
+            m_Setter?.Invoke(m_Attribute.GetUnboundValue());
+        }
+    }
+    
+    /// <summary>
+    /// Attribute Binding is a class used to bind an attribute to a property.
+    /// </summary>
+    [Serializable]
+    public abstract class AttributeBinding : AttributeBindingBase
+    {
+        [Tooltip("The object bound to the attribute.")]
+        [SerializeField] protected Object m_BoundComponent;
+
+        public Object BoundComponent {
+            get => m_BoundComponent;
+            set => m_BoundComponent = value;
+        }
+        
+        public override object BoundObject { get=> m_BoundComponent; set=> m_BoundComponent = value as Object; }
+
+        /// <summary>
+        /// Create the property delegates.
+        /// </summary>
+        public override void CreatePropertyDelegates()
+        {
+            m_BoundObject = m_BoundComponent;
+            m_Property = m_BoundComponent?.GetType().GetProperty(m_PropertyPath);
+            if (m_Property == null) { return; }
+
+            CreatePropertyDelegatesInternal(m_Property);
+        }
     }
 
     /// <summary>
@@ -76,7 +258,7 @@ namespace Opsive.UltimateInventorySystem.Core
     /// </summary>
     /// <typeparam name="T">The attribute type.</typeparam>
     [Serializable]
-    public class AttributeBinding<T> : AttributeBinding
+    public class AttributeBinding<T> : AttributeBinding, IAttributeBinding<T>
     {
         [NonSerialized] protected Attribute<T> m_Attribute;
         [NonSerialized] protected Action<T> m_Setter;
@@ -101,6 +283,7 @@ namespace Opsive.UltimateInventorySystem.Core
         public AttributeBinding(string name, Object boundObject, string path)
         {
             m_AttributeName = name;
+            m_BoundObject = boundObject;
             m_BoundComponent = boundObject;
             m_PropertyPath = path;
         }
@@ -161,11 +344,12 @@ namespace Opsive.UltimateInventorySystem.Core
         /// <summary>
         /// Refresh.
         /// </summary>
-        public void Refresh()
+        public override void Refresh()
         {
             if (m_Attribute == null) {
                 return;
             }
+           
             m_Setter?.Invoke(m_Attribute.GetUnboundValue());
         }
     }
@@ -243,7 +427,7 @@ namespace Opsive.UltimateInventorySystem.Core
         /// <summary>
         /// Refresh.
         /// </summary>
-        public void Refresh()
+        public override void Refresh()
         {
             m_Setter?.Invoke(m_Attribute.Name);
         }

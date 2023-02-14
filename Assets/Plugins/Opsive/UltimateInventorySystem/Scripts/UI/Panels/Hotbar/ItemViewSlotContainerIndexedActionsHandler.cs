@@ -92,6 +92,8 @@ namespace Opsive.UltimateInventorySystem.UI.Panels.Hotbar
         {
             if (inventory == null) { return; }
 
+            //TODO the bound inventory might not be the player inventory (example chest) so the input might not be found there...
+            //Find a better solution to get the player input.
             m_PlayerInput = inventory.gameObject.GetCachedComponent<IPlayerInput>();
             EventHandler.RegisterEvent<bool>(m_PlayerInput.gameObject, EventNames.c_CharacterGameObject_OnEnableGameplayInput_Bool, HandleEnableGameplayInput);
             enabled = true;

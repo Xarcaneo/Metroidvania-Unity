@@ -25,7 +25,7 @@ namespace Opsive.UltimateInventorySystem.Core
         [Tooltip("The item category.")]
         [SerializeField] private ItemCategory m_ItemCategory;
 
-        [System.NonSerialized] protected AttributeBinding[] m_AttributeBindings;
+        [System.NonSerialized] protected AttributeBindingBase[] m_AttributeBindings;
         [System.NonSerialized] protected bool m_Initialized = false;
 
         protected ItemObject m_ItemObject;
@@ -35,7 +35,7 @@ namespace Opsive.UltimateInventorySystem.Core
         public ItemObject ItemObject => m_ItemObject;
         public Item Item => m_Item;
 
-        public AttributeBinding[] AttributeBindings {
+        public AttributeBindingBase[] AttributeBindings {
             get => m_AttributeBindings;
             internal set => m_AttributeBindings = value;
         }
@@ -46,6 +46,19 @@ namespace Opsive.UltimateInventorySystem.Core
         private void Awake()
         {
             Initialize(true);
+        }
+
+        /// <summary>
+        /// Initialize the binding.
+        /// </summary>
+        /// <param name="force">Force initialization.</param>
+        public void Initialize(bool force)
+        {
+            if (m_Initialized && !force) { return; }
+
+            Deserialize();
+            InitializeAttributeBindings();
+            m_Initialized = true;
         }
 
         /// <summary>
@@ -73,19 +86,6 @@ namespace Opsive.UltimateInventorySystem.Core
                 SetItem(item);
             }
 
-        }
-
-        /// <summary>
-        /// Initialize the binding.
-        /// </summary>
-        /// <param name="force">Force initialization.</param>
-        public void Initialize(bool force)
-        {
-            if (m_Initialized && !force) { return; }
-
-            Deserialize();
-            InitializeAttributeBindings();
-            m_Initialized = true;
         }
 
         /// <summary>
@@ -117,13 +117,13 @@ namespace Opsive.UltimateInventorySystem.Core
         protected void Deserialize()
         {
             if (m_AttributeBindingsData == null) {
-                if (m_AttributeBindings == null) { m_AttributeBindings = new AttributeBinding[0]; }
+                if (m_AttributeBindings == null) { m_AttributeBindings = new AttributeBindingBase[0]; }
                 return;
             }
 
-            m_AttributeBindings = new AttributeBinding[m_AttributeBindingsData.Length];
+            m_AttributeBindings = new AttributeBindingBase[m_AttributeBindingsData.Length];
             for (int i = 0; i < m_AttributeBindingsData.Length; i++) {
-                var attribute = m_AttributeBindingsData[i].DeserializeFields(MemberVisibility.Public) as AttributeBinding;
+                var attribute = m_AttributeBindingsData[i].DeserializeFields(MemberVisibility.Public) as AttributeBindingBase;
                 m_AttributeBindings[i] = attribute;
             }
         }
@@ -138,13 +138,13 @@ namespace Opsive.UltimateInventorySystem.Core
                 return;
             }
 
-            var attributes = new List<AttributeBinding>();
+            var attributes = new List<AttributeBindingBase>();
             for (int i = 0; i < m_AttributeBindings.Length; i++) {
                 var attributeBinding = m_AttributeBindings[i];
                 attributes.Add(attributeBinding);
             }
 
-            m_AttributeBindingsData = Serialization.Serialize<AttributeBinding>(attributes);
+            m_AttributeBindingsData = Serialization.Serialize<AttributeBindingBase>(attributes);
         }
 
         /// <summary>
@@ -153,7 +153,7 @@ namespace Opsive.UltimateInventorySystem.Core
         private void InitializeAttributeBindings()
         {
             if (m_AttributeBindings == null) {
-                m_AttributeBindings = new AttributeBinding[0];
+                m_AttributeBindings = new AttributeBindingBase[0];
                 return;
             }
 
@@ -207,6 +207,9 @@ namespace Opsive.UltimateInventorySystem.Core
             }
         }
 
+        /// <summary>
+        /// Unbind all the attributes.
+        /// </summary>
         private void UnbindAttributes()
         {
             for (int i = 0; i < m_AttributeBindings.Length; i++) {

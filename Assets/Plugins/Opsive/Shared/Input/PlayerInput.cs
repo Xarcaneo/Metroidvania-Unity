@@ -42,6 +42,14 @@ namespace Opsive.Shared.Input
         [SerializeField] protected string m_HorizontalLookInputName = "Mouse X";
         [Tooltip("The name of the vertical camera input mapping.")]
         [SerializeField] protected string m_VerticalLookInputName = "Mouse Y";
+        [Tooltip("The name of the controller horizontal camera input mapping.")]
+        [SerializeField] protected string m_ControllerHorizontalLookInputName = "Controller X";
+        [Tooltip("The name of the vertical camera input mapping.")]
+        [SerializeField] protected string m_ControllerVerticalLookInputName = "Controller Y";
+        [Tooltip("Specifies a multiplier to apply to the controller input value.")]
+        [SerializeField] protected float m_ControllerInputMultiplier = 50;
+        [Tooltip("If a controller is connected should the controller and mouse input be checked?")]
+        [SerializeField] protected bool m_MouseControllerUpdate = true;
         [Tooltip("Specifies how the look vector is assigned.")]
         [SerializeField] protected LookVectorMode m_LookVectorMode = LookVectorMode.Smoothed;
         [Tooltip("If using look smoothing, specifies how sensitive the mouse is. The higher the value the more sensitive.")]
@@ -69,7 +77,11 @@ namespace Opsive.Shared.Input
 
         public string HorizontalLookInputName { get { return m_HorizontalLookInputName; } set { m_HorizontalLookInputName = value; } }
         public string VerticalLookInputName { get { return m_VerticalLookInputName; } set { m_VerticalLookInputName = value; } }
-        public LookVectorMode LookMode {
+        public string ControllerHorizontalLookInputName { get { return m_ControllerHorizontalLookInputName; } set { m_ControllerHorizontalLookInputName = value; } }
+        public string ControllerVerticalLookInputName { get { return m_ControllerVerticalLookInputName; } set { m_ControllerVerticalLookInputName = value; } }
+        public float ControllerInputMultiplier { get { return m_ControllerInputMultiplier; } set { m_ControllerInputMultiplier = value; } }
+        public LookVectorMode LookMode
+        {
             get { return m_LookVectorMode; }
             set {
                 m_LookVectorMode = value;
@@ -90,7 +102,7 @@ namespace Opsive.Shared.Input
 #endif
         public UnityBoolEvent EnableGameplayInputEvent { get { return m_EnableGamplayInputEvent; } set { m_EnableGamplayInputEvent = value; } }
 
-        private GameObject m_GameObject;
+        [System.NonSerialized] private GameObject m_GameObject;
         private Vector2[] m_SmoothLookBuffer;
         private int m_SmoothLookBufferIndex;
         private int m_SmoothLookBufferCount;
@@ -347,7 +359,7 @@ namespace Opsive.Shared.Input
         /// Is a controller connected?
         /// </summary>
         /// <returns>True if a controller is connected.</returns>
-        public bool IsControllerConnected() { return m_ControllerConnected; }
+        public virtual bool IsControllerConnected() { return m_ControllerConnected; }
 
         /// <summary>
         /// Is the cursor visible?
@@ -387,7 +399,7 @@ namespace Opsive.Shared.Input
             // Schedule the controller check event if the rate is positive.
             // UnityEngine.Input.GetJoystickNames generates garbage so limit the amount of time the controller is checked.
             if (m_ControllerConnectedCheckRate > 0 && (m_ControllerCheckEvent == null || !m_ControllerCheckEvent.Active)) {
-                m_ControllerCheckEvent = SchedulerBase.Schedule(m_ControllerConnectedCheckRate, CheckForController);
+                m_ControllerCheckEvent = Scheduler.Schedule(m_ControllerConnectedCheckRate, CheckForController);
             }
         }
 
@@ -399,15 +411,34 @@ namespace Opsive.Shared.Input
             if (!m_Focus)
                 return;
 
-            m_RawLookVectorAccumulation.x += GetAxisRaw(m_HorizontalLookInputName);
-            m_RawLookVectorAccumulation.y += GetAxisRaw(m_VerticalLookInputName);
-            m_UnitySmoothLookVectorAccumulation.x += GetAxis(m_HorizontalLookInputName);
-            m_UnitySmoothLookVectorAccumulation.y += GetAxis(m_VerticalLookInputName);
+            var updatedInput = false;
+            if (IsControllerConnected()) {
+                UpdateInput(m_ControllerHorizontalLookInputName, m_ControllerVerticalLookInputName, m_ControllerInputMultiplier * Time.deltaTime);
+                updatedInput = !m_MouseControllerUpdate;
+            }
+
+            if (!updatedInput) {
+                UpdateInput(m_HorizontalLookInputName, m_VerticalLookInputName, 1);
+            }
         }
-        
+
         /// <summary>
-         /// Updates the look smoothing buffer to the current look vector.
-         /// </summary>
+        /// Updates the look vector input.
+        /// </summary>
+        /// <param name="horizontalInputName">The name of the horizontal axis.</param>
+        /// <param name="verticalInputName">The name of the vertical axis.</param>
+        /// <param name="multiplier">A multiplier to apply to the input value.</param>
+        private void UpdateInput(string horizontalInputName, string verticalInputName, float multiplier)
+        {
+            m_RawLookVectorAccumulation.x += GetAxisRaw(horizontalInputName) * multiplier;
+            m_RawLookVectorAccumulation.y += GetAxisRaw(verticalInputName) * multiplier;
+            m_UnitySmoothLookVectorAccumulation.x += GetAxis(horizontalInputName) * multiplier;
+            m_UnitySmoothLookVectorAccumulation.y += GetAxis(verticalInputName) * multiplier;
+        }
+
+        /// <summary>
+        /// Updates the look smoothing buffer to the current look vector.
+        /// </summary>
         private void FixedUpdate()
         {
             if (!m_Focus) {
@@ -575,7 +606,7 @@ namespace Opsive.Shared.Input
         private void OnDestroy()
         {
             if (m_ControllerCheckEvent != null) {
-                SchedulerBase.Cancel(m_ControllerCheckEvent);
+                Scheduler.Cancel(m_ControllerCheckEvent);
                 m_ControllerCheckEvent = null;
             }
             

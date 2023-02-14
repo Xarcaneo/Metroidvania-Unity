@@ -56,6 +56,11 @@ namespace Opsive.UltimateInventorySystem.UI.Item
         }
 
         public ItemViewSlotEventData SourceSlotEventData => m_SourceSlotEventData;
+        
+        public Canvas Canvas {
+            get => m_Canvas;
+            set => m_Canvas = value;
+        }
 
         public bool UseContainerToSpawnItemView {
             get => m_UseContainerToSpawnItemView;

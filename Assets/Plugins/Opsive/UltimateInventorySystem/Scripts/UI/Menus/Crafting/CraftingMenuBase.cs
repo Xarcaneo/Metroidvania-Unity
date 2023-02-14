@@ -209,11 +209,20 @@ namespace Opsive.UltimateInventorySystem.UI.Menus.Crafting
         {
             var quantity = m_RecipePanel.Quantity;
 
+            DoCraft(quantity);
+        }
+
+        /// <summary>
+        /// Do craft the item.
+        /// </summary>
+        /// <param name="quantity">The quantity to craft.</param>
+        public virtual void DoCraft(int quantity)
+        {
             if (quantity >= 1) {
                 var result = m_Crafter.Processor.Craft(m_SelectedRecipe, m_Inventory, quantity);
                 OnCraftComplete(result, m_SelectedRecipe, m_Inventory, quantity);
             }
-            
+
             DrawRecipes();
             m_RecipePanel.SetQuantity(1);
             m_RecipePanel.Refresh();

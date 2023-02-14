@@ -38,9 +38,10 @@ namespace Opsive.UltimateInventorySystem.Equipping
         [Tooltip("The main root node used to bind Skinned Mesh Renderers at runtime using the bones hiearchy.")]
         [SerializeField] protected Transform m_MainRootNode;
 
-        private GameObject Container;
-
         protected ItemSlotCollection m_EquipmentItemCollection;
+        protected Transform[] m_Bones;
+        protected HashSet<Transform> m_BonesHashSet;
+        protected Dictionary<string, Transform> m_BonesDictionary;
 
         public ItemSlotSet ItemSlotSet {
             get => m_ItemSlotSet;
@@ -56,9 +57,57 @@ namespace Opsive.UltimateInventorySystem.Equipping
         /// </summary>
         protected virtual void Awake()
         {
-            Container = new GameObject("Equipper Container");
+            m_BonesDictionary = new Dictionary<string, Transform>();
+            m_BonesHashSet = new HashSet<Transform>();
+            
+            if (m_MainRootNode == null) {
+                var skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
+                if (skinnedMeshRenderer == null) {
+                    Debug.LogWarning("No Root Bone was found for the Equipper.");
+                } else {
+                    m_MainRootNode = skinnedMeshRenderer.rootBone;
+                }
+            }
 
+            UpdateBones(m_MainRootNode);
+            
             ValidateSlots();
+        }
+
+        /// <summary>
+        /// Update the character bones.
+        /// </summary>
+        /// <param name="rootNode">The new root node.</param>
+        public virtual void UpdateBones(Transform rootNode)
+        {
+            if (rootNode == null) {
+                Debug.LogWarning("The Root Node for the Equipper cannot be null.");
+                return;
+            }
+            m_MainRootNode = rootNode;
+            UpdateBones();
+        }
+        
+        /// <summary>
+        /// update the bones.
+        /// </summary>
+        public virtual void UpdateBones()
+        {
+            m_Bones = m_MainRootNode.GetComponentsInChildren<Transform>();
+            
+            m_BonesDictionary.Clear();
+            m_BonesHashSet.Clear();
+            for (int i = 0; i < m_Bones.Length; i++) {
+                var bone = m_Bones[i];
+
+                if (m_BonesDictionary.ContainsKey(bone.name)) {
+                    Debug.LogWarning($"Bones in the '{m_MainRootNode.name}' bone hierarchy must all have unique names. The bone name '{bone.name}' is used multiple times.", bone);
+                    continue;
+                }
+                
+                m_BonesDictionary.Add(bone.name, bone);
+                m_BonesHashSet.Add(bone);
+            }
         }
 
         /// <summary>
@@ -146,8 +195,6 @@ namespace Opsive.UltimateInventorySystem.Equipping
         {
             EventHandler.UnregisterEvent<ItemInfo, ItemStack>(m_Inventory, EventNames.c_Inventory_OnAdd_ItemInfo_ItemStack, OnAddedItemToInventory);
             EventHandler.UnregisterEvent<ItemInfo>(m_Inventory, EventNames.c_Inventory_OnRemove_ItemInfo, OnRemovedItemFromInventory);
-
-            Destroy(Container.gameObject);
         }
 
         /// <summary>
@@ -217,10 +264,128 @@ namespace Opsive.UltimateInventorySystem.Equipping
             if (itemObject == null) { return false; }
 
             slot.SetItemObject(itemObject);
+            
+            if (slot.IsSkinnedEquipment) {
+                SkinItemObject(itemObject, slot);
+            } else {
+                PositionItemObject(itemObject, slot);
+            }
 
             EventHandler.ExecuteEvent(this, EventNames.c_Equipper_OnChange);
 
             return true;
+        }
+
+        /// <summary>
+        /// Position the item object after it was spawned.
+        /// </summary>
+        /// <param name="itemObject">The item object to place.</param>
+        /// <param name="slot">The slot in which to place it.</param>
+        protected virtual  void PositionItemObject(ItemObject itemObject, ItemObjectSlot slot)
+        {
+            var itemTransform = itemObject.transform;
+            itemTransform.SetParent(slot.Transform);
+
+            itemTransform.localRotation = Quaternion.identity;
+            itemTransform.localPosition = Vector3.zero;
+            itemTransform.localScale = Vector3.one;
+        }
+
+        /// <summary>
+        /// Skin an item object with a skinned mesh renderer to the character.
+        /// </summary>
+        /// <param name="itemObject">The item object ot skin.</param>
+        /// <param name="slot">The slot to skin the item to.</param>
+        protected virtual  void SkinItemObject(ItemObject itemObject, ItemObjectSlot slot)
+        {
+            var itemTransform = itemObject.transform;
+
+            var parentTransform = slot.Transform == null  || m_BonesHashSet.Contains(slot.Transform) ? m_MainRootNode.parent : slot.Transform;
+            
+            itemTransform.SetParent(parentTransform);
+            itemTransform.localPosition = Vector3.zero;
+            itemTransform.localRotation = Quaternion.identity;
+            itemTransform.localScale = Vector3.one;
+            
+            SkinnedMeshRenderer[] equipmentSkinnedMeshRenderers = itemObject.GetComponentsInChildren<SkinnedMeshRenderer>();
+
+            for (var i = 0; i < equipmentSkinnedMeshRenderers.Length; i++) {
+                SkinnedMeshRenderer equipmentSkinnedMeshRenderer = equipmentSkinnedMeshRenderers[i];
+
+                // The item might be already linked to the character bones if it was previously spawned,
+                // considering items are pooled in a sub pool linked to the Character.
+                var equipmentRootNode = equipmentSkinnedMeshRenderer.rootBone;
+                if (m_BonesHashSet.Contains(equipmentRootNode)) {
+                    continue;
+                }
+                
+                var newRootNode = GetMatchingSubRootNode(equipmentRootNode);
+                var newBones = GetMatchingSubNodes(newRootNode, equipmentSkinnedMeshRenderer.bones);
+
+                // Remove the old bones to clean up the hierarchy.
+                if (equipmentRootNode != null) {
+                    
+                    //The Equipment Root Node might not match the master root node, search for it in the parents.
+                    var node = equipmentRootNode;
+                    var foundMatch = false;
+                    while (node != null && node != itemTransform) {
+                        if (node.name == m_MainRootNode.name) {
+                            foundMatch = true;
+                            break;
+                        }
+                        
+                        node = node.parent;
+                    }
+
+                    if (foundMatch) {
+                        GameObject.Destroy(node.gameObject);
+                    } else {
+                        GameObject.Destroy(equipmentRootNode.gameObject);
+                    }
+                }
+                
+                equipmentSkinnedMeshRenderer.rootBone = newRootNode;
+                equipmentSkinnedMeshRenderer.bones = newBones;
+            }
+        }
+
+        /// <summary>
+        /// Get the matching sub root node.
+        /// </summary>
+        /// <param name="otherRootBone">The other root node.</param>
+        /// <returns>The new matching root node.</returns>
+        protected virtual Transform GetMatchingSubRootNode(Transform otherRootBone)
+        {
+            if (otherRootBone == null) {
+                Debug.LogWarning("The equipment root node is null, the system will try to bind the equipment to the master root node.", gameObject);
+                return m_MainRootNode;
+            }
+
+            if (m_BonesDictionary.TryGetValue(otherRootBone.name, out var subRootNode)) {
+                return subRootNode;
+            }
+            
+            Debug.LogError("No Matching root node found for the equipment. Looking for "+otherRootBone.name, gameObject);
+            
+            return m_MainRootNode;
+        }
+
+        /// <summary>
+        /// Get the matching sub nodes within the new bone hiearchy.
+        /// </summary>
+        /// <param name="newRootNode">The new root node.</param>
+        /// <param name="originalItemBones">The original bones.</param>
+        /// <returns>The new bones.</returns>
+        protected virtual Transform[] GetMatchingSubNodes(Transform newRootNode, Transform[] originalItemBones)
+        {
+            for (int i = 0; i < originalItemBones.Length; i++) {
+                var originalItemBone = originalItemBones[i];
+                if(m_BonesDictionary.TryGetValue(originalItemBone.name, out var newBone)) {
+                    originalItemBones[i] = newBone;
+                }
+            }
+
+            return originalItemBones;
         }
 
         /// <summary>
@@ -411,11 +576,32 @@ namespace Opsive.UltimateInventorySystem.Equipping
 
             m_Slots[index].SetItemObject(null);
 
-
-            Destroy(itemObject.gameObject);
-
+            if (ObjectPoolBase.IsPooledObject(itemObject.gameObject)) {
+                ReturnItemObjectToPool(itemObject);
+            } else {
+                Destroy(itemObject.gameObject);
+            }
 
             EventHandler.ExecuteEvent(this, EventNames.c_Equipper_OnChange);
+        }
+
+        /// <summary>
+        /// Return the Item Object to the pool.
+        /// </summary>
+        /// <param name="itemObject">The itemObject to return.</param>
+        protected virtual void ReturnItemObjectToPool(ItemObject itemObject)
+        {
+            // The skinned mesh bones will stay linked to the character, since the pool is a sub the item will never to bound to other characters.
+            
+            // The itemObject could have children that are pooled object such as the equipment model.
+            for (int i = itemObject.transform.childCount - 1; i >= 0; i--) {
+                var child = itemObject.transform.GetChild(i);
+                if ((ObjectPoolBase.IsPooledObject(child.gameObject) == false)) { continue; }
+
+                ObjectPoolBase.Destroy(child.gameObject);
+            }
+
+            ObjectPoolBase.Destroy(itemObject.gameObject);
         }
 
         /// <summary>
@@ -447,6 +633,10 @@ namespace Opsive.UltimateInventorySystem.Equipping
             }
 
             var characterID = gameObject.GetInstanceID();
+            var equipmentGameObject = ObjectPoolBase.Instantiate(itemPrefab, characterID, usableItemGameObject.transform);
+            equipmentGameObject.transform.localPosition = Vector3.zero;
+            equipmentGameObject.transform.localRotation = Quaternion.identity;
+            equipmentGameObject.transform.localScale = itemPrefab.transform.localScale;
 
             return usableItemGameObject;
         }
@@ -464,12 +654,15 @@ namespace Opsive.UltimateInventorySystem.Equipping
                 return null;
             }
 
-            var itemObject = new GameObject().AddComponent<ItemObject>();
-            itemObject.name = item.name;
-            itemObject.transform.SetParent(Container.transform);
+            var characterID = gameObject.GetInstanceID();
+            var itemGameObject = ObjectPoolBase.Instantiate(itemPrefab, characterID);
+
+            var itemObject = itemGameObject.GetComponent<ItemObject>();
+            if (itemObject == null) {
+                itemObject = itemGameObject.AddComponent<ItemObject>();
+            }
 
             itemObject.SetItem(item);
-
             return itemObject;
         }
 

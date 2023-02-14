@@ -56,7 +56,7 @@ namespace Opsive.UltimateInventorySystem.Editor.Inspectors
         protected void Refresh()
         {
             m_SelectedContainer.Clear();
-            m_ItemCategoryAttributeBindingView = new ItemCategoryAttributeBindingView(m_DatabaseField.value as InventorySystemDatabase, typeof(Object));
+            m_ItemCategoryAttributeBindingView = new ItemCategoryAttributeBindingView(m_DatabaseField.value as InventorySystemDatabase, typeof(Object), null);
 
             m_ItemBinding.Initialize(false);
 

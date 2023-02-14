@@ -63,6 +63,8 @@ namespace Opsive.UltimateInventorySystem.UI.Grid
         [SerializeField] internal GridNavigatorBase m_GridNavigator;
         [Tooltip("The grid tab control (optional).")]
         [SerializeField] internal TabControl m_TabControl;
+        [Tooltip("Select the button at index 0 on initializing the grid.")]
+        [SerializeField] protected bool m_SelectButtonOnInitialize = true;
         [Tooltip("Refresh the grid on enable.")]
         [SerializeField] protected bool m_RefreshOnEnable;
         [Tooltip("Input name for Next tab.")]
@@ -180,7 +182,9 @@ namespace Opsive.UltimateInventorySystem.UI.Grid
             if (m_Canvas == null) { m_Canvas = GetComponentInParent<Canvas>(); }
 
             m_GridEventSystem.Initialize(m_GridSize);
-            m_GridEventSystem.SelectButton(0);
+            if (m_SelectButtonOnInitialize) {
+                m_GridEventSystem.SelectButton(0);
+            }
 
             m_GridEventSystem.OnGridElementClickE += ViewClicked;
             m_GridEventSystem.OnGridElementSelectedE += ViewSelected;

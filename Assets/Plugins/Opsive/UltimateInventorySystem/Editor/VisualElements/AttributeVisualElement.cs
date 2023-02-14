@@ -270,11 +270,17 @@ namespace Opsive.UltimateInventorySystem.Editor.VisualElements
                 m_OverrideValue,
                 (object obj) =>
                 {
-                    AttributeEditorUtility.SetOverrideValueAsObject(m_Attribute, obj);
+                    if (Application.isPlaying) {
+                        m_Attribute.SetOverrideValueAsObject(obj,true, true);
+                        Refresh();
+                        OnValueChanged?.Invoke(m_Attribute);
+                    } else {
+                        AttributeEditorUtility.SetOverrideValueAsObject(m_Attribute, obj);
                     
-                    //In some cases the displayed Attribute is no longer the one on the object
-                    
-                    AttributeChanged();
+                        //In some cases the displayed Attribute is no longer the one on the object
+                        AttributeChanged();
+                    }
+
                 }, null, false, null, null, m_AttributeControlUserData);
         }
 

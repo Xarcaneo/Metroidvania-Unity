@@ -130,17 +130,25 @@ namespace Opsive.UltimateInventorySystem.UI.Item
             var position = eventData.PointerEventData.position;
             if (m_KeepOffset) {
                 
-                // Find the ItemViewSlot center.
+                
                 var rectTransform = eventData.ItemViewSlot.transform as RectTransform;
-                rectTransform.GetWorldCorners(m_RectWorldCorners);
+                if (m_ItemViewSlotCursorManager.Canvas.renderMode == RenderMode.ScreenSpaceCamera) {
+                    position = rectTransform.rect.center +
+                               RectTransformUtility.WorldToScreenPoint(m_ItemViewSlotCursorManager.Canvas.worldCamera,
+                                   rectTransform.position);
+                } else {
+                    // Find the ItemViewSlot center.
+                    rectTransform.GetWorldCorners(m_RectWorldCorners);
                 
-                // corners start from bottom left and turns clockwise to end on bottom right
-                var bottomLeft = m_RectWorldCorners[0];
-                var topRight = m_RectWorldCorners[2];
-                var rectCenter = bottomLeft + (topRight - bottomLeft) / 2f;
+                    // corners start from bottom left and turns clockwise to end on bottom right
+                    var bottomLeft = m_RectWorldCorners[0];
+                    var topRight = m_RectWorldCorners[2];
+                    var rectCenter = bottomLeft + (topRight - bottomLeft) / 2f;
                 
-                // World position is the same as screen space position for Canvas Screen Overlay.
-                position = rectCenter;
+                    // World position is the same as screen space position for Canvas Screen Overlay.
+                    position = rectCenter;
+                }
+                
             }
             
             m_ItemViewSlotCursorManager.StartMove(eventData, position, true);

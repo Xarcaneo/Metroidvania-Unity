@@ -63,6 +63,8 @@ namespace Opsive.UltimateInventorySystem.UI.Panels
             m_PressedConfirm = true;
             OnConfirm?.Invoke();
             if (m_CloseOnConfirm) {
+                // Force close by having the panel as open.
+                m_IsOpen = true;
                 Close();
             }
             m_WaitForInput = false;
@@ -76,6 +78,8 @@ namespace Opsive.UltimateInventorySystem.UI.Panels
             m_PressedConfirm = false;
             OnCancel?.Invoke();
             if (m_CloseOnCancel) {
+                // Force close by having the panel as open.
+                m_IsOpen = true;
                 Close();
             }
             m_WaitForInput = false;

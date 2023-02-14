@@ -25,6 +25,8 @@ namespace Opsive.Shared.Audio
         protected List<AudioSource> m_AllAudioSources;
         [Tooltip("All of the shared AudioSources within the group.")]
         protected List<AudioSource> m_SharedAudioSources;
+        [Tooltip("The Shared Audio Sources that are currently locked and cannot be used by others, for example while waiting to play a delayed audio.")]
+        protected List<AudioSource> m_LockedAudioSources;
         [Tooltip("A mapping between AudioConfig and list of AudioSources.")]
         protected Dictionary<AudioConfig, List<AudioSource>> m_AudioSourceListByAudioConfig;
 
@@ -33,6 +35,7 @@ namespace Opsive.Shared.Audio
         public AudioMixerGroup AudioMixerGroup => m_AudioMixerGroup;
         public List<AudioSource> AllAudioSources => m_AllAudioSources;
         public List<AudioSource> SharedAudioSources => m_SharedAudioSources;
+        public List<AudioSource> LockedAudioSources => m_LockedAudioSources;
         public Dictionary<AudioConfig, List<AudioSource>> AudioSourceListByAudioConfig => m_AudioSourceListByAudioConfig;
 
         /// <summary>
@@ -46,6 +49,7 @@ namespace Opsive.Shared.Audio
 
             m_AllAudioSources = new List<AudioSource>();
             m_SharedAudioSources = new List<AudioSource>();
+            m_LockedAudioSources = new List<AudioSource>();
             m_AudioSourceListByAudioConfig = new Dictionary<AudioConfig, List<AudioSource>>();
 
             var existingAudioSources = gameObject.GetComponents<AudioSource>();
@@ -124,6 +128,10 @@ namespace Opsive.Shared.Audio
         /// <returns>The result of playing the AudioClip.</returns>
         public virtual PlayResult PlayAudio(GameObject gameObject, AudioClipInfo audioClipInfo)
         {
+            if (audioClipInfo.AudioClip == null && audioClipInfo.AudioConfig == null) {
+                return PlayResult.None;
+            }
+            
             var audioGroup = GetAudioGroup(gameObject);
             if (audioClipInfo.AudioConfig == null) {
                 audioClipInfo = new AudioClipInfo(audioClipInfo, m_DefaultAudioConfig);
@@ -142,7 +150,9 @@ namespace Opsive.Shared.Audio
         public virtual PlayResult PlayAtPosition(GameObject gameObject, AudioClipInfo audioClipInfo, Vector3 position)
         {
             var playResult = PlayAudio(gameObject, audioClipInfo);
-            playResult.AudioSource.transform.position = position;
+            if (playResult.AudioSource != null) {
+                playResult.AudioSource.transform.position = position;
+            }
             return playResult;
         }
 

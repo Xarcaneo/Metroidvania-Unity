@@ -43,7 +43,11 @@ namespace Opsive.UltimateInventorySystem.Crafting.Processors
         [UnityEngine.Serialization.FormerlySerializedAs("m_RemoveIngredientsExternally")]
         [Tooltip("Use crafting processor callback to remove ingredient items from the inventory.")]
         [SerializeField] protected bool m_ExternallyRemoveIngredients;
-
+        [Tooltip("The Item Collections where the items used as ingredients will be fetched from, (empty means the entire Inventory).")]
+        [SerializeField] protected string[] m_IngredientItemCollections;
+        
+        protected ItemCollectionGroup m_ItemCollectionGroup = new ItemCollectionGroup();
+        
         /// <summary>
         /// Constructor.
         /// </summary>
@@ -70,6 +74,7 @@ namespace Opsive.UltimateInventorySystem.Crafting.Processors
         /// </summary>
         /// <param name="ingredientList">The ingredient list.</param>
         /// <param name="inventory">The inventory.</param>
+        /// <param name="itemCollectionGroup">The item collection where the ingredients will be fetched from (can be null).</param>
         /// <param name="quantity">A multiplier of ingredient amount.</param>
         /// <param name="selectedItemInfos">Reference to the selected ItemAmounts.</param>
         /// <param name="selectedItemAmountsCount">Reference to the selected ItemAmounts count.</param>
@@ -78,7 +83,7 @@ namespace Opsive.UltimateInventorySystem.Crafting.Processors
         /// <typeparam name="T">The type of ingredient.</typeparam>
         /// <returns>True if the selected amount size matches the ingredient list amount size.</returns>
         private static bool TryAutoSelectIngredientGeneric<T>(ListSlice<T> ingredientList,
-            IInventory inventory, int quantity, ref ItemInfo[] selectedItemInfos, ref int selectedItemAmountsCount,
+            IInventory inventory, ItemCollectionGroup itemCollectionGroup, int quantity, ref ItemInfo[] selectedItemInfos, ref int selectedItemAmountsCount,
             Func<T, int> getAmount, Func<ItemInfo, T, bool> condition)
         {
             var pooledArray = GenericObjectPool.Get<ItemInfo[]>();
@@ -88,7 +93,10 @@ namespace Opsive.UltimateInventorySystem.Crafting.Processors
 
                 var neededAmount = quantity * getAmount.Invoke(ingredientAmount);
 
-                var filteredItemAmountsSlice = inventory.GetItemInfos(ref pooledArray, ingredientAmount, condition);//  filterInventoryItems(ingredientAmount, inventory);
+                var filteredItemAmountsSlice = itemCollectionGroup == null
+                    ? inventory.GetItemInfos(ref pooledArray, ingredientAmount, condition)
+                    : itemCollectionGroup.GetItemInfos(ref pooledArray, ingredientAmount, condition);
+                
                 for (var j = 0; j < filteredItemAmountsSlice.Count; j++) {
                     var itemInfo = filteredItemAmountsSlice[j];
 
@@ -204,9 +212,31 @@ namespace Opsive.UltimateInventorySystem.Crafting.Processors
         public override bool TryAutoSelectIngredients(CraftingRecipe recipe, IInventory inventory, int quantity,
             ref ItemInfo[] resultSelectedItemInfos, out ListSlice<ItemInfo> selectedIngredientsItemInfos)
         {
+            if (m_ItemCollectionGroup == null) {
+                m_ItemCollectionGroup = new ItemCollectionGroup();
+            } else {
+                m_ItemCollectionGroup.RemoveAllItemCollections();
+            }
+
+            var itemCollectionGroup = m_ItemCollectionGroup;
+            if (m_IngredientItemCollections != null && m_IngredientItemCollections.Length != 0) {
+                for (int i = 0; i < m_IngredientItemCollections.Length; i++) {
+                    var ingredientItemCollectionName = m_IngredientItemCollections[i];
+                    if (string.IsNullOrWhiteSpace(ingredientItemCollectionName)) { continue; }
+
+                    var itemCollection = inventory.GetItemCollection(ingredientItemCollectionName);
+                    if(itemCollection == null){ continue; }
+                    
+                    m_ItemCollectionGroup.AddItemCollection(itemCollection);
+                }
+            } else {
+                // Using null if the item collection array is empty or null, to search the entire inventory instead.
+                itemCollectionGroup = null;
+            }
+
             var count = 0;
 
-            var result = TryAutoSelectItemIngredients(recipe.Ingredients.ItemAmounts.Array, inventory, quantity,
+            var result = TryAutoSelectItemIngredients(recipe.Ingredients.ItemAmounts.Array, inventory,itemCollectionGroup, quantity,
                 ref resultSelectedItemInfos, ref count);
 
             if (result == false) {
@@ -214,7 +244,7 @@ namespace Opsive.UltimateInventorySystem.Crafting.Processors
                 return false;
             }
 
-            result = TryAutoSelectItemDefinitionIngredients(recipe.Ingredients.ItemDefinitionAmounts.Array, inventory, quantity,
+            result = TryAutoSelectItemDefinitionIngredients(recipe.Ingredients.ItemDefinitionAmounts.Array, inventory,itemCollectionGroup, quantity,
                 ref resultSelectedItemInfos, ref count);
 
             if (result == false) {
@@ -230,7 +260,7 @@ namespace Opsive.UltimateInventorySystem.Crafting.Processors
 
             result = TryAutoSelectItemCategoryIngredients(
                 itemCategoryAmountIngredientSorted,
-                inventory, quantity, ref resultSelectedItemInfos, ref count);
+                inventory,itemCollectionGroup, quantity, ref resultSelectedItemInfos, ref count);
 
             selectedIngredientsItemInfos = (resultSelectedItemInfos, 0, count);
             GenericObjectPool.Return(pooledArray2);
@@ -242,15 +272,16 @@ namespace Opsive.UltimateInventorySystem.Crafting.Processors
         /// </summary>
         /// <param name="itemAmountIngredients">The ingredients.</param>
         /// <param name="inventory">The inventory.</param>
+        /// <param name="itemCollectionGroup">The item collection where the ingredients will be fetched from (can be null).</param>
         /// <param name="quantity">A multiplier of ingredient amount.</param>
         /// <param name="selectedItemInfos">Reference to the selected ItemAmounts.</param>
         /// <param name="selectedItemAmountsCount">Reference to the selected ItemAmounts count.</param>
         /// <returns>True if the equivalent items were selected from the inventory.</returns>
         protected virtual bool TryAutoSelectItemIngredients(ListSlice<ItemAmount> itemAmountIngredients,
-            IInventory inventory, int quantity, ref ItemInfo[] selectedItemInfos, ref int selectedItemAmountsCount)
+            IInventory inventory, ItemCollectionGroup itemCollectionGroup, int quantity, ref ItemInfo[] selectedItemInfos, ref int selectedItemAmountsCount)
         {
             return TryAutoSelectIngredientGeneric(itemAmountIngredients,
-                inventory, quantity, ref selectedItemInfos, ref selectedItemAmountsCount,
+                inventory,itemCollectionGroup, quantity, ref selectedItemInfos, ref selectedItemAmountsCount,
                 xItemAmount => xItemAmount.Amount,
                 (xInventoryItemAmount, xItemAmount) => xItemAmount.Item.ValueEquivalentTo(xInventoryItemAmount.Item));
         }
@@ -260,15 +291,16 @@ namespace Opsive.UltimateInventorySystem.Crafting.Processors
         /// </summary>
         /// <param name="itemDefinitionAmountIngredients">The itemDefinition amounts.</param>
         /// <param name="inventory">The inventory.</param>
+        /// <param name="itemCollectionGroup">The item collection where the ingredients will be fetched from (can be null).</param>
         /// <param name="quantity">A multiplier of ingredient amount.</param>
         /// <param name="selectedItemInfos">Reference to the selected ItemAmounts.</param>
         /// <param name="selectedItemAmountsCount">Reference to the selected ItemAmounts count.</param>
         /// <returns>True if the equivalent items were selected from the inventory.</returns>
         protected virtual bool TryAutoSelectItemDefinitionIngredients(ListSlice<ItemDefinitionAmount> itemDefinitionAmountIngredients,
-            IInventory inventory, int quantity, ref ItemInfo[] selectedItemInfos, ref int selectedItemAmountsCount)
+            IInventory inventory, ItemCollectionGroup itemCollectionGroup, int quantity, ref ItemInfo[] selectedItemInfos, ref int selectedItemAmountsCount)
         {
             return TryAutoSelectIngredientGeneric(itemDefinitionAmountIngredients,
-                inventory, quantity, ref selectedItemInfos, ref selectedItemAmountsCount,
+                inventory,itemCollectionGroup, quantity, ref selectedItemInfos, ref selectedItemAmountsCount,
                 xItemDefAmount => xItemDefAmount.Amount,
                 (xInventoryItemAmount, xItemDefAmount) => xItemDefAmount.ItemDefinition == xInventoryItemAmount.Item.ItemDefinition);
         }
@@ -278,15 +310,16 @@ namespace Opsive.UltimateInventorySystem.Crafting.Processors
         /// </summary>
         /// <param name="itemCategoryAmountIngredients">The itemCategory amounts.</param>
         /// <param name="inventory">The inventory.</param>
+        /// <param name="itemCollectionGroup">The item collection where the ingredients will be fetched from (can be null).</param>
         /// <param name="quantity">A multiplier of ingredient amount.</param>
         /// <param name="selectedItemInfos">Reference to the selected ItemAmounts.</param>
         /// <param name="selectedItemAmountsCount">Reference to the selected ItemAmounts count.</param>
         /// <returns>True if the equivalent items were selected from the inventory.</returns>
         protected virtual bool TryAutoSelectItemCategoryIngredients(ListSlice<ItemCategoryAmount> itemCategoryAmountIngredients,
-            IInventory inventory, int quantity, ref ItemInfo[] selectedItemInfos, ref int selectedItemAmountsCount)
+            IInventory inventory, ItemCollectionGroup itemCollectionGroup, int quantity, ref ItemInfo[] selectedItemInfos, ref int selectedItemAmountsCount)
         {
             return TryAutoSelectIngredientGeneric(itemCategoryAmountIngredients,
-                inventory, quantity, ref selectedItemInfos, ref selectedItemAmountsCount,
+                inventory, itemCollectionGroup, quantity, ref selectedItemInfos, ref selectedItemAmountsCount,
                 xItemCatAmount => xItemCatAmount.Amount,
                 (xInventoryItemAmount, xItemCatAmount) => xItemCatAmount.ItemCategory.InherentlyContains(xInventoryItemAmount.Item));
         }

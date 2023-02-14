@@ -26,6 +26,12 @@ namespace Opsive.UltimateInventorySystem.DropsAndPickups
 
         public Inventory Inventory => m_Inventory;
 
+        public ItemCollectionID AddToItemCollection
+        {
+            get => m_AddToItemCollection;
+            set => m_AddToItemCollection = value;
+        }
+
         /// <summary>
         /// Initialize the component.
         /// </summary>

@@ -26,11 +26,22 @@ namespace Opsive.UltimateInventorySystem.DropsAndPickups
         [Tooltip("Fail to pickup the item if the amount added isn't the full amount inside the pickup.")]
         [SerializeField] protected bool m_FailIfFullAmountDoesNotFit;
 
-
         protected ItemObject m_ItemObject;
 
         public ItemObject ItemObject => m_ItemObject;
         public ItemInfo ItemInfo => m_ItemObject.ItemInfo;
+        
+        public ItemCollectionID AddToItemCollection
+        {
+            get => m_AddToItemCollection;
+            set => m_AddToItemCollection = value;
+        }
+
+        public bool FailIfFullAmountDoesNotFit
+        {
+            get => m_FailIfFullAmountDoesNotFit;
+            set => m_FailIfFullAmountDoesNotFit = value;
+        }
 
         /// <summary>
         /// Initialize the component.

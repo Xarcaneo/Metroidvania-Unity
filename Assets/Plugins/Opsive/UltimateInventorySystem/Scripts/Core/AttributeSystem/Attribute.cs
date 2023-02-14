@@ -26,7 +26,7 @@ namespace Opsive.UltimateInventorySystem.Core.AttributeSystem
         [SerializeField] protected T m_PreEvaluatedValue;
 
         [Tooltip("The Collection that contains this attribute.")]
-        [System.NonSerialized] protected AttributeBinding<T> m_Binding;
+        [System.NonSerialized] protected IAttributeBinding<T> m_Binding;
 
         /// <summary>
         /// Returns the override value.
@@ -165,7 +165,14 @@ namespace Opsive.UltimateInventorySystem.Core.AttributeSystem
 
             m_OverrideValue = overrideValue;
             if (setVariantTypeToOverride) { SetVariantType(VariantType.Override); }
-
+            
+            // Set the Binding value if it is not equal.
+            if (m_VariantType == VariantType.Override && m_Binding != null && m_Binding.Getter != null) {
+                if (!m_OverrideValue.Equals(m_Binding.Getter.Invoke())) {
+                    m_Binding.Setter?.Invoke(m_OverrideValue);
+                }
+            }
+            
             if (reevaluate) {
                 ReevaluateValue(true);
             } else {
@@ -270,11 +277,11 @@ namespace Opsive.UltimateInventorySystem.Core.AttributeSystem
         /// Bind the attribute to the binding.
         /// </summary>
         /// <param name="binding">the attribute binding.</param>
-        public override void Bind(AttributeBinding binding)
+        public override void Bind(IAttributeBinding binding)
         {
             Unbind(true);
             
-            if (!(binding is AttributeBinding<T> bindingT)) {
+            if (!(binding is IAttributeBinding<T> bindingT)) {
                 return;
             }
 
@@ -288,10 +295,13 @@ namespace Opsive.UltimateInventorySystem.Core.AttributeSystem
         {
             if (m_Binding == null) { return; }
 
+            if (applyValueToBinding == false) {
+                m_Binding = null;
+                return;
+            }
+            
             var bindingValue = m_Binding.Getter.Invoke();
-            
             m_Binding = null;
-            
             if (!GetValue().Equals(bindingValue)) {
                 SetOverrideValue(bindingValue);
             }

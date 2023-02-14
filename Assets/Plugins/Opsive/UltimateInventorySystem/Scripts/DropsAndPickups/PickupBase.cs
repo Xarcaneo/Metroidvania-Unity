@@ -41,6 +41,26 @@ namespace Opsive.UltimateInventorySystem.DropsAndPickups
         [SerializeField] protected AudioClip m_PartialPickupAudioClip;
         [Tooltip("The Audio Config.")]
         [SerializeField] protected AudioConfig m_PartialPickupAudioConfig;
+        
+        public UnityEvent OnPickupSuccess { get => m_OnPickupSuccess; set => m_OnPickupSuccess = value; }
+        public AudioClip AudioClip { get => m_AudioClip; set => m_AudioClip = value; }
+        public AudioConfig AudioConfig { get => m_AudioConfig; set => m_AudioConfig = value; }
+        public UnityEvent OnPickupFail { get => m_OnPickupFail; set => m_OnPickupFail = value; }
+        public AudioClip FailAudioClip { get => m_FailAudioClip; set => m_FailAudioClip = value; }
+        public AudioConfig FailAudioConfig { get => m_FailAudioConfig; set => m_FailAudioConfig = value; }
+        public UnityEvent OnPartialPickup { get => m_OnPartialPickup; set => m_OnPartialPickup = value; }
+
+        public AudioClip PartialPickupAudioClip
+        {
+            get => m_PartialPickupAudioClip;
+            set => m_PartialPickupAudioClip = value;
+        }
+
+        public AudioConfig PartialPickupAudioConfig
+        {
+            get => m_PartialPickupAudioConfig;
+            set => m_PartialPickupAudioConfig = value;
+        }
 
         /// <summary>
         /// Deactivate.
@@ -64,8 +84,6 @@ namespace Opsive.UltimateInventorySystem.DropsAndPickups
                 if(m_Interactable == null){ return; }
             }
             m_Interactable.SetIsInteractable(true);
-
-            UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(gameObject, UnityEngine.SceneManagement.SceneManager.GetActiveScene());
         }
 
         /// <summary>

@@ -27,7 +27,7 @@ namespace Opsive.Shared.Input.VirtualControls
         public bool AllowAxisInput { get { return m_AllowAxisInput; } set { m_AllowAxisInput = value; } }
         public bool AllowButtonInput { get { return m_AllowButtonInput; } set { m_AllowButtonInput = value; } }
 
-        private GameObject m_GameObject;
+        [System.NonSerialized] private GameObject m_GameObject;
         private GameObject m_CameraGameObject;
         private Dictionary<string, VirtualControl> m_NameVirtualControlsMap = new Dictionary<string, VirtualControl>();
 

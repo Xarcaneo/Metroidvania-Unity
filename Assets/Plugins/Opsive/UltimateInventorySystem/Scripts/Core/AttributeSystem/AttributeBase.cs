@@ -822,7 +822,7 @@ namespace Opsive.UltimateInventorySystem.Core.AttributeSystem
         /// Bind the attribute to the binding.
         /// </summary>
         /// <param name="binding">the attribute binding.</param>
-        public abstract void Bind(AttributeBinding binding);
+        public abstract void Bind(IAttributeBinding binding);
 
         /// <summary>
         /// Unbind the attribute.

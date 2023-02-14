@@ -107,6 +107,10 @@ namespace Opsive.Shared.Audio
         public PlayResult PlayAtPosition(Vector3 position, int clipIndex)
         {
             var audioClipConfig = GetAudioClipInfo(clipIndex);
+            if (audioClipConfig.AudioClip == null && audioClipConfig.AudioConfig == null) {
+                return PlayResult.None;
+            }
+
             m_LastPlayResult = AudioManager.PlayAtPosition(audioClipConfig.AudioClip, audioClipConfig.AudioConfig, position);
             return m_LastPlayResult;
         }

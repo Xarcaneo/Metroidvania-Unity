@@ -25,8 +25,20 @@ namespace Opsive.UltimateInventorySystem.UI.Panels.ItemViewSlotContainers
         [SerializeField] protected IndexedInput[] m_ActionInputs;
         [Tooltip("The Input to use a specific action on an item.")]
         [SerializeField] protected bool m_HandleInputOnlyIfPanelSelected;
+        [Tooltip("Use the player input of the ItemUser bound to the ItemActionBinding component?")]
+        [SerializeField] protected bool m_UseItemActionBindingItemUserPlayerInput = true;
         
         protected IPlayerInput m_PlayerInput;
+
+        public virtual IPlayerInput PlayerInput
+        {
+            get => m_PlayerInput;
+            set
+            {
+                m_PlayerInput = value;
+                enabled = m_PlayerInput != null;
+            }
+        }
 
         /// <summary>
         /// Initialize.
@@ -46,8 +58,8 @@ namespace Opsive.UltimateInventorySystem.UI.Panels.ItemViewSlotContainers
         /// </summary>
         protected virtual void HandleNewItemUser()
         {
-            m_PlayerInput = m_ItemActionBinding.ItemUser?.InventoryInput;
-            enabled = m_PlayerInput != null;
+            if(m_UseItemActionBindingItemUserPlayerInput == false){ return; }
+            PlayerInput = m_ItemActionBinding.ItemUser?.InventoryInput;
         }
 
         /// <summary>

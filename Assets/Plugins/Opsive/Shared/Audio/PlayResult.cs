@@ -19,6 +19,8 @@ namespace Opsive.Shared.Audio
         [SerializeField] private AudioSource m_AudioSource;
         [Tooltip("THe config used to play the AudioClip.")]
         [SerializeField] private AudioClipInfo m_AudioClipInfo;
+
+        public static PlayResult None => new PlayResult();
         
         public AudioSource AudioSource => m_AudioSource;
         public AudioClipInfo AudioClipInfo => m_AudioClipInfo;

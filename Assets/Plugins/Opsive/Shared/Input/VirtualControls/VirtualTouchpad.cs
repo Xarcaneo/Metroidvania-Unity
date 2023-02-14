@@ -20,6 +20,10 @@ namespace Opsive.Shared.Input.VirtualControls
         [SerializeField] protected bool m_RequireActiveDrag;
         [Tooltip("The value to dampen the drag value by when no longer dragging. The higher the value the quicker the drag value will decrease.")]
         [SerializeField] protected float m_ActiveDragDamping = 1f;
+        [Tooltip("The multiplier to apply to the touch delta position.")]
+        [SerializeField] protected float m_DeltaPositionMultiplier = 1f;
+        [Tooltip("Should the touchpad return the Input.GetAxis value?")]
+        [SerializeField] protected bool m_UseAxisInput = false;
 
         private RectTransform m_RectTransform;
         private Vector2 m_LocalStartPosition;
@@ -54,13 +58,13 @@ namespace Opsive.Shared.Input.VirtualControls
         /// <param name="data">The pointer data.</param>
         public void OnDrag(PointerEventData data)
         {
-            if (RectTransformUtility.RectangleContainsScreenPoint(m_RectTransform, data.position, null)) {
+            if (!m_UseAxisInput && RectTransformUtility.RectangleContainsScreenPoint(m_RectTransform, data.position, null)) {
                 var canvasScale = m_CanvasScalarTransform == null ? Vector3.one : m_CanvasScalarTransform.localScale;
-                m_DeltaPosition.x += data.delta.x / canvasScale.x;
-                m_DeltaPosition.y += data.delta.y / canvasScale.y;
-                SchedulerBase.Cancel(m_ActiveDragScheduler);
+                m_DeltaPosition.x += data.delta.x * m_DeltaPositionMultiplier / canvasScale.x;
+                m_DeltaPosition.y += data.delta.y * m_DeltaPositionMultiplier / canvasScale.y;
+                Scheduler.Cancel(m_ActiveDragScheduler);
                 if (m_RequireActiveDrag) {
-                    m_ActiveDragScheduler = SchedulerBase.Schedule(Time.fixedDeltaTime, DampenDeltaPosition);
+                    m_ActiveDragScheduler = Scheduler.Schedule(Time.fixedDeltaTime, DampenDeltaPosition);
                 }
             }
         }
@@ -72,7 +76,7 @@ namespace Opsive.Shared.Input.VirtualControls
         {
             m_DeltaPosition /= (1 + m_ActiveDragDamping);
             if (m_DeltaPosition.sqrMagnitude > 0.1f) {
-                m_ActiveDragScheduler = SchedulerBase.Schedule(Time.fixedDeltaTime, DampenDeltaPosition);
+                m_ActiveDragScheduler = Scheduler.Schedule(Time.fixedDeltaTime, DampenDeltaPosition);
             }
         }
 
@@ -85,6 +89,10 @@ namespace Opsive.Shared.Input.VirtualControls
         {
             if (!m_Pressed) {
                 return 0;
+            }
+
+            if (m_UseAxisInput && (buttonName == m_HorizontalInputName || buttonName == m_VerticalInputName)) {
+                return Input.GetAxis(buttonName);
             }
 
             if (buttonName == m_HorizontalInputName) {

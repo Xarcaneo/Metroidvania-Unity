@@ -186,8 +186,9 @@ namespace Opsive.UltimateInventorySystem.Editor.Inspectors
         /// <summary>
         /// Remove the event if the inspector is destroyed.
         /// </summary>
-        private void OnDestroy()
+        protected override void OnDestroy()
         {
+            base.OnDestroy();
             InventoryMainWindow.OnLostFocusEvent -= DatabaseChanged;
         }
     }

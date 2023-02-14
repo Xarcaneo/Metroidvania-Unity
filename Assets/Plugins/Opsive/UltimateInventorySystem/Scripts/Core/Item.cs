@@ -7,6 +7,7 @@
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Opsive.UltimateInventorySystem.Editor")]
 namespace Opsive.UltimateInventorySystem.Core
 {
+    using System;
     using Opsive.Shared.Inventory;
     using Opsive.Shared.Utility;
     using Opsive.UltimateInventorySystem.Core.AttributeSystem;
@@ -23,6 +24,7 @@ namespace Opsive.UltimateInventorySystem.Core
     [System.Serializable]
     public class Item : IItemIdentifier, IObjectWithID
     {
+        public event Action<AttributeBase> OnItemAttributeChange;
 
         [Tooltip("The ID of the Item.")]
         [SerializeField] protected uint m_ID;
@@ -164,7 +166,9 @@ namespace Opsive.UltimateInventorySystem.Core
                 itemAttributeOverrides.AddRange(attributeOverrides);
             }
 
-            return Create(item.ItemDefinition, id, itemAttributeOverrides);
+            var newItem = Create(item.ItemDefinition, id, itemAttributeOverrides);
+            newItem.name = item.name;
+            return newItem;
         }
 
         /// <summary>
@@ -341,6 +345,8 @@ namespace Opsive.UltimateInventorySystem.Core
             if (updateAttributes) {
                 UpdateAttributes();
             }
+
+            m_ItemAttributeCollection.OnAttributeChanged += NotifyAttributeChanged;
         }
 
         /// <summary>
@@ -518,6 +524,20 @@ namespace Opsive.UltimateInventorySystem.Core
 
         #region Attributes
 
+        /// <summary>
+        /// Notify that an attribute has changed.
+        /// </summary>
+        /// <param name="attribute">The attribute that changed on the item.</param>
+        public void NotifyAttributeChanged(AttributeBase attribute)
+        {
+            if(Application.isPlaying == false){ return; }
+            OnItemAttributeChange?.Invoke(attribute);
+            if(m_ItemObjects == null){ return;}
+            for (int i = 0; i < m_ItemObjects.Count; i++) {
+                m_ItemObjects[i].ForceChangeEvent();
+            }
+        }
+        
         /// <summary>
         /// Update the attributes so that they match the category attribute definitions.
         /// Does not match the value, only the names and types.

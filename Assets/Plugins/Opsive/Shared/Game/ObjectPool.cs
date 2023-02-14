@@ -1,5 +1,5 @@
 ﻿/// ---------------------------------------------
-/// Ultimate Character Controller
+/// Opsive Shared
 /// Copyright (c) Opsive. All Rights Reserved.
 /// https://www.opsive.com
 /// ---------------------------------------------

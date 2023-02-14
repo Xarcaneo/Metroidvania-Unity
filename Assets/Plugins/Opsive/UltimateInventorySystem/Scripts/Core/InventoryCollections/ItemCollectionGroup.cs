@@ -44,11 +44,11 @@ namespace Opsive.UltimateInventorySystem.Core.InventoryCollections
             OnItemAddOverflow?.Invoke(originalItemInfo, itemInfoAdded, rejectedItemInfo);
         }
         
-        protected List<ItemCollection> m_ItemCollections;
-        protected List<ItemCollection> m_IgnoreCollections;
+        protected List<ItemCollection> m_ItemCollections = new List<ItemCollection>();
+        protected List<ItemCollection> m_IgnoreCollections = new List<ItemCollection>();
 
-        protected List<ItemStack> m_AllItemStacks;
-        protected List<ItemInfo> m_AllItemInfos;
+        protected List<ItemStack> m_AllItemStacks = new List<ItemStack>();
+        protected List<ItemInfo> m_AllItemInfos = new List<ItemInfo>();
 
         protected bool m_EventsInitialized = false;
         
@@ -179,6 +179,19 @@ namespace Opsive.UltimateInventorySystem.Core.InventoryCollections
         }
         
         /// <summary>
+        /// Remove all the Item Collections.
+        /// </summary>
+        public void RemoveAllItemCollections()
+        {
+            if(m_ItemCollections == null){ return; }
+            
+            for (int i = m_ItemCollections.Count - 1; i >= 0; i--) {
+                var itemCollection = m_ItemCollections[i];
+                RemoveItemCollection(itemCollection);
+            }
+        }
+        
+        /// <summary>
         /// The Item Collection, it includes all the items in the inventory.
         /// </summary>
         public virtual ItemCollection MainItemCollection {
@@ -274,6 +287,23 @@ namespace Opsive.UltimateInventorySystem.Core.InventoryCollections
             if (itemCollection == null) { return false;}
 
             return m_ItemCollections.Contains(itemCollection);
+        }
+        
+        /// <summary>
+        /// Add or remove an item to the an item collection in the inventory.
+        /// </summary>
+        /// <param name="itemInfo">The amount of item being added or removed.</param>
+        /// <returns>Returns the number of items added or removed, 0 if no item was added or removed.</returns>
+        public virtual ItemInfo AdjustItem(ItemInfo itemInfo)
+        {
+            if (itemInfo.Amount < 0) {
+                itemInfo = new ItemInfo(itemInfo, -itemInfo.Amount);
+                var removedItemInfo = RemoveItem(itemInfo);
+                removedItemInfo = new ItemInfo(removedItemInfo, -removedItemInfo.Amount);
+                return removedItemInfo;
+            } else {
+                return AddItem(itemInfo);
+            }
         }
 
         /// <summary>
@@ -626,6 +656,8 @@ namespace Opsive.UltimateInventorySystem.Core.InventoryCollections
         
         public ListSlice<ItemInfo> GetAllItemInfos()
         {
+            if(m_ItemCollections == null){ return ListSlice<ItemInfo>.Empty; }
+            
             if (m_AllItemInfos == null) {
                 m_AllItemInfos = new List<ItemInfo>();
             }
@@ -644,5 +676,32 @@ namespace Opsive.UltimateInventorySystem.Core.InventoryCollections
 
             return m_AllItemInfos;
         }
+        
+        /// <summary>
+        /// Get any combination of item amounts be setting your own filter
+        /// </summary>
+        /// <param name="itemInfos">Reference to the array of item amounts. Can be resized up.</param>
+        /// <param name="filterParam">Filter parameter used to pass parameters without boxing.</param>
+        /// <param name="filterFunc">A function that will be used to filter the result, evaluating to true means it will be part of the result.</param>
+        /// <param name="startIndex">The start index, the items will be added to the itemInfos array from that start index.</param>
+        /// <returns>The list slice.</returns>
+        public virtual ListSlice<ItemInfo> GetItemInfos<T>(ref ItemInfo[] itemInfos, T filterParam,
+            Func<ItemInfo, T, bool> filterFunc, int startIndex = 0)
+        {
+            var allItemInfos = GetAllItemInfos();
+            var index = startIndex;
+            for (int i = 0; i < allItemInfos.Count; i++) {
+                if (filterFunc.Invoke(allItemInfos[i], filterParam) == false) { continue; }
+
+                TypeUtility.ResizeIfNecessary(ref itemInfos, index);
+
+                itemInfos[index] = allItemInfos[i];
+                index++;
+            }
+
+            return (itemInfos, 0, index);
+        }
+
+       
     }
 }

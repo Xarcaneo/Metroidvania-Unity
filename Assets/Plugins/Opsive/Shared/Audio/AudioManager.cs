@@ -33,7 +33,7 @@ namespace Opsive.Shared.Audio
 
         public AudioManagerModule AudioManagerModule { get { return m_AudioManagerModule; } set { m_AudioManagerModule = value; } }
 
-        private GameObject m_GameObject;
+        [System.NonSerialized] private GameObject m_GameObject;
 
         /// <summary>
         /// The object has been enabled.

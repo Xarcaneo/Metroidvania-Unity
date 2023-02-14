@@ -25,8 +25,9 @@ namespace Opsive.UltimateInventorySystem.Editor.Inspectors
     /// </summary>
     public class ItemCategoryAttributeBindingView : VisualElement
     {
+        public event Action<AttributeBindingBase> OnNewAttributeBinding;
         public event Action<ItemCategory> OnItemCategoryChanged;
-        public event Action<List<AttributeBinding>> OnAttributeBindingsChanged;
+        public event Action<List<AttributeBindingBase>> OnAttributeBindingsChanged;
 
         protected InventorySystemDatabase m_Database;
 
@@ -35,22 +36,25 @@ namespace Opsive.UltimateInventorySystem.Editor.Inspectors
         protected ItemCategory m_ItemCategory;
         protected ItemCategoryField m_ItemCategoryField;
 
-        protected List<AttributeBinding> m_AttributeBindings;
+        protected List<AttributeBindingBase> m_AttributeBindings;
 
         protected TabToolbar m_AttributeCollectionsTabToolbar;
         protected ReorderableList m_AttributesReorderableList;
         protected VisualElement m_AttributesBox;
 
         protected Type m_ObjectType;
+        protected object m_DefaultBoundObject;
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="database">The database.</param>
         /// <param name="objectType">The object type to bind.</param>
-        public ItemCategoryAttributeBindingView(InventorySystemDatabase database, Type objectType)
+        /// <param name="boundObject">The default object to which new bindings should bind to.</param>
+        public ItemCategoryAttributeBindingView(InventorySystemDatabase database, Type objectType, object boundObject)
         {
             m_ObjectType = objectType;
+            m_DefaultBoundObject = boundObject;
             InventoryMainWindow.OnLostFocusEvent += Refresh;
 
             m_Database = database;
@@ -126,8 +130,8 @@ namespace Opsive.UltimateInventorySystem.Editor.Inspectors
         protected virtual void BindItem(VisualElement parent, int index)
         {
             var attributeBindingView = parent.ElementAt(0) as AttributeBindingView;
-            var attribute = ((AttributeBase, AttributeBinding))m_AttributesReorderableList.ItemsSource[index];
-            attributeBindingView.Setup(attribute.Item1, attribute.Item2);
+            var attribute = ((AttributeBase, AttributeBindingBase))m_AttributesReorderableList.ItemsSource[index];
+            attributeBindingView.Setup(attribute.Item1, attribute.Item2 as AttributeBindingBase);
         }
 
         /// <summary>
@@ -165,11 +169,11 @@ namespace Opsive.UltimateInventorySystem.Editor.Inspectors
         /// Set the attribute bindings.
         /// </summary>
         /// <param name="attributeBindings">The attribute bindings.</param>
-        public void SetAttributeBindings(IList<AttributeBinding> attributeBindings)
+        public void SetAttributeBindings(IList<AttributeBindingBase> attributeBindings)
         {
             m_AttributeBindings = attributeBindings != null ?
-                new List<AttributeBinding>(attributeBindings) :
-                new List<AttributeBinding>();
+                new List<AttributeBindingBase>(attributeBindings) :
+                new List<AttributeBindingBase>();
             Refresh();
         }
 
@@ -182,18 +186,18 @@ namespace Opsive.UltimateInventorySystem.Editor.Inspectors
             if (m_ItemCategory == null) { return; }
 
             if (m_AttributeBindings == null) {
-                m_AttributeBindings = new List<AttributeBinding>();
+                m_AttributeBindings = new List<AttributeBindingBase>();
             }
 
             var attributeBindings = m_AttributeBindings;
             var allAttributeCount = m_ItemCategory.GetAttributesCount();
-            var newBindings = new AttributeBinding[allAttributeCount];
+            var newBindings = new AttributeBindingBase[allAttributeCount];
             for (int i = 0; i < allAttributeCount; i++) {
                 var attribute = m_ItemCategory.GetAttributesAt(i);
                 newBindings[i] = FindMatchOrCreate(attributeBindings, attribute);
             }
 
-            m_AttributeBindings = new List<AttributeBinding>(newBindings);
+            m_AttributeBindings = new List<AttributeBindingBase>(newBindings);
         }
 
         /// <summary>
@@ -202,7 +206,7 @@ namespace Opsive.UltimateInventorySystem.Editor.Inspectors
         /// <param name="attributeBindings">The attribute bindings.</param>
         /// <param name="attribute">The attribute.</param>
         /// <returns>The attribute binding.</returns>
-        protected virtual AttributeBinding FindMatchOrCreate(List<AttributeBinding> attributeBindings, AttributeBase attribute)
+        protected virtual AttributeBindingBase FindMatchOrCreate(List<AttributeBindingBase> attributeBindings, AttributeBase attribute)
         {
             for (int j = 0; j < attributeBindings.Count; j++) {
                 var attributeBinding = attributeBindings[j];
@@ -211,13 +215,31 @@ namespace Opsive.UltimateInventorySystem.Editor.Inspectors
                 if (attribute.Name != attributeBinding.AttributeName ||
                     attributeBinding.GetType().GetGenericArguments()[0] != attribute.GetValueType()) { continue; }
 
+                if (attributeBinding.BoundObject == null) {
+                    attributeBinding.BoundObject = m_DefaultBoundObject;
+                }
+                
+                // Match found.
                 return attributeBinding;
             }
+            
+            // Match not Found.
 
-            var newAttributeBinding =
-                Activator.CreateInstance(
-                    typeof(AttributeBinding<>).MakeGenericType(attribute.GetValueType())) as AttributeBinding;
+            AttributeBindingBase newAttributeBinding;
+            if (m_ObjectType == null) {
+                newAttributeBinding =
+                    Activator.CreateInstance(
+                        typeof(GenericAttributeBinding<>).MakeGenericType(attribute.GetValueType())) as AttributeBindingBase;
+            } else {
+                newAttributeBinding =
+                    Activator.CreateInstance(
+                        typeof(AttributeBinding<>).MakeGenericType(attribute.GetValueType())) as AttributeBindingBase;
+            }
+
+            newAttributeBinding.BoundObject = m_DefaultBoundObject;
             newAttributeBinding.AttributeName = attribute.Name;
+            
+            OnNewAttributeBinding?.Invoke(newAttributeBinding);
             return newAttributeBinding;
         }
 
@@ -241,7 +263,7 @@ namespace Opsive.UltimateInventorySystem.Editor.Inspectors
             if (category == null) { return null; }
             if (m_AttributeBindings == null) { return null; }
 
-            var list = new List<(AttributeBase, AttributeBinding)>();
+            var list = new List<(AttributeBase, AttributeBindingBase)>();
 
             var offset = 0;
             ResizableArray<AttributeBase> attributes;
@@ -279,7 +301,7 @@ namespace Opsive.UltimateInventorySystem.Editor.Inspectors
         /// </summary>
         /// <param name="database">The database.</param>
         /// <param name="objectType">The object type to bind.</param>
-        public ItemCategoryAttributeNameBindingView(InventorySystemDatabase database, Type objectType) : base(database, objectType)
+        public ItemCategoryAttributeNameBindingView(InventorySystemDatabase database, Type objectType) : base(database, objectType, null)
         {
         }
 
@@ -289,7 +311,7 @@ namespace Opsive.UltimateInventorySystem.Editor.Inspectors
         /// <param name="database">The database.</param>
         /// <param name="hidePropertyPath">The properties to hide.</param>
         public ItemCategoryAttributeNameBindingView(InventorySystemDatabase database, Type objectType, bool hidePropertyPath) :
-            base(database, objectType)
+            base(database, objectType, null)
         {
             m_HidePropertyPath = hidePropertyPath;
         }
@@ -300,7 +322,7 @@ namespace Opsive.UltimateInventorySystem.Editor.Inspectors
         /// <param name="attributeBindings">The attribute bindings.</param>
         /// <param name="attribute">The attribute.</param>
         /// <returns>The attribute binding.</returns>
-        protected override AttributeBinding FindMatchOrCreate(List<AttributeBinding> attributeBindings, AttributeBase attribute)
+        protected override AttributeBindingBase FindMatchOrCreate(List<AttributeBindingBase> attributeBindings, AttributeBase attribute)
         {
             for (int j = 0; j < attributeBindings.Count; j++) {
                 var attributeBinding = attributeBindings[j];
@@ -312,7 +334,7 @@ namespace Opsive.UltimateInventorySystem.Editor.Inspectors
             }
 
             var newAttributeBinding =
-                Activator.CreateInstance(typeof(AttributeNameBinding)) as AttributeBinding;
+                Activator.CreateInstance(typeof(AttributeNameBinding)) as AttributeBindingBase;
             newAttributeBinding.AttributeName = attribute.Name;
             return newAttributeBinding;
         }
@@ -339,7 +361,7 @@ namespace Opsive.UltimateInventorySystem.Editor.Inspectors
         protected override void BindItem(VisualElement parent, int index)
         {
             var attributeBindingView = parent.ElementAt(0) as AttributeNameBindingView;
-            var attribute = ((AttributeBase, AttributeBinding))m_AttributesReorderableList.ItemsSource[index];
+            var attribute = ((AttributeBase, AttributeBindingBase))m_AttributesReorderableList.ItemsSource[index];
             attributeBindingView.Setup(attribute.Item1, attribute.Item2);
         }
     }

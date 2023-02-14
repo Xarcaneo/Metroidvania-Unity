@@ -13,6 +13,7 @@ namespace Opsive.UltimateInventorySystem.Editor.Inspectors
     using System;
     using System.Collections.Generic;
     using UnityEditor.UIElements;
+    using UnityEngine;
     using UnityEngine.UIElements;
     using Object = UnityEngine.Object;
 
@@ -27,7 +28,7 @@ namespace Opsive.UltimateInventorySystem.Editor.Inspectors
         protected ObjectField m_ObjectField;
         protected PopupField<string> m_PropertyPathField;
 
-        protected AttributeBinding m_AttributeBinding;
+        protected AttributeBindingBase m_AttributeBinding;
 
         /// <summary>
         /// Constructor.
@@ -43,20 +44,22 @@ namespace Opsive.UltimateInventorySystem.Editor.Inspectors
             m_BindingContainer.AddToClassList("horizontal-layout");
             Add(m_BindingContainer);
 
-            m_ObjectField = new ObjectField();
-            m_ObjectField.AddToClassList(InventoryManagerStyles.AttributeBindingObject);
-            m_ObjectField.objectType = objectType;
-            m_ObjectField.RegisterValueChangedCallback(evt =>
-            {
-                m_AttributeBinding.BoundComponent = evt.newValue;
-                if (evt.newValue == null) {
-                    m_AttributeBinding.PropertyPath = string.Empty;
-                }
-                ValueChanged();
-                Refresh();
-            });
+            if (objectType != null) {
+                m_ObjectField = new ObjectField();
+                m_ObjectField.AddToClassList(InventoryManagerStyles.AttributeBindingObject);
+                m_ObjectField.objectType = objectType;
+                m_ObjectField.RegisterValueChangedCallback(evt =>
+                {
+                    m_AttributeBinding.BoundObject = evt.newValue;
+                    if (evt.newValue == null) {
+                        m_AttributeBinding.PropertyPath = string.Empty;
+                    }
+                    ValueChanged();
+                    Refresh();
+                });
+                m_BindingContainer.Add(m_ObjectField);
+            }
 
-            m_BindingContainer.Add(m_ObjectField);
             var choices = new List<string>();
             choices.Add("(none)");
             m_PropertyPathField = new PopupField<string>(choices, 0,
@@ -84,7 +87,7 @@ namespace Opsive.UltimateInventorySystem.Editor.Inspectors
         /// </summary>
         /// <param name="attribute">The attribute.</param>
         /// <param name="binding">The attribute binding.</param>
-        public void Setup(AttributeBase attribute, AttributeBinding binding)
+        public void Setup(AttributeBase attribute, AttributeBindingBase binding)
         {
             m_AttributeViewName.Refresh(attribute);
             m_AttributeBinding = binding;
@@ -99,7 +102,10 @@ namespace Opsive.UltimateInventorySystem.Editor.Inspectors
         {
             if (m_AttributeBinding == null) { return; }
 
-            m_ObjectField.value = m_AttributeBinding.BoundComponent;
+            if (m_ObjectField != null) {
+                m_ObjectField.value = m_AttributeBinding.BoundObject as Object;
+            }
+            
             var choices = CreatePropertyPathChoices();
             var selectedIndex = 0;
             for (int i = 0; i < choices.Count; i++) {
@@ -120,7 +126,7 @@ namespace Opsive.UltimateInventorySystem.Editor.Inspectors
         {
             var choices = new List<string>();
             choices.Add("(none)");
-            var properties = m_AttributeBinding?.BoundComponent?.GetType().GetProperties();
+            var properties = m_AttributeBinding?.BoundObject?.GetType().GetProperties();
             if (!(properties?.Length > 0)) { return choices; }
 
             for (int i = 0; i < properties.Length; i++) {
@@ -177,7 +183,7 @@ namespace Opsive.UltimateInventorySystem.Editor.Inspectors
         {
             var choices = new List<string>();
             choices.Add("(none)");
-            var properties = m_AttributeBinding?.BoundComponent?.GetType().GetProperties();
+            var properties = m_AttributeBinding?.BoundObject?.GetType().GetProperties();
             if (!(properties?.Length > 0)) { return choices; }
 
             for (int i = 0; i < properties.Length; i++) {

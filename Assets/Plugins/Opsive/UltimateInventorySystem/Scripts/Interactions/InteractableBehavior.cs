@@ -6,10 +6,11 @@
 
 namespace Opsive.UltimateInventorySystem.Interactions
 {
-    using Opsive.Shared.Events;
+    using System;
     using Opsive.Shared.Game;
     using Opsive.UltimateInventorySystem.Core;
     using UnityEngine;
+    using EventHandler = Opsive.Shared.Events.EventHandler;
 
     /// <summary>
     /// An abstract class for interactable behaviors.
@@ -23,11 +24,15 @@ namespace Opsive.UltimateInventorySystem.Interactions
         [SerializeField] protected float m_ScheduleReactivationTime = -1;
         [Tooltip("Enable the game objects when the interactable is selected.")]
         [SerializeField] internal GameObject[] m_SelectIndicators;
+        
 
         protected Interactable m_Interactable;
         protected System.Action m_ReActivateAction;
 
         public Interactable Interactable => m_Interactable;
+        public bool DeactivateOnInteract { get => m_DeactivateOnInteract; set => m_DeactivateOnInteract = value; }
+        public float ScheduleReactivationTime { get => m_ScheduleReactivationTime; set => m_ScheduleReactivationTime = value; }
+        public GameObject[] SelectIndicators { get => m_SelectIndicators; set => m_SelectIndicators = value; }
 
         /// <summary>
         /// Initialize.

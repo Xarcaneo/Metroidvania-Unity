@@ -135,8 +135,9 @@ namespace Opsive.UltimateInventorySystem.Editor.Inspectors
         /// <summary>
         /// Unregister the listeners on destroy.
         /// </summary>
-        private void OnDestroy()
+        protected override void OnDestroy()
         {
+            base.OnDestroy();
             if (m_CurrencyOwner == null) { return; }
             EventHandler.UnregisterEvent(m_CurrencyOwner, EventNames.c_CurrencyOwner_OnUpdate, CurrencyOwnerChanged);
         }

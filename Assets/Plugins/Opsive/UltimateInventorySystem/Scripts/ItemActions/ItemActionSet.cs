@@ -35,17 +35,14 @@ namespace Opsive.UltimateInventorySystem.ItemActions
         }
 
 
-        public ItemActionCollection ItemActionCollection {
-            get => m_ItemActionCollection;
-            internal set => m_ItemActionCollection = value;
-        }
-
-        /// <summary>
-        /// Initialize on awake.
-        /// </summary>
-        private void Awake()
+        public ItemActionCollection ItemActionCollection
         {
-            m_ItemActionCollection?.Initialize(true);
+            get
+            {
+                m_ItemActionCollection?.Initialize(false);
+                return m_ItemActionCollection;
+            }
+            internal set => m_ItemActionCollection = value;
         }
 
         /// <summary>

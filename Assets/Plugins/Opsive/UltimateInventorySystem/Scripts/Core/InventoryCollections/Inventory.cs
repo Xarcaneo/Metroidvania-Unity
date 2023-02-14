@@ -450,7 +450,7 @@ namespace Opsive.UltimateInventorySystem.Core.InventoryCollections
         /// </summary>
         /// <param name="itemInfo">The amount of item being added.</param>
         /// <param name="stackTarget">The item stack where the item should be added.</param>
-        /// <returns>Returns the number of items added, 0 if no item was added.</returns>
+        /// <returns>Returns an ItemInfo containing the number of items added and the stack it was added to, returns ItemInfo.None if no item was added.</returns>
         public virtual ItemInfo AddItem(ItemInfo itemInfo, ItemStack stackTarget = null)
         {
             if (stackTarget != null && stackTarget.ItemCollection != null && ReferenceEquals(stackTarget.Inventory, this)) {
@@ -465,7 +465,7 @@ namespace Opsive.UltimateInventorySystem.Core.InventoryCollections
         /// </summary>
         /// <param name="itemDefinition">The itemDefinition of item being added.</param>
         /// <param name="amount">The amount to add.</param>
-        /// <returns>Returns the number of items added, 0 if no item was added.</returns>
+        /// <returns>Returns an ItemInfo containing the number of items added and the stack it was added to, returns ItemInfo.None if no item was added.</returns>
         public virtual ItemInfo AddItem(ItemDefinition itemDefinition, int amount)
         {
             if (itemDefinition == null) { return ItemInfo.None; }
@@ -480,7 +480,7 @@ namespace Opsive.UltimateInventorySystem.Core.InventoryCollections
         /// </summary>
         /// <param name="item">The item being added.</param>
         /// <param name="amount">The amount to add.</param>
-        /// <returns>Returns the number of items added, 0 if no item was added.</returns>
+        /// <returns>Returns an ItemInfo containing the number of items added and the stack it was added to, returns ItemInfo.None if no item was added.</returns>
         public virtual ItemInfo AddItem(Item item, int amount)
         {
             var itemInfo = (ItemInfo)(item, amount);
@@ -493,7 +493,7 @@ namespace Opsive.UltimateInventorySystem.Core.InventoryCollections
         /// </summary>
         /// <param name="itemName">The item name being added.</param>
         /// <param name="amount">The amount to add.</param>
-        /// <returns>Returns the number of items added, 0 if no item was added.</returns>
+        /// <returns>Returns an ItemInfo containing the number of items added and the stack it was added to, returns ItemInfo.None if no item was added.</returns>
         public virtual ItemInfo AddItem(string itemName, int amount)
         {
             var item = InventorySystemManager.CreateItem(itemName);

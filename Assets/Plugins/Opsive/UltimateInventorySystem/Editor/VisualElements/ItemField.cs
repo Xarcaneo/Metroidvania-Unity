@@ -14,6 +14,7 @@ namespace Opsive.UltimateInventorySystem.Editor.VisualElements
     using Opsive.UltimateInventorySystem.Editor.VisualElements.ViewNames;
     using Opsive.UltimateInventorySystem.Storage;
     using System;
+    using UnityEngine;
     using UnityEngine.UIElements;
 
     /// <summary>
@@ -194,7 +195,10 @@ namespace Opsive.UltimateInventorySystem.Editor.VisualElements
         /// </summary>
         private void SoftRefresh()
         {
-            m_Item?.Serialize();
+            if (Application.isPlaying == false) {
+                m_Item?.Serialize();
+            }
+           
             m_AttributesReorderableList.Refresh(m_Item?.ItemAttributeCollection.Attributes);
             OnValueChanged?.Invoke();
         }

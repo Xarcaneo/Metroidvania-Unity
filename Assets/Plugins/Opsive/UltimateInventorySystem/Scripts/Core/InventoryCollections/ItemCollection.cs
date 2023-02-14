@@ -572,7 +572,9 @@ namespace Opsive.UltimateInventorySystem.Core.InventoryCollections
             var rejectedItemInfo = new ItemInfo(originalItemInfo.Amount - itemInfoAdded.Amount, originalItemInfo);
             
             if (m_OverflowOptions.ReturnOverflow) {
-                if (originalItemInfo.ItemCollection != null) {
+                // When the item item overflows from items being added to the same slot, the item shouldn't be returned.
+                // Checking that the itemcollection isn't this, ensures the collection isn't corrupted.
+                if (originalItemInfo.ItemCollection != null && originalItemInfo.ItemCollection != this) {
                     var returnedItemInfo = originalItemInfo.ItemCollection.AddItem(rejectedItemInfo);
                     itemInfoAdded = (returnedItemInfo.Amount, itemInfoAdded);
                 }
@@ -900,7 +902,7 @@ namespace Opsive.UltimateInventorySystem.Core.InventoryCollections
             
             for (var i = m_ItemStacks.Count - 1; i >= 0; i--) {
                 var itemStack = m_ItemStacks[i];
-                RemoveItem(itemStack.Item, itemStack.Amount);
+                RemoveItem((ItemInfo)itemStack);
             }
             
             if (disableUpdateEventsWhileRemoving) {

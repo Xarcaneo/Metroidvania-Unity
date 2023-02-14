@@ -384,6 +384,112 @@ namespace Opsive.UltimateInventorySystem.Storage
         /// </summary>
         /// <param name="item">The item.</param>
         /// <returns>True if it is contained in the database.</returns>
+        public bool TryGet(uint id, out Item item)
+        {
+            if (TryGet(id, out ItemDefinition itemDefinition) == false) {
+                item = null;
+                return false;
+            }
+
+            item = itemDefinition.DefaultItem;
+            return true;
+        }
+
+        /// <summary>
+        /// Check if the database contains the item definition
+        /// </summary>
+        /// <param name="itemDefinition">The item.</param>
+        /// <returns>True if it is contained in the database.</returns>
+        public bool TryGet(uint id, out ItemDefinition itemDefinition)
+        {
+            for (int i = 0; i < m_ItemDefinitions.Length; i++) {
+                if (m_ItemDefinitions[i].ID == id) {
+                    itemDefinition = m_ItemDefinitions[i];
+                    return true;
+                }
+            }
+
+            itemDefinition = null;
+            return false;
+        }
+
+        /// <summary>
+        /// Check if the database contains the item category
+        /// </summary>
+        /// <param name="itemCategory">The item.</param>
+        /// <returns>True if it is contained in the database.</returns>
+        public bool TryGet(uint id, out ItemCategory itemCategory)
+        {
+            for (int i = 0; i < m_ItemCategories.Length; i++) {
+                if (m_ItemCategories[i].ID == id) {
+                    itemCategory = m_ItemCategories[i];
+                    return true;
+                }
+            }
+
+            itemCategory = null;
+            return false;
+        }
+
+        /// <summary>
+        /// Check if the database contains the currency
+        /// </summary>
+        /// <param name="currency">The item.</param>
+        /// <returns>True if it is contained in the database.</returns>
+        public bool TryGet(uint id, out Currency currency)
+        {
+            for (int i = 0; i < m_Currencies.Length; i++) {
+                if (m_Currencies[i].ID == id) {
+                    currency = m_Currencies[i];
+                    return true;
+                }
+            }
+
+            currency = null;
+            return false;
+        }
+
+        /// <summary>
+        /// Check if the database contains the crafting category
+        /// </summary>
+        /// <param name="craftingCategory">The item.</param>
+        /// <returns>True if it is contained in the database.</returns>
+        public bool TryGet(uint id, out CraftingCategory craftingCategory)
+        {
+            for (int i = 0; i < m_CraftingCategories.Length; i++) {
+                if (m_CraftingCategories[i].ID == id) {
+                    craftingCategory = m_CraftingCategories[i];
+                    return true;
+                }
+            }
+
+            craftingCategory = null;
+            return false;
+        }
+
+        /// <summary>
+        /// Check if the database contains the crafting recipe
+        /// </summary>
+        /// <param name="craftingRecipe">The item.</param>
+        /// <returns>True if it is contained in the database.</returns>
+        public bool  TryGet(uint id, out CraftingRecipe craftingRecipe)
+        {
+            for (int i = 0; i < m_CraftingRecipes.Length; i++) {
+                if (m_CraftingRecipes[i].ID == id) {
+                    craftingRecipe = m_CraftingRecipes[i];
+                    return true;
+                }
+            }
+
+            craftingRecipe = null;
+            return false;
+        }
+
+        /// <summary>
+        /// Check if the database contains the items definition and category
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <returns>True if it is contained in the database.</returns>
         public bool TryGet(string objName, out Item item)
         {
             if (TryGet(objName, out ItemDefinition itemDefinition) == false) {
@@ -484,7 +590,7 @@ namespace Opsive.UltimateInventorySystem.Storage
             craftingRecipe = null;
             return false;
         }
-
+        
         /// <summary>
         /// Check if the database contains the items definition and category
         /// </summary>

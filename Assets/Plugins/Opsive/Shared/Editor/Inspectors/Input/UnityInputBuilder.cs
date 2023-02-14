@@ -6,7 +6,6 @@
 
 namespace Opsive.Shared.Editor.Inspectors.Input
 {
-    using System.Collections.Generic;
     using UnityEditor;
 
     /// <summary>
@@ -29,13 +28,10 @@ namespace Opsive.Shared.Editor.Inspectors.Input
             X, Y, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Eleven, Twelve, Thirteen, Fourteen, Fifteen, Sixteen, Seventeen, Eighteen, Nineteen, Twenty
         }
 
-        private static Dictionary<string, int> s_FoundAxes;
-        public static Dictionary<string, int> FoundAxes { get { return s_FoundAxes; } set { s_FoundAxes = value; } }
-
         /// <summary>
         /// Adds a new axis to the InputManager.
         /// </summary>
-        /// <param name="axesProperty">The array of all of the axes.</param>
+        /// <param name="axisProperty">The array of all of the axes.</param>
         /// <param name="name">The name of the new axis.</param>
         /// <param name="negativeButton">The name of the negative button of the new axis.</param>
         /// <param name="positiveButton">The name of the positive button of the new axis.</param>
@@ -48,10 +44,10 @@ namespace Opsive.Shared.Editor.Inspectors.Input
         /// <param name="invert">Is the axis inverted?</param>
         /// <param name="axisType">The type of axis to add.</param>
         /// <param name="axisNumber">The index of the axis.</param>
-        public static void AddInputAxis(SerializedProperty axesProperty, string name, string negativeButton, string positiveButton,
+        public static void AddInputAxis(SerializedProperty axisProperty, string name, string negativeButton, string positiveButton,
                                 string altNegativeButton, string altPositiveButton, float gravity, float dead, float sensitivity, bool snap, bool invert, AxisType axisType, AxisNumber axisNumber)
         {
-            var property = FindAxisProperty(axesProperty, name);
+            var property = FindAxisProperty(axisProperty, name, positiveButton, altPositiveButton, axisType);
             property.FindPropertyRelative("m_Name").stringValue = name;
             property.FindPropertyRelative("negativeButton").stringValue = negativeButton;
             property.FindPropertyRelative("positiveButton").stringValue = positiveButton;
@@ -67,39 +63,48 @@ namespace Opsive.Shared.Editor.Inspectors.Input
         }
 
         /// <summary>
+        /// Removes the axis properties with the specified name.
+        /// </summary>
+        /// <param name="axisProperty">The array of all of the axes.</param>
+        /// <param name="name">The name of the axis.</param>
+        /// <param name="positiveButton">The name of the positive button of the new axis.</param>
+        /// <param name="axisType">The type of axis.</param>
+        public static void RemoveAxisProperty(SerializedProperty axisProperty, string name, string positiveButton, AxisType axisType)
+        {
+            for (int i = axisProperty.arraySize - 1; i > -1; --i) {
+                var property = axisProperty.GetArrayElementAtIndex(i);
+                if (property.FindPropertyRelative("m_Name").stringValue.Equals(name) && property.FindPropertyRelative("type").intValue == (int)axisType && 
+                    (string.IsNullOrEmpty(positiveButton) || property.FindPropertyRelative("positiveButton").stringValue.Equals(positiveButton) && axisType == AxisType.KeyMouseButton)) {
+                    axisProperty.DeleteArrayElementAtIndex(i);
+                }
+            }
+        }
+
+        /// <summary>
         /// Searches for a property with the given name and axis type within the axes property array. If no property is found then a new one will be created.
         /// </summary>
         /// <param name="axisProperty">The array to search through.</param>
         /// <param name="name">The name of the property.</param>
+        /// <param name="positiveButton">The name of the positive button of the new axis.</param>
+        /// <param name="altPositiveButton">The name of the alternative positive button of the new axis.</param>
+        /// <param name="axisType">The type of axis that should be found.</param>
         /// <param name="autoCreate">Should a property be automatically created if it does not exist?</param>
         /// <returns>The found axis property.</returns>
-        public static SerializedProperty FindAxisProperty(SerializedProperty axisProperty, string name, bool autoCreate = true)
+        public static SerializedProperty FindAxisProperty(SerializedProperty axisProperty, string name, string positiveButton, string altPositiveButton, AxisType axisType,bool autoCreate = true)
         {
             SerializedProperty foundProperty = null;
-            // As new axes are being added make sure a previous axis is not overwritten because the name matches.
-            if (s_FoundAxes == null) {
-                s_FoundAxes = new Dictionary<string, int>();
-            }
-            s_FoundAxes.TryGetValue(name, out var existingCount);
-            var localCount = 0;
             for (int i = 0; i < axisProperty.arraySize; ++i) {
                 var property = axisProperty.GetArrayElementAtIndex(i);
-                if (property.FindPropertyRelative("m_Name").stringValue.Equals(name)) {
-                    if (localCount == existingCount) {
-                        foundProperty = property;
-                        break;
-                    }
-                    localCount++;
+                if (property.FindPropertyRelative("m_Name").stringValue.Equals(name) && property.FindPropertyRelative("type").intValue == (int)axisType && 
+                    ((string.IsNullOrEmpty(positiveButton) && string.IsNullOrEmpty(altPositiveButton)) || 
+                    (!string.IsNullOrEmpty(positiveButton) && property.FindPropertyRelative("positiveButton").stringValue.Equals(positiveButton) && axisType == AxisType.KeyMouseButton) ||
+                    (!string.IsNullOrEmpty(altPositiveButton) && property.FindPropertyRelative("altPositiveButton").stringValue.Equals(altPositiveButton) && axisType == AxisType.KeyMouseButton))) {
+                    foundProperty = property;
                 }
-            }
-            if (existingCount == 0) {
-                s_FoundAxes.Add(name, 1);
-            } else {
-                s_FoundAxes[name] = existingCount + 1;
             }
 
             // If no property was found then create a new one.
-            if (foundProperty == null) {
+            if (autoCreate && foundProperty == null) {
                 axisProperty.InsertArrayElementAtIndex(axisProperty.arraySize);
                 foundProperty = axisProperty.GetArrayElementAtIndex(axisProperty.arraySize - 1);
             }

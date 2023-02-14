@@ -258,7 +258,7 @@ namespace Opsive.UltimateInventorySystem.UI.Panels.Hotbar
                 }
                 return;
             }
-
+            
             for (int i = 0; i < m_ItemViewSlots.Length; i++) {
                 var itemInSlot = m_ItemSlotCollection.GetItemStackAtSlot(i);
                 AssignItemToSlot(new ItemInfo(itemInSlot), i);

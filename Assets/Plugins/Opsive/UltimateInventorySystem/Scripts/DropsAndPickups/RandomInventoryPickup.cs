@@ -24,6 +24,10 @@ namespace Opsive.UltimateInventorySystem.DropsAndPickups
         [SerializeField] protected int m_MaxAmount = 2;
 
         protected ItemAmountProbabilityTable m_ItemAmountProbabilityTable;
+        
+        public int MinAmount { get => m_MinAmount; set => m_MinAmount = value; }
+        public int MaxAmount { get => m_MaxAmount; set => m_MaxAmount = value; }
+
 
         /// <summary>
         /// Initialize the probability table.

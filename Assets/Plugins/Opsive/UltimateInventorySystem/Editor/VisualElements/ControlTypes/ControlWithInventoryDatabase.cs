@@ -10,8 +10,10 @@ namespace Opsive.UltimateInventorySystem.Editor.VisualElements.ControlTypes
     using Opsive.UltimateInventorySystem.Storage;
     using System;
     using System.Reflection;
+    using Opsive.Shared.Editor.UIElements.Managers;
     using Opsive.UltimateInventorySystem.Core;
     using Opsive.UltimateInventorySystem.Editor.Managers;
+    using Opsive.UltimateInventorySystem.Editor.Styles;
     using UnityEngine;
     using UnityEngine.UIElements;
     using Object = UnityEngine.Object;
@@ -41,11 +43,20 @@ namespace Opsive.UltimateInventorySystem.Editor.VisualElements.ControlTypes
             ExtractUserDataAndUseCustomControl(input.UserData);
 
             var container = new VisualElement();
-            if (field == null) {
+            container.styleSheets.Add(Shared.Editor.Utility.EditorUtility.LoadAsset<StyleSheet>("e70f56fae2d84394b861a2013cb384d0")); // Shared stylesheet.
+            container.styleSheets.Add(CommonStyles.StyleSheet);
+            container.styleSheets.Add(ManagerStyles.StyleSheet);
+            container.styleSheets.Add(ControlTypeStyles.StyleSheet);
+            container.styleSheets.Add(InventoryManagerStyles.StyleSheet);
+            container.styleSheets.Add(InventoryManagerStyles.StyleSheet);
+            
+            //TODO this used to be field == null, but it was limiting bindings, so I changed it to value ==null, please double check there aren't any issues
+            //TODO There is an issue because null Scriptable objects appeared as "NULL" instead of a field, so Completely commenting out that part
+            /*if (value == null) {
                 var text = value == null ? "NULL" : value.ToString();
                 container.Add(new Label(text));
                 return container;
-            }
+            }*/
 
             if (m_Database == null) {
                 Debug.LogWarning($"The Type Control {GetType().Name} requires the Inventory Database to work properly. But it is missing for object {unityObject}, please contact Opsive.");

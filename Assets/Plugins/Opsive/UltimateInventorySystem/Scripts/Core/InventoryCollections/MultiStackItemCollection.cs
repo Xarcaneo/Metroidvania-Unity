@@ -130,14 +130,10 @@ namespace Opsive.UltimateInventorySystem.Core.InventoryCollections
                 return (removed, itemInfo.Item, this);
             }
 
-            if (m_Inventory != null) {
-                EventHandler.ExecuteEvent<ItemInfo>(m_Inventory, EventNames.c_Inventory_OnRemove_ItemInfo,
-                    (itemInfo.Item, removed, this, itemStackRemoved));
-            }
+            ItemInfo removedItemInfo = new ItemInfo((itemInfo.Item, removed), this, itemStackRemoved);
+            NotifyItemRemoved(removedItemInfo);
 
-            UpdateCollection();
-
-            return (removed, itemInfo.Item, this, itemStackRemoved);
+            return removedItemInfo;
         }
 
         /// <summary>

@@ -333,24 +333,32 @@ namespace Opsive.UltimateInventorySystem.UI.Panels.ItemViewSlotContainers
         {
             var newAnchor = m_SetAnchorPosition ? m_AnchorPosition : m_PanelToPlace.pivot;
             var newPosition = slotRectTransform.position;
-
-            var positionOffset = new Vector2(
-                slotRectTransform.sizeDelta.x * m_AnchorRelativeOffset.x,
-                slotRectTransform.sizeDelta.y * m_AnchorRelativeOffset.y);
-
-            positionOffset = (positionOffset + m_PixelFixedOffset) * m_Canvas.scaleFactor;
             
-            if (m_SetAnchorPosition) {
-                m_PanelToPlace.anchorMax = newAnchor;
-                m_PanelToPlace.anchorMin = newAnchor;
-                m_PanelToPlace.pivot = newAnchor;
+            
+            if (m_Canvas.renderMode == RenderMode.ScreenSpaceCamera) {
+                newPosition = slotRectTransform.rect.center +
+                              RectTransformUtility.WorldToScreenPoint(m_Canvas.worldCamera,
+                                  slotRectTransform.position);
+            } else {
+                
+                var positionOffset = new Vector2(
+                    slotRectTransform.sizeDelta.x * m_AnchorRelativeOffset.x,
+                    slotRectTransform.sizeDelta.y * m_AnchorRelativeOffset.y);
+
+                positionOffset = (positionOffset + m_PixelFixedOffset) * m_Canvas.scaleFactor;
+            
+                if (m_SetAnchorPosition) {
+                    m_PanelToPlace.anchorMax = newAnchor;
+                    m_PanelToPlace.anchorMin = newAnchor;
+                    m_PanelToPlace.pivot = newAnchor;
+                }
+            
+                // Set the new position
+                newPosition = new Vector3(
+                    newPosition.x + positionOffset.x,
+                    newPosition.y + positionOffset.y,
+                    newPosition.z);
             }
-            
-            // Set the new position
-            newPosition = new Vector3(
-                newPosition.x + positionOffset.x,
-                newPosition.y + positionOffset.y,
-                newPosition.z);
 
             m_PanelToPlace.position = newPosition;
 

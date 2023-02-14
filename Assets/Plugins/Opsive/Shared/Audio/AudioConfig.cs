@@ -241,6 +241,23 @@ namespace Opsive.Shared.Audio
         public bool ReplacePreviousAudioSource { get => m_ReplacePreviousAudioSource; set => m_ReplacePreviousAudioSource = value; }
         public AudioModifier AudioModifier { get => m_AudioModifier; set => m_AudioModifier = value; }
 
+
+        [NonSerialized] protected Action<AudioSourceGroup,AudioSource> m_UnlockAudioSource = UnlockAudioSource;
+
+        /// <summary>
+        /// Unlock and Audio Source such that it can be used again by an other audio.
+        /// </summary>
+        /// <param name="audioSourceGroup">The audio source group.</param>
+        /// <param name="audioSource">The audio source.</param>
+        private static void UnlockAudioSource(AudioSourceGroup audioSourceGroup, AudioSource audioSource)
+        {
+            if (audioSourceGroup == null || audioSource == null) {
+                return;
+            }
+
+            audioSourceGroup.LockedAudioSources.Remove(audioSource);
+        }
+
         [NonSerialized] protected AudioSource m_AudioSource;
         [NonSerialized] protected int m_AudioClipIndex = 0;
 
@@ -334,6 +351,9 @@ namespace Opsive.Shared.Audio
         public PlayResult Play(AudioSourceGroup audioSourceGroup, AudioClip audioClip)
         {
             var audioSource = GetNextAudioSource(audioSourceGroup);
+            
+            // Unlock the audio source after a frame so that it can be reused.
+            Scheduler.Schedule(0.16f, m_UnlockAudioSource, audioSourceGroup, audioSource);
 
             return Play(audioSource, new AudioClipInfo(audioClip, this));
         }
@@ -347,6 +367,15 @@ namespace Opsive.Shared.Audio
         public PlayResult Play(AudioSourceGroup audioSourceGroup, AudioClipInfo audioClipInfo)
         {
             var audioSource = GetNextAudioSource(audioSourceGroup);
+            
+            // Unlock the audio source after the delay so that it can be reused.
+            var delay = 0.16f;
+            if (audioClipInfo.AudioModifier.DelayOverride.ValueOverride != FloatOverride.Override.NoOverride) {
+                delay += audioClipInfo.AudioModifier.DelayOverride.Value;
+            } else if (m_AudioModifier.DelayOverride.ValueOverride != FloatOverride.Override.NoOverride) {
+                delay += m_AudioModifier.DelayOverride.Value;
+            }
+            Scheduler.Schedule(delay, m_UnlockAudioSource, audioSourceGroup, audioSource);
 
             return Play(audioSource, audioClipInfo);
         }
@@ -506,7 +535,8 @@ namespace Opsive.Shared.Audio
             if (m_ShareAudioSource) {
                 for (int i = 0; i < audioSourceGroup.SharedAudioSources.Count; i++) {
                     var sharedAudioSource = audioSourceGroup.SharedAudioSources[i];
-                    if (sharedAudioSource.isPlaying == false) {
+                    if (sharedAudioSource != null && !sharedAudioSource.isPlaying && !audioSourceGroup.LockedAudioSources.Contains(sharedAudioSource)) {
+                        audioSourceGroup.LockedAudioSources.Add(sharedAudioSource);
                         return sharedAudioSource;
                     }
                 }

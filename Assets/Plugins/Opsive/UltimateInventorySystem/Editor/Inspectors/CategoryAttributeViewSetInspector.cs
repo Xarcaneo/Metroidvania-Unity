@@ -133,9 +133,9 @@ namespace Opsive.UltimateInventorySystem.Editor.Inspectors
                     var attributeUIs = new List<StringKeyGameObject>();
                     for (int i = 0; i < bindings.Count; i++) {
                         var attributeBinding = bindings[i];
-                        if (attributeBinding.BoundComponent == null) { continue; }
+                        if (attributeBinding.BoundObject == null) { continue; }
                         attributeUIs.Add(new StringKeyGameObject(
-                            attributeBinding.AttributeName, attributeBinding.BoundComponent as GameObject));
+                            attributeBinding.AttributeName, attributeBinding.BoundObject as GameObject));
                     }
 
                     OnValueChanged(m_ReorderableList.SelectedIndex,
@@ -160,7 +160,7 @@ namespace Opsive.UltimateInventorySystem.Editor.Inspectors
             m_Selection.Add(m_ItemCategoryAttributeBindingView);
             m_ItemCategoryAttributeBindingView.SetItemCategory(m_List[index].Category);
 
-            var attributeBindings = new List<AttributeBinding>();
+            var attributeBindings = new List<AttributeBindingBase>();
 
             if (m_List[index].AttributeViews != null) {
                 for (int i = 0; i < m_List[index].AttributeViews.Length; i++) {

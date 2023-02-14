@@ -152,35 +152,46 @@ RadioToggle > VisualElement > .light-radio-checkmark
     background-image: url("../Icons/RadioButtonLight.png");
 }
 
-/* || Object Identifier & NameId Map || */
-.name-id-map-list-element
+/* || Data Map || */
+.data-map-list-element
 {
     flex-direction: row;
 }
 
-.name-id-map-list-element_warning
+.data-map-list-element_warning
 {
     width: 18px;
 }
 
-.name-id-map-list-element_id
+.data-map-list-element_id
 {
     margin-right: 0;
 }
 
-.name-id-map-list-element_id > IntegerInput
+.data-map-list-element_id > IntegerInput
 {
     width: 90px;
 }
 
-.name-id-map-list-element_button
+.data-map-list-element_reorderable_state_button
 {
-    margin: 0 5 0 0;
-    padding: 0 1 0 1;
+    width: 15px;
+    height: 14px;
+    margin: 1px 5px 0px -16px;
+    padding: 0px 1px 0px 1px;
     font-size: 10px;
 }
 
-.name-id-map-list-element_name
+.data-map-list-element_button
+{
+    width: 17px;
+    height: 16px;
+    margin: 0px 5px 0px -18px;
+    padding: 0px 1px 0px 1px;
+    font-size: 10px;
+}
+
+.data-map-list-element_name
 {
     flex-grow: 1;
 }
