@@ -26,6 +26,8 @@ namespace Opsive.UltimateInventorySystem.UI.Item
         [SerializeField] internal ItemView m_ItemView;
         [Tooltip("The slot index.")]
         [SerializeField] protected int m_Index;
+        [Tooltip("The slot frame.")]
+        [SerializeField] private GameObject m_Frame;
 
         protected ItemViewSlotRestriction[] m_ItemViewSlotRestrictions;
 
@@ -107,6 +109,9 @@ namespace Opsive.UltimateInventorySystem.UI.Item
 
             if (m_ItemView != null) {
                 m_ItemView.Select(true);
+
+                m_Frame.gameObject.transform.position = this.gameObject.transform.position;
+                m_Frame.SetActive(true);
             }
         }
 
@@ -120,6 +125,9 @@ namespace Opsive.UltimateInventorySystem.UI.Item
 
             if (m_ItemView != null) {
                 m_ItemView.Select(false);
+
+                m_Frame.gameObject.transform.position = this.gameObject.transform.localPosition;
+                m_Frame.SetActive(false);
             }
         }
 
