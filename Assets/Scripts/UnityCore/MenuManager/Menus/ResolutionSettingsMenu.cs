@@ -20,7 +20,7 @@ namespace Menu
 
         private void SetHeader()
         {
-            headerText.text = "Resolution: " + Screen.currentResolution.width + " x " + Screen.currentResolution.height;
+            if(headerText) headerText.text = "Resolution: " + Screen.currentResolution.width + " x " + Screen.currentResolution.height;
         }
 
         public override void OnStart()
@@ -32,7 +32,8 @@ namespace Menu
             for (int i = 0; i < resolutions.Length; i++)
             {
                 ResolutionButton tempButton = Instantiate(prefabResolutionButton, buttonsParent.transform);
-                tempButton.text = resolutions[i].width.ToString() + " x " + resolutions[i].height.ToString();
+                TextMeshProUGUI textMeshPro = tempButton.GetComponent<TextMeshProUGUI>();
+                textMeshPro.text = resolutions[i].width.ToString() + " x " + resolutions[i].height.ToString();
                 tempButton.buttonIndex = i;
 
                 if (i == 0) buttonToFocus = tempButton.gameObject;
