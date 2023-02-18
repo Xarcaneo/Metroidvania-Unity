@@ -7,13 +7,7 @@ using UnityEngine;
 public class ResolutionButton : MyButton
 {
     public event Action<int> Pressed;
-    public string text = "";
     public int buttonIndex;
-
-    private void Start()
-    {
-        GetComponentInChildren<TextMeshProUGUI>().text = text;
-    }
 
     protected override void OnPressedAction()
     {
