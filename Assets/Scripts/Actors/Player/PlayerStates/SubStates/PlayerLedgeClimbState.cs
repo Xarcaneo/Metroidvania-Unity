@@ -22,7 +22,7 @@ public class PlayerLedgeClimbState : PlayerState
     private Movement movement;
     private CollisionSenses collisionSenses;
 
-    public PlayerLedgeClimbState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
+    public PlayerLedgeClimbState(Player player, StateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }
 

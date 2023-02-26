@@ -20,17 +20,11 @@ public class IdleState : State
 
     private Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
     private CollisionSenses CollisionSenses { get => collisionSenses ?? core.GetCoreComponent(ref collisionSenses); }
-    private EntityDetector EntityDetector { get => entityDetector ?? core.GetCoreComponent(ref entityDetector); }
-    private AIMeleeAttackDetector AIMeleeAttackDetector { get => aIMeleeAttackDetector ?? core.GetCoreComponent(ref aIMeleeAttackDetector); }
-    private AIRaycast AIRaycast { get => aIRaycast ?? core.GetCoreComponent(ref aIRaycast); }
 
     private Movement movement;
     private CollisionSenses collisionSenses;
-    private EntityDetector entityDetector;
-    private AIMeleeAttackDetector aIMeleeAttackDetector;
-    private AIRaycast aIRaycast;
 
-    public IdleState(Entity etity, FiniteStateMachine stateMachine, string animBoolName, D_IdleState stateData) : base(etity, stateMachine, animBoolName)
+    public IdleState(Entity etity, StateMachine stateMachine, string animBoolName, D_IdleState stateData) : base(etity, stateMachine, animBoolName)
     {
         this.stateData = stateData;
     }
@@ -43,22 +37,6 @@ public class IdleState : State
         {
             isDetectingWall = CollisionSenses.WallFront;
             isDectectingLedge = CollisionSenses.LedgeVertical;
-        }
-
-        if (EntityDetector)
-        {
-            playerDirection = EntityDetector.CheckFlipDirectionTowardsEntity();
-            isPlayerDetected = EntityDetector.GetEntityDetected();
-        }
-
-        if (AIMeleeAttackDetector)
-        {
-            isEnemyInAttackRangeDetected = AIMeleeAttackDetector.GetEntityDetected();
-        }
-
-        if (aIRaycast)
-        {
-            isPlayerInSight = AIRaycast.CheckRaycastCollision();
         }
     }
 

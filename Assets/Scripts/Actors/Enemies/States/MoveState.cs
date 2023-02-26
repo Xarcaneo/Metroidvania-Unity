@@ -13,15 +13,11 @@ public class MoveState : State
 
     private Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
     private CollisionSenses CollisionSenses { get => collisionSenses ?? core.GetCoreComponent(ref collisionSenses); }
-    private EntityDetector EntityDetector { get => entityDetector ?? core.GetCoreComponent(ref entityDetector); }
-    private AIRaycast AIRaycast { get => aIRaycast ?? core.GetCoreComponent(ref aIRaycast); }
-
     private Movement movement;
     private CollisionSenses collisionSenses;
-    private EntityDetector entityDetector;
-    private AIRaycast aIRaycast;
 
-    public MoveState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_MoveState stateData) : base(entity, stateMachine, animBoolName)
+
+    public MoveState(Entity entity, StateMachine stateMachine, string animBoolName, D_MoveState stateData) : base(entity, stateMachine, animBoolName)
     {
         this.stateData = stateData;
     }
@@ -29,16 +25,6 @@ public class MoveState : State
     public override void DoChecks()
     {
         base.DoChecks();
-
-        if (EntityDetector)
-        {
-            isPlayerDetected = EntityDetector.GetEntityDetected();
-        }
-
-        if (AIRaycast)
-        {
-            isPlayerInSight = AIRaycast.CheckRaycastCollision();
-        }
 
         if (CollisionSenses)
         {
