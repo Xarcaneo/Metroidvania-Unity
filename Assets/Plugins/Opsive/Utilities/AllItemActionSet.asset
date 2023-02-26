@@ -16,7 +16,9 @@ MonoBehaviour:
     m_Name: All
     m_ItemCategory: {fileID: 11400000, guid: 73dcbd617274339418c99cf77a1ae66b, type: 2}
   m_ExceptionCategories:
-    m_ItemCategories: []
+    m_ItemCategories:
+    - m_Name: Weapon
+      m_ItemCategory: {fileID: 11400000, guid: 913d971d930692c4a959fd47c4f48dff, type: 2}
   m_ItemActionCollection:
     m_ItemActionsData:
     - m_ObjectType: Opsive.UltimateInventorySystem.ItemActions.DropItemAction
