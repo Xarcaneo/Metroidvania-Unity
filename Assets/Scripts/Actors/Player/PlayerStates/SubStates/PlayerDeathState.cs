@@ -7,7 +7,7 @@ public class PlayerDeathState : PlayerState
     private Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
     private Movement movement;
 
-    public PlayerDeathState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
+    public PlayerDeathState(Player player, StateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }
 

@@ -19,7 +19,7 @@ public class PlayerTouchingWallState : PlayerState
     private Movement movement;
     private CollisionSenses collisionSenses;
 
-    public PlayerTouchingWallState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
+    public PlayerTouchingWallState(Player player, StateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }
 

@@ -35,7 +35,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable
     {
         if (isDamagable)
         {
-            if (Block && Block.isBlocking && Block.IsBetween(damageData.Source))
+            if (block && Block.isBlocking && Block.IsBetween(damageData.Source))
             {
                 return;
             }
@@ -49,7 +49,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable
 
     public void Knockback(int direction)
     {
-        if (Block && Block.isBlocking) return;
+        if (block && Block.isBlocking) return;
 
         if (isKnockable)
         {

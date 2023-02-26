@@ -19,7 +19,7 @@ public class PlayerGroundedState : PlayerState
     private Movement movement;
     private CollisionSenses collisionSenses;
 
-    public PlayerGroundedState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
+    public PlayerGroundedState(Player player, StateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }
 

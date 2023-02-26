@@ -9,7 +9,7 @@ public class PlayerCheckpointInteractionState : PlayerState
     private Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
     private Movement movement;
 
-    public PlayerCheckpointInteractionState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
+    public PlayerCheckpointInteractionState(Player player, StateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }
 

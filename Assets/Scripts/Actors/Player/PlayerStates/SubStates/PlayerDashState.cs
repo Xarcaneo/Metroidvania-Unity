@@ -8,7 +8,7 @@ public class PlayerDashState : PlayerAbilityState
 
     private Vector2 dashDirection;
 
-    public PlayerDashState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
+    public PlayerDashState(Player player, StateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }
     public override void Enter()

@@ -6,7 +6,7 @@ public class PlayerWallSlideState : PlayerTouchingWallState
 {
     private bool canWallJumpCoyoteTime = true;
 
-    public PlayerWallSlideState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
+    public PlayerWallSlideState(Player player, StateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }
 

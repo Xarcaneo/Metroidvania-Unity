@@ -15,7 +15,7 @@ public class PlayerAttackState : PlayerAbilityState
     private Weapon Weapon { get => weapon ?? core.GetCoreComponent(ref weapon); }
     private Weapon weapon;
 
-    public PlayerAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
+    public PlayerAttackState(Player player, StateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }
 

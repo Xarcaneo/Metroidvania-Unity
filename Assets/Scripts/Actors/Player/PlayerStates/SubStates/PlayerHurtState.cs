@@ -13,7 +13,7 @@ public class PlayerHurtState : PlayerState
     private Movement movement;
     private CollisionSenses collisionSenses;
 
-    public PlayerHurtState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
+    public PlayerHurtState(Player player, StateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }
 

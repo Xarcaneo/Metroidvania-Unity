@@ -1,4 +1,3 @@
-using Audio;
 using Opsive.UltimateInventorySystem.Equipping;
 using PixelCrushers.QuestMachine;
 using System;
@@ -7,10 +6,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class Player : MonoBehaviour
+public class Player : Entity
 {
     #region State Variables
-    public PlayerStateMachine StateMachine { get; private set; }
 
     public PlayerIdleState IdleState { get; private set; }
     public PlayerMoveState MoveState { get; private set; }
@@ -33,14 +31,10 @@ public class Player : MonoBehaviour
     #endregion
 
     #region Components
-    public Core Core { get; private set; }
-    public Animator Anim { get; private set; }
     public PlayerInputHandler InputHandler { get; private set; }
-    public BoxCollider2D MovementCollider { get; private set; }
     #endregion
 
     #region Other Variables
-    private Vector2 workspace;
     public QuestJournal questJournal;
     private IEquipper m_Equipper;
     public IEquipper Equipper => m_Equipper;
@@ -53,8 +47,10 @@ public class Player : MonoBehaviour
     #endregion
 
     #region Unity Callback Functions
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
+
         if (_instance != null)
         {
             Destroy(gameObject);
@@ -64,11 +60,8 @@ public class Player : MonoBehaviour
             _instance = this;
         }
 
-        Core = GetComponentInChildren<Core>();
         m_Equipper = GetComponent<IEquipper>();
         questJournal = GetComponent<QuestJournal>();
-
-        StateMachine = new PlayerStateMachine();
 
         IdleState = new PlayerIdleState(this, StateMachine, playerData, "idle");
         MoveState = new PlayerMoveState(this, StateMachine, playerData, "move");
@@ -95,27 +88,17 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void Start()
+    public override void Start()
     {
-        Anim = GetComponent<Animator>();
+        base.Start();
+
         InputHandler = GetComponent<PlayerInputHandler>();
-        MovementCollider = GetComponent<BoxCollider2D>();
 
         StateMachine.Initialize(IdleState);
 
         CheckIfShouldFlip();
 
         GameEvents.Instance.PlayerSpawned();
-    }
-    private void Update()
-    {
-        Core.LogicUpdate();
-        StateMachine.CurrentState.LogicUpdate();
-    }
-
-    private void FixedUpdate()
-    {
-        StateMachine.CurrentState.PhysicsUpdate();
     }
     #endregion
 
@@ -135,19 +118,6 @@ public class Player : MonoBehaviour
     {
         workspace.Set(width, MovementCollider.size.y);
         MovementCollider.size = workspace;
-    }
-
-    private void AnimationTrigger() => StateMachine.CurrentState.AnimationTrigger();
-
-    private void AnimationFinishTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
-
-    private void AnimationActionTrigger() => StateMachine.CurrentState.AnimationActionTrigger();
-
-    public void PlaySound(SfxClip sfxClip)
-    {
-        if (sfxClip != null)
-            sfxClip.AudioGroup.RaisePrimaryAudioEvent(sfxClip.AudioGroup.AudioSource, sfxClip, sfxClip.AudioConfiguration);
-
     }
 
     private void CheckIfShouldFlip()

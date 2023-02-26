@@ -17,7 +17,7 @@ public class PlayerAbilityState : PlayerState
     private Movement movement;
     private CollisionSenses collisionSenses;
 
-    public PlayerAbilityState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
+    public PlayerAbilityState(Player player, StateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }
 
