@@ -16,12 +16,14 @@ MonoBehaviour:
     m_Name: Armor
     m_ItemCategory: {fileID: 11400000, guid: 060d45e1c5c21fa47a5cb629539006f9, type: 2}
   m_ExceptionCategories:
-    m_ItemCategories: []
+    m_ItemCategories:
+    - m_Name: Weapon
+      m_ItemCategory: {fileID: 11400000, guid: 913d971d930692c4a959fd47c4f48dff, type: 2}
   m_ItemActionCollection:
     m_ItemActionsData:
     - m_ObjectType: Opsive.UltimateInventorySystem.ItemActions.MoveToCollectionItemAction
       m_ValueHashes: 0d00eb25f7c4e5320673b9cbbc1a83f317b53ca16dfde8ca0402ba8ebe6b80b63dd54b0615747382d79d7a1c
-      m_ValuePositions: 00000000070000000700000007000000070000000b0000000b0000000b0000000b0000000f00000014000000
-      m_Values: 556e657175697001000000030000004571756970556e6571756970
+      m_ValuePositions: 0000000005000000050000000500000005000000090000000900000009000000090000000d00000012000000
+      m_Values: 457175697001000000030000004571756970556e6571756970
       m_UnityObjects: []
       m_Version: 3.1
