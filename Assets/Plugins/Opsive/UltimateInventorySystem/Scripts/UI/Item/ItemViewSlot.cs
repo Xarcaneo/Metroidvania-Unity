@@ -28,6 +28,8 @@ namespace Opsive.UltimateInventorySystem.UI.Item
         [SerializeField] protected int m_Index;
         [Tooltip("The slot frame.")]
         [SerializeField] private GameObject m_Frame;
+        [Tooltip("The slot frame offset.")]
+        [SerializeField] private Vector3 m_FrameOffset;
 
         protected ItemViewSlotRestriction[] m_ItemViewSlotRestrictions;
 
@@ -110,8 +112,11 @@ namespace Opsive.UltimateInventorySystem.UI.Item
             if (m_ItemView != null) {
                 m_ItemView.Select(true);
 
-                m_Frame.gameObject.transform.position = this.gameObject.transform.position;
+            if (m_Frame)
+            {
+                m_Frame.gameObject.transform.position = this.gameObject.transform.position - m_FrameOffset;
                 m_Frame.SetActive(true);
+            }
             }
         }
 
@@ -126,8 +131,7 @@ namespace Opsive.UltimateInventorySystem.UI.Item
             if (m_ItemView != null) {
                 m_ItemView.Select(false);
 
-                m_Frame.gameObject.transform.position = this.gameObject.transform.localPosition;
-                m_Frame.SetActive(false);
+                if(m_Frame) m_Frame.SetActive(false);
             }
         }
 

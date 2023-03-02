@@ -103,6 +103,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 17.9
       objectReference: {fileID: 0}
+    - target: {fileID: 3554276542962101677, guid: 2ed3adf394ada6249b1657596b87ea8a, type: 3}
+      propertyPath: m_AllowMSAA
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554276542962101677, guid: 2ed3adf394ada6249b1657596b87ea8a, type: 3}
+      propertyPath: m_OcclusionCulling
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3554276544049536742, guid: 2ed3adf394ada6249b1657596b87ea8a, type: 3}
       propertyPath: m_Name
       value: Cameras
@@ -151,7 +159,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6942411295148356639, guid: 2ed3adf394ada6249b1657596b87ea8a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 2ed3adf394ada6249b1657596b87ea8a, type: 3}
 --- !u!4 &7332385250740223388 stripped
 Transform:

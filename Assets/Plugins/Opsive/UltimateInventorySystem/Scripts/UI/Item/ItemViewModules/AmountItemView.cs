@@ -38,7 +38,7 @@ namespace Opsive.UltimateInventorySystem.UI.Item.ItemViewModules
                 m_DisableAboveThreshold.SetActive(info.Amount <= m_HideThreshold);
             }
 
-            m_AmountText.text = $"x {info.Amount}";
+            m_AmountText.text = $"{info.Amount}";
         }
 
         /// <summary>

@@ -43,7 +43,7 @@ namespace Menu
     {
         [SerializeField] public GameObject buttonToFocus;
 
-        private Canvas canvas;
+        protected Canvas canvas;
 
         private void Update()
         {

@@ -20,7 +20,7 @@ MonoBehaviour:
     m_ValuePositions: 000000000400000008000000
     m_Values: 010000000100000000000000
     m_UnityObjects:
-    - {fileID: 11400000, guid: 73dcbd617274339418c99cf77a1ae66b, type: 2}
+    - {fileID: 11400000, guid: 148fb640b2263974abc203464a55deef, type: 2}
     m_Version: 3.1
   m_ChildrenData:
     m_ObjectType: Opsive.Shared.Utility.ResizableArray`1[[Opsive.UltimateInventorySystem.Core.ItemCategory,
@@ -33,10 +33,14 @@ MonoBehaviour:
   m_ElementsData:
     m_ObjectType: Opsive.Shared.Utility.ResizableArray`1[[Opsive.UltimateInventorySystem.Core.ItemDefinition,
       Opsive.UltimateInventorySystem, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]
-    m_ValueHashes: 4c1e4f8ec2330064
-    m_ValuePositions: 0000000004000000
-    m_Values: 0000000000000000
-    m_UnityObjects: []
+    m_ValueHashes: 4c1e4f8ec233006407c1b58994c2b589e1ccb5896eceb589
+    m_ValuePositions: 0000000004000000080000000c0000001000000014000000
+    m_Values: 040000000400000000000000010000000200000003000000
+    m_UnityObjects:
+    - {fileID: 11400000, guid: 2a636c5eef636e74baa73fea4825adf1, type: 2}
+    - {fileID: 11400000, guid: faa0fa44354f01147a2741f050745dc7, type: 2}
+    - {fileID: 11400000, guid: cfedf147afcce5e46b3cc2f8cd6d2134, type: 2}
+    - {fileID: 11400000, guid: 207a2658395487449b0e4004efb9164c, type: 2}
     m_Version: 3.1
   m_IsAbstract: 0
   m_Color: {r: 0.5945317, g: 0.16317119, b: 0.6694402, a: 1}
@@ -58,6 +62,15 @@ MonoBehaviour:
       m_ValuePositions: 0000000004000000050000000500000009000000090000000d00000011000000
       m_Values: 49636f6e0100000000196fb16fffffffffffffffff
       m_UnityObjects: []
+      m_Version: 3.1
+    - m_ObjectType: Opsive.UltimateInventorySystem.Core.AttributeSystem.Attribute`1[[UnityEngine.GameObject,
+        UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]
+      m_ValueHashes: 0d00eb255b713f72086efd3934ebab2af446621ba8823c4abbc6d22cff986c99
+      m_ValuePositions: 000000000f00000010000000100000001400000014000000180000001c000000
+      m_Values: 45717569706d656e7450726566616201010000003ccb23680000000001000000
+      m_UnityObjects:
+      - {fileID: 6316912482438463736, guid: 33a66bb1acec0634b8f365bf32895a46, type: 3}
+      - {fileID: 6316912482438463736, guid: 33a66bb1acec0634b8f365bf32895a46, type: 3}
       m_Version: 3.1
   m_RequiredItemAttributes:
     m_AttributeCollectionData: []

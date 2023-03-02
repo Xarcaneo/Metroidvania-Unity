@@ -446,11 +446,12 @@ namespace Opsive.UltimateInventorySystem.UI.Panels.ItemViewSlotContainers
         protected virtual bool CannotOpenItemActionPanel(ItemInfo itemInfo)
         {
             if (m_ActionPanel == null) { return true; }
-
             if (m_DisableActionOnEmptySlots && (itemInfo.Item == null || itemInfo.Amount <= 0)) { return true; }
 
-            if (m_PreventOpenWhenNoAction && m_ItemActionListSlice.Count == 0) { return true;}
+            // Must refresh actions to check if the item has item actions.
+            RefreshItemActions(itemInfo);
 
+            if (m_PreventOpenWhenNoAction && m_ItemActionListSlice.Count == 0) { return true; }
             return false;
         }
 
