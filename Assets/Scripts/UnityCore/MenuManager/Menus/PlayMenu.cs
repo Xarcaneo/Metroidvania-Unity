@@ -32,6 +32,9 @@ namespace Menu
             EventSystem.current.SetSelectedGameObject(null, null);
             menuClip.AudioGroup.RaiseStopAudioEvent(menuClip.AudioGroup.AudioSource);
 
+            CustomActiveSaver.IsLoadingSavedGame = true;
+            SaveSystem.loadEnded += OnLoadEnded;
+
             if (SaveSystem.HasSavedGameInSlot(active_slot))
             {
                 SaveSystem.LoadFromSlot(active_slot);
@@ -47,6 +50,12 @@ namespace Menu
             int active_slot = GameManager.Instance.currentSaveSlot;
             SaveSystem.DeleteSavedGameInSlot(active_slot);
             saveSlots[active_slot - 1].SetButtonContent();
+        }
+
+        void OnLoadEnded()
+        {
+            SaveSystem.loadEnded -= OnLoadEnded;
+            CustomActiveSaver.IsLoadingSavedGame = false;
         }
     }
 }

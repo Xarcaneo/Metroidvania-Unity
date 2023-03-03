@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Entity : MonoBehaviour
+public abstract class Entity : MonoBehaviour
 {
     #region State Variables
     public StateMachine StateMachine { get; set; }
@@ -48,7 +48,9 @@ public class Entity : MonoBehaviour
     protected void AnimationTrigger() => StateMachine.CurrentState.AnimationTrigger();
     protected void AnimationFinishTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
     protected void AnimationActionTrigger() => StateMachine.CurrentState.AnimationActionTrigger();
-
+    public abstract State GetDeathState();
+    public abstract State GetHurtState();
+    
     public void PlaySound(SfxClip sfxClip)
     {
         if (sfxClip != null)

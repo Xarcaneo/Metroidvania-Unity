@@ -80,6 +80,16 @@ public class Player : Entity
         BlockState = new PlayerBlockState(this, StateMachine, playerData, "block");
     }
 
+    public override State GetDeathState()
+    {
+        return DeathState;
+    }
+
+    public override State GetHurtState()
+    {
+        return HurtState;
+    }
+
     private void OnDestroy()
     {
         if (_instance == this)
