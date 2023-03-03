@@ -8,6 +8,7 @@ public class MovingPlatform : MonoBehaviour
     public float speed;
     public int startingPoint;
     public Transform[] points;
+    [SerializeField] float collision_offset = 1.8f;
 
     private int i;
 
@@ -16,7 +17,7 @@ public class MovingPlatform : MonoBehaviour
         transform.position = points[startingPoint].position;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if(Vector2.Distance(transform.position, points[i].position) < 0.02f)
         {
@@ -32,7 +33,7 @@ public class MovingPlatform : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (transform.position.y < collision.transform.position.y - 0.6)
+        if (transform.position.y < collision.transform.position.y - collision_offset)
             collision.transform.SetParent(transform);
     }
 

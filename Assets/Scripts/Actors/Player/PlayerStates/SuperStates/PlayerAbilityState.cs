@@ -4,23 +4,26 @@ using UnityEngine;
 
 public class PlayerAbilityState : PlayerState
 {
+    //Variable to check if ability is done
     protected bool isAbilityDone;
 
-    //Checks
+    //Variables to check player's current state
     private bool isGrounded;
     protected bool isTouchingWall;
     protected bool isTouchingLedge;
 
+    //References to Movement and CollisionSenses components
     protected Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
     protected CollisionSenses CollisionSenses { get => collisionSenses ?? core.GetCoreComponent(ref collisionSenses); }
-
     private Movement movement;
     private CollisionSenses collisionSenses;
 
+    //Constructor to initialize variables
     public PlayerAbilityState(Player player, StateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }
 
+    //Checks player's current state
     public override void DoChecks()
     {
         base.DoChecks();
@@ -33,30 +36,19 @@ public class PlayerAbilityState : PlayerState
         }
     }
 
+    //Resets ability state when entered
     public override void Enter()
     {
         base.Enter();
 
         isAbilityDone = false;
-
-        damageEventHandler = (amount) => { stateMachine.ChangeState(player.HurtState); };
-        healthZeroEventHandler = () => { stateMachine.ChangeState(player.DeathState); };
-
-        SubscribeEvents();
     }
 
-    public override void Exit()
-    {
-        base.Exit();
-
-        UnsubscribeEvents();
-    }
-
+    //Checks conditions to change state
     public override void LogicUpdate()
     {
         base.LogicUpdate();
 
-        //Check conditions to change state
         if (isAbilityDone)
         {
             if (isGrounded && Movement?.CurrentVelocity.y < 0.01f)

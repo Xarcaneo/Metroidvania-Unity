@@ -3,29 +3,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class State
+public class State
 {
-    protected Core core;
+    protected Core core; // Reference to the core component of the entity
 
-    protected Entity entity;
-    protected StateMachine stateMachine;
+    protected Entity entity; // Reference to the entity that this state belongs to
+    protected StateMachine stateMachine; // Reference to the state machine that this state belongs to
 
-    //Events
-    protected Action<float> damageEventHandler;
-    protected Action healthZeroEventHandler;
+    protected bool isAnimationFinished; // Flag that indicates whether the animation has finished playing
+    protected bool isExitingState; // Flag that indicates whether the state is currently being exited
 
-    protected bool isAnimationFinished;
-    protected bool isExitingState;
+    protected float startTime; // The time that the state was entered
 
-    protected float startTime;
+    private string animBoolName; // The name of the animation boolean parameter
 
-    private string animBoolName;
+    private Stats Stats { get => stats ?? core.GetCoreComponent(ref stats); } // Reference to the Stats component of the entity
+    private Combat Combat { get => combat ?? core.GetCoreComponent(ref combat); } // Reference to the Combat component of the entity
 
-    private Stats Stats { get => stats ?? core.GetCoreComponent(ref stats); }
-    private Combat Combat { get => combat ?? core.GetCoreComponent(ref combat); }
-
-    private Stats stats;
-    private Combat combat;
+    private Stats stats; // Reference to the Stats component of the entity (cached for efficiency)
+    private Combat combat; // Reference to the Combat component of the entity (cached for efficiency)
 
     public State(Entity entity, StateMachine stateMachine, string animBoolName)
     {
@@ -35,49 +31,74 @@ public abstract class State
         core = entity.Core;
     }
 
-    public virtual void Enter()
+    ~State() // Destructor that unsubscribes from events when the state is destroyed
     {
-        DoChecks();
-        entity.Anim.SetBool(animBoolName, true);
-        startTime = Time.time;
-        //Debug.Log(animBoolName);
-        isAnimationFinished = false;
-        isExitingState = false;
+        Combat.OnDamage -= OnDamage;
+        Stats.HealthZero -= OnHealthZero;
     }
 
-    public virtual void Exit()
+    // Subscribe to events when the state is entered
+    private void SubscribeEvents()
     {
-        entity.Anim.SetBool(animBoolName, false);
-        isExitingState = true;
+        Stats.HealthZero += OnHealthZero;
+        Combat.OnDamage += OnDamage;
     }
 
-    public virtual void LogicUpdate()
+    // Unsubscribe from events when the state is exited
+    private void UnsubscribeEvents()
+    {
+        Stats.HealthZero -= OnHealthZero;
+        Combat.OnDamage -= OnDamage;
+    }
+
+    public virtual void Enter() // Called when the state is entered
+    {
+        DoChecks(); // Perform any necessary checks before entering the state
+        entity.Anim.SetBool(animBoolName, true); // Set the animation boolean parameter to true
+        startTime = Time.time; // Record the current time
+        isAnimationFinished = false; // Reset the animation finished flag
+        isExitingState = false; // Reset the exiting state flag
+
+        // Subscribe to events
+        SubscribeEvents();
+    }
+
+    public virtual void Exit() // Called when the state is exited
+    {
+        entity.Anim.SetBool(animBoolName, false); // Set the animation boolean parameter to false
+        isExitingState = true; // Set the exiting state flag to true
+
+        // Unsubscribe from events
+        UnsubscribeEvents();
+    }
+
+    public virtual void LogicUpdate() // Called once per frame for logic updates
     {
 
     }
 
-    public virtual void PhysicsUpdate()
+    public virtual void PhysicsUpdate() // Called once per frame for physics updates
     {
-        DoChecks();
+        DoChecks(); // Perform any necessary checks before updating the physics
     }
 
-    public virtual void DoChecks() { }
+    public virtual void DoChecks() { } // Perform any necessary checks before entering the state
 
-    public virtual void AnimationTrigger() { }
+    public virtual void AnimationTrigger() { } // Called when the animation trigger is fired
 
-    public virtual void AnimationFinishTrigger() => isAnimationFinished = true;
+    public virtual void AnimationFinishTrigger() => isAnimationFinished = true; // Called when the animation finish trigger is fired
 
-    public virtual void AnimationActionTrigger() { }
+    public virtual void AnimationActionTrigger() { } // Called when the animation action trigger is fired
 
-    public void SubscribeEvents()
+    public virtual void OnDamage(float amount) // Called when the entity takes damage
     {
-        Combat.OnDamage += damageEventHandler;
-        Stats.HealthZero += healthZeroEventHandler;
+       if(entity.GetHurtState() != null)
+            stateMachine.ChangeState(entity.GetHurtState());
     }
 
-    public void UnsubscribeEvents()
+    public virtual void OnHealthZero() // Called when the entity's health reaches zero
     {
-        Combat.OnDamage -= damageEventHandler;
-        Stats.HealthZero -= healthZeroEventHandler;
+        if (entity.GetDeathState() != null)
+            stateMachine.ChangeState(entity.GetDeathState());
     }
 }

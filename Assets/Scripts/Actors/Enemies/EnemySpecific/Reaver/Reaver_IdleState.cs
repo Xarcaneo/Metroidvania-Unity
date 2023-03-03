@@ -13,15 +13,11 @@ public class Reaver_IdleState : IdleState
     public override void Enter()
     {
         base.Enter();
-
-        SubscribeEvents();
     }
 
     public override void Exit()
     {
         base.Exit();
-
-        UnsubscribeEvents();
     }
 
     public override void LogicUpdate()

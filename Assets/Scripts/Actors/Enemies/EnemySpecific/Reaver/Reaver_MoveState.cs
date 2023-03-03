@@ -10,20 +10,6 @@ public class Reaver_MoveState : MoveState
         this.enemy = enemy;
     }
 
-    public override void Enter()
-    {
-        base.Enter();
-
-        SubscribeEvents();
-    }
-
-    public override void Exit()
-    {
-        base.Exit();
-
-        UnsubscribeEvents();
-    }
-
     public override void LogicUpdate()
     {
         base.LogicUpdate();
