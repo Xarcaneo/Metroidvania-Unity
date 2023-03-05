@@ -7,14 +7,18 @@ public class Reaver_PlayerDetectedState : PlayerDetectedState
     private Reaver enemy;
     private D_Reaver_PlayerDetectedState stateData;
 
-    protected bool isDetectingWall;
-    protected bool isDetectingLedge;
+    private bool isDetectingWall;
+    private bool isDetectingLedge;
+    private bool attackableTargetDetected;
 
     private Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
     private Movement movement;
 
     private CollisionSenses CollisionSenses { get => collisionSenses ?? core.GetCoreComponent(ref collisionSenses); }
     private CollisionSenses collisionSenses;
+
+    private EnemyWeapon EnemyWeapon { get => enemyWeapon ?? core.GetCoreComponent(ref enemyWeapon); }
+    private EnemyWeapon enemyWeapon;
 
     public Reaver_PlayerDetectedState(Entity entity, StateMachine stateMachine, string animBoolName, D_Reaver_PlayerDetectedState stateData, Reaver enemy) : base(entity, stateMachine, animBoolName)
     {
@@ -31,6 +35,8 @@ public class Reaver_PlayerDetectedState : PlayerDetectedState
             isDetectingLedge = CollisionSenses.LedgeVertical;
             isDetectingWall = CollisionSenses.WallFront;
         }
+
+        attackableTargetDetected = EnemyWeapon.EntityInRange();
     }
 
     public override void LogicUpdate()
@@ -49,6 +55,10 @@ public class Reaver_PlayerDetectedState : PlayerDetectedState
         else if (isDetectingWall || !isDetectingLedge)
         {
             stateMachine.ChangeState(enemy.waitingState);
+        }
+        else if (attackableTargetDetected)
+        {
+            stateMachine.ChangeState(enemy.meleeAttackState);
         }
     }
 }
