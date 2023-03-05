@@ -330,6 +330,8 @@ MonoBehaviour:
   idleStateData: {fileID: 11400000, guid: 2f53f30b06f334a4a9756aded3a02069, type: 2}
   moveStateData: {fileID: 11400000, guid: 7abe10eb2c646394ab8992a9e9b0490a, type: 2}
   reaver_PlayerDetectedData: {fileID: 11400000, guid: f079c03abae222c41818abdc34e21a6c, type: 2}
+  reaver_MeleeAttackData: {fileID: 11400000, guid: a99763cf0f9e14146b953171626d7d9e, type: 2}
+  reaver_AttackCooldownData: {fileID: 11400000, guid: 33564d71851bfd046b4a505fc8e3e74d, type: 2}
 --- !u!1 &1795069383799447301
 GameObject:
   m_ObjectHideFlags: 0
@@ -371,7 +373,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1795069383867180870}
   - component: {fileID: 1795069383867180871}
-  - component: {fileID: 8026342790480316234}
+  - component: {fileID: 4782734778913941941}
   m_Layer: 30
   m_Name: Weapon
   m_TagString: Untagged
@@ -407,7 +409,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -1.3552434, y: -0.65225625}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -418,9 +420,9 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.86954874, y: 0.68111897}
   m_EdgeRadius: 0
---- !u!114 &8026342790480316234
+--- !u!114 &4782734778913941941
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -429,9 +431,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 1795069383867180869}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4dc1d71dae6ce0428506a96681db46e, type: 3}
+  m_Script: {fileID: 11500000, guid: 0a9e02eb8cceca44892ff50a82d30742, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 1
+  detectionWidth: 4
+  detectionHeight: 2
+  entityLayer:
+    serializedVersion: 2
+    m_Bits: 8192
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  entityToRight: 0
 --- !u!1 &1795069384084588082
 GameObject:
   m_ObjectHideFlags: 0
@@ -939,8 +951,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8abcacb2eeda45646bb37ae840d74b5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionWidth: 20
-  detectionHeight: 3
+  debug: 0
+  detectionWidth: 13
+  detectionHeight: 2
   entityLayer:
     serializedVersion: 2
     m_Bits: 8192

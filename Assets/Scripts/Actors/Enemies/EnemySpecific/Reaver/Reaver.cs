@@ -9,6 +9,8 @@ public class Reaver : Enemy
     public Reaver_DeathState deathState { get; private set; }
     public Reaver_PlayerDetectedState playerDetectedState { get; private set; }
     public Reaver_WaitingState waitingState { get; private set; }
+    public Reaver_MeleeAttackState meleeAttackState { get; private set; }
+    public Reaver_AttackCooldownState attackCooldownState { get; private set; }
 
     [SerializeField]
     private D_IdleState idleStateData;
@@ -16,6 +18,10 @@ public class Reaver : Enemy
     private D_MoveState moveStateData;
     [SerializeField]
     private D_Reaver_PlayerDetectedState reaver_PlayerDetectedData;
+    [SerializeField]
+    private D_MeleeAttack reaver_MeleeAttackData;
+    [SerializeField]
+    private D_AttackCooldownState reaver_AttackCooldownData;
 
     public override void Awake()
     {
@@ -26,6 +32,8 @@ public class Reaver : Enemy
         deathState = new Reaver_DeathState(this, StateMachine, "death", this);
         playerDetectedState = new Reaver_PlayerDetectedState(this, StateMachine, "playerDetected", reaver_PlayerDetectedData, this);
         waitingState = new Reaver_WaitingState(this, StateMachine, "waiting", this);
+        meleeAttackState = new Reaver_MeleeAttackState(this, StateMachine, "meleeAttack", reaver_MeleeAttackData, this);
+        attackCooldownState = new Reaver_AttackCooldownState(this, StateMachine, "attackCooldown", reaver_AttackCooldownData, this);
     }
 
     public override State GetDeathState()

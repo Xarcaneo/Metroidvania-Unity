@@ -16,7 +16,7 @@ public class Block : CoreComponent
     private Movement movement;
 
     // Checks whether the source GameObject is within the blocking angle of this object
-    public bool IsBetween(GameObject source)
+    public bool IsBetween(Entity source)
     {
         // Calculate the angle between the facing direction of this object and the source
         float angle = AngleFromFacingDirection(core.Parent.transform, source.transform, Movement.FacingDirection);

@@ -9,9 +9,9 @@ public interface IDamageable
     public struct DamageData
     {
         public float DamageAmount;
-        public GameObject Source;
+        public Entity Source;
 
-        public void SetData(GameObject source, float damageAmount)
+        public void SetData(Entity source, float damageAmount)
         {
             DamageAmount = damageAmount;
             Source = source;
