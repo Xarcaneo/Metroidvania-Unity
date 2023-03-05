@@ -9,6 +9,7 @@ public class CustomActiveSaver : ActiveSaver
 
     public override void ApplyData(string s)
     {
+        Debug.Log(IsLoadingSavedGame);
         if (!IsLoadingSavedGame) base.ApplyData(s);
     }
 }

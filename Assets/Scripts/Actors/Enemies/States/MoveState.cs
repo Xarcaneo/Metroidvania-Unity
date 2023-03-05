@@ -8,12 +8,11 @@ public class MoveState : State
 
     protected bool isDetectingWall;
     protected bool isDetectingLedge;
-    protected bool isPlayerDetected;
-    protected bool isPlayerInSight;
 
-    private Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
+    protected Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
+    protected Movement movement;
+
     private CollisionSenses CollisionSenses { get => collisionSenses ?? core.GetCoreComponent(ref collisionSenses); }
-    private Movement movement;
     private CollisionSenses collisionSenses;
 
 
@@ -36,8 +35,6 @@ public class MoveState : State
     public override void Enter()
     {
         base.Enter();
-
-        Movement?.SetVelocityX(stateData.movementSpeed * Movement.FacingDirection);
     }
 
     public override void Exit()

@@ -7,14 +7,11 @@ public class IdleState : State
     protected D_IdleState stateData;
 
     protected bool flipAfterIdle;
-    protected int playerDirection;
-
     protected bool isIdleTimeOver;
-    protected bool isPlayerDetected;
+
     protected bool isDectectingLedge;
     protected bool isDetectingWall;
-    protected bool isEnemyInAttackRangeDetected;
-    protected bool isPlayerInSight;
+  
 
     protected float idleTime;
 

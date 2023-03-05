@@ -16,6 +16,7 @@ public class LevelManager : MonoBehaviour
         AudioManager.Instance.Jukebox.SetAudioCollection(ChapterNumber);
         AudioManager.Instance.Jukebox.gameObject.SetActive(true);
         GameEvents.Instance.LevelLoaded(m_roomID);
+        CustomActiveSaver.IsLoadingSavedGame = false;
 
         SpawnPlayer();
     }

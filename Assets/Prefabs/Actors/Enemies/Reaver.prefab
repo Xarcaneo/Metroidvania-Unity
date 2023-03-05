@@ -329,6 +329,7 @@ MonoBehaviour:
   entityData: {fileID: 11400000, guid: d8152c96d47aa7147974f79b97869596, type: 2}
   idleStateData: {fileID: 11400000, guid: 2f53f30b06f334a4a9756aded3a02069, type: 2}
   moveStateData: {fileID: 11400000, guid: 7abe10eb2c646394ab8992a9e9b0490a, type: 2}
+  reaver_PlayerDetectedData: {fileID: 11400000, guid: f079c03abae222c41818abdc34e21a6c, type: 2}
 --- !u!1 &1795069383799447301
 GameObject:
   m_ObjectHideFlags: 0
@@ -369,8 +370,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1795069383867180870}
-  - component: {fileID: 1795069383867180872}
   - component: {fileID: 1795069383867180871}
+  - component: {fileID: 8026342790480316234}
   m_Layer: 30
   m_Name: Weapon
   m_TagString: Untagged
@@ -393,18 +394,6 @@ Transform:
   m_Father: {fileID: 1795069385183972928}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1795069383867180872
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1795069383867180869}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4dc1d71dae6ce0428506a96681db46e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!61 &1795069383867180871
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -431,6 +420,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &8026342790480316234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1795069383867180869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4dc1d71dae6ce0428506a96681db46e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1795069384084588082
 GameObject:
   m_ObjectHideFlags: 0
@@ -611,7 +612,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52b8561a32df37a4c9f112523c2e3c8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isKnockable: 1
+  isKnockable: 0
   isDamagable: 1
   knockbackAngle: {x: 1, y: 0}
   knockbackStrength: 2
@@ -651,6 +652,7 @@ Transform:
   - {fileID: 1795069385087863258}
   - {fileID: 1795069384084588083}
   - {fileID: 1795069385746687639}
+  - {fileID: 4083355183404358399}
   m_Father: {fileID: 1795069383703867986}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -893,6 +895,59 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &3953392795131209144
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4083355183404358399}
+  - component: {fileID: 496732677959676310}
+  m_Layer: 14
+  m_Name: PlayerDetector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4083355183404358399
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3953392795131209144}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1795069385183972928}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &496732677959676310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3953392795131209144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8abcacb2eeda45646bb37ae840d74b5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectionWidth: 20
+  detectionHeight: 3
+  entityLayer:
+    serializedVersion: 2
+    m_Bits: 8192
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  entityToRight: 0
 --- !u!1 &5896956476068211966
 GameObject:
   m_ObjectHideFlags: 0
@@ -1014,7 +1069,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6903533bc036b7045aa48815f8664ad9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_key: 
+  m_key: reaverActiveSaver
   m_appendSaverTypeToKey: 0
   m_saveAcrossSceneChanges: 1
   m_restoreStateOnStart: 0
