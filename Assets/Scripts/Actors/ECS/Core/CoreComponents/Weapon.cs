@@ -12,10 +12,10 @@ public class Weapon : CoreComponent
     private Stats Stats { get => stats ?? core.GetCoreComponent(ref stats); }
     private Stats stats;
 
-    private List<IDamageable> detectedDamageables = new List<IDamageable>();
-    private List<IKnockbackable> detectedKnockbackables = new List<IKnockbackable>();
+    private List<IDamageable> detectedDamageables = new List<IDamageable>(); // list of damageables detected within range
+    private List<IKnockbackable> detectedKnockbackables = new List<IKnockbackable>(); // list of knockbackables detected within range
 
-    private DamageData damageData;
+    private DamageData damageData; // data for damage dealt by this weapon
 
     public void AddToDetected(Collider2D collision)
     {
@@ -63,12 +63,14 @@ public class Weapon : CoreComponent
 
     public void CheckMeleeAttack()
     {
+        // loop through all detected damageables and deal damage to each one
         foreach (IDamageable item in detectedDamageables.ToList())
         {
             damageData.SetData(core.Parent, Stats.GetAttack());
             item.Damage(damageData);
         }
 
+        // loop through all detected knockbackables and apply knockback to each one
         foreach (IKnockbackable item in detectedKnockbackables.ToList())
         {
             item.Knockback(Movement.FacingDirection);
