@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3112323105412166876}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.4, z: 0}
+  m_LocalPosition: {x: 0, y: 0.39, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -378,7 +378,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d9ff4d97da8f8d4fbb582b40f2ed91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Parent>k__BackingField: {fileID: 5445145942140402601}
 --- !u!1 &5445145941798234620
 GameObject:
   m_ObjectHideFlags: 0
@@ -558,9 +557,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isKnockable: 1
   isDamagable: 1
+  isBlockable: 1
   knockbackAngle: {x: 1, y: 0}
   knockbackStrength: 2
   maxKnockbackTime: 0.2
+  blocked: 0
 --- !u!1 &5445145942140402601
 GameObject:
   m_ObjectHideFlags: 0
@@ -859,7 +860,7 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 7
   m_Material: {fileID: 6200000, guid: bcd65c658f11e504188f3672cb8f5174, type: 2}
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4

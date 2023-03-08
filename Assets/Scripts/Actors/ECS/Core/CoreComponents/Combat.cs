@@ -9,6 +9,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable
     [Header("Set variables")]
     [SerializeField] private bool isKnockable = true;
     [SerializeField] private bool isDamagable = true;
+    [SerializeField] private bool isBlockable = false;
 
     [Header("Knockback variables")]
     [SerializeField] private Vector2 knockbackAngle = new Vector2(1,0);
@@ -17,6 +18,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable
 
     private bool isKnockbackActive;
     private float knockbackStartTime;
+    public bool blocked = false;
 
     private Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
     private Stats Stats { get => stats ?? core.GetCoreComponent(ref stats); }
@@ -35,8 +37,9 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable
     {
         if (isDamagable)
         {
-            if (block && Block.isBlocking && Block.IsBetween(damageData.Source))
+            if (isBlockable && Block.isBlocking && Block.IsBetween(damageData.Source))
             {
+                damageData.Source.Core.GetCoreComponent<Combat>().blocked = true;
                 return;
             }
             else
@@ -49,7 +52,7 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable
 
     public void Knockback(int direction)
     {
-        if (block && Block.isBlocking) return;
+        if (isBlockable && Block.isBlocking) return;
 
         if (isKnockable)
         {

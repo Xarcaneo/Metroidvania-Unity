@@ -37,6 +37,7 @@ public class Core : MonoBehaviour
         if (comp == null)
         {
             Debug.LogWarning($"{typeof(T)} not found on {transform.parent.name}");
+            return null;
         }
 
         return comp;
