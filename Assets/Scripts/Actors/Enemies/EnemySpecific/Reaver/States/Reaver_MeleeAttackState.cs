@@ -6,6 +6,9 @@ public class Reaver_MeleeAttackState : MeleeAttackState
 {
     private Reaver enemy;
 
+    private Combat Combat { get => combat ?? core.GetCoreComponent(ref combat); }
+    private Combat combat;
+
     public Reaver_MeleeAttackState(Entity entity, StateMachine stateMachine, string animBoolName, D_MeleeAttack stateData, Reaver enemy) : base(entity, stateMachine, animBoolName, stateData)
     {
         this.enemy = enemy;
@@ -25,6 +28,8 @@ public class Reaver_MeleeAttackState : MeleeAttackState
 
     public override void Exit()
     {
+        Combat.blocked = false;
+
         base.Exit();
     }
 
@@ -32,7 +37,7 @@ public class Reaver_MeleeAttackState : MeleeAttackState
     {
         base.LogicUpdate();
 
-        if (isAnimationFinished && !isExitingState)
+        if (isAnimationFinished && !isExitingState || Combat.blocked)
         {
             stateMachine.ChangeState(enemy.attackCooldownState);
         }
