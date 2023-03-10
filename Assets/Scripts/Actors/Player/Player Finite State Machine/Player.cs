@@ -24,7 +24,7 @@ public class Player : Entity
     public PlayerDeathState DeathState { get; private set; }
     public PlayerLedgeClimbState LedgeClimbState { get; private set; }
     public PlayerCheckpointInteractionState CheckpointInteractionState { get; private set; }
-    public PlayerBlockState BlockState { get; private set; }
+    public PlayerPrepareBlockState PrepareBlockState { get; private set; }
 
     [SerializeField]
     private PlayerData playerData;
@@ -77,7 +77,7 @@ public class Player : Entity
         DeathState = new PlayerDeathState(this, StateMachine, playerData, "death");
         LedgeClimbState = new PlayerLedgeClimbState(this, StateMachine, playerData, "ledgeClimbState");
         CheckpointInteractionState = new PlayerCheckpointInteractionState(this, StateMachine, playerData, "checkpointInteraction");
-        BlockState = new PlayerBlockState(this, StateMachine, playerData, "block");
+        PrepareBlockState = new PlayerPrepareBlockState(this, StateMachine, playerData, "prepareBlock");
     }
 
     public override State GetDeathState()

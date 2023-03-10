@@ -61,7 +61,7 @@ public class PlayerGroundedState : PlayerState
         }
         else if (blockInput)
         {
-            stateMachine.ChangeState(player.BlockState);
+            stateMachine.ChangeState(player.PrepareBlockState);
         }
         else if (!isGrounded)
         {
