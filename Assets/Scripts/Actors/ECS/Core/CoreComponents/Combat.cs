@@ -5,6 +5,8 @@ using UnityEngine;
 public class Combat : CoreComponent, IDamageable, IKnockbackable
 {
     public event Action<float> OnDamage;
+    public event Action OnSuccessfulBlock;
+    public event Action OnAttackBlockedByDefender;
 
     [Header("Set variables")]
     [SerializeField] private bool isKnockable = true;
@@ -18,7 +20,6 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable
 
     private bool isKnockbackActive;
     private float knockbackStartTime;
-    public bool blocked = false;
 
     private Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
     private Stats Stats { get => stats ?? core.GetCoreComponent(ref stats); }
@@ -39,7 +40,8 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable
         {
             if (isBlockable && Block.isBlocking && Block.IsBetween(damageData.Source))
             {
-                damageData.Source.Core.GetCoreComponent<Combat>().blocked = true;
+                damageData.Source.Core.GetCoreComponent<Combat>().OnAttackBlockedByDefender?.Invoke();
+                OnSuccessfulBlock?.Invoke();
                 return;
             }
             else
