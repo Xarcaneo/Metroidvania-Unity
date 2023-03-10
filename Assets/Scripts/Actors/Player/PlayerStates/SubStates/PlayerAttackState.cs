@@ -68,7 +68,7 @@ public class PlayerAttackState : PlayerAbilityState
 
         if(blockInput)
         {
-            stateMachine.ChangeState(player.BlockState);
+            stateMachine.ChangeState(player.PrepareBlockState);
         }
         else if (!isExitingState && isAnimationFinished)
         {

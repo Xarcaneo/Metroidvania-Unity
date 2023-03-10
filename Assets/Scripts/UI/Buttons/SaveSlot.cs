@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class SaveSlot : MyButton, ISelectHandler
+public class SaveSlot : MyButton
 {
     [SerializeField] private int SlotNumber;
 

@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerBlockState : PlayerAbilityState
+public class PlayerPrepareBlockState : PlayerAbilityState
 {
     protected Block Block { get => block ?? core.GetCoreComponent(ref block); }
 
     private Block block;
 
-    public PlayerBlockState(Player player, StateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
+    public PlayerPrepareBlockState(Player player, StateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }
 
