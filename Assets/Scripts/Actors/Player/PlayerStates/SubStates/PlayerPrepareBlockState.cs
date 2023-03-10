@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class PlayerPrepareBlockState : PlayerAbilityState
 {
-    protected Block Block { get => block ?? core.GetCoreComponent(ref block); }
+    private Block Block { get => block ?? core.GetCoreComponent(ref block); }
 
     private Block block;
+
+    private Combat Combat { get => combat ?? core.GetCoreComponent(ref combat); }
+
+    private Combat combat;
+
+    private bool successfulBlock = false;
 
     public PlayerPrepareBlockState(Player player, StateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
@@ -15,6 +21,8 @@ public class PlayerPrepareBlockState : PlayerAbilityState
     public override void Enter()
     {
         base.Enter();
+
+        Combat.OnSuccessfulBlock += OnSuccesfullBlock;
 
         Movement?.SetVelocityX(0f);
 
@@ -25,6 +33,9 @@ public class PlayerPrepareBlockState : PlayerAbilityState
     {
         base.Exit();
 
+        Combat.OnSuccessfulBlock -= OnSuccesfullBlock;
+
+        successfulBlock = false;
         Block.isBlocking = false;
     }
 
@@ -32,13 +43,18 @@ public class PlayerPrepareBlockState : PlayerAbilityState
     {
         base.LogicUpdate();
 
-        Movement?.SetVelocityX(0f);
-
-        if (!isExitingState && isAnimationFinished)
+        if(successfulBlock)
+        {
+            stateMachine.ChangeState(player.BlockState);
+        }
+        else if (!isExitingState && isAnimationFinished)
         {
             stateMachine.ChangeState(player.IdleState);
         }
     }
+
+    private void OnSuccesfullBlock() => successfulBlock = true;
+
     public override void AnimationActionTrigger()
     {
         base.AnimationActionTrigger();

@@ -7,7 +7,10 @@ public class Reaver_MeleeAttackState : MeleeAttackState
     private Reaver enemy;
 
     private Combat Combat { get => combat ?? core.GetCoreComponent(ref combat); }
+
     private Combat combat;
+
+    private bool attackBlockedByDefender = false;
 
     public Reaver_MeleeAttackState(Entity entity, StateMachine stateMachine, string animBoolName, D_MeleeAttack stateData, Reaver enemy) : base(entity, stateMachine, animBoolName, stateData)
     {
@@ -23,12 +26,16 @@ public class Reaver_MeleeAttackState : MeleeAttackState
     {
         base.Enter();
 
+        Combat.OnAttackBlockedByDefender += OnAttackBlockedByDefender;
+
         Movement?.SetVelocityX(0f);
     }
 
     public override void Exit()
     {
-        Combat.blocked = false;
+        Combat.OnAttackBlockedByDefender -= OnAttackBlockedByDefender;
+
+        attackBlockedByDefender = false;
 
         base.Exit();
     }
@@ -37,7 +44,7 @@ public class Reaver_MeleeAttackState : MeleeAttackState
     {
         base.LogicUpdate();
 
-        if (isAnimationFinished && !isExitingState || Combat.blocked)
+        if (isAnimationFinished && !isExitingState || attackBlockedByDefender)
         {
             stateMachine.ChangeState(enemy.attackCooldownState);
         }
@@ -47,4 +54,5 @@ public class Reaver_MeleeAttackState : MeleeAttackState
     {
         base.PhysicsUpdate();
     }
+    private void OnAttackBlockedByDefender() => attackBlockedByDefender = true;
 }
