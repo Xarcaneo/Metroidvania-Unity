@@ -23,5 +23,6 @@ public class CameraController : MonoBehaviour
     void OnPlayerSpawned()
     {
         m_proCamera2D.AddCameraTarget(Player.Instance.transform);
+        m_proCamera2D.CenterOnTargets();
     }
 }
