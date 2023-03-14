@@ -24,8 +24,6 @@ public class PlayerPrepareBlockState : PlayerAbilityState
 
         Combat.OnSuccessfulBlock += OnSuccesfullBlock;
 
-        Movement?.SetVelocityX(0f);
-
         player.InputHandler.UseBlockInput();
     }
 
@@ -43,7 +41,9 @@ public class PlayerPrepareBlockState : PlayerAbilityState
     {
         base.LogicUpdate();
 
-        if(successfulBlock)
+        Movement?.SetVelocityX(0f);
+
+        if (successfulBlock)
         {
             stateMachine.ChangeState(player.BlockState);
         }

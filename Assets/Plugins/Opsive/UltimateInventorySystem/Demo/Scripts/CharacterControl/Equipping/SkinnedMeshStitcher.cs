@@ -35,7 +35,9 @@ namespace Opsive.UltimateInventorySystem.Demo.CharacterControl.Equiping
         /// <param name="equipmentPrefab">The equipment prefab.</param>
         public void AddEquipmentToRig(GameObject equipmentPrefab)
         {
-            var equipmentInstance = Instantiate(equipmentPrefab, transform);
+            GameObject equipperContainer = GameObject.Find("Equiper Container");
+
+            var equipmentInstance = Instantiate(equipmentPrefab, equipperContainer.transform);
             SkinnedMeshRenderer[] equipmentSkinnedMeshRenderers = equipmentInstance.GetComponentsInChildren<SkinnedMeshRenderer>();
 
             for (var i = 0; i < equipmentSkinnedMeshRenderers.Length; i++) {

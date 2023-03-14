@@ -83,6 +83,7 @@ namespace Opsive.UltimateInventorySystem.UI.Panels.ItemViewSlotContainers
 
         protected Vector3[] m_BoundCorners;
         protected Vector3[] m_PanelCorners;
+        protected Vector3[] m_SlotRectCorners;
         protected Canvas m_Canvas;
         protected bool m_TooltipInitialize;
         protected bool m_IsItemViewSlotContainerBound;
@@ -110,7 +111,7 @@ namespace Opsive.UltimateInventorySystem.UI.Panels.ItemViewSlotContainers
         /// <summary>
         /// Listen to the grid events.
         /// </summary>
-        private void Awake()
+        protected virtual void Awake()
         {
             Initialize(false);
         }
@@ -129,6 +130,7 @@ namespace Opsive.UltimateInventorySystem.UI.Panels.ItemViewSlotContainers
             
             m_BoundCorners = new Vector3[4];
             m_PanelCorners = new Vector3[4];
+            m_SlotRectCorners = new Vector3[4];
 
             if (m_Canvas == null) {
                 m_Canvas = GetComponentInParent<Canvas>();
@@ -331,36 +333,7 @@ namespace Opsive.UltimateInventorySystem.UI.Panels.ItemViewSlotContainers
         /// <param name="slotRectTransform">The rect transform.</param>
         protected virtual void PlacePanelInternal(RectTransform slotRectTransform)
         {
-            var newAnchor = m_SetAnchorPosition ? m_AnchorPosition : m_PanelToPlace.pivot;
-            var newPosition = slotRectTransform.position;
-            
-            
-            if (m_Canvas.renderMode == RenderMode.ScreenSpaceCamera) {
-                newPosition = slotRectTransform.rect.center +
-                              RectTransformUtility.WorldToScreenPoint(m_Canvas.worldCamera,
-                                  slotRectTransform.position);
-            } else {
-                
-                var positionOffset = new Vector2(
-                    slotRectTransform.sizeDelta.x * m_AnchorRelativeOffset.x,
-                    slotRectTransform.sizeDelta.y * m_AnchorRelativeOffset.y);
-
-                positionOffset = (positionOffset + m_PixelFixedOffset) * m_Canvas.scaleFactor;
-            
-                if (m_SetAnchorPosition) {
-                    m_PanelToPlace.anchorMax = newAnchor;
-                    m_PanelToPlace.anchorMin = newAnchor;
-                    m_PanelToPlace.pivot = newAnchor;
-                }
-            
-                // Set the new position
-                newPosition = new Vector3(
-                    newPosition.x + positionOffset.x,
-                    newPosition.y + positionOffset.y,
-                    newPosition.z);
-            }
-
-            m_PanelToPlace.position = newPosition;
+            SetPanelPositionToSlot(slotRectTransform, m_AnchorPosition, m_PixelFixedOffset, m_AnchorRelativeOffset);
 
             AdjustPositionIfOutOfBounds(slotRectTransform);
         }
@@ -433,28 +406,58 @@ namespace Opsive.UltimateInventorySystem.UI.Panels.ItemViewSlotContainers
                 return;
             }
             
+            SetPanelPositionToSlot(slotRectTransform, anchorPosition, pixelFixedOffset, anchorRelativeOffset);
+        }
+
+        protected virtual void SetPanelPositionToSlot(RectTransform slotRectTransform, Vector2 anchorPosition, Vector2 pixelFixedOffset,
+            Vector2 anchorRelativeOffset)
+        {
             var newAnchor = m_SetAnchorPosition ? anchorPosition : m_PanelToPlace.pivot;
             var newPosition = slotRectTransform.position;
 
-            var positionOffset = new Vector2(
-                slotRectTransform.sizeDelta.x * anchorRelativeOffset.x,
-                slotRectTransform.sizeDelta.y * anchorRelativeOffset.y);
-
-            positionOffset = (positionOffset + pixelFixedOffset) * m_Canvas.scaleFactor;
-            
             if (m_SetAnchorPosition) {
                 m_PanelToPlace.anchorMax = newAnchor;
                 m_PanelToPlace.anchorMin = newAnchor;
                 m_PanelToPlace.pivot = newAnchor;
             }
-            
-            // Set the new position
-            newPosition = new Vector3(
-                newPosition.x + positionOffset.x,
-                newPosition.y + positionOffset.y,
-                newPosition.z);
 
+            Vector2 positionOffset;
+            if (m_Canvas.renderMode == RenderMode.ScreenSpaceCamera) {
+                //When converting to world space the y gets inversed.
+                var pixelOffset = new Vector2(pixelFixedOffset.x, -pixelFixedOffset.y);
+                var worldRect = slotRectTransform.GetWorldRect(m_SlotRectCorners, pixelOffset);
+                positionOffset = new Vector2(
+                    worldRect.size.x * anchorRelativeOffset.x,
+                    worldRect.size.y * anchorRelativeOffset.y);
+            } else {
+                var sizeDelta = slotRectTransform.sizeDelta;
+                positionOffset = new Vector2(
+                    sizeDelta.x * m_AnchorRelativeOffset.x,
+                    sizeDelta.y * m_AnchorRelativeOffset.y);
+
+                positionOffset = (positionOffset + pixelFixedOffset) * m_Canvas.scaleFactor;
+            }
+
+            newPosition += new Vector3(positionOffset.x, positionOffset.y);
             m_PanelToPlace.position = newPosition;
+        }
+    }
+    
+    public static class RectTransformExtensions
+    {
+        public static Rect GetWorldRect(this RectTransform rectTransform, Vector3[] corners, Vector2 offset = default)
+        {
+            rectTransform.GetWorldCorners(corners);
+            // Get the bottom left corner.
+            Vector3 position = corners[0];
+
+            var lossyScale = rectTransform.lossyScale;
+            var rect = rectTransform.rect;
+            Vector2 size = new Vector2(
+                lossyScale.x * (rect.size.x + offset.x) ,
+                lossyScale.y * (rect.size.y + offset.y) );
+ 
+            return new Rect(position, size);
         }
     }
 }
