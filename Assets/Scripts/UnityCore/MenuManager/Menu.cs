@@ -83,7 +83,7 @@ namespace Menu
         public virtual void SetCanvas()
         {
             canvas = gameObject.GetComponent<Canvas>();
-            canvas.worldCamera = Camera.main;
+            canvas.worldCamera = MenuManager.Instance.m_camera;
         }
 
         public virtual void OnReturnInput() => OnBackPressed();

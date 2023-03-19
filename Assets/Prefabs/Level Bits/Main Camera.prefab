@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 7015856279492186311}
   - component: {fileID: 7015856279492186310}
   - component: {fileID: 7015856279492186305}
-  - component: {fileID: 7015856279492186304}
   - component: {fileID: 7015856279492186307}
   - component: {fileID: 7015856279492186306}
-  - component: {fileID: 6469316481066452919}
+  - component: {fileID: 5491530082688238785}
+  - component: {fileID: 9204994131240477009}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -57,19 +57,19 @@ Camera:
   m_FocalLength: 0.86602545
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
+    x: 0.1578125
+    y: 0.0046296297
+    width: 0.33333334
+    height: 0.3333333
   near clip plane: 0.1
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 6
+  orthographic size: 5.625
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4227887903
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -120,29 +120,6 @@ MonoBehaviour:
   IsCameraPositionTopBounded: 0
   IsCameraPositionBottomBounded: 0
   GameCamera: {fileID: 7015856279492186311}
---- !u!114 &7015856279492186304
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7015856279492186317}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17577239430844efcbdda516df8c1f8e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _pc2D: {fileID: 7015856279492186305}
-  _serializedAxis: 0
-  PixelsPerUnit: 16
-  ViewportAutoScale: 1
-  TargetViewportSizeInPixels: {x: 320, y: 180}
-  _zoom: 1
-  SnapMovementToGrid: 1
-  SnapCameraToGrid: 0
-  DrawGrid: 0
-  GridColor: {r: 1, g: 0, b: 0, a: 0.1}
-  GridDensity: 0
 --- !u!114 &7015856279492186307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,7 +169,7 @@ MonoBehaviour:
   SoftAreaSize: 0.1
   UseBoundaryDelayOnEnterScene: 0
   BoundaryDelayFrames: 10
---- !u!114 &6469316481066452919
+--- !u!114 &5491530082688238785
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -201,15 +178,50 @@ MonoBehaviour:
   m_GameObject: {fileID: 7015856279492186317}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7b9c22c96ab04d479afeb29c7b9bfc4, type: 3}
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pc2D: {fileID: 7015856279492186305}
-  _serializedAxis: 0
-  CameraWindowRect:
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
     serializedVersion: 2
-    x: 0
-    y: 0
-    width: 0.3
-    height: 0.3
-  IsRelativeSizeAndPosition: 1
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
+--- !u!114 &9204994131240477009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7015856279492186317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c88f5cead0c0b2a4eb05b5900433f8d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ComponentVersion: 1
+  m_AssetsPPU: 16
+  m_RefResolutionX: 320
+  m_RefResolutionY: 180
+  m_CropFrame: 3
+  m_GridSnapping: 0
+  m_UpscaleRT: 0
+  m_PixelSnapping: 0
+  m_CropFrameX: 0
+  m_CropFrameY: 0
+  m_StretchFill: 0

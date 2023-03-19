@@ -8,6 +8,11 @@ namespace Menu
 {
     public class MenuManager : MonoBehaviour
     {
+
+        [Header("Camera")]
+        [SerializeField] public Camera m_camera;
+
+        [Header("Menus prefabs")]
         [SerializeField] private MainMenu mainMenuPrefab;
         [SerializeField] private SettingsMenu settingsMenuPrefab;
         [SerializeField] private CreditsScreen creditsScreenPrefab;
