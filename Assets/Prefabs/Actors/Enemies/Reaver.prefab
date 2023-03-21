@@ -546,7 +546,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1795069385038586378}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.7, y: 0.7, z: 1}
+  m_LocalPosition: {x: 0.7, y: 0.8, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -630,7 +630,6 @@ MonoBehaviour:
   knockbackAngle: {x: 1, y: 0}
   knockbackStrength: 2
   maxKnockbackTime: 0.2
-  blocked: 0
 --- !u!1 &1795069385183998399
 GameObject:
   m_ObjectHideFlags: 0
@@ -1047,7 +1046,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3089187644029303311}
-  - component: {fileID: 479123834335326013}
   m_Layer: 0
   m_Name: Reaver
   m_TagString: Untagged
@@ -1071,23 +1069,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &479123834335326013
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6159363638474043647}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6903533bc036b7045aa48815f8664ad9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_key: reaverActiveSaver
-  m_appendSaverTypeToKey: 0
-  m_saveAcrossSceneChanges: 1
-  m_restoreStateOnStart: 0
-  m_gameObjectToWatch: {fileID: 1795069383703867985}
 --- !u!1 &7600555336467721360
 GameObject:
   m_ObjectHideFlags: 0

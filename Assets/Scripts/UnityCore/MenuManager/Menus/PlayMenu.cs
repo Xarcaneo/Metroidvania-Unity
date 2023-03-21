@@ -32,8 +32,6 @@ namespace Menu
             EventSystem.current.SetSelectedGameObject(null, null);
             menuClip.AudioGroup.RaiseStopAudioEvent(menuClip.AudioGroup.AudioSource);
 
-            CustomActiveSaver.IsLoadingSavedGame = true;
-
             if (SaveSystem.HasSavedGameInSlot(active_slot))
             {
                 SaveSystem.LoadFromSlot(active_slot);
