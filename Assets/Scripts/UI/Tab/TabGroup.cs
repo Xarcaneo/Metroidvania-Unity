@@ -7,12 +7,12 @@ using UnityEngine.InputSystem;
 public class TabGroup : MonoBehaviour
 {
     [SerializeField] List<Tab> objectsToSwap;
-    private List<TabButton> tabButtons;
+    private List<UITabButton> tabButtons;
 
     [SerializeField] private Sprite tabIdle;
     [SerializeField] private Sprite tabActive;
 
-    private TabButton selectedTab;
+    private UITabButton selectedTab;
     private int index;
 
     private void OnEnable()
@@ -43,23 +43,23 @@ public class TabGroup : MonoBehaviour
     }
 
 
-    public void Subscribe(TabButton button)
+    public void Subscribe(UITabButton button)
     {
         if (tabButtons == null)
         {
-            tabButtons = new List<TabButton>();
+            tabButtons = new List<UITabButton>();
         }
 
         tabButtons.Add(button);
         button.background.sprite = tabIdle;
     }
 
-    public void OnTabExit(TabButton button)
+    public void OnTabExit(UITabButton button)
     {
         ResetTabs();
     }
 
-    public void OnTabSelected(TabButton button)
+    public void OnTabSelected(UITabButton button)
     {
         selectedTab = button;
         ResetTabs();
@@ -81,7 +81,7 @@ public class TabGroup : MonoBehaviour
 
     public void ResetTabs()
     {
-        foreach(TabButton button in tabButtons)
+        foreach(UITabButton button in tabButtons)
         {
             button.background.sprite = tabIdle;
         }
