@@ -2523,6 +2523,14 @@ PrefabInstance:
       propertyPath: m_ID
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1233404157789816199, guid: df3c1fb67eabf724e910d80d4bf98fc3, type: 3}
+      propertyPath: m_CategoryItemViewSet
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1233404157789816199, guid: df3c1fb67eabf724e910d80d4bf98fc3, type: 3}
+      propertyPath: m_UseContainerToSpawnItemView
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1957269603950629585, guid: df3c1fb67eabf724e910d80d4bf98fc3, type: 3}
       propertyPath: m_Pivot.x
       value: 1
@@ -2611,9 +2619,17 @@ PrefabInstance:
       propertyPath: m_Material
       value: 
       objectReference: {fileID: 2100000, guid: 84568129bd3ea9b4fa5f097dac433c97, type: 2}
+    - target: {fileID: 2810493341451053297, guid: df3c1fb67eabf724e910d80d4bf98fc3, type: 3}
+      propertyPath: m_SlotCursorID
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2986133822615481732, guid: df3c1fb67eabf724e910d80d4bf98fc3, type: 3}
       propertyPath: m_Name
       value: GameHotbar
+      objectReference: {fileID: 0}
+    - target: {fileID: 2986133822615481732, guid: df3c1fb67eabf724e910d80d4bf98fc3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5875165067255403867, guid: df3c1fb67eabf724e910d80d4bf98fc3, type: 3}
       propertyPath: m_AnchorMax.y

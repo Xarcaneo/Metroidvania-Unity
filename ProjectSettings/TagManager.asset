@@ -4,11 +4,12 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Enemy
   - Solid
   - PlayerStats
   - AudioManager
   - SpawnPoint
+  - SpawnableEnemy
+  - NonSpawnableEnemy
   layers:
   - Default
   - TransparentFX
@@ -16,7 +17,7 @@ TagManager:
   - Camera Boundaries
   - Water
   - UI
-  - 
+  - WorldSpaceUI
   - 
   - Solid
   - MovingPlatform
