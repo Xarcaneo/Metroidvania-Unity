@@ -26,7 +26,7 @@ public class PlayerBlockState : PlayerState
 
         if (!isExitingState && isAnimationFinished)
         {
-            stateMachine.ChangeState(player.IdleState);
+            stateMachine.ChangeState(player.CounterAttackState);
         }
     }
 }
