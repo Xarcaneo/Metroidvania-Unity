@@ -14,7 +14,7 @@ namespace PixelCrushers
 
         [Tooltip("Save data under this key. If blank, use GameObject name.")]
         [SerializeField]
-        private string m_key;
+        protected string m_key;
 
         [Tooltip("Append the name of this saver type to the key.")]
         [SerializeField]

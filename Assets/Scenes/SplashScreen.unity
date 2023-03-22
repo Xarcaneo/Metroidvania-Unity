@@ -248,9 +248,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.055555556
-    width: 0.33333334
-    height: 0.3333333
+    y: 0
+    width: 1
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -2594,15 +2594,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 33181041, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
       propertyPath: enterSceneTransition.animationDuration
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 33181041, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
       propertyPath: leaveSceneTransition.animationDuration
-      value: 1
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 33181041, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
       propertyPath: enterSceneTransition.minTransitionDuration
-      value: 2.5
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 33181041, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
       propertyPath: leaveSceneTransition.minTransitionDuration
