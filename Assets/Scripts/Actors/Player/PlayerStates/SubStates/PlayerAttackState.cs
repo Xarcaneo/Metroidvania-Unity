@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class PlayerAttackState : PlayerAbilityState
 {
-    private int attackCounter;
     private float velocityToSet;
-    private float lastAttackTime;
     private bool isGrounded;
     private bool attackInput;
 
@@ -31,16 +29,8 @@ public class PlayerAttackState : PlayerAbilityState
         base.Enter();
 
         attackInput = false;
-
         player.InputHandler.UseAttackInput();
-
-        ResetAttackCounter();
-
-        lastAttackTime = Time.time;
-
         SettAttackVelocity();
-
-        player.Anim.SetInteger("attackCounter", attackCounter);
     }
 
     public override void Exit()
@@ -49,18 +39,11 @@ public class PlayerAttackState : PlayerAbilityState
 
         Movement?.SetVelocityX(0f);
         velocityToSet = 0;
-
-        attackCounter++;
     }
 
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-
-        if(player.InputHandler.AttackInput)
-        {
-            attackInput = true;
-        }
 
         Movement?.SetVelocityX(velocityToSet * Movement.FacingDirection);
 
@@ -72,37 +55,16 @@ public class PlayerAttackState : PlayerAbilityState
         }
         else if (!isExitingState && isAnimationFinished)
         {
-            if (attackInput)
-            {
-                stateMachine.ChangeState(player.AttackState);
-            }
-            else
-            {
-                isAbilityDone = true;
-            }
+            stateMachine.ChangeState(player.IdleState);
+            isAbilityDone = true;       
         }
     }
-
-    private void ResetAttackCounter()
-    {
-        if (Time.time >= lastAttackTime + playerData.breakComboTime)
-        {
-            attackCounter = 0;
-        }
-        else
-        {
-            if (attackCounter > 2)
-            {
-                attackCounter = 0;
-            }
-        }
-    }
-
+    
     private void SettAttackVelocity()
     {
         if(isGrounded)
         {
-            velocityToSet = playerData.attackMovementSpeed[attackCounter];
+            velocityToSet = playerData.attackMovementSpeed[0];
         }
         else
         {

@@ -26,6 +26,7 @@ public class Player : Entity
     public PlayerCheckpointInteractionState CheckpointInteractionState { get; private set; }
     public PlayerPrepareBlockState PrepareBlockState { get; private set; }
     public PlayerBlockState BlockState { get; private set; }
+    public PlayerCounterAttackState CounterAttackState { get; private set; }
 
     [SerializeField]
     private PlayerData playerData;
@@ -80,6 +81,7 @@ public class Player : Entity
         CheckpointInteractionState = new PlayerCheckpointInteractionState(this, StateMachine, playerData, "checkpointInteraction");
         PrepareBlockState = new PlayerPrepareBlockState(this, StateMachine, playerData, "prepareBlock");
         BlockState = new PlayerBlockState(this, StateMachine, playerData, "block");
+        CounterAttackState = new PlayerCounterAttackState(this, StateMachine, playerData, "counterAttack");
     }
 
     public override State GetDeathState()
