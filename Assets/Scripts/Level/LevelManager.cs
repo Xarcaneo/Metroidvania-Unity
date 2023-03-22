@@ -20,6 +20,13 @@ public class LevelManager : MonoBehaviour
         SpawnPlayer();
     }
 
+    private void OnDisable()
+    {
+        GameObject[] items = GameObject.FindGameObjectsWithTag("Item");
+        foreach (GameObject item in items)
+            GameObject.Destroy(item);
+    }
+
     private void SpawnPlayer()
     {
         if (GameObject.FindGameObjectWithTag("SpawnPoint"))

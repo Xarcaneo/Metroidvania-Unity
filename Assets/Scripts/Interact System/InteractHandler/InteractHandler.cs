@@ -15,31 +15,37 @@ public class InteractHandler : MonoBehaviour
     {
         m_collider = GetComponent<Collider2D>();
     }
+    private IEnumerator WaitForItemDetector()
+    {
+        while (Player.Instance == null)
+        {
+            yield return null;
+        }
+
+        // Wait until the ItemDetector component is added to the player's Core
+        while (Player.Instance.Core.GetCoreComponent<ItemDetector>() == null)
+        {
+            yield return null;
+        }
+
+        // Subscribe to the ItemDetector's onItemDetected event
+        Player.Instance.Core.GetCoreComponent<ItemDetector>().onItemDetected += DisableEnableInteraction;
+    }
 
     private void OnEnable()
     {
-        try
-        {
-            GameEvents.Instance.onPlayerInteractTrigger += PlayerInteract;
-            interactableObject.onInteractionCompleted += OnInteractionCompleted;
-            Player.Instance.Core.GetCoreComponent<ItemDetector>().onItemDetected += DisableEnableInteraction;
-        }
-        catch
-        {
-        }
+        GameEvents.Instance.onPlayerInteractTrigger += PlayerInteract;
+        interactableObject.onInteractionCompleted += OnInteractionCompleted;
+
+        StartCoroutine(WaitForItemDetector());
     }
 
     private void OnDisable()
     {
-        try
-        {
-            GameEvents.Instance.onPlayerInteractTrigger -= PlayerInteract;
-            interactableObject.onInteractionCompleted -= OnInteractionCompleted;
-            Player.Instance.Core.GetCoreComponent<ItemDetector>().onItemDetected -= DisableEnableInteraction;
-        }
-        catch
-        {
-        }
+        GameEvents.Instance.onPlayerInteractTrigger -= PlayerInteract;
+        interactableObject.onInteractionCompleted -= OnInteractionCompleted;
+
+        StopAllCoroutines();
     }
 
     private void PlayerInteract(bool isInteracting)
@@ -70,22 +76,6 @@ public class InteractHandler : MonoBehaviour
     {
         if (isItemDetected) m_collider.enabled = false;
         else m_collider.enabled = true;
-
-        //if (isItemDetected)
-        //{
-        //    pictogramHandler.HidePictogram();
-        //    interactableObject.canInteract = false;
-        //}
-        //else
-        //{
-        //    if (interactableObject.isInteractionCompleted)
-        //    {
-        //        if (playerInRange)
-        //            pictogramHandler.ShowPictogram(0);
-
-        //        interactableObject.canInteract = true;
-        //    }
-        //}
     }
 
 

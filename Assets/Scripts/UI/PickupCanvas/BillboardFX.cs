@@ -37,13 +37,20 @@ namespace Opsive.UltimateInventorySystem.Demo.UI.WorldSpace
         /// </summary>
         void Start()
         {
-            if (m_CamTransform == null) {
-                if (Camera.main != null) {
+            SetupCamera();
+
+            m_OriginalRotation = transform.localRotation;
+        }
+
+        void SetupCamera()
+        {
+            if (m_CamTransform == null)
+            {
+                if (Camera.main != null)
+                {
                     m_CamTransform = Camera.main.transform;
                 }
             }
-
-            m_OriginalRotation = transform.localRotation;
         }
 
         /// <summary>
@@ -51,6 +58,7 @@ namespace Opsive.UltimateInventorySystem.Demo.UI.WorldSpace
         /// </summary>
         void LateUpdate()
         {
+            SetupCamera();
             transform.rotation = m_CamTransform.rotation * m_OriginalRotation;
         }
     }
