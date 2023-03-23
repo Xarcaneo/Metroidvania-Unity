@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class Reaver_MeleeAttackState : MeleeAttackState
 {
-    private Reaver enemy;
+    private readonly Reaver enemy;
 
-    private Combat Combat { get => combat ?? core.GetCoreComponent(ref combat); }
+    private DamageReceiver DamageReceiver { get => damageReceiver ?? core.GetCoreComponent(ref damageReceiver); }
+    private DamageReceiver damageReceiver;
 
-    private Combat combat;
+    private EnemyDamageHitBox EnemyDamageHitBox { get => enemyDamageHitBox ?? core.GetCoreComponent(ref enemyDamageHitBox); }
+    private EnemyDamageHitBox enemyDamageHitBox;
 
     private bool attackBlockedByDefender = false;
 
@@ -26,14 +28,19 @@ public class Reaver_MeleeAttackState : MeleeAttackState
     {
         base.Enter();
 
-        Combat.OnAttackBlockedByDefender += OnAttackBlockedByDefender;
+        DamageReceiver.OnAttackBlockedByDefender += OnAttackBlockedByDefender;
+
+        if (Movement.FacingDirection != EnemyDamageHitBox.entityToRight)
+        {
+            Movement.Flip();
+        }
 
         Movement?.SetVelocityX(0f);
     }
 
     public override void Exit()
     {
-        Combat.OnAttackBlockedByDefender -= OnAttackBlockedByDefender;
+        DamageReceiver.OnAttackBlockedByDefender -= OnAttackBlockedByDefender;
 
         attackBlockedByDefender = false;
 

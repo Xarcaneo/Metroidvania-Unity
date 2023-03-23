@@ -16,20 +16,19 @@ public class HurtEffect : CoreComponent
     // The currently running coroutine.
     protected Coroutine effectRoutine;
 
-    private Combat Combat { get => combat ?? core.GetCoreComponent(ref combat); }
-
-    private Combat combat;
+    private DamageReceiver DamageReceiver { get => damageReceiver ?? core.GetCoreComponent(ref damageReceiver); }
+    private DamageReceiver damageReceiver;
 
     private void Start()
     {
         spriteRenderer = core.transform.parent.GetComponent<SpriteRenderer>();
         damageEventHandler = (amount) => { TurnOnEffect(); };
-        Combat.OnDamage += damageEventHandler;
+        DamageReceiver.OnDamage += damageEventHandler;
     }
 
     private void OnDisable()
     {
-        Combat.OnDamage -= damageEventHandler;
+        DamageReceiver.OnDamage -= damageEventHandler;
     }
     public void TurnOnEffect()
     {

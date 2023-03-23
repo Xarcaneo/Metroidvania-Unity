@@ -6,12 +6,14 @@ public class PlayerAttackState : PlayerAbilityState
 {
     private float velocityToSet;
     private bool isGrounded;
-    private bool attackInput;
-
     private bool blockInput;
 
-    private Weapon Weapon { get => weapon ?? core.GetCoreComponent(ref weapon); }
-    private Weapon weapon;
+    private DamageHitBox DamageHitBox { get => damageHitBox ?? core.GetCoreComponent(ref damageHitBox); }
+    private DamageHitBox damageHitBox;
+    protected Stats Stats { get => stats ?? core.GetCoreComponent(ref stats); }
+    private Stats stats;
+
+    private IDamageable.DamageData m_damageData;
 
     public PlayerAttackState(Player player, StateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
@@ -28,7 +30,7 @@ public class PlayerAttackState : PlayerAbilityState
     {
         base.Enter();
 
-        attackInput = false;
+        m_damageData.SetData(player, Stats.GetAttack());
         player.InputHandler.UseAttackInput();
         SettAttackVelocity();
     }
@@ -75,9 +77,10 @@ public class PlayerAttackState : PlayerAbilityState
     public override void AnimationActionTrigger()
     {
         base.AnimationActionTrigger();
-      
+
         //Checks what IDamageable entities intersects with weapon collider and damage them
-        Weapon?.CheckMeleeAttack();       
+        DamageHitBox?.MeleeAttack(m_damageData);
+        DamageHitBox?.Knockback(Movement.FacingDirection);
     }
 }
 

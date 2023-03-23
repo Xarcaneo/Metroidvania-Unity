@@ -8,10 +8,15 @@ public class PlayerHurtState : PlayerState
     private bool isGrounded;
 
     private Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
-    private CollisionSenses CollisionSenses { get => collisionSenses ?? core.GetCoreComponent(ref collisionSenses); }
-
     private Movement movement;
+    private CollisionSenses CollisionSenses { get => collisionSenses ?? core.GetCoreComponent(ref collisionSenses); }
     private CollisionSenses collisionSenses;
+
+    private KnockbackReceiver KnockbackReceiver { get => knockbackReceiver ?? core.GetCoreComponent(ref knockbackReceiver); }
+    private KnockbackReceiver knockbackReceiver;
+
+    private DamageReceiver DamageReceiver { get => damageReceiver ?? core.GetCoreComponent(ref damageReceiver); }
+    private DamageReceiver damageReceiver;
 
     public PlayerHurtState(Player player, StateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
@@ -31,12 +36,21 @@ public class PlayerHurtState : PlayerState
     {
         base.Enter();
 
+        DamageReceiver.OnDamage += OnDamageReceived;
+        KnockbackReceiver.OnKnockback += OnKnockbackReceived;
+
         Movement?.SetVelocityX(0f);
     }
 
     public override void Exit()
     {
         base.Exit();
+
+        DamageReceiver.OnDamage -= OnDamageReceived;
+        KnockbackReceiver.OnKnockback -= OnKnockbackReceived;
+
+        KnockbackReceiver.isKnockable = true;
+        DamageReceiver.isDamagable = true;
     }
 
     public override void LogicUpdate()
@@ -45,7 +59,7 @@ public class PlayerHurtState : PlayerState
 
         Movement?.SetVelocityX(0f);
 
-        if (isAnimationFinished && !isExitingState)
+        if (isAnimationFinished && !isExitingState && !KnockbackReceiver.isKnockbackActive)
         {
             if (isGrounded && Movement?.CurrentVelocity.y < 0.01f)
             {
@@ -58,4 +72,7 @@ public class PlayerHurtState : PlayerState
     {
         base.PhysicsUpdate();
     }
+
+    private void OnDamageReceived(float damage) => DamageReceiver.isDamagable = false;
+    private void OnKnockbackReceived() => KnockbackReceiver.isKnockable = false;
 }

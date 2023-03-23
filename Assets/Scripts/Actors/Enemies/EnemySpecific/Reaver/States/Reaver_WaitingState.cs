@@ -19,17 +19,27 @@ public class Reaver_WaitingState : WaitingState
     public override void Exit()
     {
         base.Exit();
-
-        Movement.Flip();
     }
 
     public override void LogicUpdate()
     {
         base.LogicUpdate();
 
+        if (playerPosition != Movement.FacingDirection)
+            Movement.Flip();
+
         if (!isPlayerDetected)
         {
+            Movement.Flip();
             stateMachine.ChangeState(enemy.moveState);
+        }
+        else if (attackableTargetDetected)
+        {
+            stateMachine.ChangeState(enemy.meleeAttackState);
+        }
+        else if(!isDetectingWall && isDetectingLedge)
+        {
+            stateMachine.ChangeState(enemy.playerDetectedState);
         }
     }
 }

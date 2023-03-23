@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyWeapon : Weapon
+public class EnemyDamageHitBox : DamageHitBox
 {
     [SerializeField] bool debug = false;     // switch on or off debug (e.g. show gizmos)
 

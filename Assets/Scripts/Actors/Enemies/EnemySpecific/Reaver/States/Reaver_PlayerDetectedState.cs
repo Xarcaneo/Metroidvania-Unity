@@ -17,8 +17,8 @@ public class Reaver_PlayerDetectedState : PlayerDetectedState
     private CollisionSenses CollisionSenses { get => collisionSenses ?? core.GetCoreComponent(ref collisionSenses); }
     private CollisionSenses collisionSenses;
 
-    private EnemyWeapon EnemyWeapon { get => enemyWeapon ?? core.GetCoreComponent(ref enemyWeapon); }
-    private EnemyWeapon enemyWeapon;
+    private EnemyDamageHitBox EnemyDamageHitBox { get => enemyDamageHitBox ?? core.GetCoreComponent(ref enemyDamageHitBox); }
+    private EnemyDamageHitBox enemyDamageHitBox;
 
     public Reaver_PlayerDetectedState(Entity entity, StateMachine stateMachine, string animBoolName, D_Reaver_PlayerDetectedState stateData, Reaver enemy) : base(entity, stateMachine, animBoolName)
     {
@@ -36,7 +36,7 @@ public class Reaver_PlayerDetectedState : PlayerDetectedState
             isDetectingWall = CollisionSenses.WallFront;
         }
 
-        attackableTargetDetected = EnemyWeapon.EntityInRange();
+        attackableTargetDetected = EnemyDamageHitBox.EntityInRange();
     }
 
     public override void LogicUpdate()

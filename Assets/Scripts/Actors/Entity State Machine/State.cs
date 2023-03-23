@@ -18,10 +18,10 @@ public class State
     private string animBoolName; // The name of the animation boolean parameter
 
     private Stats Stats { get => stats ?? core.GetCoreComponent(ref stats); } // Reference to the Stats component of the entity
-    private Combat Combat { get => combat ?? core.GetCoreComponent(ref combat); } // Reference to the Combat component of the entity
+    private DamageReceiver DamageReceiver { get => damageReceiver ?? core.GetCoreComponent(ref damageReceiver); } // Reference to the Combat component of the entity
 
     private Stats stats; // Reference to the Stats component of the entity (cached for efficiency)
-    private Combat combat; // Reference to the Combat component of the entity (cached for efficiency)
+    private DamageReceiver damageReceiver; // Reference to the Combat component of the entity (cached for efficiency)
 
     public State(Entity entity, StateMachine stateMachine, string animBoolName)
     {
@@ -33,7 +33,7 @@ public class State
 
     ~State() // Destructor that unsubscribes from events when the state is destroyed
     {
-        Combat.OnDamage -= OnDamage;
+        DamageReceiver.OnDamage -= OnDamage;
         Stats.HealthZero -= OnHealthZero;
     }
 
@@ -41,14 +41,14 @@ public class State
     private void SubscribeEvents()
     {
         Stats.HealthZero += OnHealthZero;
-        Combat.OnDamage += OnDamage;
+        DamageReceiver.OnDamage += OnDamage;
     }
 
     // Unsubscribe from events when the state is exited
     private void UnsubscribeEvents()
     {
         Stats.HealthZero -= OnHealthZero;
-        Combat.OnDamage -= OnDamage;
+        DamageReceiver.OnDamage -= OnDamage;
     }
 
     public virtual void Enter() // Called when the state is entered

@@ -8,8 +8,8 @@ public class Reaver_AttackCooldownState : AttackCooldownState
 
     private bool attackableTargetDetected;
 
-    private EnemyWeapon EnemyWeapon { get => enemyWeapon ?? core.GetCoreComponent(ref enemyWeapon); }
-    private EnemyWeapon enemyWeapon;
+    private EnemyDamageHitBox EnemyDamageHitBox { get => enemyDamageHitBox ?? core.GetCoreComponent(ref enemyDamageHitBox); }
+    private EnemyDamageHitBox enemyDamageHitBox;
 
     public Reaver_AttackCooldownState(Entity entity, StateMachine stateMachine, string animBoolName, D_AttackCooldownState stateData, Reaver enemy) : base(entity, stateMachine, animBoolName, stateData)
     {
@@ -20,7 +20,7 @@ public class Reaver_AttackCooldownState : AttackCooldownState
     {
         base.DoChecks();
 
-        attackableTargetDetected = EnemyWeapon.EntityInRange();
+        attackableTargetDetected = EnemyDamageHitBox.EntityInRange();
     }
 
     public override void LogicUpdate()
