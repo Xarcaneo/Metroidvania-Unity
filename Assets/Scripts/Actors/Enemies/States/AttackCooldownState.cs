@@ -7,6 +7,9 @@ public class AttackCooldownState : State
     protected float timeSinceEnteredState;
     protected readonly D_AttackCooldownState stateData;
 
+    protected Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
+    private Movement movement;
+
     public AttackCooldownState(Entity entity, StateMachine stateMachine, string animBoolName, D_AttackCooldownState stateData) : base(entity, stateMachine, animBoolName)
     {
         this.stateData = stateData;
@@ -21,6 +24,7 @@ public class AttackCooldownState : State
     {
         base.Enter();
 
+        Movement?.SetVelocityX(0f);
         timeSinceEnteredState = 0f;
     }
 
@@ -33,6 +37,7 @@ public class AttackCooldownState : State
     {
         base.LogicUpdate();
 
+        Movement?.SetVelocityX(0f);
         timeSinceEnteredState += Time.deltaTime;  
     }
 

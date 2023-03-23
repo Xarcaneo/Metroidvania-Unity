@@ -8,9 +8,9 @@ using Opsive.UltimateInventorySystem.Core;
 
 public class Stats : CoreComponent
 {
-    [SerializeField]  private float m_BaseMaxHealth;
-    [SerializeField]  private int m_BaseAttack;
-    [SerializeField]  private int m_BaseDefense;
+    [SerializeField] private float m_BaseMaxHealth;
+    [SerializeField] private int m_BaseAttack;
+    [SerializeField] private int m_BaseDefense;
 
     private float maxHealth;
     private int attack;
@@ -65,6 +65,11 @@ public class Stats : CoreComponent
     public float GetMaxHealth()
     {
         return maxHealth;
+    }
+
+    public float GetCurrentHealth()
+    {
+        return currentHealth;
     }
 
     public int GetAttack()

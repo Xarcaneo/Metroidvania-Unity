@@ -7,8 +7,13 @@ public class PlayerCounterAttackState : PlayerState
     protected Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
     private Movement movement;
 
-    private Weapon Weapon { get => weapon ?? core.GetCoreComponent(ref weapon); }
-    private Weapon weapon;
+    private DamageHitBox DamageHitBox { get => damageHitBox ?? core.GetCoreComponent(ref damageHitBox); }
+    private DamageHitBox damageHitBox;
+
+    protected Stats Stats { get => stats ?? core.GetCoreComponent(ref stats); }
+    private Stats stats;
+
+    private IDamageable.DamageData m_damageData;
 
     public PlayerCounterAttackState(Player player, StateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
@@ -18,6 +23,7 @@ public class PlayerCounterAttackState : PlayerState
     {
         base.Enter();
 
+        m_damageData.SetData(player, Stats.GetAttack());
         player.InputHandler.UseAttackInput();
     }
 
@@ -43,6 +49,7 @@ public class PlayerCounterAttackState : PlayerState
         base.AnimationActionTrigger();
 
         //Checks what IDamageable entities intersects with weapon collider and damage them
-        Weapon?.CheckMeleeAttack();
+        DamageHitBox?.MeleeAttack(m_damageData);
+        DamageHitBox?.Knockback(Movement.FacingDirection);
     }
 }

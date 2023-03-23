@@ -4,5 +4,6 @@ using UnityEngine;
 
 public interface IKnockbackable
 {
-    void Knockback(int direction);
+    void ReceiveKnockback(int direction);
+    void ReceiveKnockback();
 }

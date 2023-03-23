@@ -8,9 +8,9 @@ public class PlayerPrepareBlockState : PlayerAbilityState
 
     private Block block;
 
-    private Combat Combat { get => combat ?? core.GetCoreComponent(ref combat); }
+    private DamageReceiver DamageReceiver { get => damageReceiver ?? core.GetCoreComponent(ref damageReceiver); }
 
-    private Combat combat;
+    private DamageReceiver damageReceiver;
 
     private bool successfulBlock = false;
 
@@ -22,7 +22,7 @@ public class PlayerPrepareBlockState : PlayerAbilityState
     {
         base.Enter();
 
-        Combat.OnSuccessfulBlock += OnSuccesfullBlock;
+        DamageReceiver.OnSuccessfulBlock += OnSuccesfullBlock;
 
         player.InputHandler.UseBlockInput();
     }
@@ -31,7 +31,7 @@ public class PlayerPrepareBlockState : PlayerAbilityState
     {
         base.Exit();
 
-        Combat.OnSuccessfulBlock -= OnSuccesfullBlock;
+        DamageReceiver.OnSuccessfulBlock -= OnSuccesfullBlock;
 
         successfulBlock = false;
         Block.isBlocking = false;
