@@ -5,7 +5,7 @@ using UnityEngine;
 public class Reaver : Enemy
 {
     public Reaver_IdleState idleState { get; private set; }
-    public Reaver_MoveState moveState { get; private set; }
+    public Reaver_PatrolState patrolState { get; private set; }
     public Reaver_DeathState deathState { get; private set; }
     public Reaver_PlayerDetectedState playerDetectedState { get; private set; }
     public Reaver_WaitingState waitingState { get; private set; }
@@ -28,7 +28,7 @@ public class Reaver : Enemy
         base.Awake();
 
         idleState = new Reaver_IdleState(this, StateMachine, "idle", idleStateData, this);
-        moveState = new Reaver_MoveState(this, StateMachine, "move", moveStateData, this);
+        patrolState = new Reaver_PatrolState(this, StateMachine, "move", moveStateData, this);
         deathState = new Reaver_DeathState(this, StateMachine, "death", this);
         playerDetectedState = new Reaver_PlayerDetectedState(this, StateMachine, "playerDetected", reaver_PlayerDetectedData, this);
         waitingState = new Reaver_WaitingState(this, StateMachine, "waiting", this);
@@ -45,6 +45,6 @@ public class Reaver : Enemy
     {
         base.Start();
 
-        StateMachine.Initialize(moveState);
+        StateMachine.Initialize(patrolState);
     }
 }

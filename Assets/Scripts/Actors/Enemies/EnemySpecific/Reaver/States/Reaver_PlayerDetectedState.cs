@@ -50,7 +50,7 @@ public class Reaver_PlayerDetectedState : PlayerDetectedState
 
         if (!isPlayerDetected)
         {
-            stateMachine.ChangeState(enemy.moveState);
+            stateMachine.ChangeState(enemy.patrolState);
         }
         else if (isDetectingWall || !isDetectingLedge)
         {

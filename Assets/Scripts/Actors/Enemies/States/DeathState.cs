@@ -20,6 +20,9 @@ public class DeathState : State
     {
         base.Enter();
 
+        core.GetCoreComponent<HurtArea>().EnableDisableComponent(false);
+        core.GetCoreComponent<HurtEffect>().EnableDisableComponent(false);
+
         Movement?.SetVelocityX(0f);
     }
 

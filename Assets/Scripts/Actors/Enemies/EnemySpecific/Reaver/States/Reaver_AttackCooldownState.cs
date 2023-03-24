@@ -32,7 +32,7 @@ public class Reaver_AttackCooldownState : AttackCooldownState
             if (attackableTargetDetected)
                 stateMachine.ChangeState(enemy.meleeAttackState);
             else
-                stateMachine.ChangeState(enemy.moveState);
+                stateMachine.ChangeState(enemy.patrolState);
         }
     }
 }

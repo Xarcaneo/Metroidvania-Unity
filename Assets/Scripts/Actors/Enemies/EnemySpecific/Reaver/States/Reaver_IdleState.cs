@@ -39,7 +39,7 @@ public class Reaver_IdleState : IdleState
         if (isIdleTimeOver)
         {
             flipAfterIdle = true;
-            stateMachine.ChangeState(enemy.moveState);
+            stateMachine.ChangeState(enemy.patrolState);
         }
         else if (isPlayerDetected)
         {
