@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Reaver_MoveState : MoveState
+public class Reaver_PatrolState : MoveState
 {
     private Reaver enemy;
 
@@ -11,7 +11,7 @@ public class Reaver_MoveState : MoveState
     private EntityDetector EntityDetector { get => entityDetector ?? core.GetCoreComponent(ref entityDetector); }
     private EntityDetector entityDetector;
 
-    public Reaver_MoveState(Entity entity, StateMachine stateMachine, string animBoolName, D_MoveState stateData, Reaver enemy) : base(entity, stateMachine, animBoolName, stateData)
+    public Reaver_PatrolState(Entity entity, StateMachine stateMachine, string animBoolName, D_MoveState stateData, Reaver enemy) : base(entity, stateMachine, animBoolName, stateData)
     {
         this.enemy = enemy;
     }

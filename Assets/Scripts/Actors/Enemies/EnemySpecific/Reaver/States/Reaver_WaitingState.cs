@@ -31,7 +31,7 @@ public class Reaver_WaitingState : WaitingState
         if (!isPlayerDetected)
         {
             Movement.Flip();
-            stateMachine.ChangeState(enemy.moveState);
+            stateMachine.ChangeState(enemy.patrolState);
         }
         else if (attackableTargetDetected)
         {
