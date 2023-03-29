@@ -246,10 +246,10 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.099999994
-    y: 0.2
-    width: 0.79999995
-    height: 0.6
+    x: 0.14791667
+    y: 0.005555555
+    width: 0.33333334
+    height: 0.3333333
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -507,9 +507,17 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3137564901227109404, guid: 645561fcbbb52b044be6a70a4d8a0f4d, type: 3}
+      propertyPath: deathMenu
+      value: 
+      objectReference: {fileID: -6322259228835397112, guid: 3f36d86f82cee73489fc909011b70ef1, type: 3}
+    - target: {fileID: 3137564901227109404, guid: 645561fcbbb52b044be6a70a4d8a0f4d, type: 3}
       propertyPath: playerMenu
       value: 
       objectReference: {fileID: 247148568258883016, guid: d4a568c7d2c81414d8b44f8b02dd1357, type: 3}
+    - target: {fileID: 3137564901227109404, guid: 645561fcbbb52b044be6a70a4d8a0f4d, type: 3}
+      propertyPath: deathMenuPrefab
+      value: 
+      objectReference: {fileID: -6322259228835397112, guid: 3f36d86f82cee73489fc909011b70ef1, type: 3}
     - target: {fileID: 3137564901227109404, guid: 645561fcbbb52b044be6a70a4d8a0f4d, type: 3}
       propertyPath: udioSettingsMenu
       value: 

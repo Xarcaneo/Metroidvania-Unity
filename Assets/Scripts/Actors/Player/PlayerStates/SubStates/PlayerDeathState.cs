@@ -42,4 +42,11 @@ public class PlayerDeathState : PlayerState
     {
         base.PhysicsUpdate();
     }
+
+    public override void AnimationActionTrigger()
+    {
+        base.AnimationActionTrigger();
+
+        GameEvents.Instance.PlayerDied();
+    }
 }

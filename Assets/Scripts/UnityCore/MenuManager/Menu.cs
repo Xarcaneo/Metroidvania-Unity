@@ -61,7 +61,7 @@ namespace Menu
 
         private void OnDestroy() => SceneManager.sceneLoaded -= OnSceneLoaded;
 
-        private void OnEnable()
+        protected virtual void OnEnable()
         {
             InputManager.Instance.isInputActive = true;
 
@@ -70,7 +70,7 @@ namespace Menu
             InputManager.Instance.OnMenuDelete += OnPlayerDeleteInput;
         }
 
-        private void OnDisable()
+        protected virtual void OnDisable()
         {
             InputManager.Instance.OnMenuReturn -= OnReturnInput;
             InputManager.Instance.OnMenuPlayerMenu -= OnPlayerMenuInput;
