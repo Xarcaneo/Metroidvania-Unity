@@ -1,22 +1,23 @@
-using Audio;
 using PixelCrushers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 
 namespace Menu
 {
-    public class PlayMenu : Menu<PlayMenu>
+    public class DeathMenu : Menu<DeathMenu>
     {
-        [SerializeField] SfxClip menuClip = default;
-        public List<SaveSlot> saveSlots;
-
-        public override void OnOpenMenu()
+        public override void OnStart()
         {
-            GameManager.Instance.currentSaveSlot = 1;
+            base.OnStart();
+        }
+
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+
             SaveSystem.sceneLoaded += OnSceneLoaded;
+            GetComponent<Animator>().Play("FadeIn");
         }
 
         void OnSceneLoaded(string sceneName, int sceneIndex)
@@ -25,31 +26,22 @@ namespace Menu
             GameMenu.Open();
         }
 
-        public void OnSlotPressed()
+        public override void OnReturnInput() 
         {
-            InputManager.Instance.isInputActive = false;
             int active_slot = GameManager.Instance.currentSaveSlot;
-            EventSystem.current.SetSelectedGameObject(null, null);
-            menuClip.AudioGroup.RaiseStopAudioEvent(menuClip.AudioGroup.AudioSource);
 
             if (SaveSystem.HasSavedGameInSlot(active_slot))
             {
                 var savedGameData = SaveSystem.storer.RetrieveSavedGameData(active_slot);
                 var positionData = SaveSystem.Deserialize<PlayerPositionSaver.PositionData>(savedGameData.GetData("playerPositionKey"));
                 savedGameData.sceneName = positionData.checkpointSceneName;
+
                 SaveSystem.LoadGame(savedGameData);
             }
             else
             {
                 SaveSystem.RestartGame("Area 0");
             }
-        }
-
-        public override void OnPlayerDeleteInput()
-        {
-            int active_slot = GameManager.Instance.currentSaveSlot;
-            SaveSystem.DeleteSavedGameInSlot(active_slot);
-            saveSlots[active_slot - 1].SetButtonContent();
         }
     }
 }

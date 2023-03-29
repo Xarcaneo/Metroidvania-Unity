@@ -1,7 +1,5 @@
 using Audio;
 using PixelCrushers;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
@@ -11,8 +9,6 @@ public class LevelManager : MonoBehaviour
 
     [SerializeField] Player m_playerPref;
 
-    private IEnumerator loadDataCoroutine;
-
     private void OnEnable()
     {
         AudioManager.Instance.Jukebox.SetAudioCollection(ChapterNumber);
@@ -20,7 +16,6 @@ public class LevelManager : MonoBehaviour
         GameEvents.Instance.LevelLoaded(m_roomID);
 
         SpawnPlayer();
-
     }
 
     private void OnDisable()
@@ -32,23 +27,14 @@ public class LevelManager : MonoBehaviour
 
     private void SpawnPlayer()
     {
-        if (PixelCrushers.SaveSystem.playerSpawnpoint)
+        if (GameObject.FindGameObjectWithTag("SpawnPoint"))
         {
-            var position = PixelCrushers.SaveSystem.playerSpawnpoint.transform.position;
+            var position = GameObject.FindGameObjectWithTag("SpawnPoint").transform.position;
             Instantiate(m_playerPref, position, Quaternion.identity);
-            Camera.main.transform.position = position;
         }
         else
         {
-            if (GameObject.FindGameObjectWithTag("SpawnPoint"))
-            {
-                var position = GameObject.FindGameObjectWithTag("SpawnPoint").transform.position;
-                Instantiate(m_playerPref, position, Quaternion.identity);
-            }
-            else
-            {
-                Instantiate(m_playerPref, new Vector3(0, 0, 0), Quaternion.identity);
-            }
+            Instantiate(m_playerPref, new Vector3(0, 0, 0), Quaternion.identity);
         }
     }
 }

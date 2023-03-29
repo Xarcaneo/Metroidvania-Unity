@@ -31,6 +31,7 @@ namespace PixelCrushers
         [Serializable]
         public class PositionData
         {
+            public string checkpointSceneName;
             public int scene = -1;
             public Vector3 position;
             public Quaternion rotation;
@@ -140,6 +141,7 @@ namespace PixelCrushers
                 {
                     var data = SaveSystem.Deserialize<PositionData>(s, m_data);
                     if (data == null) return;
+
                     m_data = data;
                     if (data.scene == currentScene || data.scene == -1)
                     {

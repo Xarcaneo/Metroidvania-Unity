@@ -57,6 +57,16 @@ public class GameEvents : MonoBehaviour
         }
     }
 
+    public event Action onPlayerDied;
+    public void PlayerDied()
+    {
+        if (onPlayerDied != null)
+        {
+            onPlayerDied();
+        }
+    }
+
+
     public event Action<int> onLevelLoaded;
     public void LevelLoaded(int levelID)
     {

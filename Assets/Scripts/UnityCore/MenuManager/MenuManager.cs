@@ -26,6 +26,7 @@ namespace Menu
         [SerializeField] private AudioSettingsMenu audioSettingsMenu;
         [SerializeField] private LanguageSettingsMenu languageSettingsMenu;
         [SerializeField] private PlayerMenu playerMenu;
+        [SerializeField] private DeathMenu deathMenuPrefab;
 
         [SerializeField]
         private Transform _menuParent;
