@@ -7,6 +7,8 @@ namespace Menu
 {
     public class DeathMenu : Menu<DeathMenu>
     {
+        private bool canReturn = false;
+
         public override void OnStart()
         {
             base.OnStart();
@@ -15,6 +17,8 @@ namespace Menu
         protected override void OnEnable()
         {
             base.OnEnable();
+
+            int active_slot = GameManager.Instance.currentSaveSlot;
 
             SaveSystem.sceneLoaded += OnSceneLoaded;
             GetComponent<Animator>().Play("FadeIn");
@@ -28,20 +32,26 @@ namespace Menu
 
         public override void OnReturnInput() 
         {
-            int active_slot = GameManager.Instance.currentSaveSlot;
-
-            if (SaveSystem.HasSavedGameInSlot(active_slot))
+            if (canReturn)
             {
-                var savedGameData = SaveSystem.storer.RetrieveSavedGameData(active_slot);
-                var positionData = SaveSystem.Deserialize<PlayerPositionSaver.PositionData>(savedGameData.GetData("playerPositionKey"));
-                savedGameData.sceneName = positionData.checkpointSceneName;
+                int active_slot = GameManager.Instance.currentSaveSlot;
 
-                SaveSystem.LoadGame(savedGameData);
+                if (SaveSystem.HasSavedGameInSlot(active_slot))
+                {
+                    SaveSystem.LoadFromSlot(active_slot);
+                }
+                else
+                {
+                    SaveSystem.RestartGame("Area 0");
+                }
             }
-            else
-            {
-                SaveSystem.RestartGame("Area 0");
-            }
+
+            canReturn = false;
+        }
+
+        public void OnAnimationFinish()
+        {
+            canReturn = true;
         }
     }
 }

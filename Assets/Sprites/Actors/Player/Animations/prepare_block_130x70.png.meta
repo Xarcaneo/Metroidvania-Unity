@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e9d3d5f39c385d34aa2ae67e69cad1c9
+guid: 8219bb1cab70cf140aecb7e83c5465e0
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -101,11 +101,23 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: block_0
+      name: prepare_block_130x70_0
       rect:
         serializedVersion: 2
         x: 0
@@ -119,14 +131,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5f8fd9abde4229f4588f59bb9f60754e
-      internalID: -1270376020
+      spriteID: 10962736bcfd1384199040e5f712c2f6
+      internalID: -2119935636
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: block_1
+      name: prepare_block_130x70_1
       rect:
         serializedVersion: 2
         x: 130
@@ -140,14 +152,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8aafa60c00f8c2f428cfc064b836d7fb
-      internalID: 1528500457
+      spriteID: 830d7ca96889d684eaaf486fcadfc873
+      internalID: 2027108324
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: block_2
+      name: prepare_block_130x70_2
       rect:
         serializedVersion: 2
         x: 260
@@ -161,14 +173,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a09f05cda85b68a43a487128d90bb1ac
-      internalID: 1653080914
+      spriteID: 2b497b685a0fb11448bb153541b0cd4d
+      internalID: -488871633
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: block_3
+      name: prepare_block_130x70_3
       rect:
         serializedVersion: 2
         x: 390
@@ -182,14 +194,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 89b16a905da49cc40a0b6cfb1088a1cf
-      internalID: -2093825260
+      spriteID: 7f8c6181895ea174eb6656e7d2542988
+      internalID: 516085016
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: block_4
+      name: prepare_block_130x70_4
       rect:
         serializedVersion: 2
         x: 520
@@ -203,8 +215,113 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 284cf2981523f794da7d811533661863
-      internalID: -954540087
+      spriteID: 71307f2ebf0e4cb44824497dc6ee5418
+      internalID: -1185939480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: prepare_block_130x70_5
+      rect:
+        serializedVersion: 2
+        x: 650
+        y: 0
+        width: 130
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f686e3a62aa6aab4e99f12b7c682c988
+      internalID: 1941243547
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: prepare_block_130x70_6
+      rect:
+        serializedVersion: 2
+        x: 780
+        y: 0
+        width: 130
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1020c2a3e52e4744e80b3e64435b19c7
+      internalID: -1899823151
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: prepare_block_130x70_7
+      rect:
+        serializedVersion: 2
+        x: 910
+        y: 0
+        width: 130
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: efa959ec558612c4288048bbf1f30f00
+      internalID: -722744434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: prepare_block_130x70_8
+      rect:
+        serializedVersion: 2
+        x: 1040
+        y: 0
+        width: 130
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 71ecfc8098d47564e878227212191c8b
+      internalID: -1060777339
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: prepare_block_130x70_9
+      rect:
+        serializedVersion: 2
+        x: 1170
+        y: 0
+        width: 130
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77af6a0b96d678741b1b0824c1bdc49f
+      internalID: -1537082925
       vertices: []
       indices: 
       edges: []
@@ -220,11 +337,16 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      block_4: -954540087
-      block_0: -1270376020
-      block_2: 1653080914
-      block_3: -2093825260
-      block_1: 1528500457
+      prepare_block_130x70_6: -1899823151
+      prepare_block_130x70_3: 516085016
+      prepare_block_130x70_8: -1060777339
+      prepare_block_130x70_0: -2119935636
+      prepare_block_130x70_1: 2027108324
+      prepare_block_130x70_9: -1537082925
+      prepare_block_130x70_2: -488871633
+      prepare_block_130x70_7: -722744434
+      prepare_block_130x70_5: 1941243547
+      prepare_block_130x70_4: -1185939480
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -1,42 +1,36 @@
 fileFormatVersion: 2
-guid: e1adf96d926ba9d46a162f46ca1eb0a0
+guid: 5a337daac1bda6d4f8e6e62a6bff7fd7
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 9057206025413583902
-    second: ledgeGrab_0
+      213: -1882347247711912902
+    second: run_0
   - first:
-      213: -5413749519117383617
-    second: ledgeGrab_1
+      213: 7439426567979852956
+    second: run_1
   - first:
-      213: -1731019334380313989
-    second: ledgeGrab_2
+      213: -2673560216460186399
+    second: run_2
   - first:
-      213: -3268292736439605203
-    second: ledgeGrab_3
+      213: -5822559823783948592
+    second: run_3
   - first:
-      213: 2306931203976585995
-    second: ledgeGrab_4
+      213: -4997308686002322044
+    second: run_4
   - first:
-      213: -1234373709026628043
-    second: ledgeGrab_5
+      213: -7808277857516635856
+    second: run_5
   - first:
-      213: -4667581708404480772
-    second: ledgeGrab_6
+      213: 2102408166121253023
+    second: run_6
   - first:
-      213: 665021829009176120
-    second: ledgeGrab_7
+      213: -828024806730890176
+    second: run_7
   - first:
-      213: 8428545052692286581
-    second: ledgeGrab_8
-  - first:
-      213: -4004681000749619339
-    second: ledgeGrab_9
-  - first:
-      213: -2513879566615883946
-    second: ledgeGrab_10
+      213: 7319402618797355783
+    second: run_8
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -96,6 +90,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -133,221 +128,23 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ledgeGrab_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 70
-        width: 130
-        height: 70
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e14ed4a94e8a1bd70800000000000000
-      internalID: 9057206025413583902
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ledgeGrab_1
-      rect:
-        serializedVersion: 2
-        x: 130
-        y: 70
-        width: 130
-        height: 70
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f380112ee7f7ed4b0800000000000000
-      internalID: -5413749519117383617
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ledgeGrab_2
-      rect:
-        serializedVersion: 2
-        x: 260
-        y: 70
-        width: 130
-        height: 70
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b72ade2361f2af7e0800000000000000
-      internalID: -1731019334380313989
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ledgeGrab_3
-      rect:
-        serializedVersion: 2
-        x: 390
-        y: 70
-        width: 130
-        height: 70
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d2827868211b4a2d0800000000000000
-      internalID: -3268292736439605203
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ledgeGrab_4
-      rect:
-        serializedVersion: 2
-        x: 520
-        y: 70
-        width: 130
-        height: 70
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b03e94615bdd30020800000000000000
-      internalID: 2306931203976585995
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ledgeGrab_5
-      rect:
-        serializedVersion: 2
-        x: 650
-        y: 70
-        width: 130
-        height: 70
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 53ee261d6af9edee0800000000000000
-      internalID: -1234373709026628043
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ledgeGrab_6
-      rect:
-        serializedVersion: 2
-        x: 780
-        y: 70
-        width: 130
-        height: 70
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: cf4a0768a2b693fb0800000000000000
-      internalID: -4667581708404480772
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ledgeGrab_7
-      rect:
-        serializedVersion: 2
-        x: 910
-        y: 70
-        width: 130
-        height: 70
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 836f8fd74d1aa3900800000000000000
-      internalID: 665021829009176120
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ledgeGrab_8
-      rect:
-        serializedVersion: 2
-        x: 1040
-        y: 70
-        width: 130
-        height: 70
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 57c891fa11538f470800000000000000
-      internalID: 8428545052692286581
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ledgeGrab_9
-      rect:
-        serializedVersion: 2
-        x: 1170
-        y: 70
-        width: 130
-        height: 70
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5772097f8d38c68c0800000000000000
-      internalID: -4004681000749619339
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ledgeGrab_10
+      name: run_0
       rect:
         serializedVersion: 2
         x: 0
@@ -361,8 +158,176 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 65f4fbf6ad7ec1dd0800000000000000
-      internalID: -2513879566615883946
+      spriteID: a3c723cb62f80e5e0800000000000000
+      internalID: -1882347247711912902
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: run_1
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 0
+        width: 130
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c94ea0d3c072e3760800000000000000
+      internalID: 7439426567979852956
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: run_2
+      rect:
+        serializedVersion: 2
+        x: 260
+        y: 0
+        width: 130
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ec2644f52b95ead0800000000000000
+      internalID: -2673560216460186399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: run_3
+      rect:
+        serializedVersion: 2
+        x: 390
+        y: 0
+        width: 130
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0de85e380bc123fa0800000000000000
+      internalID: -5822559823783948592
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: run_4
+      rect:
+        serializedVersion: 2
+        x: 520
+        y: 0
+        width: 130
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4858bd91a3ef5aab0800000000000000
+      internalID: -4997308686002322044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: run_5
+      rect:
+        serializedVersion: 2
+        x: 650
+        y: 0
+        width: 130
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0393c2b98ac63a390800000000000000
+      internalID: -7808277857516635856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: run_6
+      rect:
+        serializedVersion: 2
+        x: 780
+        y: 0
+        width: 130
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f98a98a86114d2d10800000000000000
+      internalID: 2102408166121253023
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: run_7
+      rect:
+        serializedVersion: 2
+        x: 910
+        y: 0
+        width: 130
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 044089943d34284f0800000000000000
+      internalID: -828024806730890176
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: run_8
+      rect:
+        serializedVersion: 2
+        x: 1040
+        y: 0
+        width: 130
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 703fa75e6edb39560800000000000000
+      internalID: 7319402618797355783
       vertices: []
       indices: 
       edges: []
@@ -378,17 +343,15 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      ledgeGrab_3: -3268292736439605203
-      ledgeGrab_10: -2513879566615883946
-      ledgeGrab_6: -4667581708404480772
-      ledgeGrab_5: -1234373709026628043
-      ledgeGrab_9: -4004681000749619339
-      ledgeGrab_7: 665021829009176120
-      ledgeGrab_1: -5413749519117383617
-      ledgeGrab_4: 2306931203976585995
-      ledgeGrab_8: 8428545052692286581
-      ledgeGrab_2: -1731019334380313989
-      ledgeGrab_0: 9057206025413583902
+      run_1: 7439426567979852956
+      run_8: 7319402618797355783
+      run_2: -2673560216460186399
+      run_4: -4997308686002322044
+      run_5: -7808277857516635856
+      run_7: -828024806730890176
+      run_0: -1882347247711912902
+      run_3: -5822559823783948592
+      run_6: 2102408166121253023
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

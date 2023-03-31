@@ -1,9 +1,33 @@
 fileFormatVersion: 2
-guid: 14c47f05747ccf245989d90e1eff624f
+guid: ec935cd1095468246aeaa9f333b710c2
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 2598868237486306103
+    second: attack1_0
+  - first:
+      213: -4914715563372401958
+    second: attack1_1
+  - first:
+      213: 2659852609378229497
+    second: attack1_2
+  - first:
+      213: -742131402468218244
+    second: attack1_3
+  - first:
+      213: 4622947799296944477
+    second: attack1_4
+  - first:
+      213: -5698581097663248921
+    second: attack1_5
+  - first:
+      213: -774457592843739951
+    second: attack1_6
+  - first:
+      213: 6747177639697281107
+    second: attack1_7
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -63,6 +87,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -89,6 +114,18 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
     buildTarget: Server
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -104,7 +141,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: checkpointInteraction_0
+      name: attack1_0
       rect:
         serializedVersion: 2
         x: 0
@@ -118,14 +155,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d3054efc0ca5ada4b9eaca8eec24da30
-      internalID: -975751224
+      spriteID: 733ba6184e8011420800000000000000
+      internalID: 2598868237486306103
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: checkpointInteraction_1
+      name: attack1_1
       rect:
         serializedVersion: 2
         x: 130
@@ -139,14 +176,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 61f49f525a0241846988a6fdc3b60ce5
-      internalID: 349171689
+      spriteID: adaaa110c3c6bcbb0800000000000000
+      internalID: -4914715563372401958
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: checkpointInteraction_2
+      name: attack1_2
       rect:
         serializedVersion: 2
         x: 260
@@ -160,14 +197,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 435ac870ca3dd9644affa3b6c8729d30
-      internalID: 1317062352
+      spriteID: 9fc92e01bd1b9e420800000000000000
+      internalID: 2659852609378229497
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: checkpointInteraction_3
+      name: attack1_3
       rect:
         serializedVersion: 2
         x: 390
@@ -181,14 +218,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 70364609742e2d64fb7c30fcc2aa77d1
-      internalID: 1355344283
+      spriteID: c7a2833eb6b63b5f0800000000000000
+      internalID: -742131402468218244
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: checkpointInteraction_4
+      name: attack1_4
       rect:
         serializedVersion: 2
         x: 520
@@ -202,14 +239,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a91380ec672fca4469af8865ad9e323e
-      internalID: 233273344
+      spriteID: d59a440b782082040800000000000000
+      internalID: 4622947799296944477
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: checkpointInteraction_5
+      name: attack1_5
       rect:
         serializedVersion: 2
         x: 650
@@ -223,14 +260,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 237c401d6ebf7d94daa06d916e97f481
-      internalID: -1053543941
+      spriteID: 7e5c60e1fa29ae0b0800000000000000
+      internalID: -5698581097663248921
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: checkpointInteraction_6
+      name: attack1_6
       rect:
         serializedVersion: 2
         x: 780
@@ -244,14 +281,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0ac6c15425844ac4091481dcc2bdc75a
-      internalID: -1188741186
+      spriteID: 1dcd1fc2ce29045f0800000000000000
+      internalID: -774457592843739951
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: checkpointInteraction_7
+      name: attack1_7
       rect:
         serializedVersion: 2
         x: 910
@@ -265,29 +302,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b76e7f8a45a67f341bc931a2576cb3ae
-      internalID: -754876365
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: checkpointInteraction_8
-      rect:
-        serializedVersion: 2
-        x: 1040
-        y: 0
-        width: 130
-        height: 70
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 317ba3e684583a84a9cccc41c78c389c
-      internalID: -1743034903
+      spriteID: 3507d92b05ac2ad50800000000000000
+      internalID: 6747177639697281107
       vertices: []
       indices: 
       edges: []
@@ -303,15 +319,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      checkpointInteraction_4: 233273344
-      checkpointInteraction_5: -1053543941
-      checkpointInteraction_8: -1743034903
-      checkpointInteraction_7: -754876365
-      checkpointInteraction_1: 349171689
-      checkpointInteraction_3: 1355344283
-      checkpointInteraction_0: -975751224
-      checkpointInteraction_6: -1188741186
-      checkpointInteraction_2: 1317062352
+      attack1_7: 6747177639697281107
+      attack1_5: -5698581097663248921
+      attack1_2: 2659852609378229497
+      attack1_1: -4914715563372401958
+      attack1_6: -774457592843739951
+      attack1_0: 2598868237486306103
+      attack1_3: -742131402468218244
+      attack1_4: 4622947799296944477
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

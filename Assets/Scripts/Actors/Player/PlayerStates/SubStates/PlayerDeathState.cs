@@ -10,6 +10,10 @@ public class PlayerDeathState : PlayerState
     private KnockbackReceiver KnockbackReceiver { get => knockbackReceiver ?? core.GetCoreComponent(ref knockbackReceiver); }
     private KnockbackReceiver knockbackReceiver;
 
+    private PlayerDeath PlayerDeath { get => playerDeath ?? core.GetCoreComponent(ref playerDeath); }
+    private PlayerDeath playerDeath;
+
+
     public PlayerDeathState(Player player, StateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }
@@ -29,6 +33,8 @@ public class PlayerDeathState : PlayerState
     public override void Exit()
     {
         base.Exit();
+
+        PlayerDeath.Die();
     }
 
     public override void LogicUpdate()
