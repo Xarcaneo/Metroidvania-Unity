@@ -1,21 +1,15 @@
 fileFormatVersion: 2
-guid: 10c0632c5f3fcc0478e762d82bbec0bc
+guid: dfe43c7c02fc6994c82a2e4931fd9bd8
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5879514480746932602
-    second: iddle_0
+      213: 134770245705420833
+    second: wall slide_0
   - first:
-      213: 3001753947148021978
-    second: iddle_1
-  - first:
-      213: -162975150160864465
-    second: iddle_2
-  - first:
-      213: -3780870728865093229
-    second: iddle_3
+      213: 6971452479351588281
+    second: wall slide_1
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -75,13 +69,14 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -128,7 +123,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: iddle_0
+      name: wall slide_0
       rect:
         serializedVersion: 2
         x: 0
@@ -142,14 +137,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 68650531bb4c76ea0800000000000000
-      internalID: -5879514480746932602
+      spriteID: 120509d03dcced100800000000000000
+      internalID: 134770245705420833
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: iddle_1
+      name: wall slide_1
       rect:
         serializedVersion: 2
         x: 130
@@ -163,50 +158,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ad072ea9f4f58a920800000000000000
-      internalID: 3001753947148021978
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: iddle_2
-      rect:
-        serializedVersion: 2
-        x: 260
-        y: 0
-        width: 130
-        height: 70
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f2b1273e6fefcbdf0800000000000000
-      internalID: -162975150160864465
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: iddle_3
-      rect:
-        serializedVersion: 2
-        x: 390
-        y: 0
-        width: 130
-        height: 70
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 399e250aa16a78bc0800000000000000
-      internalID: -3780870728865093229
+      spriteID: 9b58448f7139fb060800000000000000
+      internalID: 6971452479351588281
       vertices: []
       indices: 
       edges: []
@@ -222,10 +175,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      iddle_3: -3780870728865093229
-      iddle_2: -162975150160864465
-      iddle_1: 3001753947148021978
-      iddle_0: -5879514480746932602
+      wall slide_0: 134770245705420833
+      wall slide_1: 6971452479351588281
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

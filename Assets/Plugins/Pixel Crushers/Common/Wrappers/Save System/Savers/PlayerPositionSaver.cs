@@ -22,8 +22,9 @@ namespace PixelCrushers
                 if (data == null) return;
 
                 m_data = data;
-   
-                    
+                previousCheckpointSceneName = m_data.checkpointSceneName;
+                previousCheckpointPosition = m_data.position;
+
                 SetPosition(data.position, data.rotation);          
             }
 
@@ -36,11 +37,12 @@ namespace PixelCrushers
 
         public override string RecordData()
         {
-            var currentScene = SceneManager.GetActiveScene().buildIndex;
+           var currentScene = SceneManager.GetActiveScene().buildIndex;
 
             if (isCheckpoint)
             {
                 m_data.checkpointSceneName = SceneManager.GetActiveScene().name;
+                SaveSystem.currentSavedGameData.sceneName = SceneManager.GetActiveScene().name;
                 m_data.position = target.transform.position;
 
                 previousCheckpointSceneName = m_data.checkpointSceneName;
@@ -48,8 +50,9 @@ namespace PixelCrushers
             }
             else
             {
-                m_data.checkpointSceneName = previousCheckpointSceneName;
                 m_data.position = previousCheckpointPosition;
+                m_data.checkpointSceneName = previousCheckpointSceneName;
+                SaveSystem.currentSavedGameData.sceneName = previousCheckpointSceneName;
             }
 
             isCheckpoint = false;

@@ -34,10 +34,7 @@ namespace Menu
 
             if (SaveSystem.HasSavedGameInSlot(active_slot))
             {
-                var savedGameData = SaveSystem.storer.RetrieveSavedGameData(active_slot);
-                var positionData = SaveSystem.Deserialize<PlayerPositionSaver.PositionData>(savedGameData.GetData("playerPositionKey"));
-                savedGameData.sceneName = positionData.checkpointSceneName;
-                SaveSystem.LoadGame(savedGameData);
+                SaveSystem.LoadFromSlot(active_slot);
             }
             else
             {
