@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class PlayerDeathState : PlayerState
 {
+    private bool isGrounded;
+
     private Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
     private Movement movement;
-
-    private KnockbackReceiver KnockbackReceiver { get => knockbackReceiver ?? core.GetCoreComponent(ref knockbackReceiver); }
-    private KnockbackReceiver knockbackReceiver;
-
+    private CollisionSenses CollisionSenses { get => collisionSenses ?? core.GetCoreComponent(ref collisionSenses); }
+    private CollisionSenses collisionSenses;
     private PlayerDeath PlayerDeath { get => playerDeath ?? core.GetCoreComponent(ref playerDeath); }
     private PlayerDeath playerDeath;
-
 
     public PlayerDeathState(Player player, StateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
@@ -21,6 +20,12 @@ public class PlayerDeathState : PlayerState
     public override void DoChecks()
     {
         base.DoChecks();
+
+        if (CollisionSenses)
+        {
+            isGrounded = CollisionSenses.Ground;
+        }
+
     }
 
     public override void Enter()
@@ -30,29 +35,16 @@ public class PlayerDeathState : PlayerState
         Movement?.SetVelocityX(0f);
     }
 
-    public override void Exit()
-    {
-        base.Exit();
-
-        PlayerDeath.Die();
-    }
-
     public override void LogicUpdate()
     {
         base.LogicUpdate();
 
         Movement?.SetVelocityX(0f);
-    }
 
-    public override void PhysicsUpdate()
-    {
-        base.PhysicsUpdate();
-    }
-
-    public override void AnimationActionTrigger()
-    {
-        base.AnimationActionTrigger();
-
-        GameEvents.Instance.PlayerDied();
+        if (isAnimationFinished && isGrounded)
+        {
+            GameEvents.Instance.PlayerDied();
+            PlayerDeath.Die();
+        }
     }
 }

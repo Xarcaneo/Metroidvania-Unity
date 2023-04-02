@@ -14,8 +14,9 @@ public class PlayerAbilityState : PlayerState
 
     //References to Movement and CollisionSenses components
     protected Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
-    protected CollisionSenses CollisionSenses { get => collisionSenses ?? core.GetCoreComponent(ref collisionSenses); }
     private Movement movement;
+
+    protected CollisionSenses CollisionSenses { get => collisionSenses ?? core.GetCoreComponent(ref collisionSenses); }
     private CollisionSenses collisionSenses;
 
     //Constructor to initialize variables
