@@ -9,7 +9,6 @@ public class DamageReceiver : CoreComponent, IDamageable
     [SerializeField] private bool isBlockable = false;
 
     public event Action<float> OnDamage;
-
     public event Action OnSuccessfulBlock;
     public event Action OnAttackBlockedByDefender;
 
@@ -35,5 +34,11 @@ public class DamageReceiver : CoreComponent, IDamageable
                 OnDamage?.Invoke(damageData.DamageAmount);
             }
         }
+    }
+
+    public void InstantKill()
+    {
+        Stats?.DecreaseHealth(stats.GetMaxHealth());
+        OnDamage?.Invoke(stats.GetMaxHealth());
     }
 }

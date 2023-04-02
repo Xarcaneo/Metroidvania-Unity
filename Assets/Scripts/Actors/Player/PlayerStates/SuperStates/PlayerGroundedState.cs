@@ -14,9 +14,8 @@ public class PlayerGroundedState : PlayerState
     private bool dashInput;
 
     protected Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
-    protected CollisionSenses CollisionSenses { get => collisionSenses ?? core.GetCoreComponent(ref collisionSenses); }
-
     private Movement movement;
+    protected CollisionSenses CollisionSenses { get => collisionSenses ?? core.GetCoreComponent(ref collisionSenses); }
     private CollisionSenses collisionSenses;
 
     public PlayerGroundedState(Player player, StateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
@@ -36,7 +35,6 @@ public class PlayerGroundedState : PlayerState
     public override void Enter()
     {
         base.Enter();
-
         player.JumpState.ResetAmountOfJumpsLeft();
     }
 
