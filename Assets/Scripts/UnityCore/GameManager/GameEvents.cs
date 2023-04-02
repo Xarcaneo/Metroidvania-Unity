@@ -67,12 +67,12 @@ public class GameEvents : MonoBehaviour
     }
 
 
-    public event Action<int> onLevelLoaded;
-    public void LevelLoaded(int levelID)
+    public event Action<int> onRoomChanged;
+    public void RoomChanged(int levelID)
     {
-        if (onLevelLoaded != null)
+        if (onRoomChanged != null)
         {
-            onLevelLoaded(levelID);
+            onRoomChanged(levelID);
         }
     }
 }

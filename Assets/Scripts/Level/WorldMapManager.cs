@@ -11,13 +11,13 @@ public class WorldMapManager : MonoBehaviour
 
     private void Awake()
     {
-        GameEvents.Instance.onLevelLoaded += OnLevelLoaded;
+        GameEvents.Instance.onRoomChanged += OnRoomChanged;
 
         m_rooms = FindObjectsOfType<Room>();
     }
-    private void OnDestroy() => GameEvents.Instance.onLevelLoaded -= OnLevelLoaded;
+    private void OnDestroy() => GameEvents.Instance.onRoomChanged -= OnRoomChanged;
 
-    private void OnLevelLoaded(int levelID)
+    private void OnRoomChanged(int levelID)
     {
         current_levelID = levelID;
 
