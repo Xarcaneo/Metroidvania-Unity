@@ -1,4 +1,4 @@
-using Audio;
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -50,12 +50,5 @@ public abstract class Entity : MonoBehaviour
     protected void AnimationActionTrigger() => StateMachine.CurrentState.AnimationActionTrigger();
     public abstract State GetDeathState();
     public abstract State GetHurtState();
-    
-    public void PlaySound(SfxClip sfxClip)
-    {
-        if (sfxClip != null)
-            sfxClip.AudioGroup.RaisePrimaryAudioEvent(sfxClip.AudioGroup.AudioSource, sfxClip, sfxClip.AudioConfiguration);
-
-    }
     #endregion
 }

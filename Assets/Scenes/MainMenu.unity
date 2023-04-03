@@ -209,9 +209,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1132600106}
   - component: {fileID: 1132600105}
-  - component: {fileID: 1132600104}
   - component: {fileID: 1132600108}
   - component: {fileID: 1132600107}
+  - component: {fileID: 1132600109}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -219,14 +219,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &1132600104
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1132600103}
-  m_Enabled: 1
 --- !u!20 &1132600105
 Camera:
   m_ObjectHideFlags: 0
@@ -246,10 +238,10 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.14791667
-    y: 0.005555555
-    width: 0.33333334
-    height: 0.3333333
+    x: 0
+    y: 0
+    width: 1
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -341,6 +333,19 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!114 &1132600109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1132600103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attenuationObject: {fileID: 0}
 --- !u!1 &1165033062
 GameObject:
   m_ObjectHideFlags: 0
@@ -596,19 +601,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8194078873543507856, guid: 645561fcbbb52b044be6a70a4d8a0f4d, type: 3}
       propertyPath: m_NormalizedViewPortRect.x
-      value: 0.099999994
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8194078873543507856, guid: 645561fcbbb52b044be6a70a4d8a0f4d, type: 3}
       propertyPath: m_NormalizedViewPortRect.y
-      value: 0.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8194078873543507856, guid: 645561fcbbb52b044be6a70a4d8a0f4d, type: 3}
       propertyPath: m_NormalizedViewPortRect.width
-      value: 0.79999995
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8194078873543507856, guid: 645561fcbbb52b044be6a70a4d8a0f4d, type: 3}
       propertyPath: m_NormalizedViewPortRect.height
-      value: 0.6
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 645561fcbbb52b044be6a70a4d8a0f4d, type: 3}

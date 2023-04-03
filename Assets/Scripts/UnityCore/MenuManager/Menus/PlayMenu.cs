@@ -1,4 +1,3 @@
-using Audio;
 using PixelCrushers;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,7 +9,6 @@ namespace Menu
 {
     public class PlayMenu : Menu<PlayMenu>
     {
-        [SerializeField] SfxClip menuClip = default;
         public List<SaveSlot> saveSlots;
 
         public override void OnOpenMenu()
@@ -30,7 +28,6 @@ namespace Menu
             InputManager.Instance.isInputActive = false;
             int active_slot = GameManager.Instance.currentSaveSlot;
             EventSystem.current.SetSelectedGameObject(null, null);
-            menuClip.AudioGroup.RaiseStopAudioEvent(menuClip.AudioGroup.AudioSource);
 
             if (SaveSystem.HasSavedGameInSlot(active_slot))
             {
