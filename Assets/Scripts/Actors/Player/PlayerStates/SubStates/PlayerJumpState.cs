@@ -20,6 +20,8 @@ public class PlayerJumpState : PlayerAbilityState
         isAbilityDone = true;
         amountOfJumpsLeft--;
         player.InAirState.SetIsJumping();
+
+        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/PlayerEvents/PlayerJump", this.player.transform.position);
     }
 
     public bool CanJump()

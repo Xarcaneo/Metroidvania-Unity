@@ -15,11 +15,14 @@ public class AudioManager : MonoBehaviour
     public float ambienceVolume = 1;
     [Range(0, 1)]
     public float SFXVolume = 1;
+    [Range(0, 1)]
+    public float SFX2Volume = 1;
 
     private Bus masterBus;
     private Bus musicBus;
     private Bus ambienceBus;
     private Bus sfxBus;
+    private Bus sfx2Bus;
 
     private List<EventInstance> eventInstances;
     private List<StudioEventEmitter> eventEmitters;
@@ -42,15 +45,36 @@ public class AudioManager : MonoBehaviour
 
         masterBus = RuntimeManager.GetBus("bus:/");
         musicBus = RuntimeManager.GetBus("bus:/Music");
-        ambienceBus = RuntimeManager.GetBus("bus:/Ambience");
+        //ambienceBus = RuntimeManager.GetBus("bus:/Ambience");
         sfxBus = RuntimeManager.GetBus("bus:/SFX");
+        sfx2Bus = RuntimeManager.GetBus("bus:/SFX2");
     }
 
-    private void Start()
+    private IEnumerator WaitToSubscribe()
     {
-        //InitializeAmbience(FMODEvents.instance.ambience);
-        //InitializeMusic(FMODEvents.instance.music);
+        while (GameEvents.Instance == null)
+        {
+            yield return null;
+        }
+
+        GameEvents.Instance.onPauseTrigger += PauseSFX;
     }
+
+    private void OnEnable()
+    {
+        StartCoroutine(WaitToSubscribe());
+    }
+
+    private void OnDisable()
+    {
+        if (GameEvents.Instance != null)
+        {
+            GameEvents.Instance.onPauseTrigger -= PauseSFX;
+        }
+    }
+
+    private void PauseSFX(bool pause) => sfxBus.setPaused(pause);
+    public void ClearSFXBus() => sfxBus.stopAllEvents(FMOD.Studio.STOP_MODE.IMMEDIATE);
 
     private void Update()
     {
@@ -58,18 +82,25 @@ public class AudioManager : MonoBehaviour
         musicBus.setVolume(musicVolume);
         ambienceBus.setVolume(ambienceVolume);
         sfxBus.setVolume(SFXVolume);
+        sfx2Bus.setVolume(SFX2Volume);
     }
 
-    private void InitializeAmbience(EventReference ambienceEventReference)
+    public void InitializeAmbience(EventReference ambienceEventReference)
     {
         ambienceEventInstance = CreateInstance(ambienceEventReference);
         ambienceEventInstance.start();
     }
 
-    private void InitializeMusic(EventReference musicEventReference)
+    public void PlayMusic(EventReference musicEventReference)
     {
         musicEventInstance = CreateInstance(musicEventReference);
         musicEventInstance.start();
+    }
+
+    public void StopMusic()
+    {
+        musicEventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        musicEventInstance.release();
     }
 
     public void SetAmbienceParameter(string parameterName, float parameterValue)
