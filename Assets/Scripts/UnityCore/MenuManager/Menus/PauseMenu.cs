@@ -45,6 +45,7 @@ namespace Menu
         {
             InputManager.Instance.isInputActive = false;
             EventSystem.current.SetSelectedGameObject(null, null);
+            AudioManager.instance.ClearSFXBus();
             SaveSystem.LoadScene("MainMenu");
             GameEvents.Instance.PauseTrigger(true);
         }
