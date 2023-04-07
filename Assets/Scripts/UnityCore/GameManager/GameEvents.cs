@@ -75,4 +75,13 @@ public class GameEvents : MonoBehaviour
             onRoomChanged(levelID);
         }
     }
+
+    public event Action onNewSession;
+    public void NewSession()
+    {
+        if (onNewSession != null)
+        {
+            onNewSession();
+        }
+    }
 }

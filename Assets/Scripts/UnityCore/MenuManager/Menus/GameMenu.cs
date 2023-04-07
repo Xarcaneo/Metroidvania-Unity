@@ -45,7 +45,13 @@ namespace Menu
         public override void OnReturnInput() => OnPausePressed();
         public override void OnPlayerMenuInput() => PlayerMenu.Open();
 
-        private void OnPlayerDied() => DeathMenu.Open();
+        private void OnPlayerDied()
+        {
+            if (SaveSystem.HasSavedGameInSlot(GameManager.Instance.currentSaveSlot))
+                SaveSystem.SaveToSlot(GameManager.Instance.currentSaveSlot);
+
+            DeathMenu.Open();
+        }
         
 
         public void OnPausePressed()

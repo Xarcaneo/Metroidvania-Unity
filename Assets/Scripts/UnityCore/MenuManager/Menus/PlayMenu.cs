@@ -25,6 +25,7 @@ namespace Menu
 
         public void OnSlotPressed()
         {
+            GameEvents.Instance.NewSession();
             AudioManager.instance.StopMusic();
 
             InputManager.Instance.isInputActive = false;
