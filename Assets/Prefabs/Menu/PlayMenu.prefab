@@ -394,7 +394,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonToFocus: {fileID: 6317173301083531289}
-  menuClip: {fileID: 11400000, guid: cb0e4a26f372b3c40bec3ecef5f90ff5, type: 2}
   saveSlots:
   - {fileID: 3675383439536793041}
   - {fileID: 5699303428406688435}
@@ -579,6 +578,10 @@ PrefabInstance:
       propertyPath: SlotNumber
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 5587275164140332510, guid: 4431fdf28eeb8c04f9c26b9945a9dfae, type: 3}
+      propertyPath: onSelectSoundPath
+      value: event:/SFX/UIEvents/ButtonFocused
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4431fdf28eeb8c04f9c26b9945a9dfae, type: 3}
 --- !u!224 &4153274470367555108 stripped
@@ -700,6 +703,10 @@ PrefabInstance:
       propertyPath: SlotNumber
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 5587275164140332510, guid: 4431fdf28eeb8c04f9c26b9945a9dfae, type: 3}
+      propertyPath: onSelectSoundPath
+      value: event:/SFX/UIEvents/ButtonFocused
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4431fdf28eeb8c04f9c26b9945a9dfae, type: 3}
 --- !u!114 &2639605332028368137 stripped
@@ -820,6 +827,10 @@ PrefabInstance:
     - target: {fileID: 5587275164140332510, guid: 4431fdf28eeb8c04f9c26b9945a9dfae, type: 3}
       propertyPath: SlotNumber
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5587275164140332510, guid: 4431fdf28eeb8c04f9c26b9945a9dfae, type: 3}
+      propertyPath: onSelectSoundPath
+      value: event:/SFX/UIEvents/ButtonFocused
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4431fdf28eeb8c04f9c26b9945a9dfae, type: 3}

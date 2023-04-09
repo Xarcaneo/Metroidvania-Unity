@@ -15,7 +15,7 @@ public class Portal : Interactable
 
     public override void Interact()
     {
-        GameEvents.Instance.ChangingScene(true);
+        GameEvents.Instance.DeactivatePlayerInput(true);
         Anim.SetBool("activated", true);
     }
 

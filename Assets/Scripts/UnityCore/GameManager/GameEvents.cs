@@ -39,12 +39,12 @@ public class GameEvents : MonoBehaviour
         }
     }
 
-    public event Action<bool> onChangingScene;
-    public void ChangingScene(bool isChangingScene)
+    public event Action<bool> onDeactivatePlayerInput;
+    public void DeactivatePlayerInput(bool isChangingScene)
     {
-        if (onChangingScene != null)
+        if (onDeactivatePlayerInput != null)
         {
-            onChangingScene(isChangingScene);
+            onDeactivatePlayerInput(isChangingScene);
         }
     }
 
