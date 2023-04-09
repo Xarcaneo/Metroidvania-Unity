@@ -39,6 +39,15 @@ public class GameEvents : MonoBehaviour
         }
     }
 
+    public event Action<bool> onChangingScene;
+    public void ChangingScene(bool isChangingScene)
+    {
+        if (onChangingScene != null)
+        {
+            onChangingScene(isChangingScene);
+        }
+    }
+
     public event Action<bool> onPlayerInteractTrigger;
     public void InteractTrigger(bool isInteracting)
     {
