@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
@@ -8,8 +9,6 @@ namespace Menu
 {
     public class AudioSettingsMenu : Menu<AudioSettingsMenu>
     {
-        [SerializeField] private AudioMixer audioMixer;
-
         [Header("Mixer Channels")]
         [SerializeField] private string MasterVolume = "MasterVolume";
         [SerializeField] private string MusicVolume = "MusicVolume";
