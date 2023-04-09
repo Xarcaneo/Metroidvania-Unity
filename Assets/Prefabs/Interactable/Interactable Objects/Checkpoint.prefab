@@ -127,6 +127,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7003887881509009644}
     m_Modifications:
+    - target: {fileID: 229851882679837210, guid: 55187ab96d3c4fa42b7efdbc97ee1486, type: 3}
+      propertyPath: interactableObject
+      value: 
+      objectReference: {fileID: 5309258156328020974}
     - target: {fileID: 809836684806532773, guid: 55187ab96d3c4fa42b7efdbc97ee1486, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.0000006109476
@@ -213,38 +217,8 @@ PrefabInstance:
       objectReference: {fileID: 5309258156328020974}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 55187ab96d3c4fa42b7efdbc97ee1486, type: 3}
---- !u!114 &432949348292597492 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1765511866684117848, guid: 55187ab96d3c4fa42b7efdbc97ee1486, type: 3}
-  m_PrefabInstance: {fileID: 2198458738518918572}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b8b3bbffbd783e48843730b803032d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &466970545931993908 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1799607720511194776, guid: 55187ab96d3c4fa42b7efdbc97ee1486, type: 3}
   m_PrefabInstance: {fileID: 2198458738518918572}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &466970545931993913 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1799607720511194773, guid: 55187ab96d3c4fa42b7efdbc97ee1486, type: 3}
-  m_PrefabInstance: {fileID: 2198458738518918572}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &6194924503116591781
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 466970545931993913}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0426415b3f73f0f49bbd1a178fba9df2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interactableObject: {fileID: 5309258156328020974}
-  pictogramHandler: {fileID: 432949348292597492}
