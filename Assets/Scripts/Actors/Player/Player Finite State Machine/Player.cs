@@ -19,7 +19,6 @@ public class Player : Entity
     public PlayerHurtState HurtState { get; private set; }
     public PlayerDeathState DeathState { get; private set; }
     public PlayerLedgeClimbState LedgeClimbState { get; private set; }
-    public PlayerCheckpointInteractionState CheckpointInteractionState { get; private set; }
     public PlayerPrepareBlockState PrepareBlockState { get; private set; }
     public PlayerBlockState BlockState { get; private set; }
     public PlayerCounterAttackState CounterAttackState { get; private set; }
@@ -74,7 +73,6 @@ public class Player : Entity
         HurtState = new PlayerHurtState(this, StateMachine, playerData, "hurt");
         DeathState = new PlayerDeathState(this, StateMachine, playerData, "death");
         LedgeClimbState = new PlayerLedgeClimbState(this, StateMachine, playerData, "ledgeClimbState");
-        CheckpointInteractionState = new PlayerCheckpointInteractionState(this, StateMachine, playerData, "checkpointInteraction");
         PrepareBlockState = new PlayerPrepareBlockState(this, StateMachine, playerData, "prepareBlock");
         BlockState = new PlayerBlockState(this, StateMachine, playerData, "block");
         CounterAttackState = new PlayerCounterAttackState(this, StateMachine, playerData, "counterAttack");

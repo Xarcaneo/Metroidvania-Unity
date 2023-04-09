@@ -35,7 +35,7 @@ public class PlayerInputHandler : MonoBehaviour
         {
             GameEvents.Instance.onPauseTrigger += EnableDisablePlayerInput;
             GameEvents.Instance.onDialogueTrigger += EnableDisablePlayerInput;
-            GameEvents.Instance.onChangingScene += EnableDisablePlayerInput;
+            GameEvents.Instance.onDeactivatePlayerInput += EnableDisablePlayerInput;
         }
         catch
         {
@@ -48,7 +48,7 @@ public class PlayerInputHandler : MonoBehaviour
         {
             GameEvents.Instance.onPauseTrigger -= EnableDisablePlayerInput;
             GameEvents.Instance.onDialogueTrigger -= EnableDisablePlayerInput;
-            GameEvents.Instance.onChangingScene -= EnableDisablePlayerInput;
+            GameEvents.Instance.onDeactivatePlayerInput -= EnableDisablePlayerInput;
         }
         catch
         {
