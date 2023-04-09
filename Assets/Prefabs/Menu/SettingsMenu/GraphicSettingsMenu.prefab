@@ -105,8 +105,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5331660355726189335}
   - {fileID: 9111572872005635619}
+  - {fileID: 5331660355726189335}
   m_Father: {fileID: 9089581446522060748}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -269,6 +269,7 @@ GameObject:
   - component: {fileID: 5492065848951358930}
   - component: {fileID: 815842434270885978}
   - component: {fileID: 4884631998513632681}
+  - component: {fileID: 3191345299900708303}
   m_Layer: 5
   m_Name: FullscreenButton
   m_TagString: Untagged
@@ -290,7 +291,7 @@ RectTransform:
   m_Children:
   - {fileID: 2783476299253761953}
   m_Father: {fileID: 2618614830696806431}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -454,6 +455,22 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3191345299900708303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3004809112490626640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39da977d96f05ff42b78c01c682ccf06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectedColor: {r: 1, g: 0, b: 0, a: 1}
+  deselectedColor: {r: 1, g: 1, b: 1, a: 1}
+  textMeshProUGUI: {fileID: 4884631998513632681}
+  isFirstButton: 1
 --- !u!1 &8154912150062678836
 GameObject:
   m_ObjectHideFlags: 0
@@ -670,7 +687,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6094467527249545860, guid: 27d77dbb131b0ac4aace80d2617465d7, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6094467527249545860, guid: 27d77dbb131b0ac4aace80d2617465d7, type: 3}
       propertyPath: m_AnchorMax.x
