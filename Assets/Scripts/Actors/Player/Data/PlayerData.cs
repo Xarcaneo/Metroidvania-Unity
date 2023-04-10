@@ -41,6 +41,11 @@ public class PlayerData : ScriptableObject
     public float dashTime = 0.2f;
     public float dashEndYMultiplier = 0.2f;
 
+    [Header("Roll State")]
+    public float rollSpeed = 10.0f;
+    public float rollDuration = 0.7f;
+    public float rollCooldown = 1.0f;
+
     [Header("Crouch State")]
     public float standColliderHeight = 1.87f;
     public float crouchColliderHeight = 0.6f;

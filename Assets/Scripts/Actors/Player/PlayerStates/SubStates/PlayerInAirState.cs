@@ -73,7 +73,7 @@ public class PlayerInAirState : PlayerState
         xInput = player.InputHandler.NormInputX;
         jumpInput = player.InputHandler.JumpInput;
         jumpInputStop = player.InputHandler.JumpInputStop;
-        dashInput = player.InputHandler.DashInput;
+        dashInput = player.InputHandler.RollOrDashInput;
 
         CheckJumpMultiplier();
 

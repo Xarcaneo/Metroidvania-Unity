@@ -45,7 +45,7 @@ public class PlayerGroundedState : PlayerState
         xInput = player.InputHandler.NormInputX;
         yInput = player.InputHandler.NormInputY;
         JumpInput = player.InputHandler.JumpInput;
-        dashInput = player.InputHandler.DashInput;
+        dashInput = player.InputHandler.RollOrDashInput;
         attackInput = player.InputHandler.AttackInput;
         blockInput = player.InputHandler.BlockInput;
 
@@ -66,9 +66,9 @@ public class PlayerGroundedState : PlayerState
             player.InAirState.StartCoyoteTime();
             stateMachine.ChangeState(player.InAirState);
         }
-        else if (dashInput && player.DashState.CheckIfCanDash())
+        else if (dashInput && player.RollState.CheckIfCanRoll())
         {
-            stateMachine.ChangeState(player.DashState);
+            stateMachine.ChangeState(player.RollState);
         }
     }
 

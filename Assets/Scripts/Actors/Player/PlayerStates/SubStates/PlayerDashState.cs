@@ -19,8 +19,6 @@ public class PlayerDashState : PlayerAbilityState
 
         dashDirection = Vector2.right * Movement.FacingDirection;
 
-        startTime = Time.unscaledTime;
-
         float angle = Vector2.SignedAngle(Vector2.right, dashDirection);
 
         startTime = Time.time;
