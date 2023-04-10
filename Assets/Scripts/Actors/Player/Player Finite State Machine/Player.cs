@@ -22,6 +22,7 @@ public class Player : Entity
     public PlayerPrepareBlockState PrepareBlockState { get; private set; }
     public PlayerBlockState BlockState { get; private set; }
     public PlayerCounterAttackState CounterAttackState { get; private set; }
+    public PlayerRollState RollState { get; private set; }
 
     [SerializeField]
     private PlayerData playerData;
@@ -76,6 +77,7 @@ public class Player : Entity
         PrepareBlockState = new PlayerPrepareBlockState(this, StateMachine, playerData, "prepareBlock");
         BlockState = new PlayerBlockState(this, StateMachine, playerData, "block");
         CounterAttackState = new PlayerCounterAttackState(this, StateMachine, playerData, "counterAttack");
+        RollState = new PlayerRollState(this, StateMachine, playerData, "roll");
     }
 
     public override State GetDeathState()

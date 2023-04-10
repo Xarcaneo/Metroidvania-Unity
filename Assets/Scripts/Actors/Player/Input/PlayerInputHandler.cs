@@ -16,8 +16,7 @@ public class PlayerInputHandler : MonoBehaviour
     public int NormInputY { get; private set; }
     public bool JumpInput { get; private set; }
     public bool JumpInputStop { get; private set; }
-    public bool DashInput { get; private set; }
-    public bool DashInputStop { get; private set; }
+    public bool RollOrDashInput { get; private set; }
     public bool AttackInput { get; private set; }
     public bool BlockInput { get; private set; }
 
@@ -25,7 +24,7 @@ public class PlayerInputHandler : MonoBehaviour
     private float inputHoldTime = 0.2f;
 
     private float jumpInputStartTime;
-    private float dashInputStartTime;
+    private float rollOrDashInputInputStartTime;
 
     private void Start()
     {
@@ -134,13 +133,8 @@ public class PlayerInputHandler : MonoBehaviour
         {
             if (context.started)
             {
-                DashInput = true;
-                DashInputStop = false;
-                dashInputStartTime = Time.time;
-            }
-            else if (context.canceled)
-            {
-                DashInputStop = true;
+                RollOrDashInput = true;
+                rollOrDashInputInputStartTime = Time.time;
             }
         }
     }
@@ -162,7 +156,7 @@ public class PlayerInputHandler : MonoBehaviour
 
     public void UseJumpInput() => JumpInput = false;
 
-    public void UseDashInput() => DashInput = false;
+    public void UseDashInput() => RollOrDashInput = false;
 
     public void UseAttackInput() => AttackInput = false;
     public void UseBlockInput() => BlockInput = false;
@@ -177,9 +171,9 @@ public class PlayerInputHandler : MonoBehaviour
 
     private void CheckDashInputHoldTime()
     {
-        if (Time.time >= dashInputStartTime + inputHoldTime)
+        if (Time.time >= rollOrDashInputInputStartTime + inputHoldTime)
         {
-            DashInput = false;
+            RollOrDashInput = false;
         }
     }
 
