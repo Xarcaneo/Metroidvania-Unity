@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerRollState : PlayerAbilityState
 {
     private float lastRollTime;
+    private bool startRoll = false;
 
     protected DamageReceiver DamageReceiver { get => damageReceiver ?? core.GetCoreComponent(ref damageReceiver); }
     private DamageReceiver damageReceiver;
@@ -24,7 +25,6 @@ public class PlayerRollState : PlayerAbilityState
         DamageReceiver.isDamagable = false;
         KnockbackReceiver.isKnockable = false;
 
-        Movement?.SetVelocityX(0f);
         startTime = Time.time;
     }
 
@@ -34,6 +34,7 @@ public class PlayerRollState : PlayerAbilityState
 
         DamageReceiver.isDamagable = true;
         KnockbackReceiver.isKnockable = true;
+        startRoll = false;
     }
 
     public override void LogicUpdate()
@@ -48,11 +49,21 @@ public class PlayerRollState : PlayerAbilityState
             return;
         }
 
-        Movement?.SetVelocityX(playerData.rollSpeed * Movement.FacingDirection);
+        if (startRoll)
+            Movement?.SetVelocityX(playerData.rollSpeed * Movement.FacingDirection);
+        else
+            Movement?.SetVelocityX(0f);
     }
 
     public bool CheckIfCanRoll ()
     {
         return Time.time >= lastRollTime + playerData.rollCooldown;
+    }
+
+    public override void AnimationActionTrigger()
+    {
+        base.AnimationActionTrigger();
+
+        startRoll = true;
     }
 }

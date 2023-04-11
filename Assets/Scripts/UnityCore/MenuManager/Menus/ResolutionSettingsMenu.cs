@@ -27,11 +27,12 @@ namespace Menu
         {
             base.OnStart();
 
-            resolutions = new Resolution[3];
+            resolutions = new Resolution[4];
 
             resolutions[0] = new Resolution() { width = 1280, height = 720 };
-            resolutions[1] = new Resolution() { width = 1366, height = 768 };
-            resolutions[2] = new Resolution() { width = 1920, height = 1080 };
+            resolutions[1] = new Resolution() { width = 1920, height = 1080 };
+            resolutions[2] = new Resolution() { width = 2560, height = 1440 };
+            resolutions[3] = new Resolution() { width = 3840, height = 2160 };
 
             for (int i = 0; i < resolutions.Length; i++)
             {
