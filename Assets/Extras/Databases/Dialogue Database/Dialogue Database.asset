@@ -137,15 +137,15 @@ MonoBehaviour:
   - id: 1
     fields:
     - title: Name
-      value: Alert
+      value: Trigger_1
       type: 0
       typeString: CustomFieldType_Text
     - title: Initial Value
-      value: 
-      type: 0
-      typeString: CustomFieldType_Text
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
     - title: Description
-      value: 
+      value: Trigger state variable
       type: 0
       typeString: CustomFieldType_Text
   conversations:

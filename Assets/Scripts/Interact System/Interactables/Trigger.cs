@@ -1,9 +1,14 @@
+using PixelCrushers;
+using PixelCrushers.DialogueSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Trigger : Interactable
 {
+    [SerializeField] private int m_triggerID;
+    private bool m_triggerState;
+
     public Animator entityAnim; // reference to the Animator component
 
     // Define the possible states of the trigger
@@ -20,8 +25,18 @@ public class Trigger : Interactable
     {
         entityAnim = GetComponent<Animator>();
 
-        currentState = TriggerState.IdleOn; // set initial state to IdleOn
-        entityAnim.SetBool(idleOnParam, true); // set the animation boolean parameter to true
+        m_triggerState = DialogueLua.GetVariable("Trigger_" + m_triggerID).asBool;
+  
+        if (m_triggerState)
+        {
+            currentState = TriggerState.IdleOn;
+            entityAnim.SetBool(idleOnParam, true);
+        }
+        else
+        {
+            currentState = TriggerState.IdleOff;
+            entityAnim.SetBool(idleOffParam, true);
+        }
     }
 
     public override void Interact()
@@ -68,12 +83,14 @@ public class Trigger : Interactable
         {
             case TriggerState.IdleOn:
                 entityAnim.SetBool(idleOnParam, true);
+                DialogueLua.SetVariable("Trigger_" + m_triggerID, true);
                 break;
             case TriggerState.TurningOff:
                 entityAnim.SetBool(turningOffParam, true);
                 break;
             case TriggerState.IdleOff:
                 entityAnim.SetBool(idleOffParam, true);
+                DialogueLua.SetVariable("Trigger_" + m_triggerID, false);
                 break;
             case TriggerState.TurningOn:
                 entityAnim.SetBool(turningOnParam, true);
