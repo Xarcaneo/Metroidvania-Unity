@@ -6,6 +6,9 @@ public class Reaver_DeathState : DeathState
 {
     private Reaver enemy;
 
+    private EnemyDeath EnemyDeath { get => enemyDeath ?? core.GetCoreComponent(ref enemyDeath); }
+    private EnemyDeath enemyDeath;
+
     public Reaver_DeathState(Entity entity, StateMachine stateMachine, string animBoolName, Reaver enemy) : base(entity, stateMachine, animBoolName)
     {
         this.enemy = enemy;
@@ -23,6 +26,7 @@ public class Reaver_DeathState : DeathState
 
         if (isAnimationFinished)
         {
+            EnemyDeath.Die();
             enemy.gameObject.SetActive(false);
         }
     }
