@@ -93,4 +93,13 @@ public class GameEvents : MonoBehaviour
             onNewSession();
         }
     }
+
+    public event Action<int> onTriggerStateChanged;
+    public void TriggerStateChanged(int triggerID)
+    {
+        if (onTriggerStateChanged != null)
+        {
+            onTriggerStateChanged(triggerID);
+        }
+    }
 }

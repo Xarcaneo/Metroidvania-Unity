@@ -21,12 +21,12 @@ public class Trigger : Interactable
     const string idleOffParam = "IdleOff";
     const string turningOnParam = "TurningOn";
 
-    void Start()
+    IEnumerator Start()
     {
+        yield return new WaitForEndOfFrame();
         entityAnim = GetComponent<Animator>();
-
         m_triggerState = DialogueLua.GetVariable("Trigger_" + m_triggerID).asBool;
-  
+
         if (m_triggerState)
         {
             currentState = TriggerState.IdleOn;
@@ -84,6 +84,7 @@ public class Trigger : Interactable
             case TriggerState.IdleOn:
                 entityAnim.SetBool(idleOnParam, true);
                 DialogueLua.SetVariable("Trigger_" + m_triggerID, true);
+                GameEvents.Instance.TriggerStateChanged(m_triggerID);
                 break;
             case TriggerState.TurningOff:
                 entityAnim.SetBool(turningOffParam, true);
@@ -91,6 +92,7 @@ public class Trigger : Interactable
             case TriggerState.IdleOff:
                 entityAnim.SetBool(idleOffParam, true);
                 DialogueLua.SetVariable("Trigger_" + m_triggerID, false);
+                GameEvents.Instance.TriggerStateChanged(m_triggerID);
                 break;
             case TriggerState.TurningOn:
                 entityAnim.SetBool(turningOnParam, true);

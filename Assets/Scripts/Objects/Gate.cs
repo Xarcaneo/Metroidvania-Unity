@@ -1,4 +1,5 @@
 using PixelCrushers.DialogueSystem;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,13 +21,44 @@ public class Gate : MonoBehaviour
     const string idleCloseParam = "IdleClose";
     const string openingParam = "Opening";
 
-    void Start()
+    IEnumerator Start()
     {
+        yield return new WaitForEndOfFrame();
         gateAnimator = GetComponent<Animator>();
-
         m_GateState = DialogueLua.GetVariable("Trigger_" + m_gateID).asBool;
 
-        ChangeState(m_GateState ? GateState.IdleOpen : GateState.IdleClose);
+        if (m_GateState)
+        {
+            currentState = GateState.IdleOpen;
+            gateAnimator.SetBool(idleOpenParam, true);
+        }
+        else
+        {
+            currentState = GateState.IdleClose;
+            gateAnimator.SetBool(idleCloseParam, true);
+        }
+    }
+
+    private void OnEnable() => GameEvents.Instance.onTriggerStateChanged += TriggerStateChanged;
+    private void OnDisable() => GameEvents.Instance.onTriggerStateChanged -= TriggerStateChanged;
+
+    private void TriggerStateChanged(int triggerID)
+    {
+        Debug.Log("ENTER");
+        if (triggerID == m_gateID)
+        {
+            Debug.Log("ENTER2");
+            m_GateState = DialogueLua.GetVariable("Trigger_" + m_gateID).asBool;
+
+            if (m_GateState)
+            {
+                OpenGate();
+            }
+            else
+            {
+                CloseGate();
+            }
+        }
     }
 
     // Method to open the gate
@@ -87,4 +119,16 @@ public class Gate : MonoBehaviour
         }
     }
 
+    void OnAnimationTrigger()
+    {
+        // Transition to the new state based on the current state
+        if (currentState == GateState.Closing)
+        {
+            ChangeState(GateState.IdleClose);
+        }
+        else if (currentState == GateState.Opening)
+        {
+            ChangeState(GateState.IdleOpen);
+        }
+    }
 }

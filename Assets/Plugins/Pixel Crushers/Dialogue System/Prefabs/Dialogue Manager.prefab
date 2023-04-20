@@ -26,6 +26,7 @@ GameObject:
   - component: {fileID: 936214819}
   - component: {fileID: 936214820}
   - component: {fileID: 936214837}
+  - component: {fileID: 788971091}
   m_Layer: 0
   m_Name: Dialogue Manager
   m_TagString: Untagged
@@ -46,6 +47,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1659656380}
+  - {fileID: 2052836147}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -87,8 +89,8 @@ MonoBehaviour:
       cancelConversation:
         key: 27
         buttonName: 
-    dialogueUI: {fileID: 0}
-    defaultCanvas: {fileID: 0}
+    dialogueUI: {fileID: 408349333806482075, guid: 1bb9ae154121b624b8bc77f545a12774, type: 3}
+    defaultCanvas: {fileID: 2052836150}
     localizationSettings:
       language: 
       useSystemLanguage: 0
@@ -96,7 +98,7 @@ MonoBehaviour:
     subtitleSettings:
       showNPCSubtitlesDuringLine: 1
       showNPCSubtitlesWithResponses: 1
-      showPCSubtitlesDuringLine: 0
+      showPCSubtitlesDuringLine: 1
       allowPCSubtitleReminders: 1
       skipPCSubtitleAfterResponseMenu: 1
       subtitleCharsPerSecond: 50
@@ -125,10 +127,10 @@ MonoBehaviour:
       - Fire1
       - Fire2
       cancel:
-        key: 27
+        key: 0
         buttonName: 
       cancelConversation:
-        key: 27
+        key: 0
         buttonName: 
     barkSettings:
       allowBarksDuringConversations: 1
@@ -161,7 +163,7 @@ MonoBehaviour:
   dontDestroyOnLoad: 1
   allowOnlyOneInstance: 1
   dialogueTimeMode: 0
-  debugLevel: 2
+  debugLevel: 1
 --- !u!114 &11424616
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -221,7 +223,7 @@ MonoBehaviour:
   m_appendSaverTypeToKey: 0
   m_saveAcrossSceneChanges: 1
   m_restoreStateOnStart: 0
-  skipApplyDataAfterFramesIfApplyImmediate: 1
+  skipApplyDataAfterFramesIfApplyImmediate: 0
   saveRawData: 0
 --- !u!114 &33181038
 MonoBehaviour:
@@ -264,12 +266,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99738be95cdf96a4c83561277430a7a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseDuringTransition: 1
+  pauseDuringTransition: 0
   leaveSceneTransition:
     animator: {fileID: 1663818488}
     trigger: Show
-    animationDuration: 0.5
-    minTransitionDuration: 0
+    animationDuration: 1
+    minTransitionDuration: 1
     onTransitionStart:
       m_PersistentCalls:
         m_Calls: []
@@ -280,8 +282,8 @@ MonoBehaviour:
   enterSceneTransition:
     animator: {fileID: 1663818488}
     trigger: Hide
-    animationDuration: 0
-    minTransitionDuration: 0
+    animationDuration: 1
+    minTransitionDuration: 1
     onTransitionStart:
       m_PersistentCalls:
         m_Calls: []
@@ -567,7 +569,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_version: 0
   m_saveCurrentScene: 1
-  m_framesToWaitBeforeApplyData: 1
+  m_framesToWaitBeforeApplyData: 0
   m_debug: 0
 --- !u!114 &936214837
 MonoBehaviour:
@@ -587,6 +589,122 @@ MonoBehaviour:
   m_LoadOnStart: 0
   m_UsingNestedItems: 1
   m_SaveItemNames: 1
+--- !u!114 &788971091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 125852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ad36c5fadef6e742963bdd62ac09210, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_key: Multi
+  m_appendSaverTypeToKey: 0
+  m_saveAcrossSceneChanges: 1
+  m_restoreStateOnStart: 0
+--- !u!1 &2052836146
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2052836147}
+  - component: {fileID: 2052836150}
+  - component: {fileID: 2052836149}
+  - component: {fileID: 2052836148}
+  m_Layer: 0
+  m_Name: Dialogue Canvas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2052836147
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2052836146}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 425660}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0, y: 0}
+--- !u!223 &2052836150
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2052836146}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 0
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
+--- !u!114 &2052836149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2052836146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UiScaleMode: 1
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 480, y: 270}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
+--- !u!114 &2052836148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2052836146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1001 &1673115584
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -605,6 +723,10 @@ PrefabInstance:
     - target: {fileID: 144936, guid: 57901d8399fd6e74fbabbc9956f39557, type: 3}
       propertyPath: m_Layer
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 22335492, guid: 57901d8399fd6e74fbabbc9956f39557, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1898968247
       objectReference: {fileID: 0}
     - target: {fileID: 22409084, guid: 57901d8399fd6e74fbabbc9956f39557, type: 3}
       propertyPath: m_Pivot.x
