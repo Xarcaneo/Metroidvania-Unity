@@ -178,7 +178,7 @@ MonoBehaviour:
   buttonToFocus: {fileID: 0}
   prefabResolutionButton: {fileID: -3266938514495039997, guid: f8d0ad45c1d56dc4e97c036f09f34920, type: 3}
   buttonsParent: {fileID: 2618614830696806880}
-  headerText: {fileID: 0}
+  headerText: {fileID: 9150759327042679447}
 --- !u!1 &7313416747324394659
 GameObject:
   m_ObjectHideFlags: 0
@@ -233,7 +233,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2182466175941422151, guid: c713f5b6c091565438e3ad9a96fe2390, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 42.06155
+      value: 55.1
       objectReference: {fileID: 0}
     - target: {fileID: 3677576100457151806, guid: c713f5b6c091565438e3ad9a96fe2390, type: 3}
       propertyPath: m_text
@@ -241,7 +241,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3677576100457151806, guid: c713f5b6c091565438e3ad9a96fe2390, type: 3}
       propertyPath: m_fontSize
-      value: 20
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 3677576100457151806, guid: c713f5b6c091565438e3ad9a96fe2390, type: 3}
       propertyPath: m_margin.w
@@ -249,7 +249,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3677576100457151806, guid: c713f5b6c091565438e3ad9a96fe2390, type: 3}
       propertyPath: m_fontSizeBase
-      value: 20
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 3677576100457151806, guid: c713f5b6c091565438e3ad9a96fe2390, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8137203495970350143, guid: c713f5b6c091565438e3ad9a96fe2390, type: 3}
       propertyPath: m_Pivot.x
@@ -342,3 +346,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8137203495970350143, guid: c713f5b6c091565438e3ad9a96fe2390, type: 3}
   m_PrefabInstance: {fileID: 5618056755764154281}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &9150759327042679447 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3677576100457151806, guid: c713f5b6c091565438e3ad9a96fe2390, type: 3}
+  m_PrefabInstance: {fileID: 5618056755764154281}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

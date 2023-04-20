@@ -23,7 +23,7 @@ namespace Menu
         {
             base.SetCanvas();
 
-            DialogueManager.dialogueUI = dialogueUI;
+            //DialogueManager.dialogueUI = dialogueUI;
         }
 
         protected override void OnEnable()
