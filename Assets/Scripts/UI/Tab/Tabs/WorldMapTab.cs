@@ -11,20 +11,53 @@ public class WorldMapTab : Tab
 
     [SerializeField] private float moveSpeed = 400f;
 
+    private WorldMapManager _worldMapManagerInstance;
+
+    public void Initialize()
+    {
+        GameEvents.Instance.onNewSession += OnNewSession;
+        GameEvents.Instance.onEndSession += OnEndSession;
+    }
+    private void OnDestroy()
+    {
+        GameEvents.Instance.onNewSession -= OnNewSession;
+        GameEvents.Instance.onEndSession -= OnEndSession;
+    }
+
     private void OnEnable()
     {
-        m_worldMapManager.gameObject.SetActive(true);
+        if (_worldMapManagerInstance != null)  
+            _worldMapManagerInstance.gameObject.SetActive(true);
+
         UpdateRectPosition();
     }
 
     private void OnDisable()
     {
-        m_worldMapManager.gameObject.SetActive(false);
+        if (_worldMapManagerInstance != null)
+            _worldMapManagerInstance.gameObject.SetActive(false);
+    }
+
+    private void OnNewSession()
+    {
+        _worldMapManagerInstance = Instantiate(m_worldMapManager, transform);
+        scrollRect.content = _worldMapManagerInstance.GetComponent<RectTransform>();
+        _worldMapManagerInstance.Initialize();
+    }
+
+    private void OnEndSession()
+    {
+        if (_worldMapManagerInstance != null)
+        {
+            Destroy(_worldMapManagerInstance.gameObject);
+            _worldMapManagerInstance = null;
+        }
     }
 
     private void Update()
     {
-        scrollRect.content.position -= new Vector3(CalculateRectMove().x, CalculateRectMove().y, 0);
+        if (_worldMapManagerInstance != null)
+            scrollRect.content.position -= new Vector3(CalculateRectMove().x, CalculateRectMove().y, 0);
     }
 
     private Vector2 CalculateRectMove()
@@ -34,9 +67,10 @@ public class WorldMapTab : Tab
 
     private void UpdateRectPosition()
     {
-        if (m_worldMapManager.m_activeRoom)
-        {
-            scrollRect.FocusOnItem(m_worldMapManager.m_activeRoom.GetComponent<RectTransform>());
-        }
+        if (_worldMapManagerInstance != null)
+            if (_worldMapManagerInstance.m_activeRoom)
+            {
+                scrollRect.FocusOnItem(_worldMapManagerInstance.m_activeRoom.GetComponent<RectTransform>());
+            }
     }
 }

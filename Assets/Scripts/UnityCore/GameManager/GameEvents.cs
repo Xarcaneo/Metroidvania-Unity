@@ -94,6 +94,15 @@ public class GameEvents : MonoBehaviour
         }
     }
 
+    public event Action onEndSession;
+    public void EndSession()
+    {
+        if (onEndSession != null)
+        {
+            onEndSession();
+        }
+    }
+
     public event Action<int> onTriggerStateChanged;
     public void TriggerStateChanged(int triggerID)
     {
