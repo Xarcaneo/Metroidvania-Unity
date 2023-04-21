@@ -31,7 +31,6 @@ public class Chest : Interactable
     private void SetOpened()
     {
         canInteract = false;
-        Debug.Log("A_");
         chestAnim.SetBool("IdleOpened", true);
     }
 

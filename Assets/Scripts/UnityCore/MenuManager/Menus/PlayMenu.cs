@@ -21,11 +21,11 @@ namespace Menu
         {
             SaveSystem.sceneLoaded -= OnSceneLoaded;
             GameMenu.Open();
+            GameEvents.Instance.NewSession();
         }
 
         public void OnSlotPressed()
         {
-            GameEvents.Instance.NewSession();
             AudioManager.instance.StopMusic();
 
             InputManager.Instance.isInputActive = false;

@@ -6,12 +6,14 @@ namespace Menu
     {
         [SerializeField] private StatsPanel statsPanel;
         [SerializeField] TabGroup tabGroup;
+        [SerializeField] WorldMapTab m_worldMapTab;
 
         public override void OnStart()
         {
             base.OnStart();
 
             statsPanel.Initialize();
+            m_worldMapTab.Initialize();
         }
 
         public override void CustomUpdate()

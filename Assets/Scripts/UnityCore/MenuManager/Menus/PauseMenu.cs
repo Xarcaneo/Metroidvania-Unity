@@ -48,6 +48,7 @@ namespace Menu
             AudioManager.instance.ClearSFXBus();
             SaveSystem.LoadScene("MainMenu");
             GameEvents.Instance.PauseTrigger(true);
+            GameEvents.Instance.EndSession();
         }
     }
 }

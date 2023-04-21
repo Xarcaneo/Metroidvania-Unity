@@ -33,8 +33,6 @@ namespace Menu
             GameEvents.Instance.onPlayerDied += OnPlayerDied;
         }
 
-
-
         protected override void OnDisable()
         {
             base.OnDisable();
@@ -58,7 +56,5 @@ namespace Menu
         {
             PauseMenu.Open();
         }        
-        
-
     }
 }
