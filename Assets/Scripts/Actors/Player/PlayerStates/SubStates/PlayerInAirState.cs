@@ -6,6 +6,7 @@ public class PlayerInAirState : PlayerState
 {
     //Input
     private int xInput;
+    private int yInput;
     private bool jumpInput;
     private bool jumpInputStop;
     private bool dashInput;
@@ -14,6 +15,7 @@ public class PlayerInAirState : PlayerState
     private bool isGrounded;
     private bool isTouchingWall;
     private bool isTouchingWallBack;
+    private bool isTouchingLadder;
 
     private bool coyoteTime;
     protected bool wallJumpCoyoteTime;
@@ -23,9 +25,9 @@ public class PlayerInAirState : PlayerState
     private float startWallJumpCoyoteTime;
 
     private Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
-    private CollisionSenses CollisionSenses { get => collisionSenses ?? core.GetCoreComponent(ref collisionSenses); }
-
     private Movement movement;
+
+    private CollisionSenses CollisionSenses { get => collisionSenses ?? core.GetCoreComponent(ref collisionSenses); }
     private CollisionSenses collisionSenses;
 
     public PlayerInAirState(Player player, StateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
@@ -42,6 +44,7 @@ public class PlayerInAirState : PlayerState
             isTouchingWall = CollisionSenses.WallFront;
             isTouchingWallBack = CollisionSenses.WallBack;
             isTouchingLedge = CollisionSenses.LedgeHorizontal;
+            isTouchingLadder = collisionSenses.Ladder;
         }
 
         if (isTouchingWall && !isTouchingLedge)
@@ -71,6 +74,7 @@ public class PlayerInAirState : PlayerState
         CheckWallJumpCoyoteTime();
 
         xInput = player.InputHandler.NormInputX;
+        yInput = player.InputHandler.NormInputY;
         jumpInput = player.InputHandler.JumpInput;
         jumpInputStop = player.InputHandler.JumpInputStop;
         dashInput = player.InputHandler.RollOrDashInput;
@@ -99,6 +103,11 @@ public class PlayerInAirState : PlayerState
         else if (isTouchingWall && xInput == Movement?.FacingDirection && Movement?.CurrentVelocity.y <= 0)
         {
             stateMachine.ChangeState(player.WallSlideState);
+        }
+        else if (yInput == 1 && isTouchingLadder)
+        {
+            player.LadderClimbState.SetClimbingDirection(yInput);
+            stateMachine.ChangeState(player.LadderClimbState);
         }
         else if (dashInput && player.DashState.CheckIfCanDash())
         {

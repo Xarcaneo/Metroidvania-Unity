@@ -54,6 +54,6 @@ public class PlayerData : ScriptableObject
     public float[] attackMovementSpeed;
     public float breakComboTime = 1.0f;
 
-    [Header("Checkpoint Interaction State")]
-    public float checkpointActivationOffset = 1.0f;
+    [Header("Move State")]
+    public float climbingVelocity = 5f;
 }

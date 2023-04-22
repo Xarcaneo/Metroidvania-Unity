@@ -36,6 +36,19 @@ public class PlayerIdleState : PlayerGroundedState
             {
                 stateMachine.ChangeState(player.MoveState);
             }
+            else if (yInput != 0 && isTouchingLadder)
+            {
+                var canClimb = false;
+
+                if (yInput == -1 && CollisionSenses.LadderBottom) canClimb = true;
+                else if (yInput == 1 && CollisionSenses.LadderTop) canClimb = true;
+
+                if (canClimb)
+                {
+                    player.LadderClimbState.SetClimbingDirection(yInput);
+                    stateMachine.ChangeState(player.LadderClimbState);
+                }
+            }
             else if (yInput == -1)
             {
                 stateMachine.ChangeState(player.CrouchIdleState);

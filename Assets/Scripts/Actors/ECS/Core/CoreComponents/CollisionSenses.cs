@@ -30,6 +30,11 @@ public class CollisionSenses : CoreComponent
         private set => ledgeCheckVertical = value;
     }
 
+    public Transform LadderCheck
+    {
+        get => GenericNotImplementedError<Transform>.TryGet(ladderCheck, core.transform.parent.name);
+        private set => ladderCheck = value;
+    }
 
     public float GroundCheckRadius { get => groundCheckRadius; set => groundCheckRadius = value; }
     public float WallCheckDistance { get => wallCheckDistance; set => wallCheckDistance = value; }
@@ -40,12 +45,15 @@ public class CollisionSenses : CoreComponent
     [SerializeField] private Transform wallCheck;
     [SerializeField] private Transform ledgeCheckHorizontal;
     [SerializeField] private Transform ledgeCheckVertical;
+    [SerializeField] private Transform ladderCheck;
+
     [SerializeField] private float groundCheckRadius;
     [SerializeField] private float wallCheckDistance;
+    [SerializeField] private float ladderCheckRadius;
 
     [SerializeField] private LayerMask whatIsGround;
     [SerializeField] private LayerMask whatIsWall;
-
+    [SerializeField] private LayerMask whatIsLadder;
     #endregion
 
     public bool Ground
@@ -69,5 +77,18 @@ public class CollisionSenses : CoreComponent
     public bool LedgeHorizontal
     {
         get => Physics2D.Raycast(LedgeCheckHorizontal.position, Vector2.right * Movement.FacingDirection, wallCheckDistance, whatIsGround);
+    }
+    public bool Ladder
+    {
+        get => Physics2D.OverlapCircle(LadderCheck.position, ladderCheckRadius, whatIsLadder);
+    }
+    public bool LadderBottom
+    {
+        get => Physics2D.OverlapCircle(LadderCheck.position - new Vector3(0,5,0), ladderCheckRadius, whatIsLadder);
+    }
+
+    public bool LadderTop
+    {
+        get => Physics2D.OverlapCircle(LadderCheck.position - new Vector3(0, -5, 0), ladderCheckRadius, whatIsLadder);
     }
 }
