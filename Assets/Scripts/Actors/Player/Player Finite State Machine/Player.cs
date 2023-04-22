@@ -24,6 +24,8 @@ public class Player : Entity
     public PlayerCounterAttackState CounterAttackState { get; private set; }
     public PlayerRollState RollState { get; private set; }
     public PlayerLadderClimbState LadderClimbState { get; private set; }
+    public PlayerPrepareClimb PrepareClimb { get; private set; }
+    public PlayerFinishClimb FinishClimb { get; private set; }
 
     [SerializeField]
     private PlayerData playerData;
@@ -80,6 +82,8 @@ public class Player : Entity
         CounterAttackState = new PlayerCounterAttackState(this, StateMachine, playerData, "counterAttack");
         RollState = new PlayerRollState(this, StateMachine, playerData, "roll");
         LadderClimbState = new PlayerLadderClimbState(this, StateMachine, playerData, "ladderClimb");
+        PrepareClimb = new PlayerPrepareClimb(this, StateMachine, playerData, "prepareClimb");
+        FinishClimb = new PlayerFinishClimb(this, StateMachine, playerData, "finishClimb");
     }
 
     public override State GetDeathState()

@@ -54,6 +54,7 @@ public class PlayerData : ScriptableObject
     public float[] attackMovementSpeed;
     public float breakComboTime = 1.0f;
 
-    [Header("Move State")]
+    [Header("Ladder Climb State")]
     public float climbingVelocity = 5f;
+    public float ladderJumpCooldown = 1.0f;
 }

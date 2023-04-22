@@ -46,7 +46,7 @@ public class PlayerIdleState : PlayerGroundedState
                 if (canClimb)
                 {
                     player.LadderClimbState.SetClimbingDirection(yInput);
-                    stateMachine.ChangeState(player.LadderClimbState);
+                    stateMachine.ChangeState(player.PrepareClimb);
                 }
             }
             else if (yInput == -1)
