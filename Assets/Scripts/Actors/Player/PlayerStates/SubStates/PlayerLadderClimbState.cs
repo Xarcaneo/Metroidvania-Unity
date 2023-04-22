@@ -10,6 +10,8 @@ public class PlayerLadderClimbState : PlayerState
 
     private int climbingDirection;
 
+    private float lastJumpTime;
+
     private Animator m_anim;
     private Rigidbody2D m_rigidbody;
 
@@ -41,8 +43,8 @@ public class PlayerLadderClimbState : PlayerState
         base.Enter();
 
         if (climbingDirection == 1)
-            Player.Instance.gameObject.transform.position += new Vector3(0,0.5f,0);
-        else
+            Player.Instance.gameObject.transform.position += new Vector3(0,1f,0);
+        else if (climbingDirection == -1)
             Player.Instance.gameObject.transform.position -= new Vector3(0, 1f, 0);
 
         player.JumpState.ResetAmountOfJumpsLeft();
@@ -55,6 +57,7 @@ public class PlayerLadderClimbState : PlayerState
     {
         base.Exit();
 
+        climbingDirection = 0;
         m_anim.speed = 1;
         m_rigidbody.bodyType = RigidbodyType2D.Dynamic;
     }
@@ -71,15 +74,17 @@ public class PlayerLadderClimbState : PlayerState
 
         if(!isTouchingLadder)
         {
-            stateMachine.ChangeState(player.InAirState);
+            stateMachine.ChangeState(player.FinishClimb);
         }
-        else if (JumpInput && player.JumpState.CanJump())
+        else if (JumpInput && player.JumpState.CanJump() && CheckIfCanJump())
         {
+            Movement?.SetVelocityX(0f);
+            lastJumpTime = Time.time;
             stateMachine.ChangeState(player.JumpState);
         }
-        else if (isGrounded && yInput != 0)
+        else if (isGrounded && yInput == -1)
         {
-            stateMachine.ChangeState(player.IdleState);
+            stateMachine.ChangeState(player.FinishClimb);
         }
         else if (yInput != 0)
         {
@@ -91,4 +96,9 @@ public class PlayerLadderClimbState : PlayerState
     }
 
     public void SetClimbingDirection(int direciton) => climbingDirection = direciton;
+
+    public bool CheckIfCanJump()
+    {
+        return Time.time >= lastJumpTime + playerData.ladderJumpCooldown;
+    }
 }
