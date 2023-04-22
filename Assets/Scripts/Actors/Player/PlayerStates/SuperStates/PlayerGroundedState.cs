@@ -11,6 +11,7 @@ public class PlayerGroundedState : PlayerState
     private bool attackInput;
     private bool blockInput;
     private bool isGrounded;
+    protected bool isTouchingLadder;
     private bool dashInput;
 
     protected Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
@@ -29,6 +30,7 @@ public class PlayerGroundedState : PlayerState
         if (CollisionSenses)
         {
             isGrounded = CollisionSenses.Ground;
+            isTouchingLadder = collisionSenses.Ladder;
         }
     }
 

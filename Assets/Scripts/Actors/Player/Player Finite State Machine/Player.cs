@@ -23,6 +23,7 @@ public class Player : Entity
     public PlayerBlockState BlockState { get; private set; }
     public PlayerCounterAttackState CounterAttackState { get; private set; }
     public PlayerRollState RollState { get; private set; }
+    public PlayerLadderClimbState LadderClimbState { get; private set; }
 
     [SerializeField]
     private PlayerData playerData;
@@ -60,7 +61,7 @@ public class Player : Entity
 
         m_Equipper = GetComponent<IEquipper>();
         questJournal = GetComponent<QuestJournal>();
-
+        
         IdleState = new PlayerIdleState(this, StateMachine, playerData, "idle");
         MoveState = new PlayerMoveState(this, StateMachine, playerData, "move");
         JumpState = new PlayerJumpState(this, StateMachine, playerData, "inAir");
@@ -78,6 +79,7 @@ public class Player : Entity
         BlockState = new PlayerBlockState(this, StateMachine, playerData, "block");
         CounterAttackState = new PlayerCounterAttackState(this, StateMachine, playerData, "counterAttack");
         RollState = new PlayerRollState(this, StateMachine, playerData, "roll");
+        LadderClimbState = new PlayerLadderClimbState(this, StateMachine, playerData, "ladderClimb");
     }
 
     public override State GetDeathState()
