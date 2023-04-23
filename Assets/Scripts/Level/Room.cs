@@ -27,7 +27,9 @@ public class Room : MonoBehaviour
 
     public void SetRoomActive()
     {
-        m_playerIcon.SetActive(true);
+        if(m_playerIcon) 
+            m_playerIcon.SetActive(true);
+
         ShowRoom();
     }
     public void SetRoomInActive()

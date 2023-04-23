@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Table : Interactable
+public class Lectern : Interactable
 {
     [SerializeField] string dialogue_ID;
 

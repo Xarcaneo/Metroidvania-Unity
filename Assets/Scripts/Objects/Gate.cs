@@ -44,10 +44,8 @@ public class Gate : MonoBehaviour
 
     private void TriggerStateChanged(int triggerID)
     {
-        Debug.Log("ENTER");
         if (triggerID == m_gateID)
         {
-            Debug.Log("ENTER2");
             m_GateState = DialogueLua.GetVariable("Trigger_" + m_gateID).asBool;
 
             if (m_GateState)
