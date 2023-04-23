@@ -1,3 +1,4 @@
+using Menu;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -26,8 +27,13 @@ public class WorldMapTab : Tab
 
     private void OnEnable()
     {
-        if (_worldMapManagerInstance != null)  
+        if (_worldMapManagerInstance != null)
+        {
+            if(_worldMapManagerInstance.transform != transform)
+                _worldMapManagerInstance.transform.SetParent(transform);
+
             _worldMapManagerInstance.gameObject.SetActive(true);
+        }
 
         UpdateRectPosition();
     }
@@ -40,7 +46,7 @@ public class WorldMapTab : Tab
 
     private void OnNewSession()
     {
-        _worldMapManagerInstance = Instantiate(m_worldMapManager, transform);
+        _worldMapManagerInstance = Instantiate(m_worldMapManager);
         scrollRect.content = _worldMapManagerInstance.GetComponent<RectTransform>();
         _worldMapManagerInstance.Initialize();
     }
@@ -49,6 +55,7 @@ public class WorldMapTab : Tab
     {
         if (_worldMapManagerInstance != null)
         {
+            _worldMapManagerInstance.Deinitialize();
             Destroy(_worldMapManagerInstance.gameObject);
             _worldMapManagerInstance = null;
         }

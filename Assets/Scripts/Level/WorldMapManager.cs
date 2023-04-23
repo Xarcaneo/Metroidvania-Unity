@@ -5,18 +5,26 @@ using UnityEngine;
 
 public class WorldMapManager : MonoBehaviour
 {
-    public List<Room> m_rooms;
+    public List<Room> m_rooms = new List<Room>();
     public Room m_activeRoom;
     public int current_levelID = 0;
 
     public void Initialize()
     {
         GameEvents.Instance.onRoomChanged += OnRoomChanged;
+
+        foreach (Transform child in transform)
+        {
+            Room roomComponent = child.GetComponent<Room>();
+            if (roomComponent != null)
+            {
+                m_rooms.Add(roomComponent);
+            }
+        }
     }
-    private void OnDestroy()
-    {
-        GameEvents.Instance.onRoomChanged -= OnRoomChanged;
-    }
+    
+    public void Deinitialize() => GameEvents.Instance.onRoomChanged -= OnRoomChanged;
+    
 
     private void OnRoomChanged(int levelID)
     {
