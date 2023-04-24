@@ -17,6 +17,7 @@ public class Portal : Interactable
 
     public override void Interact()
     {
+        InputManager.Instance.isInputActive = false;
         GameEvents.Instance.DeactivatePlayerInput(true);
         Anim.SetBool("activated", true);
     }
@@ -46,4 +47,7 @@ public class Portal : Interactable
             FindObjectOfType<ProCamera2D>().RemoveCameraTarget(m_cameraHook.transform);
         }
     }
+
+
+    private void OnDestroy() => InputManager.Instance.isInputActive = true;
 }

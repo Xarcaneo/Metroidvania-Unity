@@ -260,6 +260,20 @@ MonoBehaviour:
       value: Room state variable
       type: 0
       typeString: CustomFieldType_Text
+  - id: 10
+    fields:
+    - title: Name
+      value: Attack_Keybinding
+      type: 0
+      typeString: CustomFieldType_Text
+    - title: Initial Value
+      value: 
+      type: 0
+      typeString: CustomFieldType_Text
+    - title: Description
+      value: Keybinding action name
+      type: 0
+      typeString: CustomFieldType_Text
   conversations:
   - id: 1
     fields:
@@ -1769,11 +1783,11 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: "Once upon a time, deep in the heart of a dense forest, there stood
-          a towering fortress, home to the most powerful wizard of the land. The
-          fortress was surrounded by a moat filled with enchanted water that kept
-          intruders at bay, and guarded by mystical creatures that obeyed the wizard's
-          every command.\r"
+        value: "<color=#ff0000ff>[var=Attack_Keybinding]</color> Once upon a time,
+          deep in the heart of a dense forest, there stood a towering fortress, home
+          to the most powerful wizard of the land. The fortress was surrounded by
+          a moat filled with enchanted water that kept intruders at bay, and guarded
+          by mystical creatures that obeyed the wizard's every command.\r"
         type: 0
         typeString: CustomFieldType_Text
       - title: Parenthetical
@@ -1817,8 +1831,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 30
-        y: 70
+        x: 29
+        y: 71
         width: 160
         height: 30
     - id: 2

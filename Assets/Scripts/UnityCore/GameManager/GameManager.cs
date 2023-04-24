@@ -1,11 +1,11 @@
-using PixelCrushers;
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using PixelCrushers.DialogueSystem;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private InputActionAsset actions;
+
     public int currentSaveSlot;
     public bool shouldFlipPlayer = false;
 
@@ -32,6 +32,35 @@ public class GameManager : MonoBehaviour
         if (_instance == this)
         {
             _instance = null;
+        }
+    }
+
+    #endregion
+
+    #region Input
+    private void OnDeviceChange(InputDevice arg1, InputDeviceChange arg2)
+    {
+        UpdateBindingToDialogue();
+    }
+
+    public void UpdateBindingToDialogue()
+    {
+        // Iterate through all action maps in the asset
+        foreach (InputActionMap actionMap in actions.actionMaps)
+        {
+            // Iterate through all actions in the action map
+            foreach (InputAction action in actionMap.actions)
+            {
+                // Iterate through all bindings of the action
+                foreach (InputBinding binding in action.bindings)
+                {
+                    // Get the display string for the binding with only the key
+                    string keyName = binding.ToDisplayString(
+                        InputBinding.DisplayStringOptions.DontIncludeInteractions);
+
+                    DialogueLua.SetVariable(action.name + "_Keybinding", keyName);
+                }
+            }
         }
     }
 
