@@ -21,6 +21,7 @@ namespace Menu
         {
             SaveSystem.sceneLoaded -= OnSceneLoaded;
             GameMenu.Open();
+            GameManager.Instance.UpdateBindingToDialogue();
             GameEvents.Instance.NewSession();
         }
 
