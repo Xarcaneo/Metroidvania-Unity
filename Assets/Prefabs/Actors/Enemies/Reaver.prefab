@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 1795069383703867998}
   - component: {fileID: 1078489767368504234}
   - component: {fileID: 587140200453833426}
+  - component: {fileID: 5842632576459355922}
   m_Layer: 14
   m_Name: Body
   m_TagString: SpawnableEnemy
@@ -225,6 +226,19 @@ MonoBehaviour:
   m_SplitUniqueItems: 1
   m_MinAmount: 0
   m_MaxAmount: 1
+--- !u!114 &5842632576459355922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1795069383703867985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e2fd1edb66619f469a1e9e236c27199, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  muteSounds: 0
 --- !u!1 &1795069383799447301
 GameObject:
   m_ObjectHideFlags: 0
@@ -484,6 +498,7 @@ Transform:
   - {fileID: 4083355183404358399}
   - {fileID: 1130135263870266731}
   - {fileID: 8252785281407607091}
+  - {fileID: 4375418672841957808}
   m_Father: {fileID: 1795069383703867986}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -550,14 +565,19 @@ MonoBehaviour:
   wallCheck: {fileID: 1795069385038586379}
   ledgeCheckHorizontal: {fileID: 0}
   ledgeCheckVertical: {fileID: 1795069383799447302}
+  ladderCheck: {fileID: 0}
   groundCheckRadius: 0.3
   wallCheckDistance: 1
+  ladderCheckRadius: 0
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
   whatIsWall:
     serializedVersion: 2
     m_Bits: 256
+  whatIsLadder:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &1795069385611182496
 GameObject:
   m_ObjectHideFlags: 0
@@ -647,6 +667,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   duration: 0.125
+  sfx_patch: event:/SFX/ActorsEvents/ReaverEvents/ReaverHurt
   flashMaterial: {fileID: 2100000, guid: 00c9adf18f92e2044af599313777149e, type: 2}
   originalMaterial: {fileID: 2100000, guid: 84568129bd3ea9b4fa5f097dac433c97, type: 2}
 --- !u!1 &3447983638100308747
@@ -853,6 +874,52 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6913114497991534004
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4375418672841957808}
+  - component: {fileID: 3250321381009368285}
+  m_Layer: 14
+  m_Name: EnemyInCameraView
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4375418672841957808
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6913114497991534004}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1795069385183972928}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3250321381009368285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6913114497991534004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe9bb023528f87940a86e85e04767a29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyTransform: {fileID: 1795069383703867986}
+  m_PlayAnimationEvents: {fileID: 5842632576459355922}
 --- !u!1 &8657794932323908113
 GameObject:
   m_ObjectHideFlags: 0

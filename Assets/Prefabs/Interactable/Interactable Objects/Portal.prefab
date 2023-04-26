@@ -118,6 +118,7 @@ GameObject:
   - component: {fileID: 8642945794993908440}
   - component: {fileID: 598119380388230603}
   - component: {fileID: 1213004821487775922}
+  - component: {fileID: 453200156436840180}
   m_Layer: 28
   m_Name: Portal
   m_TagString: Untagged
@@ -231,6 +232,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canInteract: 1
+  <music>k__BackingField:
+    Guid:
+      Data1: -152382995
+      Data2: 1319914942
+      Data3: 712231868
+      Data4: -1787774182
+    Path: event:/SFX/InteractableEvents/Portal/PortalIdle
   m_scenePortal: {fileID: 7663696974528931283}
   m_cameraHook: {fileID: 8160347086528031623}
 --- !u!61 &1213004821487775922
@@ -259,6 +267,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 20, y: 4.45}
   m_EdgeRadius: 0
+--- !u!114 &453200156436840180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6569758103795881211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e2fd1edb66619f469a1e9e236c27199, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  muteSounds: 0
 --- !u!1 &6979251166138173900
 GameObject:
   m_ObjectHideFlags: 0

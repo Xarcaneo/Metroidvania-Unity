@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class FlashEffect : HurtEffect
 {
+    [Tooltip("Sound to play when hit.")]
+    [SerializeField] private String sfx_patch;
+
     [Tooltip("Material to switch to during the flash.")]
     [SerializeField] private Material flashMaterial;
 
@@ -13,6 +16,9 @@ public class FlashEffect : HurtEffect
 
     public override IEnumerator EffectRoutine()
     {
+        if(sfx_patch != "")
+            FMODUnity.RuntimeManager.PlayOneShot(sfx_patch, this.transform.position);
+
         // Swap to the flashMaterial.
         spriteRenderer.material = flashMaterial;
 
