@@ -218,7 +218,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   muteSound: 0
-  SFX_Button_Pressed: {fileID: 11400000, guid: 1bc0402b4d65cba4b9347ebd2872c629, type: 2}
-  SFX_Button_Focused: {fileID: 11400000, guid: c1e00735692340b4cb1b06b1c99aea9f, type: 2}
-  text: 
+  onSelectSoundPath: event:/SFX/UIEvents/ButtonFocused
+  onPressedSoundPath: event:/SFX/UIEvents/ButtonPressed
   buttonIndex: 0

@@ -109,6 +109,7 @@ GameObject:
   - component: {fileID: 5505584810606385950}
   - component: {fileID: 1327799375140879366}
   - component: {fileID: 4990805166412353580}
+  - component: {fileID: 1372161114385382838}
   m_Layer: 0
   m_Name: SpecialChest
   m_TagString: Untagged
@@ -263,6 +264,18 @@ MonoBehaviour:
   canInteract: 1
   m_ChestID: 0
   m_randomItemDropper: {fileID: 1327799375140879366}
+--- !u!114 &1372161114385382838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4703490649678327256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e2fd1edb66619f469a1e9e236c27199, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6136305146189104342
 GameObject:
   m_ObjectHideFlags: 0

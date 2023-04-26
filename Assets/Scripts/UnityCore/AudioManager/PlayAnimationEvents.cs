@@ -4,8 +4,11 @@ using FMODUnity;
 
 public class PlayAnimationEvents : MonoBehaviour
 {
+    [SerializeField] public bool muteSounds = false;
+
     private void PlaySound(string path)
     {
-        FMODUnity.RuntimeManager.PlayOneShot(path, GetComponent<Transform>().position);
+        if(!muteSounds)
+            FMODUnity.RuntimeManager.PlayOneShot(path, GetComponent<Transform>().position);
     }
 }

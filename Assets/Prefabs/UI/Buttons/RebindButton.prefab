@@ -79,7 +79,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Enter
+  m_Text: Left
 --- !u!1 &6161120886177336345
 GameObject:
   m_ObjectHideFlags: 0
@@ -428,6 +428,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   muteSound: 0
-  SFX_Button_Pressed: {fileID: 11400000, guid: 1bc0402b4d65cba4b9347ebd2872c629, type: 2}
-  SFX_Button_Focused: {fileID: 11400000, guid: c1e00735692340b4cb1b06b1c99aea9f, type: 2}
-  selectedImage: {fileID: 21300000, guid: 59abfc115b9a503498a1e4964f389f20, type: 3}
+  onSelectSoundPath: event:/SFX/UIEvents/ButtonFocused
+  onPressedSoundPath: event:/SFX/UIEvents/ButtonPressed
+  m_rebindingPanel: {fileID: 0}
