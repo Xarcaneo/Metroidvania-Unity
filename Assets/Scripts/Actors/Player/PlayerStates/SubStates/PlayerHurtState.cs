@@ -63,7 +63,7 @@ public class PlayerHurtState : PlayerState
         {
             if (isGrounded && Movement?.CurrentVelocity.y < 0.01f)
             {
-                stateMachine.ChangeState(player.LandState);
+                stateMachine.ChangeState(player.RecoverState);
             }
         }
     }
