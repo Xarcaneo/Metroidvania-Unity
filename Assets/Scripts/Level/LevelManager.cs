@@ -1,4 +1,6 @@
+using FMOD.Studio;
 using PixelCrushers;
+using System.Collections;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
@@ -7,7 +9,7 @@ public class LevelManager : MonoBehaviour
 
     private void OnEnable()
     {
-        SpawnPlayer();
+        StartCoroutine(SpawnPlayerWithDelay());
     }
 
     private void OnDisable()
@@ -17,8 +19,11 @@ public class LevelManager : MonoBehaviour
             GameObject.Destroy(item);
     }
 
-    private void SpawnPlayer()
+    private IEnumerator SpawnPlayerWithDelay()
     {
+        Bus musicBus = FMODUnity.RuntimeManager.GetBus("bus:/SFX");
+        musicBus.setMute(true);
+
         if (GameObject.FindGameObjectWithTag("SpawnPoint"))
         {
             var position = GameObject.FindGameObjectWithTag("SpawnPoint").transform.position;
@@ -28,5 +33,9 @@ public class LevelManager : MonoBehaviour
         {
             Instantiate(m_playerPref, new Vector3(0, 0, 0), Quaternion.identity);
         }
+
+        yield return new WaitForSeconds(0.5f);
+
+        musicBus.setMute(false);
     }
 }
