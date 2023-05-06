@@ -85,6 +85,15 @@ public class GameEvents : MonoBehaviour
         }
     }
 
+    public event Action<string> onAreaChanged;
+    public void AreaChanged(string areaName)
+    {
+        if (onAreaChanged != null)
+        {
+            onAreaChanged(areaName);
+        }
+    }
+
     public event Action onNewSession;
     public void NewSession()
     {

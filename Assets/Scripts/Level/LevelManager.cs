@@ -5,11 +5,17 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    [SerializeField] Player m_playerPref;
+    [SerializeField] private Player m_playerPref;
+    [SerializeField] private string m_areaName;
 
     private void OnEnable()
     {
         StartCoroutine(SpawnPlayerWithDelay());
+
+        Menu.GameMenu.Instance.locationNameIndicator.Cancelcoroutine();
+
+        if(m_areaName != "")
+            StartCoroutine(DelayedAreaChanged());
     }
 
     private void OnDisable()
@@ -17,6 +23,11 @@ public class LevelManager : MonoBehaviour
         GameObject[] items = GameObject.FindGameObjectsWithTag("Item");
         foreach (GameObject item in items)
             GameObject.Destroy(item);
+    }
+    private IEnumerator DelayedAreaChanged()
+    {
+        yield return new WaitForSeconds(0.5f);
+        GameEvents.Instance.AreaChanged(m_areaName);
     }
 
     private IEnumerator SpawnPlayerWithDelay()

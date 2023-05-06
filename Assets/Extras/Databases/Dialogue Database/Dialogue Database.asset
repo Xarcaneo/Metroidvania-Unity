@@ -274,6 +274,20 @@ MonoBehaviour:
       value: Keybinding action name
       type: 0
       typeString: CustomFieldType_Text
+  - id: 11
+    fields:
+    - title: Name
+      value: ShowAreaName
+      type: 0
+      typeString: CustomFieldType_Text
+    - title: Initial Value
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Description
+      value: Show or not area name indicator
+      type: 0
+      typeString: CustomFieldType_Text
   conversations:
   - id: 1
     fields:
