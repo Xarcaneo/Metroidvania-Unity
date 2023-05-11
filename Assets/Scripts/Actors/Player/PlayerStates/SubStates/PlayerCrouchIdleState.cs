@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerCrouchIdleState : PlayerGroundedState
 {
+    public bool isCrouching = false;
+
     public PlayerCrouchIdleState(Player player, StateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }
@@ -12,12 +14,15 @@ public class PlayerCrouchIdleState : PlayerGroundedState
     {
         base.Enter();
 
+        isCrouching = true;
         player.SetColliderHeight(playerData.crouchColliderHeight);
     }
 
     public override void Exit()
     {
         base.Exit();
+
+        isCrouching = false;
         player.SetColliderHeight(playerData.standColliderHeight);
     }
 
@@ -26,6 +31,11 @@ public class PlayerCrouchIdleState : PlayerGroundedState
         base.LogicUpdate();
 
         Movement?.SetVelocityX(0f);
+
+        if (JumpInput)
+        {
+            GameEvents.Instance.PlayerCrouchJump();
+        }
 
         if (!isExitingState)
         {

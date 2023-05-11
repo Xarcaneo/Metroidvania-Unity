@@ -12,8 +12,33 @@ public class LocationNameIndicator : MonoBehaviour
 
     private Coroutine fadeCoroutine;
 
-    private void Awake() => GameEvents.Instance.onAreaChanged += OnAreaChanged;
-    private void OnDestroy() => GameEvents.Instance.onAreaChanged -= OnAreaChanged;
+    private void Awake()
+    {
+        GameEvents.Instance.onAreaChanged += OnAreaChanged;
+        GameEvents.Instance.onPauseTrigger += OnPauseTrigger;
+    }
+
+    private void OnDestroy()
+    {
+        GameEvents.Instance.onAreaChanged -= OnAreaChanged;
+        GameEvents.Instance.onPauseTrigger -= OnPauseTrigger;
+    }
+
+    private void OnPauseTrigger(bool isPaused)
+    {
+        if (isPaused)
+        {
+            // Set the alpha to 0 when the game is paused
+            locationName.color = new Color(locationName.color.r, locationName.color.g, locationName.color.b, 0f);
+
+            // Cancel the current fade coroutine if it is running
+            if (fadeCoroutine != null)
+            {
+                StopCoroutine(fadeCoroutine);
+            }
+        }
+    }
+
     public void Cancelcoroutine()
     {
         // Cancel the current fade coroutine if it is running

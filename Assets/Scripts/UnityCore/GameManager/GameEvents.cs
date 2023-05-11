@@ -120,4 +120,13 @@ public class GameEvents : MonoBehaviour
             onTriggerStateChanged(triggerID);
         }
     }
+
+    public event Action onPlayerCrouchJump;
+    public void PlayerCrouchJump()
+    {
+        if (onPlayerCrouchJump != null)
+        {
+            onPlayerCrouchJump();
+        }
+    }
 }
