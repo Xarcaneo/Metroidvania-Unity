@@ -1,3 +1,4 @@
+using PixelCrushers.DialogueSystem;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,6 +10,16 @@ public class GameEvents : MonoBehaviour
 
     public static GameEvents Instance { get => _instance; }
 
+    void OnEnable()
+    {
+        Lua.RegisterFunction(nameof(CameraNewTarget), this, SymbolExtensions.GetMethodInfo(() => CameraNewTarget(string.Empty)));
+    }
+
+    void OnDisable()
+    {
+        Lua.UnregisterFunction(nameof(CameraNewTarget)); // <-- Only if not on Dialogue Manager.
+    }
+
     private void Awake()
     {
         if (_instance != null)
@@ -18,6 +29,15 @@ public class GameEvents : MonoBehaviour
         else
         {
             _instance = this;
+        }
+    }
+
+    public event Action<String> onCameraNewTarget;
+    public void CameraNewTarget(String cameraHookID)
+    {
+        if (onCameraNewTarget != null)
+        {
+            onCameraNewTarget(cameraHookID);
         }
     }
 

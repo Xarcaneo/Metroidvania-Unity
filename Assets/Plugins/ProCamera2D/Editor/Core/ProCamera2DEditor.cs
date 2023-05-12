@@ -250,7 +250,7 @@ namespace Com.LuisPedroFonseca.ProCamera2D
 
                         foreach (Object dragged_object in DragAndDrop.objectReferences)
                         {
-                            var newCameraTarget = new CameraTarget
+                            var newCameraTarget = new dssd
                             {
                                 TargetTransform = ((GameObject)dragged_object).transform,
                                 TargetInfluence = 1f

@@ -19,7 +19,7 @@ namespace Com.LuisPedroFonseca.ProCamera2D
 
         #region Inspector Variables
 
-        public List<CameraTarget> CameraTargets = new List<CameraTarget>();
+        public List<dssd> CameraTargets = new List<dssd>();
 
         public bool CenterTargetOnStart;
 
@@ -331,9 +331,9 @@ namespace Com.LuisPedroFonseca.ProCamera2D
         /// <param name="targetInfluenceV">The influence this target vertical position should have when calculating the average position of all the targets</param>
         /// <param name="duration">The time it takes for this target to reach it's influence. Use for a more progressive transition.</param>
         /// <param name="targetOffset">A vector that offsets the target position that the camera will follow</param>
-        public CameraTarget AddCameraTarget(Transform targetTransform, float targetInfluenceH = 1f, float targetInfluenceV = 1f, float duration = 0f, Vector2 targetOffset = default(Vector2))
+        public dssd AddCameraTarget(Transform targetTransform, float targetInfluenceH = 1f, float targetInfluenceV = 1f, float duration = 0f, Vector2 targetOffset = default(Vector2))
         {
-            var newCameraTarget = new CameraTarget
+            var newCameraTarget = new dssd
             {
                 TargetTransform = targetTransform,
                 TargetInfluenceH = targetInfluenceH,
@@ -368,14 +368,14 @@ namespace Com.LuisPedroFonseca.ProCamera2D
 
 		/// <summary>Add multiple targets for the camera to follow.</summary>
 		/// <param name="cameraTargets">An array or list with the new targets</param>
-		public void AddCameraTargets(IList<CameraTarget> cameraTargets)
+		public void AddCameraTargets(IList<dssd> cameraTargets)
 		{
 			CameraTargets.AddRange(cameraTargets);
 		}
 
         /// <summary>Gets the corresponding CameraTarget from an object's transform.</summary>
         /// <param name="targetTransform">The Transform of the target</param>
-        public CameraTarget GetCameraTarget(Transform targetTransform)
+        public dssd GetCameraTarget(Transform targetTransform)
         {
             for (int i = 0; i < CameraTargets.Count; i++)
             {
@@ -428,7 +428,7 @@ namespace Com.LuisPedroFonseca.ProCamera2D
         /// <param name="targetInfluenceH">The influence this target horizontal position should have when calculating the average position of all the targets</param>
         /// <param name="targetInfluenceV">The influence this target vertical position should have when calculating the average position of all the targets</param>
         /// <param name="duration">The time it takes for this target to reach it's influence. Don't use a duration if calling every frame.</param>
-        public Coroutine AdjustCameraTargetInfluence(CameraTarget cameraTarget, float targetInfluenceH, float targetInfluenceV, float duration = 0)
+        public Coroutine AdjustCameraTargetInfluence(dssd cameraTarget, float targetInfluenceH, float targetInfluenceV, float duration = 0)
         {
             if (duration > 0)
                 return StartCoroutine(AdjustTargetInfluenceRoutine(cameraTarget, targetInfluenceH, targetInfluenceV, duration));
@@ -802,7 +802,7 @@ namespace Com.LuisPedroFonseca.ProCamera2D
             } 
         }
 
-        Vector3 GetTargetsWeightedMidPoint(ref List<CameraTarget> targets)
+        Vector3 GetTargetsWeightedMidPoint(ref List<dssd> targets)
         {
             var midPointH = 0f;
             var midPointV = 0f;
@@ -874,7 +874,7 @@ namespace Com.LuisPedroFonseca.ProCamera2D
             }
         }
 
-        IEnumerator AdjustTargetInfluenceRoutine(CameraTarget cameraTarget, float influenceH, float influenceV, float duration, bool removeIfZeroInfluence = false)
+        IEnumerator AdjustTargetInfluenceRoutine(dssd cameraTarget, float influenceH, float influenceV, float duration, bool removeIfZeroInfluence = false)
         {
             var startInfluenceH = cameraTarget.TargetInfluenceH;
             var startInfluenceV = cameraTarget.TargetInfluenceV;

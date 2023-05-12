@@ -701,6 +701,7 @@ GameObject:
   - component: {fileID: 6315207859231680510}
   - component: {fileID: 4183963696185393645}
   - component: {fileID: 7357214905936069869}
+  - component: {fileID: 3394732371202828757}
   m_Layer: 13
   m_Name: Player
   m_TagString: Player
@@ -1348,6 +1349,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   muteSounds: 0
+--- !u!114 &3394732371202828757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5445145942140402601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f71d23bf65ebc14ab8be9867d17b589, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HookID: Hook_Player
 --- !u!1 &6770450666467460752
 GameObject:
   m_ObjectHideFlags: 0
