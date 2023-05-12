@@ -20,11 +20,11 @@ namespace Com.LuisPedroFonseca.ProCamera2D
 
         public FollowMode FollowMode;
 
-        public List<CameraTarget> CameraTargets = new List<CameraTarget>();
+        public List<dssd> CameraTargets = new List<dssd>();
 
-        Dictionary<CameraTarget, Transform> _cameraTargetsOnRails = new Dictionary<CameraTarget, Transform>();
+        Dictionary<dssd, Transform> _cameraTargetsOnRails = new Dictionary<dssd, Transform>();
 
-        List<CameraTarget> _tempCameraTargets = new List<CameraTarget>();
+        List<dssd> _tempCameraTargets = new List<dssd>();
 
         KDTree _kdTree;
 
@@ -119,7 +119,7 @@ namespace Com.LuisPedroFonseca.ProCamera2D
             if (GetRailsTarget(targetTransform) != null)
                 return;
             
-            var newCameraTarget = new CameraTarget()
+            var newCameraTarget = new dssd()
             {
                 TargetTransform = targetTransform,
                 TargetInfluenceH = targetInfluenceH,
@@ -157,7 +157,7 @@ namespace Com.LuisPedroFonseca.ProCamera2D
 
         /// <summary>Gets the corresponding CameraTarget from an object's transform.</summary>
         /// <param name="targetTransform">The Transform of the target</param>
-        public CameraTarget GetRailsTarget(Transform targetTransform)
+        public dssd GetRailsTarget(Transform targetTransform)
         {
             for (int i = 0; i < CameraTargets.Count; i++)
             {

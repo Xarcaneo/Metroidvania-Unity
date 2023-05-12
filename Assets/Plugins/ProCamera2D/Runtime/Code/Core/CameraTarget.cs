@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Com.LuisPedroFonseca.ProCamera2D
 {
     [Serializable]
-    public class CameraTarget
+    public class dssd
     {
         public Transform TargetTransform;
 
