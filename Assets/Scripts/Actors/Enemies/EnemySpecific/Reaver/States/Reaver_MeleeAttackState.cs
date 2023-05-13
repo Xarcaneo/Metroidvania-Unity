@@ -9,9 +9,6 @@ public class Reaver_MeleeAttackState : MeleeAttackState
     private DamageReceiver DamageReceiver { get => damageReceiver ?? core.GetCoreComponent(ref damageReceiver); }
     private DamageReceiver damageReceiver;
 
-    private EnemyDamageHitBox EnemyDamageHitBox { get => enemyDamageHitBox ?? core.GetCoreComponent(ref enemyDamageHitBox); }
-    private EnemyDamageHitBox enemyDamageHitBox;
-
     private bool attackBlockedByDefender = false;
 
     public Reaver_MeleeAttackState(Entity entity, StateMachine stateMachine, string animBoolName, D_MeleeAttack stateData, Reaver enemy) : base(entity, stateMachine, animBoolName, stateData)
@@ -36,6 +33,8 @@ public class Reaver_MeleeAttackState : MeleeAttackState
         }
 
         Movement?.SetVelocityX(0f);
+
+        m_damageData.canBlock = true; 
     }
 
     public override void Exit()

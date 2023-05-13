@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -16,13 +17,17 @@ public class LocationNameIndicator : MonoBehaviour
     {
         GameEvents.Instance.onAreaChanged += OnAreaChanged;
         GameEvents.Instance.onPauseTrigger += OnPauseTrigger;
+        GameEvents.Instance.onEndSession += OnEndSession;
     }
 
     private void OnDestroy()
     {
         GameEvents.Instance.onAreaChanged -= OnAreaChanged;
         GameEvents.Instance.onPauseTrigger -= OnPauseTrigger;
+        GameEvents.Instance.onEndSession -= OnEndSession;
     }
+
+    private void OnEndSession() => locationName.text = "";
 
     private void OnPauseTrigger(bool isPaused)
     {

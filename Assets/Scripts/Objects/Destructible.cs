@@ -34,7 +34,6 @@ public class Destructible : MonoBehaviour, IDamageable
     {
         if (m_spriteRenderer != null)
         {
-            Debug.Log("START");
             StartCoroutine(FadeOutSprite(m_spriteRenderer));
         }
     }
