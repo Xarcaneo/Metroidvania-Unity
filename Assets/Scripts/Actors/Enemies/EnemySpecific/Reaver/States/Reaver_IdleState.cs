@@ -46,9 +46,4 @@ public class Reaver_IdleState : IdleState
             stateMachine.ChangeState(enemy.playerDetectedState);
         }
     }
-
-    public override void PhysicsUpdate()
-    {
-        base.PhysicsUpdate();
-    }
 }

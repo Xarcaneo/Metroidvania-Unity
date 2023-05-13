@@ -33,7 +33,7 @@ public class Reaver : Enemy
         playerDetectedState = new Reaver_PlayerDetectedState(this, StateMachine, "playerDetected", reaver_PlayerDetectedData, this);
         waitingState = new Reaver_WaitingState(this, StateMachine, "waiting", this);
         meleeAttackState = new Reaver_MeleeAttackState(this, StateMachine, "meleeAttack", reaver_MeleeAttackData, this);
-        attackCooldownState = new Reaver_AttackCooldownState(this, StateMachine, "attackCooldown", reaver_AttackCooldownData, this);
+        attackCooldownState = new Reaver_AttackCooldownState(this, StateMachine, "attackCooldown", reaver_AttackCooldownData);
     }
 
     public override State GetDeathState()

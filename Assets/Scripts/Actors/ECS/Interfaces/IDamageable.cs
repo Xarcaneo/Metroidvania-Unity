@@ -11,11 +11,14 @@ public interface IDamageable
     {
         public float DamageAmount;
         public Entity Source;
+        public bool canBlock;
 
         public void SetData(Entity source, float damageAmount)
         {
             DamageAmount = damageAmount;
             Source = source;
         }
+
+        public void CanBlockCurrentAttack(bool canBlock) => this.canBlock = canBlock;
     }
 }

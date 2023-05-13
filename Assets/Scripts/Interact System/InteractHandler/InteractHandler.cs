@@ -15,29 +15,11 @@ public class InteractHandler : MonoBehaviour
     {
         m_collider = GetComponent<Collider2D>();
     }
-    private IEnumerator WaitForItemDetector()
-    {
-        while (Player.Instance == null)
-        {
-            yield return null;
-        }
-
-        // Wait until the ItemDetector component is added to the player's Core
-        while (Player.Instance.Core.GetCoreComponent<ItemDetector>() == null)
-        {
-            yield return null;
-        }
-
-        // Subscribe to the ItemDetector's onItemDetected event
-        Player.Instance.Core.GetCoreComponent<ItemDetector>().onItemDetected += DisableEnableInteraction;
-    }
 
     private void OnEnable()
     {
         GameEvents.Instance.onPlayerInteractTrigger += PlayerInteract;
         interactableObject.onInteractionCompleted += OnInteractionCompleted;
-
-        StartCoroutine(WaitForItemDetector());
     }
 
     private void OnDisable()
@@ -83,6 +65,7 @@ public class InteractHandler : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            Player.Instance.Core.GetCoreComponent<ItemDetector>().onItemDetected += DisableEnableInteraction;
             playerInRange = true;
             ShowInteractPictogram();
         }
@@ -92,6 +75,7 @@ public class InteractHandler : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            Player.Instance.Core.GetCoreComponent<ItemDetector>().onItemDetected -= DisableEnableInteraction;
             playerInRange = false;
             pictogramHandler.HidePictogram();
         }

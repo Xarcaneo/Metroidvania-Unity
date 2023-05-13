@@ -36,6 +36,11 @@ public class Player : Entity
     public PlayerInputHandler InputHandler { get; private set; }
     #endregion
 
+    #region Colliders
+    [SerializeField] private BoxCollider2D m_combatCollider;
+
+    #endregion
+
     #region Other Variables
     public QuestJournal questJournal;
     private IEquipper m_Equipper;
@@ -130,6 +135,9 @@ public class Player : Entity
 
         MovementCollider.size = workspace;
         MovementCollider.offset = center;
+
+        m_combatCollider.size = new Vector2(m_combatCollider.size.x, workspace.y);
+        m_combatCollider.offset = center;
     }
 
     public void SetColliderWidth(float width)

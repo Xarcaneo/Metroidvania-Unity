@@ -22,7 +22,7 @@ public class DamageReceiver : CoreComponent, IDamageable
     {
         if (isDamagable)
         {
-            if (isBlockable && Block.isBlocking && Block.IsBetween(damageData.Source))
+            if (isBlockable && damageData.canBlock && Block.isBlocking && Block.IsBetween(damageData.Source))
             {
                 damageData.Source.Core.GetCoreComponent<DamageReceiver>().OnAttackBlockedByDefender?.Invoke();
                 OnSuccessfulBlock?.Invoke();
