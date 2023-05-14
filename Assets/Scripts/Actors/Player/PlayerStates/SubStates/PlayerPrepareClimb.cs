@@ -4,11 +4,25 @@ using UnityEngine;
 
 public class PlayerPrepareClimb : PlayerState
 {
+    private int climbingDirection;
+
     private Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
     private Movement movement;
 
     public PlayerPrepareClimb(Player player, StateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+
+        if (climbingDirection == 1)
+            Player.Instance.gameObject.transform.position += new Vector3(0, 1f, 0);
+        else if (climbingDirection == -1)
+            Player.Instance.gameObject.transform.position -= new Vector3(0, 1f, 0);
+
+        climbingDirection = 0;
     }
 
     public override void LogicUpdate()
@@ -22,4 +36,6 @@ public class PlayerPrepareClimb : PlayerState
             stateMachine.ChangeState(player.LadderClimbState);
         }
     }
+
+    public void SetClimbingDirection(int direciton) => climbingDirection = direciton;
 }
