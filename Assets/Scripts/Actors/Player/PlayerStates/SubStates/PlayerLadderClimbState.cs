@@ -6,9 +6,7 @@ public class PlayerLadderClimbState : PlayerState
     private bool JumpInput;
 
     private bool isGrounded;
-    private bool isTouchingLadder;
-
-    private int climbingDirection;
+    private bool isTouchingLadderTop;
 
     private float lastJumpTime;
 
@@ -34,18 +32,13 @@ public class PlayerLadderClimbState : PlayerState
         if (CollisionSenses)
         {
             isGrounded = CollisionSenses.Ground;
-            isTouchingLadder = collisionSenses.Ladder;
+            isTouchingLadderTop = collisionSenses.LadderTop;
         }
     }
 
     public override void Enter()
     {
         base.Enter();
-
-        if (climbingDirection == 1)
-            Player.Instance.gameObject.transform.position += new Vector3(0,1f,0);
-        else if (climbingDirection == -1)
-            Player.Instance.gameObject.transform.position -= new Vector3(0, 1f, 0);
 
         player.JumpState.ResetAmountOfJumpsLeft();
 
@@ -57,7 +50,6 @@ public class PlayerLadderClimbState : PlayerState
     {
         base.Exit();
 
-        climbingDirection = 0;
         m_anim.speed = 1;
         m_rigidbody.bodyType = RigidbodyType2D.Dynamic;
     }
@@ -72,7 +64,7 @@ public class PlayerLadderClimbState : PlayerState
         yInput = player.InputHandler.NormInputY;
         JumpInput = player.InputHandler.JumpInput;
 
-        if(!isTouchingLadder)
+        if(!isTouchingLadderTop && yInput == 1)
         {
             stateMachine.ChangeState(player.FinishClimb);
         }
@@ -94,8 +86,6 @@ public class PlayerLadderClimbState : PlayerState
         else
             m_anim.speed = 0;
     }
-
-    public void SetClimbingDirection(int direciton) => climbingDirection = direciton;
 
     public bool CheckIfCanJump()
     {

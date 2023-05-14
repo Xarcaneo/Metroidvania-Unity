@@ -50,6 +50,8 @@ public class CollisionSenses : CoreComponent
     [SerializeField] private float groundCheckRadius;
     [SerializeField] private float wallCheckDistance;
     [SerializeField] private float ladderCheckRadius;
+    [SerializeField] private float ladderTopDistance;
+    [SerializeField] private float ladderBottomDistance;
 
     [SerializeField] private LayerMask whatIsGround;
     [SerializeField] private LayerMask whatIsWall;
@@ -84,11 +86,11 @@ public class CollisionSenses : CoreComponent
     }
     public bool LadderBottom
     {
-        get => Physics2D.OverlapCircle(LadderCheck.position - new Vector3(0,5,0), ladderCheckRadius, whatIsLadder);
+        get => Physics2D.OverlapCircle(LadderCheck.position - new Vector3(0, ladderBottomDistance, 0), ladderCheckRadius, whatIsLadder);
     }
 
     public bool LadderTop
     {
-        get => Physics2D.OverlapCircle(LadderCheck.position - new Vector3(0, -5, 0), ladderCheckRadius, whatIsLadder);
+        get => Physics2D.OverlapCircle(LadderCheck.position - new Vector3(0, ladderTopDistance, 0), ladderCheckRadius, whatIsLadder);
     }
 }
