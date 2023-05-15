@@ -29,7 +29,7 @@ public class Reaver_PatrolState : MoveState
 
         if(isPlayerDetected)
         {
-            stateMachine.ChangeState(enemy.playerDetectedState);
+            stateMachine.ChangeState(enemy.chasteState);
         }
         else if (isDetectingWall || !isDetectingLedge)
         {

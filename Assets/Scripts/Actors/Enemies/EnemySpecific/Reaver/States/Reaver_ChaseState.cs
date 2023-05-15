@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Reaver_PlayerDetectedState : PlayerDetectedState
+public class Reaver_ChaseState : ChaseState
 {
     private Reaver enemy;
-    private D_Reaver_PlayerDetectedState stateData;
 
     private bool isDetectingWall;
     private bool isDetectingLedge;
@@ -20,10 +19,9 @@ public class Reaver_PlayerDetectedState : PlayerDetectedState
     private EnemyDamageHitBox EnemyDamageHitBox { get => enemyDamageHitBox ?? core.GetCoreComponent(ref enemyDamageHitBox); }
     private EnemyDamageHitBox enemyDamageHitBox;
 
-    public Reaver_PlayerDetectedState(Entity entity, StateMachine stateMachine, string animBoolName, D_Reaver_PlayerDetectedState stateData, Reaver enemy) : base(entity, stateMachine, animBoolName)
+    public Reaver_ChaseState(Entity entity, StateMachine stateMachine, string animBoolName, D_ChaseState stateData) : base(entity, stateMachine, animBoolName, stateData)
     {
-        this.enemy = enemy;
-        this.stateData = stateData;
+        this.enemy = (Reaver)entity;
     }
 
     public override void DoChecks()

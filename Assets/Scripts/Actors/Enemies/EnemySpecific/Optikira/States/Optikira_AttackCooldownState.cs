@@ -32,7 +32,9 @@ public class Optikira_AttackCooldownState : AttackCooldownState
 
         if (timeSinceEnteredState >= stateData.cooldownTime)
         {
-            if (isPlayerDetected)
+            if (enemy.dashState.EntityInRange())
+                stateMachine.ChangeState(enemy.dashState);
+            else if (isPlayerDetected)
                 stateMachine.ChangeState(enemy.rangedAttackState);
             else
                 stateMachine.ChangeState(enemy.idleState);

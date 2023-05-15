@@ -5,6 +5,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "newPlayerData", menuName = "Data/Player Data/Base Data")]
 public class PlayerData : ScriptableObject
 {
+    [Header("Shared")]
+    public float standColliderHeight = 1.87f;
+
     [Header("Move State")]
     public float movementVelocity = 10f;
 
@@ -39,15 +42,14 @@ public class PlayerData : ScriptableObject
     public Vector2 dashAngle = new Vector2(1, 0);
     public float dashCooldown = 1.5f;
     public float dashTime = 0.2f;
-    public float dashEndYMultiplier = 0.2f;
 
     [Header("Roll State")]
     public float rollSpeed = 10.0f;
     public float rollDuration = 0.7f;
     public float rollCooldown = 1.0f;
+    public float rollColliderHeight = 0.6f;
 
     [Header("Crouch State")]
-    public float standColliderHeight = 1.87f;
     public float crouchColliderHeight = 0.6f;
 
     [Header("Attack State")]

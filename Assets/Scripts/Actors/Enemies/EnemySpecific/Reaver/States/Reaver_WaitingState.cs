@@ -39,7 +39,7 @@ public class Reaver_WaitingState : WaitingState
         }
         else if(!isDetectingWall && isDetectingLedge)
         {
-            stateMachine.ChangeState(enemy.playerDetectedState);
+            stateMachine.ChangeState(enemy.chasteState);
         }
     }
 }

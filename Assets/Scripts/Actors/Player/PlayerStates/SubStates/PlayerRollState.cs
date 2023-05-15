@@ -22,6 +22,8 @@ public class PlayerRollState : PlayerAbilityState
     {
         base.Enter();
 
+        player.SetColliderHeight(playerData.crouchColliderHeight);
+
         DamageReceiver.isDamagable = false;
         KnockbackReceiver.isKnockable = false;
 
@@ -31,6 +33,8 @@ public class PlayerRollState : PlayerAbilityState
     public override void Exit()
     {
         base.Exit();
+
+        player.SetColliderHeight(playerData.standColliderHeight);
 
         DamageReceiver.isDamagable = true;
         KnockbackReceiver.isKnockable = true;

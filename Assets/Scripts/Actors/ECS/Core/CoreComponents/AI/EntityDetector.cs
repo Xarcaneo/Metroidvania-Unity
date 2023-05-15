@@ -42,14 +42,4 @@ public class EntityDetector : CoreComponent
             return entityInRange = false;
         }
     }
-
-    private void OnDrawGizmos()
-    {
-        // Draw a wire rectangle at the detection range to visualize the area
-        if (debug)
-        {
-            Gizmos.color = entityInRange ? Color.green : Color.red;
-            Gizmos.DrawWireCube(transform.position, new Vector3(detectionWidth, detectionHeight, 0));
-        }
-    }
 }

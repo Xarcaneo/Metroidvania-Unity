@@ -15,7 +15,7 @@ public class PlayerCrouchIdleState : PlayerGroundedState
         base.Enter();
 
         isCrouching = true;
-        player.SetColliderHeight(playerData.crouchColliderHeight);
+        player.SetColliderHeight(playerData.rollColliderHeight);
     }
 
     public override void Exit()
