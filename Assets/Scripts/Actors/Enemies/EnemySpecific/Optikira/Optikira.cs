@@ -8,10 +8,12 @@ public class Optikira : Enemy
     public Optikira_DeathState deathState { get; private set; }
     public Optikira_RangedAttackState rangedAttackState { get; private set; }
     public Optikira_AttackCooldownState attackCooldownState { get; private set; }
+    public Optikira_DashState dashState { get; private set; }
 
     [SerializeField] private D_IdleState idleStateData;
     [SerializeField] private D_RangedAttackState rangedAttackData;
     [SerializeField] private D_AttackCooldownState attackCooldownData;
+    [SerializeField] private D_DashState dashData;
 
     [SerializeField] private Transform attackPosition;
 
@@ -23,6 +25,7 @@ public class Optikira : Enemy
         deathState = new Optikira_DeathState(this, StateMachine, "death", this);
         rangedAttackState = new Optikira_RangedAttackState(this, StateMachine, "attack", rangedAttackData, attackPosition);
         attackCooldownState = new Optikira_AttackCooldownState(this, StateMachine, "attackCooldown", attackCooldownData);
+        dashState = new Optikira_DashState(this, StateMachine, "dash", dashData);
     }
     public override State GetDeathState()
     {

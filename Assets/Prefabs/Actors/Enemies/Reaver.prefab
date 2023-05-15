@@ -175,7 +175,7 @@ MonoBehaviour:
   entityData: {fileID: 11400000, guid: d8152c96d47aa7147974f79b97869596, type: 2}
   idleStateData: {fileID: 11400000, guid: 2f53f30b06f334a4a9756aded3a02069, type: 2}
   moveStateData: {fileID: 11400000, guid: 7abe10eb2c646394ab8992a9e9b0490a, type: 2}
-  reaver_PlayerDetectedData: {fileID: 11400000, guid: f079c03abae222c41818abdc34e21a6c, type: 2}
+  chaseData: {fileID: 11400000, guid: a78ad5a56d2d8de4a845d8324fe6b7ab, type: 2}
   reaver_MeleeAttackData: {fileID: 11400000, guid: a99763cf0f9e14146b953171626d7d9e, type: 2}
   reaver_AttackCooldownData: {fileID: 11400000, guid: 33564d71851bfd046b4a505fc8e3e74d, type: 2}
 --- !u!114 &1078489767368504234
@@ -569,6 +569,8 @@ MonoBehaviour:
   groundCheckRadius: 0.3
   wallCheckDistance: 1
   ladderCheckRadius: 0
+  ladderTopDistance: 0
+  ladderBottomDistance: 0
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256

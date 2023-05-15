@@ -43,7 +43,7 @@ public class Reaver_IdleState : IdleState
         }
         else if (isPlayerDetected)
         {
-            stateMachine.ChangeState(enemy.playerDetectedState);
+            stateMachine.ChangeState(enemy.chasteState);
         }
     }
 }

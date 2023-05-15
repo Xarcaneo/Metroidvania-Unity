@@ -19,20 +19,8 @@ public class PlayerDashState : PlayerAbilityState
 
         dashDirection = Vector2.right * Movement.FacingDirection;
 
-        float angle = Vector2.SignedAngle(Vector2.right, dashDirection);
-
         startTime = Time.time;
         Movement?.CheckIfShouldFlip(Mathf.RoundToInt(dashDirection.x));
-    }
-
-    public override void Exit()
-    {
-        base.Exit();
-
-        if (Movement?.CurrentVelocity.y > 0)
-        {
-            Movement?.SetVelocityY(Movement.CurrentVelocity.y * playerData.dashEndYMultiplier);
-        }
     }
 
     public override void LogicUpdate()
@@ -41,8 +29,6 @@ public class PlayerDashState : PlayerAbilityState
 
         if (!isExitingState)
         {
-            player.Anim.SetFloat("yVelocity", Movement.CurrentVelocity.y);
-
             Movement?.SetVelocity(playerData.dashVelocity, playerData.dashAngle, Movement.FacingDirection);
 
             if (Time.time >= startTime + playerData.dashTime || isTouchingWall  || isTouchingLedge || Movement?.CurrentVelocity.x == 0)
