@@ -2,11 +2,13 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LocationNameIndicator : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI locationName;
-    
+    [SerializeField] private Image locationNameBackground;
+
     private float fadeInTime = 1f;
     private float timeBeforeFadeOut = 2f;
     private float fadeOutTime = 1f;
@@ -27,20 +29,27 @@ public class LocationNameIndicator : MonoBehaviour
         GameEvents.Instance.onEndSession -= OnEndSession;
     }
 
-    private void OnEndSession() => locationName.text = "";
+    private void OnEndSession()
+    {
+        CancelFadeCoroutine();
+        locationName.text = "";
+    }
 
     private void OnPauseTrigger(bool isPaused)
     {
         if (isPaused)
         {
-            // Set the alpha to 0 when the game is paused
-            locationName.color = new Color(locationName.color.r, locationName.color.g, locationName.color.b, 0f);
+            CancelFadeCoroutine();
+            SetAlpha(0f);
+        }
+    }
 
-            // Cancel the current fade coroutine if it is running
-            if (fadeCoroutine != null)
-            {
-                StopCoroutine(fadeCoroutine);
-            }
+    public void CancelFadeCoroutine()
+    {
+        if (fadeCoroutine != null)
+        {
+            StopCoroutine(fadeCoroutine);
+            fadeCoroutine = null;
         }
     }
 
@@ -51,6 +60,7 @@ public class LocationNameIndicator : MonoBehaviour
         {
             StopCoroutine(fadeCoroutine);
             locationName.color = new Color(locationName.color.r, locationName.color.g, locationName.color.b, 0f);
+            locationNameBackground.color = locationName.color;
         }
     }
 
@@ -59,16 +69,25 @@ public class LocationNameIndicator : MonoBehaviour
         if (locationName.text != areaName)
         {
             locationName.text = areaName;
-            fadeCoroutine = StartCoroutine(FadeInAndOut());
+            StartFadeCoroutine();
         }
     }
+
+    private void StartFadeCoroutine()
+    {
+        CancelFadeCoroutine();
+        fadeCoroutine = StartCoroutine(FadeInAndOut());
+    }
+
     private IEnumerator FadeInAndOut()
     {
+        SetAlpha(0f);
+
         float currentTime = 0f;
         while (currentTime < fadeInTime)
         {
             float alpha = Mathf.Lerp(0f, 1f, currentTime / fadeInTime);
-            locationName.color = new Color(locationName.color.r, locationName.color.g, locationName.color.b, alpha);
+            SetAlpha(alpha);
             currentTime += Time.deltaTime;
             yield return null;
         }
@@ -79,9 +98,22 @@ public class LocationNameIndicator : MonoBehaviour
         while (currentTime < fadeOutTime)
         {
             float alpha = Mathf.Lerp(1f, 0f, currentTime / fadeOutTime);
-            locationName.color = new Color(locationName.color.r, locationName.color.g, locationName.color.b, alpha);
+            SetAlpha(alpha);
             currentTime += Time.deltaTime;
             yield return null;
         }
+
+        SetAlpha(0f);
+        fadeCoroutine = null;
+    }
+
+    private void SetAlpha(float alpha)
+    {
+        Color nameColor = locationName.color;
+        Color bgColor = locationNameBackground.color;
+        nameColor.a = alpha;
+        bgColor.a = alpha;
+        locationName.color = nameColor;
+        locationNameBackground.color = bgColor;
     }
 }

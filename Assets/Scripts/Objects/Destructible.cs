@@ -23,32 +23,13 @@ public class Destructible : MonoBehaviour, IDamageable
         }
     }
 
-    private void OnDisable()
-    {
-        if (isDestroyed) Destroy(gameObject);
-    }
-
     public void InstantKill() { }
 
     public void AnimationFinishTrigger()
     {
         if (m_spriteRenderer != null)
         {
-            StartCoroutine(FadeOutSprite(m_spriteRenderer));
+            Destroy(gameObject);
         }
-    }
-
-    private IEnumerator FadeOutSprite(SpriteRenderer spriteRenderer)
-    {
-        Color color = spriteRenderer.color;
-        float alpha = color.a;
-        while (alpha > 0)
-        {
-            alpha -= Time.deltaTime;
-            color = new Color(color.r, color.g, color.b, alpha);
-            spriteRenderer.color = color;
-            yield return null;
-        }
-        Destroy(gameObject);
     }
 }
