@@ -45,11 +45,24 @@ public class Projectile : MonoBehaviour
     {
         if (!hasHitGround)
         {
-            //attackDetails.position = transform.position;
+            // attackDetails.position = transform.position;
 
             if (isGravityOn)
             {
+                // Calculate the angle based on the velocity direction
                 float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * Mathf.Rad2Deg;
+
+                // Rotate the projectile sprite
+                if (angle > 90 || angle < -90)
+                {
+                    transform.localScale = new Vector3(-1f, 1f, 1f); // Flip sprite horizontally
+                    angle += 180f;
+                }
+                else
+                {
+                    transform.localScale = new Vector3(1f, 1f, 1f); // Reset sprite scale
+                }
+
                 transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
             }
         }

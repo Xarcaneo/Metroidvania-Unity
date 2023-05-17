@@ -60,7 +60,7 @@ public class CollisionSenses : CoreComponent
 
     public bool Ground
     {
-        get => Physics2D.OverlapBox(GroundCheck.position, new Vector2(groundCheckRadius * 2, 0.1f), 0, whatIsGround);
+        get => Physics2D.OverlapCircle(GroundCheck.position,groundCheckRadius, whatIsGround);
     }
 
     public bool WallFront
