@@ -6,10 +6,11 @@ using UnityEngine;
 
 public class Gate : MonoBehaviour
 {
-    [SerializeField] private int m_gateID;
+    [SerializeField] public int m_gateID;
     private bool m_GateState;
+    public bool isEventCompleted = false;
 
-    public Animator gateAnimator; // reference to the Animator component
+    private Animator gateAnimator; // reference to the Animator component
 
     // Define the possible states of the gate
     enum GateState { IdleOpen, Closing, IdleClose, Opening };
@@ -44,6 +45,8 @@ public class Gate : MonoBehaviour
 
     private void TriggerStateChanged(int triggerID)
     {
+        isEventCompleted = false;
+
         if (triggerID == m_gateID)
         {
             m_GateState = DialogueLua.GetVariable("Trigger_" + m_gateID).asBool;
@@ -128,5 +131,7 @@ public class Gate : MonoBehaviour
         {
             ChangeState(GateState.IdleOpen);
         }
+
+        isEventCompleted = true;
     }
 }

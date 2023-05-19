@@ -9,6 +9,8 @@ public class Trigger : Interactable
     [SerializeField] private int m_triggerID;
     private bool m_triggerState;
 
+    private List<Gate> connectedGates; // List to store references to connected gates
+
     public Animator entityAnim; // reference to the Animator component
 
     // Define the possible states of the trigger
@@ -37,6 +39,10 @@ public class Trigger : Interactable
             currentState = TriggerState.IdleOff;
             entityAnim.SetBool(idleOffParam, true);
         }
+
+        // Get references to connected gates using triggerID
+        connectedGates = new List<Gate>(FindObjectsOfType<Gate>());
+        connectedGates.RemoveAll(gate => gate.m_gateID != m_triggerID);
     }
 
     public override void Interact()
@@ -120,6 +126,32 @@ public class Trigger : Interactable
 
         GameEvents.Instance.DeactivatePlayerInput(false);
 
-        CallInteractionCompletedEvent();
+
+        StartCoroutine(CheckConnectedGatesEventCompletion());
+    }
+
+    IEnumerator CheckConnectedGatesEventCompletion()
+    {
+        while (true)
+        {
+            bool allGatesCompleted = true;
+
+            foreach (Gate gate in connectedGates)
+            {
+                if (!gate.isEventCompleted)
+                {
+                    allGatesCompleted = false;
+                    break;
+                }
+            }
+
+            if (allGatesCompleted)
+            {
+                CallInteractionCompletedEvent();
+                yield break; // Exit the coroutine
+            }
+
+            yield return null; // Wait for the next frame before checking again
+        }
     }
 }
