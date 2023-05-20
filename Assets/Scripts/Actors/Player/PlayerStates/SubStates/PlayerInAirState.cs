@@ -106,7 +106,7 @@ public class PlayerInAirState : PlayerState
         }
         else if (yInput == 1 && isTouchingLadder)
         {
-            stateMachine.ChangeState(player.PrepareClimb);
+            stateMachine.ChangeState(player.LadderClimbState);
         }
         else if (dashInput && player.DashState.CheckIfCanDash())
         {

@@ -30,6 +30,7 @@ public class PlayerPrepareClimb : PlayerState
         base.LogicUpdate();
 
         Movement?.SetVelocityX(0f);
+        Movement?.SetVelocityY(0f);
 
         if (isAnimationFinished)
         {
