@@ -21,6 +21,8 @@ public class Optikira_DashState : DashState
 
         if (!DashBackCollision()) dashDirection = -Movement.FacingDirection;
         else dashDirection = Movement.FacingDirection;
+
+        enemy.Anim.SetInteger("dash_direction", dashDirection);
     }
 
     public override void Exit()
