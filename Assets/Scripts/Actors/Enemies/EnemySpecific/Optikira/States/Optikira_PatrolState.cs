@@ -2,18 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Reaver_PatrolState : MoveState
+public class Optikira_PatrolState : MoveState
 {
-    private Reaver enemy;
+    private Optikira enemy;
 
     private bool isPlayerDetected;
 
     private EntityDetector EntityDetector { get => entityDetector ?? core.GetCoreComponent(ref entityDetector); }
     private EntityDetector entityDetector;
 
-    public Reaver_PatrolState(Entity entity, StateMachine stateMachine, string animBoolName, D_MoveState stateData, Reaver enemy) : base(entity, stateMachine, animBoolName, stateData)
+    public Optikira_PatrolState(Entity entity, StateMachine stateMachine, string animBoolName, D_MoveState stateData) : base(entity, stateMachine, animBoolName, stateData)
     {
-        this.enemy = enemy;
+        this.enemy = (Optikira)entity;
     }
 
     public override void DoChecks()
@@ -27,9 +27,9 @@ public class Reaver_PatrolState : MoveState
     {
         base.LogicUpdate();
 
-        if(isPlayerDetected)
+        if (isPlayerDetected)
         {
-            stateMachine.ChangeState(enemy.chasteState);
+            stateMachine.ChangeState(enemy.rangedAttackState);
         }
         else if (isDetectingWall || !isDetectingLedge)
         {

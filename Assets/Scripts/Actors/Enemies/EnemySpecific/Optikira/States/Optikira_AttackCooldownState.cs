@@ -37,7 +37,7 @@ public class Optikira_AttackCooldownState : AttackCooldownState
             else if (isPlayerDetected)
                 stateMachine.ChangeState(enemy.rangedAttackState);
             else
-                stateMachine.ChangeState(enemy.idleState);
+                stateMachine.ChangeState(enemy.patrolState);
         }
     }
 }

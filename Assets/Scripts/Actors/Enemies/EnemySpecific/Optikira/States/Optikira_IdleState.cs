@@ -27,7 +27,12 @@ public class Optikira_IdleState : IdleState
     {
         base.LogicUpdate();
 
-        if (isPlayerDetected)
+        if (isIdleTimeOver)
+        {
+            flipAfterIdle = true;
+            stateMachine.ChangeState(enemy.patrolState);
+        }
+        else if (isPlayerDetected)
         {
             stateMachine.ChangeState(enemy.rangedAttackState);
         }
