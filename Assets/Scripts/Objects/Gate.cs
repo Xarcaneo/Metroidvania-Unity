@@ -26,7 +26,7 @@ public class Gate : MonoBehaviour
     {
         yield return new WaitForEndOfFrame();
         gateAnimator = GetComponent<Animator>();
-        m_GateState = DialogueLua.GetVariable("Trigger_" + m_gateID).asBool;
+        m_GateState = DialogueLua.GetVariable("Trigger." + m_gateID).asBool;
 
         if (m_GateState)
         {
@@ -49,7 +49,7 @@ public class Gate : MonoBehaviour
 
         if (triggerID == m_gateID)
         {
-            m_GateState = DialogueLua.GetVariable("Trigger_" + m_gateID).asBool;
+            m_GateState = DialogueLua.GetVariable("Trigger." + m_gateID).asBool;
 
             if (m_GateState)
             {

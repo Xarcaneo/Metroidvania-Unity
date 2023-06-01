@@ -9,6 +9,8 @@ namespace Menu
 {
     public class PlayMenu : Menu<PlayMenu>
     {
+        [SerializeField] string m_startingArea = "Area 0";
+
         public List<SaveSlot> saveSlots;
 
         public override void OnOpenMenu()
@@ -39,7 +41,7 @@ namespace Menu
             }
             else
             {
-                SaveSystem.RestartGame("Area 0");
+                SaveSystem.RestartGame(m_startingArea);
             }
         }
 

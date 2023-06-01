@@ -435,7 +435,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1182027512274452441
 Transform:
   m_ObjectHideFlags: 0
@@ -1657,7 +1657,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7015856279492186317}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1685,10 +1685,10 @@ Camera:
   m_FocalLength: 0.86602545
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.15260418
-    y: 0.021296296
-    width: 0.33333334
-    height: 0.3333333
+    x: 0.0052083335
+    y: 0.14629629
+    width: 0.16666667
+    height: 0.16666666
   near clip plane: 0.1
   far clip plane: 1000
   field of view: 60
@@ -1722,7 +1722,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CameraTargets: []
-  CenterTargetOnStart: 1
+  CenterTargetOnStart: 0
   Axis: 0
   UpdateType: 1
   FollowHorizontal: 1
@@ -1752,6 +1752,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21ca80c383df8bc4a9bbb2ec06d2d970, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targets: []
 --- !u!114 &7015856279492186306
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1768,16 +1769,16 @@ MonoBehaviour:
   _serializedAxis: 0
   UseNumericBoundaries: 1
   UseTopBoundary: 1
-  TopBoundary: 39
+  TopBoundary: 40
   TargetTopBoundary: 0
   UseBottomBoundary: 1
-  BottomBoundary: -7
+  BottomBoundary: 0
   TargetBottomBoundary: 0
   UseLeftBoundary: 1
-  LeftBoundary: -5
+  LeftBoundary: 0
   TargetLeftBoundary: 0
   UseRightBoundary: 1
-  RightBoundary: 43
+  RightBoundary: 40
   TargetRightBoundary: 0
   IsCameraPositionHorizontallyBounded: 0
   IsCameraPositionVerticallyBounded: 0

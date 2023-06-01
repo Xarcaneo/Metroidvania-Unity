@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour
                     string keyName = binding.ToDisplayString(
                         InputBinding.DisplayStringOptions.DontIncludeInteractions);
 
-                    DialogueLua.SetVariable(action.name + "_Keybinding", keyName);
+                    DialogueLua.SetVariable("Keybinding." + action.name, keyName);
                 }
             }
         }
