@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class NPC : Interactable
 {
+    [SerializeField] private string m_dialogueID;
+
     private void OnEnable()
     {
         try
@@ -29,7 +31,7 @@ public class NPC : Interactable
 
     public override void Interact()
     {
-        DialogueManager.StartConversation("New Conversation 1");
+        DialogueManager.StartConversation(m_dialogueID);
     }
 
     protected override void IsInteractionCompleted(bool value)

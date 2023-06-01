@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6465585732757602299}
   - component: {fileID: 622619104236007423}
   - component: {fileID: 6763475184513781350}
-  - component: {fileID: 4991341690206584876}
+  - component: {fileID: 8530749246345757559}
   m_Layer: 8
   m_Name: Gate
   m_TagString: Untagged
@@ -121,6 +121,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_gateID: 0
+  isEventCompleted: 0
 --- !u!114 &6763475184513781350
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,7 +135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   muteSounds: 0
---- !u!61 &4991341690206584876
+--- !u!61 &8530749246345757559
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -147,10 +148,10 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.5, y: -3}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 1}
     oldSize: {x: 1, y: 6}
     newSize: {x: 0.0009937888, y: 0.0039751553}
     adaptiveTilingThreshold: 0.5

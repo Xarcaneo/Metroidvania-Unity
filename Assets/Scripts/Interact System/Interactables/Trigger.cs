@@ -27,7 +27,7 @@ public class Trigger : Interactable
     {
         yield return new WaitForEndOfFrame();
         entityAnim = GetComponent<Animator>();
-        m_triggerState = DialogueLua.GetVariable("Trigger_" + m_triggerID).asBool;
+        m_triggerState = DialogueLua.GetVariable("Trigger." + m_triggerID).asBool;
 
         if (m_triggerState)
         {
@@ -89,7 +89,7 @@ public class Trigger : Interactable
         {
             case TriggerState.IdleOn:
                 entityAnim.SetBool(idleOnParam, true);
-                DialogueLua.SetVariable("Trigger_" + m_triggerID, true);
+                DialogueLua.SetVariable("Trigger." + m_triggerID, true);
                 GameEvents.Instance.TriggerStateChanged(m_triggerID);
                 break;
             case TriggerState.TurningOff:
@@ -97,7 +97,7 @@ public class Trigger : Interactable
                 break;
             case TriggerState.IdleOff:
                 entityAnim.SetBool(idleOffParam, true);
-                DialogueLua.SetVariable("Trigger_" + m_triggerID, false);
+                DialogueLua.SetVariable("Trigger." + m_triggerID, false);
                 GameEvents.Instance.TriggerStateChanged(m_triggerID);
                 break;
             case TriggerState.TurningOn:
