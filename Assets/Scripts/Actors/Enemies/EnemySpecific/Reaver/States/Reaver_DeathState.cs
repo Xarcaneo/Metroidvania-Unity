@@ -18,7 +18,7 @@ public class Reaver_DeathState : DeathState
     {
         base.Enter();
 
-        PixelCrushers.MessageSystem.SendMessage(this, "Killed", "Knight");
+        PixelCrushers.MessageSystem.SendMessage(this, "Killed", "Reaver");
     }
     public override void LogicUpdate()
     {
