@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 9162216182597265565}
   - component: {fileID: 1847822791}
   - component: {fileID: 377543945}
+  - component: {fileID: 657163957}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -58,7 +59,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cce4f9c235896647bec18f4e252026e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_playerPref: {fileID: 5445145942140402593, guid: 9d74e8e5f15669a41804d51785721f33, type: 3}
+  actions: {fileID: -944628639613478452, guid: 4670f0957538c94499ccaa88a47110f7, type: 3}
   currentSaveSlot: 0
   shouldFlipPlayer: 0
 --- !u!114 &377543945
@@ -74,3 +75,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actions: {fileID: -944628639613478452, guid: 4670f0957538c94499ccaa88a47110f7, type: 3}
+--- !u!114 &657163957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9162216182597265552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05d892a6041f45446bb1cdc085a0e801, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
