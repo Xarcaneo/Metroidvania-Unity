@@ -1,5 +1,6 @@
 using FMOD.Studio;
 using PixelCrushers;
+using QFSW.QC;
 using System.Collections;
 using UnityEngine;
 
@@ -16,6 +17,8 @@ public class LevelManager : MonoBehaviour
 
         if(m_areaName != "")
             StartCoroutine(DelayedAreaChanged());
+
+        QuantumConsole.Instance.canToggleConsole = true;
     }
 
     private void OnDisable()
@@ -23,6 +26,9 @@ public class LevelManager : MonoBehaviour
         GameObject[] items = GameObject.FindGameObjectsWithTag("Item");
         foreach (GameObject item in items)
             GameObject.Destroy(item);
+
+        QuantumConsole.Instance.canToggleConsole = false;
+        QuantumConsole.Instance.Deactivate();
     }
     private IEnumerator DelayedAreaChanged()
     {

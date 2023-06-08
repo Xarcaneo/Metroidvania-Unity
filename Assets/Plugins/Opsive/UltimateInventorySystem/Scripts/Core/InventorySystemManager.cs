@@ -649,5 +649,10 @@ namespace Opsive.UltimateInventorySystem.Core
             if (ReferenceEquals(s_Manager, this)) { s_Manager = null; }
 
         }
+
+        public static object GetGlobal<T>(object itemObjectSpawnerID)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

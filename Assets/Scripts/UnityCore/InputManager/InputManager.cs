@@ -1,3 +1,4 @@
+using QFSW.QC;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -50,6 +51,8 @@ public class InputManager : MonoBehaviour
             else if (menuInput.actions["NextTab"].triggered) OnMenuNextTab?.Invoke();
             else if (menuInput.actions["Delete"].triggered) OnMenuDelete?.Invoke();
         }
+
+        if (menuInput.actions["Console"].triggered) ToggleConsole();
     }
 
     private void OnDialogueTrigger( bool dialogueState )
@@ -60,5 +63,14 @@ public class InputManager : MonoBehaviour
     public Vector2 GetNavigateValue()
     {
         return menuInput.actions["Navigate"].ReadValue<Vector2>();
+    }
+
+    private void ToggleConsole()
+    {
+        if(QuantumConsole.Instance.canToggleConsole)
+            QuantumConsole.Instance.Toggle();
+
+        GameEvents.Instance.DeactivatePlayerInput(QuantumConsole.Instance.IsActive);
+        isInputActive = !QuantumConsole.Instance.IsActive;
     }
 }
