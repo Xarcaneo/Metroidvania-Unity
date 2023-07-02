@@ -71,8 +71,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 316027bc35bf2d9418e482f66709901e, type: 2}
-  m_sharedMaterial: {fileID: 4431155284346702290, guid: 316027bc35bf2d9418e482f66709901e, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 179b33e9c1283f841890d746fbe9fd13, type: 2}
+  m_sharedMaterial: {fileID: -6258254714882776784, guid: 179b33e9c1283f841890d746fbe9fd13, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -219,8 +219,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   muteSound: 0
-  SFX_Button_Pressed: {fileID: 11400000, guid: 1bc0402b4d65cba4b9347ebd2872c629, type: 2}
-  SFX_Button_Focused: {fileID: 11400000, guid: c1e00735692340b4cb1b06b1c99aea9f, type: 2}
+  onSelectSoundPath: 
+  onPressedSoundPath: 
 --- !u!114 &6599760340825031281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -234,4 +234,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_textTable: {fileID: 11400000, guid: 6e81d7d258335c64ebe2b9085326655e, type: 2}
+  m_localizedFonts: {fileID: 0}
   m_fieldName: 

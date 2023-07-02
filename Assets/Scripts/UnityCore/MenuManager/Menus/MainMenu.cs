@@ -11,11 +11,21 @@ namespace Menu
         [field: Header("Music")]
         [field: SerializeField] public EventReference music { get; private set; }
 
+        [field: Header("Title Screen")]
+        [SerializeField] private TitleScreen m_titleScreen;
+
+        [field: Header("Buttons")]
+        [SerializeField] private GameObject m_buttons;
+
         public override void OnOpenMenu()
         {
-            Time.timeScale = 1;
-            GameEvents.Instance.PauseTrigger(false);
-            AudioManager.instance.PlayMusic(music);
+            if (m_titleScreen.transitionFinished)
+            {
+                Time.timeScale = 1;
+                GameEvents.Instance.PauseTrigger(false);
+                AudioManager.instance.PlayMusic(music);
+                m_buttons.SetActive(true);
+            }
         }
 
         public override void OnReturnInput()
@@ -25,22 +35,22 @@ namespace Menu
 
         public void OnPlayPressed()
         {
-            PlayMenu.Open();
+           PlayMenu.Open();
         }
 
         public void OnSettingPressed()
         {
-            SettingsMenu.Open();
+           SettingsMenu.Open();
         }
 
         public void OnCreditsPressed()
         {
-            CreditsScreen.Open();
+           CreditsScreen.Open();
         }
 
         public override void OnBackPressed()
         {
-            Application.Quit();
+           Application.Quit();
         }
     }
 }
