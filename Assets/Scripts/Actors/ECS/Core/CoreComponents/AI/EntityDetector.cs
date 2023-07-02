@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class EntityDetector : CoreComponent
 {
-    [SerializeField] bool debug = false;     // switch on or off debug (e.g. show gizmos)
-
     public float detectionWidth;    // width of the detection area
     public float detectionHeight;   // height of the detection area
     public LayerMask entityLayer;   // layer(s) of the entity to detect
     public LayerMask obstacleLayer; // layer(s) of obstacles (e.g. walls) that can block the entity's view
     public int entityToRight;
-
-    private bool entityInRange = false; // whether the entity is within detection range
 
     public bool EntityInRange()
     {
@@ -27,19 +23,19 @@ public class EntityDetector : CoreComponent
             if (hit.collider != null)
             {
                 // there is an obstacle between the entity and detector, do not detect entity
-                return entityInRange = false;
+                return false;
             }
             else
             {
                 // entity is within range and not blocked by an obstacle
                 entityToRight = entityCollider.transform.position.x > transform.position.x ? 1 : -1;
-                return entityInRange = true;
+                return true;
             }
         }
         else
         {
             // entity is not within range
-            return entityInRange = false;
+            return  false;
         }
     }
 }
