@@ -11,6 +11,7 @@ public class PlayerAbilityState : PlayerState
     private bool isGrounded;
     protected bool isTouchingWall;
     protected bool isTouchingLedge;
+    protected bool isOnSlope;
 
     //References to Movement and CollisionSenses components
     protected Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
@@ -34,6 +35,7 @@ public class PlayerAbilityState : PlayerState
             isGrounded = CollisionSenses.Ground;
             isTouchingWall = CollisionSenses.WallFront;
             isTouchingLedge = CollisionSenses.LedgeHorizontal;
+            isOnSlope = CollisionSenses.SlopeCheck();
         }
     }
 

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Movement : CoreComponent
 {
+    private CollisionSenses CollisionSenses { get => collisionSenses ?? core.GetCoreComponent(ref collisionSenses); }
+    private CollisionSenses collisionSenses;
+
     public Rigidbody2D RB { get; private set; }
     public int FacingDirection { get; private set; }
     public bool CanSetVelocity { get; set; }
@@ -52,6 +55,12 @@ public class Movement : CoreComponent
     public void SetVelocityX(float velocity)
     {
         workspace.Set(velocity, CurrentVelocity.y);
+        SetFinalVelocity();
+    }
+
+    public void SetVelocityXOnSlope(float velocity)
+    {
+        workspace.Set(velocity * CollisionSenses.slopeNormalPerp.x, velocity * CollisionSenses.slopeNormalPerp.y);
         SetFinalVelocity();
     }
 

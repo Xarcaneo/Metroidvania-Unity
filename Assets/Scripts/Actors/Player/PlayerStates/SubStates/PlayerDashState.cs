@@ -31,7 +31,7 @@ public class PlayerDashState : PlayerAbilityState
         {
             Movement?.SetVelocity(playerData.dashVelocity, playerData.dashAngle, Movement.FacingDirection);
 
-            if (Time.time >= startTime + playerData.dashTime || isTouchingWall  || isTouchingLedge || Movement?.CurrentVelocity.x == 0)
+            if (Time.time >= startTime + playerData.dashTime || isTouchingWall || isOnSlope || isTouchingLedge || Movement?.CurrentVelocity.x == 0)
             {
                 isAbilityDone = true;
                 lastDashTime = Time.time;

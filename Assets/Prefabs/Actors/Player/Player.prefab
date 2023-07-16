@@ -596,6 +596,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61e846e5673490a46b46e7b29f86d15e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slopeDownAngle: 0
+  slopeNormalPerp: {x: 0, y: 0}
   groundCheck: {fileID: 5445145941035833279}
   wallCheck: {fileID: 5445145940627070307}
   ledgeCheckHorizontal: {fileID: 8432406758514290535}
@@ -606,15 +608,18 @@ MonoBehaviour:
   ladderCheckRadius: 0.3
   ladderTopDistance: -1
   ladderBottomDistance: 5
+  slopeCheckDistance: 1
+  boxCollider2D: {fileID: 5445145942140402598}
   whatIsGround:
     serializedVersion: 2
-    m_Bits: 768
+    m_Bits: 2816
   whatIsWall:
     serializedVersion: 2
     m_Bits: 256
   whatIsLadder:
     serializedVersion: 2
     m_Bits: 1024
+  test: 0
 --- !u!1 &5445145942140402601
 GameObject:
   m_ObjectHideFlags: 0
@@ -915,7 +920,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 7
-  m_Material: {fileID: 6200000, guid: bcd65c658f11e504188f3672cb8f5174, type: 2}
+  m_Material: {fileID: 6200000, guid: 04f4dbe619046474987fd401a611d668, type: 2}
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1

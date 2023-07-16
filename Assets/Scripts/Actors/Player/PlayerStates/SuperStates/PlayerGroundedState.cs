@@ -13,6 +13,7 @@ public class PlayerGroundedState : PlayerState
     private bool isGrounded;
     protected bool isTouchingLadder;
     private bool dashInput;
+    protected bool isOnSlope;
 
     protected Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
     private Movement movement;
@@ -31,6 +32,7 @@ public class PlayerGroundedState : PlayerState
         {
             isGrounded = CollisionSenses.Ground;
             isTouchingLadder = collisionSenses.Ladder;
+            isOnSlope = CollisionSenses.SlopeCheck();
         }
     }
 
@@ -38,6 +40,13 @@ public class PlayerGroundedState : PlayerState
     {
         base.Enter();
         player.JumpState.ResetAmountOfJumpsLeft();
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+        
+        player.RigidBody2D.sharedMaterial = playerData.noFriction;
     }
 
     public override void LogicUpdate()
@@ -50,6 +59,18 @@ public class PlayerGroundedState : PlayerState
         dashInput = player.InputHandler.RollOrDashInput;
         attackInput = player.InputHandler.AttackInput;
         blockInput = player.InputHandler.BlockInput;
+
+        if (isOnSlope)
+        {
+            if (xInput == 0.0f)
+                player.RigidBody2D.sharedMaterial = playerData.fullFriction;
+            else
+                player.RigidBody2D.sharedMaterial = playerData.noFriction;
+        }
+        else
+        {
+            player.RigidBody2D.sharedMaterial = playerData.noFriction;
+        }
 
         if (attackInput)
         {
