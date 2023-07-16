@@ -13,6 +13,7 @@ public abstract class Entity : MonoBehaviour
     public Core Core { get; set; }
     public Animator Anim { get; private set; }
     public BoxCollider2D MovementCollider { get; private set; }
+    public Rigidbody2D RigidBody2D { get; private set; }
     #endregion
 
     #region Other Variables
@@ -28,6 +29,7 @@ public abstract class Entity : MonoBehaviour
 
     public virtual void Start()
     {
+        RigidBody2D = GetComponent<Rigidbody2D>();
         Anim = GetComponent<Animator>();
         MovementCollider = GetComponent<BoxCollider2D>();
     }

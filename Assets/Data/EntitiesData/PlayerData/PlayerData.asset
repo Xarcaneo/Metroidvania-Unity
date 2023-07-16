@@ -12,7 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 628376d03fe58714588858e1485b4dc5, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
+  standColliderHeight: 1.87
   movementVelocity: 10
+  flatSurfaceGravity: 7
+  slopeSurfaceGravity: 25
+  noFriction: {fileID: 6200000, guid: 04f4dbe619046474987fd401a611d668, type: 2}
+  fullFriction: {fileID: 6200000, guid: e601778952baef74384b7e967ec60bee, type: 2}
   jumpVelocity: 22
   amountOfJumps: 1
   wallJumpVelocity: {x: 25, y: 25}
@@ -31,11 +36,10 @@ MonoBehaviour:
   dashAngle: {x: 1, y: 0}
   dashCooldown: 1.5
   dashTime: 0.2
-  dashEndYMultiplier: 0.2
   rollSpeed: 10
   rollDuration: 0.7
   rollCooldown: 1
-  standColliderHeight: 1.87
+  rollColliderHeight: 0.6
   crouchColliderHeight: 0.6
   attackMovementSpeed:
   - 0

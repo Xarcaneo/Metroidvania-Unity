@@ -7,6 +7,9 @@ public class CollisionSenses : CoreComponent
     private Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
     private Movement movement;
 
+    public float slopeDownAngle;
+    public Vector2 slopeNormalPerp;
+
     #region Check Transforms
 
     public Transform GroundCheck
@@ -52,6 +55,8 @@ public class CollisionSenses : CoreComponent
     [SerializeField] private float ladderCheckRadius;
     [SerializeField] private float ladderTopDistance;
     [SerializeField] private float ladderBottomDistance;
+    [SerializeField] private float slopeCheckDistance;
+    [SerializeField] private BoxCollider2D boxCollider2D;
 
     [SerializeField] private LayerMask whatIsGround;
     [SerializeField] private LayerMask whatIsWall;
@@ -60,7 +65,7 @@ public class CollisionSenses : CoreComponent
 
     public bool Ground
     {
-        get => Physics2D.OverlapCircle(GroundCheck.position,groundCheckRadius, whatIsGround);
+        get => Physics2D.OverlapCircle(GroundCheck.position, groundCheckRadius, whatIsGround);
     }
 
     public bool WallFront
@@ -92,5 +97,31 @@ public class CollisionSenses : CoreComponent
     public bool LadderTop
     {
         get => Physics2D.OverlapCircle(LadderCheck.position - new Vector3(0, ladderTopDistance, 0), ladderCheckRadius, whatIsLadder);
+    }
+
+    public bool SlopeCheck()
+    {
+        var isOnSlope = false;
+
+        Vector2 checkPos = Movement.RB.transform.position - new Vector3(0.0f, boxCollider2D.size.y / 2);
+
+        RaycastHit2D hit = Physics2D.Raycast(checkPos, Vector2.down, slopeCheckDistance, whatIsGround);
+
+        if (hit)
+        {
+            slopeNormalPerp = Vector2.Perpendicular(hit.normal).normalized;
+
+            slopeDownAngle = Vector2.Angle(hit.normal, Vector2.up);
+
+            Debug.DrawRay(hit.point, slopeNormalPerp, Color.blue);
+            Debug.DrawRay(hit.point, hit.normal, Color.green);
+
+            if (slopeDownAngle != 0.0)
+            {
+                isOnSlope = true;
+            }
+        }
+
+        return isOnSlope;
     }
 }
