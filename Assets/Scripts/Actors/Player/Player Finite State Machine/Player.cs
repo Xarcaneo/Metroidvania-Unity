@@ -27,6 +27,7 @@ public class Player : Entity
     public PlayerPrepareClimb PrepareClimb { get; private set; }
     public PlayerFinishClimb FinishClimb { get; private set; }
     public PlayerRecoverState RecoverState { get; private set; }
+    public PlayerGroundHitState GroundHitState { get; private set; }
 
     [SerializeField]
     private PlayerData playerData;
@@ -91,6 +92,7 @@ public class Player : Entity
         PrepareClimb = new PlayerPrepareClimb(this, StateMachine, playerData, "prepareClimb");
         FinishClimb = new PlayerFinishClimb(this, StateMachine, playerData, "finishClimb");
         RecoverState = new PlayerRecoverState(this, StateMachine, playerData, "recover");
+        GroundHitState = new PlayerGroundHitState(this, StateMachine, playerData, "groundHit");
     }
 
     public override State GetDeathState()

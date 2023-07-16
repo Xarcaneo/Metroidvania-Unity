@@ -21,7 +21,7 @@ public class PlayerInAirState : PlayerState
     protected bool wallJumpCoyoteTime;
     private bool isJumping;
     private bool isTouchingLedge;
-
+    private float maxReachedVelocityY;
     private float startWallJumpCoyoteTime;
 
     private Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
@@ -53,17 +53,14 @@ public class PlayerInAirState : PlayerState
         }
     }
 
-    public override void Enter()
-    {
-        base.Enter();
-    }
-
     public override void Exit()
     {
         base.Exit();
 
         isTouchingWall = false;
         isTouchingWallBack = false;
+
+        maxReachedVelocityY = 0.0f;
     }
 
     public override void LogicUpdate()
@@ -73,6 +70,9 @@ public class PlayerInAirState : PlayerState
         CheckCoyoteTime();
         CheckWallJumpCoyoteTime();
 
+        if (Movement?.CurrentVelocity.y < maxReachedVelocityY)
+            maxReachedVelocityY = (float)(Movement?.CurrentVelocity.y);
+
         xInput = player.InputHandler.NormInputX;
         yInput = player.InputHandler.NormInputY;
         jumpInput = player.InputHandler.JumpInput;
@@ -81,7 +81,11 @@ public class PlayerInAirState : PlayerState
 
         CheckJumpMultiplier();
 
-        if (isGrounded && Movement?.CurrentVelocity.y < 0.01f)
+        if (isGrounded && maxReachedVelocityY <= playerData.velocityToHit)
+        {
+            stateMachine.ChangeState(player.GroundHitState);
+        }
+        else if (isGrounded && Movement?.CurrentVelocity.y < 0.01f)
         {
             stateMachine.ChangeState(player.LandState);
         }
