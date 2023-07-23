@@ -138,8 +138,6 @@ public class CollisionSenses : CoreComponent
 
             slopeDownAngle = Vector2.Angle(groundHit.normal, Vector2.up);
 
-            Debug.Log(slopeDownAngle);
-
             Debug.DrawRay(groundHit.point, slopeNormalPerp, Color.blue);
             Debug.DrawRay(groundHit.point, groundHit.normal, Color.green);
 
