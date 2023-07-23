@@ -51,7 +51,16 @@ public class PlayerAttackState : PlayerAbilityState
 
         blockInput = player.InputHandler.BlockInput;
 
-        if(blockInput)
+        if (isOnSlope)
+        {
+            player.RigidBody2D.sharedMaterial = playerData.fullFriction;
+        }
+        else
+        {
+            player.RigidBody2D.sharedMaterial = playerData.noFriction;
+        }
+
+        if (blockInput)
         {
             stateMachine.ChangeState(player.PrepareBlockState);
         }
