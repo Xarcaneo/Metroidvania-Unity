@@ -29,13 +29,13 @@ public class PlayerMoveState : PlayerGroundedState
 
         Movement?.CheckIfShouldFlip(xInput);
 
-        if (!isOnSlope)
-            Movement?.SetVelocityX(playerData.movementVelocity * xInput);
-        else
-            Movement?.SetVelocityXOnSlope(playerData.movementVelocity * -xInput);
-
         if (!isExitingState)
         {
+            if (!isOnSlope)
+                Movement?.SetVelocityX(playerData.movementVelocity * xInput);
+            else
+                Movement?.SetVelocityXOnSlope(playerData.movementVelocity * -xInput);
+
             if (xInput == 0)
             {
                 stateMachine.ChangeState(player.IdleState);

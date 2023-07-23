@@ -61,6 +61,8 @@ public class CollisionSenses : CoreComponent
     [SerializeField] private LayerMask whatIsGround;
     [SerializeField] private LayerMask whatIsWall;
     [SerializeField] private LayerMask whatIsLadder;
+
+    private int raycastDirection;
     #endregion
 
     public bool Ground
@@ -103,18 +105,43 @@ public class CollisionSenses : CoreComponent
     {
         var isOnSlope = false;
 
-        Vector2 checkPos = Movement.RB.transform.position - new Vector3(0.0f, boxCollider2D.size.y / 2);
+        Vector2 slopeRaycastOrigin = Movement.RB.transform.position - (Vector3)(new Vector2(0.0f, boxCollider2D.size.y / 2));
 
-        RaycastHit2D hit = Physics2D.Raycast(checkPos, Vector2.down, slopeCheckDistance, whatIsGround);
+        // Offset the raycast position based on player's facing direction
+        Vector2 offsetDirection = (Movement != null && Movement.FacingDirection == 1) ? Vector2.right : Vector2.left;
+        Vector2 offsetRaycastOrigin = slopeRaycastOrigin + offsetDirection * 0.5f;
 
-        if (hit)
+        // Perform the second raycast to check for slope
+        RaycastHit2D slopeHit = Physics2D.Raycast(offsetRaycastOrigin, Vector2.down, slopeCheckDistance, whatIsGround);
+
+
+        if (slopeHit)
         {
-            slopeNormalPerp = Vector2.Perpendicular(hit.normal).normalized;
+            Vector2 slopeNormalPerp = Vector2.Perpendicular(slopeHit.normal).normalized;
+            Debug.DrawRay(slopeHit.point, slopeNormalPerp, Color.yellow);
 
-            slopeDownAngle = Vector2.Angle(hit.normal, Vector2.up);
+            if (slopeNormalPerp.y > 0.1 || slopeNormalPerp.y < -0.1)
+            {
+                if (slopeNormalPerp.y > 0)
+                    raycastDirection = 1;
+                else if (slopeNormalPerp.y < 0)
+                    raycastDirection = -1;
+            }
+        }
 
-            Debug.DrawRay(hit.point, slopeNormalPerp, Color.blue);
-            Debug.DrawRay(hit.point, hit.normal, Color.green);
+        Vector2 raycastOrigin = Movement.RB.transform.position - (Vector3)(new Vector2(raycastDirection * 0.5f, boxCollider2D.size.y / 2));
+        RaycastHit2D groundHit = Physics2D.Raycast(raycastOrigin, Vector2.down, slopeCheckDistance, whatIsGround);
+
+        if (groundHit)
+        {
+            slopeNormalPerp = Vector2.Perpendicular(groundHit.normal).normalized;
+
+            slopeDownAngle = Vector2.Angle(groundHit.normal, Vector2.up);
+
+            Debug.Log(slopeDownAngle);
+
+            Debug.DrawRay(groundHit.point, slopeNormalPerp, Color.blue);
+            Debug.DrawRay(groundHit.point, groundHit.normal, Color.green);
 
             if (slopeDownAngle != 0.0)
             {

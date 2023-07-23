@@ -608,7 +608,7 @@ MonoBehaviour:
   ladderCheckRadius: 0.3
   ladderTopDistance: -1
   ladderBottomDistance: 5
-  slopeCheckDistance: 1
+  slopeCheckDistance: 3
   boxCollider2D: {fileID: 5445145942140402598}
   whatIsGround:
     serializedVersion: 2
@@ -619,7 +619,6 @@ MonoBehaviour:
   whatIsLadder:
     serializedVersion: 2
     m_Bits: 1024
-  test: 0
 --- !u!1 &5445145942140402601
 GameObject:
   m_ObjectHideFlags: 0
