@@ -8,7 +8,7 @@ public class PlayerAbilityState : PlayerState
     protected bool isAbilityDone;
 
     //Variables to check player's current state
-    private bool isGrounded;
+    protected bool isGrounded;
     protected bool isTouchingWall;
     protected bool isTouchingLedge;
     protected bool isOnSlope;
