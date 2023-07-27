@@ -64,5 +64,34 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // Function to get the keybinding for a specific action
+    public string GetKeybindingForAction(string actionName)
+    {
+        Debug.Log(actionName);
+        // Iterate through all action maps in the asset
+        foreach (InputActionMap actionMap in actions.actionMaps)
+        {
+            // Find the action with the provided name
+            InputAction action = actionMap.FindAction(actionName);
+
+            if (action != null)
+            {
+                // Iterate through all bindings of the action
+                foreach (InputBinding binding in action.bindings)
+                {
+                    // Get the display string for the binding with only the key
+                    string keyName = binding.ToDisplayString(
+                        InputBinding.DisplayStringOptions.DontIncludeInteractions);
+
+                    // Return the keybinding for the action
+                    return keyName;
+                }
+            }
+        }
+
+        // If the action is not found, return an empty string
+        return string.Empty;
+    }
+
     #endregion
 }
