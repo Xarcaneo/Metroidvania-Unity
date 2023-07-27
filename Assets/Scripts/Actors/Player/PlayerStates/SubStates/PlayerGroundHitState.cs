@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerGroundHitState : PlayerState
 {
+    private Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
+    private Movement movement;
+
     public PlayerGroundHitState(Player player, StateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }
@@ -12,7 +15,9 @@ public class PlayerGroundHitState : PlayerState
     {
         base.LogicUpdate();
 
-        if( isAnimationFinished )
+        Movement?.SetVelocityX(0f);
+
+        if ( isAnimationFinished )
         {
             stateMachine.ChangeState(player.IdleState);
         }
