@@ -13,6 +13,7 @@ namespace Menu
         [SerializeField] private PlayerHealthBarController healthBarController;
         [SerializeField] private StandardDialogueUI dialogueUI;
 
+        [SerializeField] public HintBox hintBox; 
         [SerializeField] public LocationNameIndicator locationNameIndicator;
 
         public override void OnStart()
