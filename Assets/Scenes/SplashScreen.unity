@@ -162,10 +162,10 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
+    x: 0.03229167
+    y: 0.03425926
+    width: 0.33333334
+    height: 0.3333333
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -3086,6 +3086,10 @@ PrefabInstance:
       propertyPath: initialDatabase
       value: 
       objectReference: {fileID: 11400000, guid: c5bff3d04288d1b42abfebdba8c4d5c3, type: 2}
+    - target: {fileID: 11426072, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
+      propertyPath: displaySettings.localizationSettings.language
+      value: en
+      objectReference: {fileID: 0}
     - target: {fileID: 33181041, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
       propertyPath: enterSceneTransition.animationDuration
       value: 2

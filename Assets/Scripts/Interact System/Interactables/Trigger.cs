@@ -48,7 +48,8 @@ public class Trigger : Interactable
     public override void Interact()
     {
         GameEvents.Instance.DeactivatePlayerInput(true);
-        Player.Instance.gameObject.transform.position = this.transform.position;
+        Player.Instance.gameObject.transform.position = 
+            new Vector3(this.transform.position.x, Player.Instance.gameObject.transform.position.y, 0.0f);
         Player.Instance.gameObject.GetComponent<Renderer>().enabled = false;
 
         // Change state based on current state

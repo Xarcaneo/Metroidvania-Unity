@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f9839ff07fc3994aa17c3c6b5ecfd28, type: 3}
+  m_Name: Hints Localization
+  m_EditorClassIdentifier: 
+  m_languageKeys:
+  - Language 0
+  - en
+  - pl
+  m_languageValues: 000000000100000002000000
+  m_fieldKeys: 08000000090000000a000000
+  m_fieldValues:
+  - m_fieldName: '#000'
+    m_keys: 000000000100000002000000
+    m_values:
+    - 
+    - Venture forth, intrepid explorer! Seek out levers to unseal gates and discover
+      new paths. The power of unlocking awaits your keen eye!
+    - Polski
+  - m_fieldName: '#001'
+    m_keys: 000000000200000001000000
+    m_values:
+    - 
+    - 
+    - Courageous seeker, embrace the power of interaction! Engage with objects by
+      pressing the <color="red>{Interact}</color>!
+  - m_fieldName: '#002'
+    m_keys: 0000000001000000
+    m_values:
+    - 
+    - 'Unlock the power of checkpoints! Don''t forget to press <color="red>{Interact}</color>
+      to activate these lifelines and fortify your journey forward! '
+  m_nextLanguageID: 3
+  m_nextFieldID: 11

@@ -16,12 +16,12 @@ public class HintBox : MonoBehaviour
     private float targetAlpha;
     private bool isPaused; // New variable to track pausing state
 
-    private void OnEnable() => GameEvents.Instance.onEndSession += ResetAlpha;
+    private void OnEnable() => GameEvents.Instance.onNewSession += ResetAlpha;
 
 
     private void OnDisable()
     {
-        GameEvents.Instance.onEndSession -= ResetAlpha;
+        GameEvents.Instance.onNewSession -= ResetAlpha;
 
         // Check if the hint box is in the middle of fading and adjust the alpha accordingly
         if (isFading)
@@ -50,29 +50,26 @@ public class HintBox : MonoBehaviour
         TextMeshProUGUI hintText = GetComponentInChildren<TextMeshProUGUI>();
         LocalizeUI localization = GetComponentInChildren<LocalizeUI>();
 
-        if (hintText != null)
+        localization.fieldName = text;
+        localization.UpdateText();
+
+        // Find all placeholders in the text (e.g., {Attack}) and replace them with keybindings
+        string modifiedText = hintText.text;
+        int startPlaceholderIndex = modifiedText.IndexOf('{');
+        while (startPlaceholderIndex >= 0)
         {
-            hintText.text = text;
-            localization.UpdateText();
-
-            // Find all placeholders in the text (e.g., {Attack}) and replace them with keybindings
-            string modifiedText = hintText.text;
-            int startPlaceholderIndex = modifiedText.IndexOf('{');
-            while (startPlaceholderIndex >= 0)
+            int endPlaceholderIndex = modifiedText.IndexOf('}', startPlaceholderIndex + 1);
+            if (endPlaceholderIndex > startPlaceholderIndex)
             {
-                int endPlaceholderIndex = modifiedText.IndexOf('}', startPlaceholderIndex + 1);
-                if (endPlaceholderIndex > startPlaceholderIndex)
-                {
-                    string placeholder = modifiedText.Substring(startPlaceholderIndex + 1, endPlaceholderIndex - startPlaceholderIndex - 1);
-                    string keybinding = GameManager.Instance.GetKeybindingForAction(placeholder);
-                    modifiedText = modifiedText.Replace($"{{{placeholder}}}", keybinding);
-                }
-
-                startPlaceholderIndex = modifiedText.IndexOf('{', endPlaceholderIndex + 1);
+                string placeholder = modifiedText.Substring(startPlaceholderIndex + 1, endPlaceholderIndex - startPlaceholderIndex - 1);
+                string keybinding = GameManager.Instance.GetKeybindingForAction(placeholder);
+                modifiedText = modifiedText.Replace($"{{{placeholder}}}", keybinding);
             }
 
-            hintText.text = modifiedText;
+            startPlaceholderIndex = modifiedText.IndexOf('{', endPlaceholderIndex + 1);
         }
+
+        hintText.text = modifiedText;
     }
 
     public void FadeIn()
@@ -132,7 +129,8 @@ public class HintBox : MonoBehaviour
     public void ResetAlpha()
     {
         // Set the alpha value to 0 to hide the object
-        canvasGroup.alpha = 0f;
+        if(canvasGroup)
+            canvasGroup.alpha = 0f;
         isFading = false;
         isPaused = false; // Reset the pausing state when resetting the alpha
     }

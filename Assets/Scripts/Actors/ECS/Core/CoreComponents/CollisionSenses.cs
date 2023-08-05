@@ -137,10 +137,10 @@ public class CollisionSenses : CoreComponent
             slopeNormalPerp = Vector2.Perpendicular(groundHit.normal).normalized;
 
             slopeDownAngle = Vector2.Angle(groundHit.normal, Vector2.up);
-
+ 
             Debug.DrawRay(groundHit.point, slopeNormalPerp, Color.blue);
             Debug.DrawRay(groundHit.point, groundHit.normal, Color.green);
-
+ 
             if (slopeDownAngle != 0.0)
             {
                 isOnSlope = true;

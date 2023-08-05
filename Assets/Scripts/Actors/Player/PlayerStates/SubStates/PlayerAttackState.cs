@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerAttackState : PlayerAbilityState
 {
     private float velocityToSet;
-    private bool isGrounded;
     private bool blockInput;
 
     private DamageHitBox DamageHitBox { get => damageHitBox ?? core.GetCoreComponent(ref damageHitBox); }
@@ -17,13 +16,6 @@ public class PlayerAttackState : PlayerAbilityState
 
     public PlayerAttackState(Player player, StateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
-    }
-
-    public override void DoChecks()
-    {
-        base.DoChecks();
-
-        isGrounded = CollisionSenses.Ground;
     }
 
     public override void Enter()

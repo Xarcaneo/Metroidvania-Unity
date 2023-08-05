@@ -33,7 +33,7 @@ public class PlayerMoveState : PlayerGroundedState
         {
             if (!isOnSlope)
                 Movement?.SetVelocityX(playerData.movementVelocity * xInput);
-            else
+            else if (isOnSlope && !isTouchingWall)
                 Movement?.SetVelocityXOnSlope(playerData.movementVelocity * -xInput);
 
             if (xInput == 0)

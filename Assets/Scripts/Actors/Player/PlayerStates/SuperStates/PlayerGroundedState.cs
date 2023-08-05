@@ -14,6 +14,7 @@ public class PlayerGroundedState : PlayerState
     protected bool isTouchingLadder;
     private bool dashInput;
     protected bool isOnSlope;
+    protected bool isTouchingWall;
 
     protected Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
     private Movement movement;
@@ -33,6 +34,7 @@ public class PlayerGroundedState : PlayerState
             isGrounded = CollisionSenses.Ground;
             isTouchingLadder = collisionSenses.Ladder;
             isOnSlope = CollisionSenses.SlopeCheck();
+            isTouchingWall = CollisionSenses.WallFront;
         }
     }
 
