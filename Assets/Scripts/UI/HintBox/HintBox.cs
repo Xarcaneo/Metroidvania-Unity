@@ -70,6 +70,7 @@ public class HintBox : MonoBehaviour
         }
 
         hintText.text = modifiedText;
+        localization.fieldName = "";
     }
 
     public void FadeIn()

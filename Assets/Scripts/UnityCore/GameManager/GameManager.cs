@@ -67,7 +67,6 @@ public class GameManager : MonoBehaviour
     // Function to get the keybinding for a specific action
     public string GetKeybindingForAction(string actionName)
     {
-        Debug.Log(actionName);
         // Iterate through all action maps in the asset
         foreach (InputActionMap actionMap in actions.actionMaps)
         {
