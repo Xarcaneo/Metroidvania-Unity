@@ -3,42 +3,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DamageReceiver : CoreComponent, IDamageable
+public class DamageReceiver : Receiver, IDamageable
 {
     [SerializeField] public bool isDamagable = true;
-    [SerializeField] private bool isBlockable = false;
 
     public event Action<float> OnDamage;
-    public event Action OnSuccessfulBlock;
-    public event Action OnAttackBlockedByDefender;
-
-    private Block Block { get => block ?? core.GetCoreComponent(ref block); }
-    private Block block;
-
-    private Stats Stats { get => stats ?? core.GetCoreComponent(ref stats); }
-    private Stats stats;
 
     public void Damage(IDamageable.DamageData damageData)
     {
-        if (isDamagable)
+        if (isDamagable && !IsImmune)
         {
-            if (isBlockable && damageData.canBlock && Block.isBlocking && Block.IsBetween(damageData.Source))
+            CheckBlock(damageData);
+
+            if (Stats?.GetCurrentHealth() > 0)
             {
-                damageData.Source.Core.GetCoreComponent<DamageReceiver>().OnAttackBlockedByDefender?.Invoke();
-                OnSuccessfulBlock?.Invoke();
-                return;
-            }
-            else
-            {
-                Stats?.DecreaseHealth(damageData.DamageAmount);
+                Stats.DecreaseHealth(damageData.DamageAmount);
                 OnDamage?.Invoke(damageData.DamageAmount);
+
+                IsImmune = true;
+                ImmunityEndTime = Time.time + immunityTime;
             }
         }
     }
 
     public void InstantKill()
     {
-        Stats?.DecreaseHealth(stats.GetMaxHealth());
-        OnDamage?.Invoke(stats.GetMaxHealth());
+        Stats?.DecreaseHealth(Stats.GetMaxHealth());
+        OnDamage?.Invoke(Stats.GetMaxHealth());
+    }
+
+    public override void LogicUpdate()
+    {
+        base.LogicUpdate();
+        CheckImmunity();
     }
 }

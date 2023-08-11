@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Reaver_WaitingState : WaitingState
+public class Skeleton_WaitingState : WaitingState
 {
-    private Reaver enemy;
+    private readonly Skeleton enemy;
 
-    public Reaver_WaitingState(Entity entity, StateMachine stateMachine, string animBoolName, Reaver enemy) : base(entity, stateMachine, animBoolName)
+    public Skeleton_WaitingState(Entity entity, StateMachine stateMachine, string animBoolName) : base(entity, stateMachine, animBoolName)
     {
-        this.enemy = enemy;
+        this.enemy = (Skeleton)entity;
     }
 
     public override void LogicUpdate()
@@ -23,11 +23,7 @@ public class Reaver_WaitingState : WaitingState
             Movement.Flip();
             stateMachine.ChangeState(enemy.patrolState);
         }
-        else if (attackableTargetDetected)
-        {
-            stateMachine.ChangeState(enemy.meleeAttackState);
-        }
-        else if(!isDetectingWall && isDetectingLedge)
+        else if (!isDetectingWall && isDetectingLedge)
         {
             stateMachine.ChangeState(enemy.chaseState);
         }

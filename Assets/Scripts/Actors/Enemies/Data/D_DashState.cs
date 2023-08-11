@@ -11,6 +11,7 @@ public class D_DashState : ScriptableObject
     public LayerMask entityLayer;   // layer(s) of the entity to detect
     public Vector3 raycastTopPosition;
     public Vector3 raycastBottomPosition;
+    public int groundRaycastDistance = 1;
 
     [Header("Collision layers")]
     public LayerMask collisionLayer;   // layer(s) of the collision to detect

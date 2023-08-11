@@ -46,8 +46,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0465b5baa4e571a448dc26fc7fbe3c6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDamagable: 1
   isBlockable: 1
+  immunityTime: 2
+  isDamagable: 1
 --- !u!114 &3745032278966499276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,8 +61,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52b8561a32df37a4c9f112523c2e3c8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isKnockable: 1
   isBlockable: 1
+  immunityTime: 2
+  isKnockable: 1
   m_knockbackData: {fileID: 11400000, guid: e61a604f083f19e46a7e6b6a1060b287, type: 2}
   isKnockbackActive: 0
 --- !u!61 &7974105933141585200
@@ -374,7 +376,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BaseMaxHealth: 100
-  m_BaseAttack: 10
+  m_BaseAttack: 5
   m_BaseDefense: 15
 --- !u!1 &5445145941692919592
 GameObject:

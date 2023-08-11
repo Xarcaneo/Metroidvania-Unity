@@ -26,16 +26,19 @@ public class EnemyInCameraView : CoreComponent
     {
         base.LogicUpdate();
 
-        // Check if the enemy's bounding box is within the camera's frustum planes
-        if (GeometryUtility.TestPlanesAABB(GeometryUtility.CalculateFrustumPlanes(mainCamera), enemyTransform.GetComponent<Renderer>().bounds))
+        if (m_PlayAnimationEvents)
         {
-            // Enemy is in camera view
-            m_PlayAnimationEvents.muteSounds = false;
-        }
-        else
-        {
-            // Enemy is not in camera view
-            m_PlayAnimationEvents.muteSounds = true;
+            // Check if the enemy's bounding box is within the camera's frustum planes
+            if (GeometryUtility.TestPlanesAABB(GeometryUtility.CalculateFrustumPlanes(mainCamera), enemyTransform.GetComponent<Renderer>().bounds))
+            {
+                // Enemy is in camera view
+                m_PlayAnimationEvents.muteSounds = false;
+            }
+            else
+            {
+                // Enemy is not in camera view
+                m_PlayAnimationEvents.muteSounds = true;
+            }
         }
     }
 }

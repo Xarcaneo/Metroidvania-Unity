@@ -66,7 +66,7 @@ public class DashState : State
 
         bool bottomRaycastHit = Physics2D.Raycast(entity.transform.position + stateData.raycastBottomPosition, raycastDirection, raycastDistance, stateData.collisionLayer).collider != null;
         bool topRaycastHit = Physics2D.Raycast(entity.transform.position + stateData.raycastTopPosition, raycastDirection, raycastDistance, stateData.collisionLayer).collider != null;
-        bool groundRaycastHit = Physics2D.Raycast(groundRaycastPosition, Vector2.down, raycastDistance, stateData.collisionLayer).collider != null;
+        bool groundRaycastHit = Physics2D.Raycast(groundRaycastPosition, Vector2.down, stateData.groundRaycastDistance, stateData.collisionLayer).collider != null;
 
         return bottomRaycastHit || topRaycastHit || !groundRaycastHit;
     }

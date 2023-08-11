@@ -33707,7 +33707,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 870747656422461615, guid: 945fc3f5d631be2469137d2ba7131c60, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 870747656422461615, guid: 945fc3f5d631be2469137d2ba7131c60, type: 3}
       propertyPath: m_LocalPosition.y
@@ -33755,11 +33755,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2945861657735116234, guid: 945fc3f5d631be2469137d2ba7131c60, type: 3}
       propertyPath: roomNumber
-      value: 10
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 7008728493225166541, guid: 945fc3f5d631be2469137d2ba7131c60, type: 3}
       propertyPath: m_Name
-      value: Area 10
+      value: Area 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 945fc3f5d631be2469137d2ba7131c60, type: 3}
@@ -33806,37 +33806,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3659680767223653774, guid: f4bba6eb00abeda4eb0bebfe7cedff7d, type: 3}
   m_PrefabInstance: {fileID: 501507457321511117}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &547529941
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 547529942}
-  m_Layer: 0
-  m_Name: Vases
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &547529942
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 547529941}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 20.244131, y: 8.706779, z: 0.17515181}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 11
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &581213581
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33854,7 +33823,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 870747656422461615, guid: 945fc3f5d631be2469137d2ba7131c60, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 30
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 870747656422461615, guid: 945fc3f5d631be2469137d2ba7131c60, type: 3}
       propertyPath: m_LocalPosition.z
@@ -33898,11 +33867,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2945861657735116234, guid: 945fc3f5d631be2469137d2ba7131c60, type: 3}
       propertyPath: roomNumber
-      value: 11
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 7008728493225166541, guid: 945fc3f5d631be2469137d2ba7131c60, type: 3}
       propertyPath: m_Name
-      value: Area 11
+      value: Area 13
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 945fc3f5d631be2469137d2ba7131c60, type: 3}
@@ -34022,7 +33991,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1604151456, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
       propertyPath: hintID
-      value: '#003'
+      value: '#004'
       objectReference: {fileID: 0}
     - target: {fileID: 1727324615543367607, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
       propertyPath: m_RootOrder
@@ -34412,6 +34381,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1776510500}
     m_Modifications:
+    - target: {fileID: 529517075851815737, guid: be9fe6a688e23d946a6fa42d2f8ec38d, type: 3}
+      propertyPath: m_destinationSceneName
+      value: Area 7
+      objectReference: {fileID: 0}
     - target: {fileID: 6323214256313279159, guid: be9fe6a688e23d946a6fa42d2f8ec38d, type: 3}
       propertyPath: m_Name
       value: Entrance (1)

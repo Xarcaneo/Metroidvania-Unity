@@ -281,7 +281,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8abcacb2eeda45646bb37ae840d74b5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debug: 0
   detectionWidth: 26
   detectionHeight: 2
   entityLayer:
@@ -516,9 +515,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e345a3e101e8bf1419b93eb05e3578b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_BaseMaxHealth: 100
+  m_BaseMaxHealth: 90
   m_BaseAttack: 10
-  m_BaseDefense: 10
+  m_BaseDefense: 0
 --- !u!1 &4200895155197045542
 GameObject:
   m_ObjectHideFlags: 0
@@ -691,6 +690,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61e846e5673490a46b46e7b29f86d15e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slopeDownAngle: 0
+  slopeNormalPerp: {x: 0, y: 0}
   groundCheck: {fileID: 3132958701271702952}
   wallCheck: {fileID: 243942681580534056}
   ledgeCheckHorizontal: {fileID: 0}
@@ -701,6 +702,8 @@ MonoBehaviour:
   ladderCheckRadius: 0
   ladderTopDistance: 0
   ladderBottomDistance: 0
+  slopeCheckDistance: 0
+  boxCollider2D: {fileID: 0}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
