@@ -23,14 +23,12 @@ namespace Menu
             MainMenu.Open();
         }
 
-        public override void OnReturnInput()
-        {
-            SaveSystem.sceneLoaded -= OnSceneLoaded;
-            OnResumePressed();
-        }
+        public override void OnReturnInput() => OnResumePressed();
+
 
         public void OnResumePressed()
         {
+            SaveSystem.sceneLoaded -= OnSceneLoaded;
             Time.timeScale = 1;
             GameEvents.Instance.PauseTrigger(false);
             base.OnBackPressed();

@@ -225,6 +225,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffe5fc3f8d9f8e5479f30b975af00d9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemsDetected: 0
 --- !u!1 &5445145940581822908
 GameObject:
   m_ObjectHideFlags: 0
@@ -605,7 +606,8 @@ MonoBehaviour:
   ledgeCheckHorizontal: {fileID: 8432406758514290535}
   ledgeCheckVertical: {fileID: 0}
   ladderCheck: {fileID: 6509838877211819368}
-  groundCheckRadius: 0.45
+  groundCheckDistance: 0.2
+  groundCheckOffset: 0.2
   wallCheckDistance: 1
   ladderCheckRadius: 0.3
   ladderTopDistance: -1

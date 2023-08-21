@@ -33,7 +33,9 @@ public class MovingPlatform : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (transform.position.y < collision.transform.position.y - collision_offset)
+        if (collision.gameObject.CompareTag("Item"))
+            collision.transform.SetParent(transform);
+        else if (transform.position.y < collision.transform.position.y - collision_offset)
             collision.transform.SetParent(transform);
     }
 

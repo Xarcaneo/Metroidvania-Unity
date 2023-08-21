@@ -7,7 +7,7 @@ public class ItemDetector : CoreComponent
 {
     public event Action<bool> onItemDetected;
 
-    private int itemsDetected = 0;
+    public int itemsDetected = 0;
 
     protected override void Awake()
     {

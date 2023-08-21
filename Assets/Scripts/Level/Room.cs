@@ -9,13 +9,14 @@ public class Room : MonoBehaviour
 {
     [SerializeField] public int m_roomID = 0;
     [SerializeField] private GameObject m_playerIcon;
+    [SerializeField] private bool isActiveByDefault = false;
 
     IEnumerator Start()
     {
         yield return new WaitForEndOfFrame();
-        var roomState = DialogueLua.GetVariable("Room" + m_roomID).asBool;
+        var roomState = DialogueLua.GetVariable("Room." + m_roomID).asBool;
 
-        if (roomState) gameObject.SetActive(true);
+        if (roomState || isActiveByDefault) gameObject.SetActive(true);
         else gameObject.SetActive(false);
 
         WorldMapManager worldMapManager = FindObjectOfType<WorldMapManager>();
@@ -39,7 +40,6 @@ public class Room : MonoBehaviour
 
     private void ShowRoom()
     {
-        DialogueLua.SetVariable("Room" + m_roomID, true);
         gameObject.SetActive(true);
     }
 }

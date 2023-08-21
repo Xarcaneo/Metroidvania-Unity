@@ -25,7 +25,7 @@ namespace PixelCrushers
                 previousCheckpointSceneName = m_data.checkpointSceneName;
                 previousCheckpointPosition = m_data.position;
 
-                SetPosition(data.position, data.rotation);          
+                SetPosition(data.position, data.rotation);
             }
 
             var cameraPos = new Vector3(transform.position.x, transform.position.y, Camera.main.transform.position.z);

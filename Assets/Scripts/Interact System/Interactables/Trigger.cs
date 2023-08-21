@@ -47,10 +47,9 @@ public class Trigger : Interactable
 
     public override void Interact()
     {
-        GameEvents.Instance.DeactivatePlayerInput(true);
         Player.Instance.gameObject.transform.position = 
             new Vector3(this.transform.position.x, Player.Instance.gameObject.transform.position.y, 0.0f);
-        Player.Instance.gameObject.GetComponent<Renderer>().enabled = false;
+        Player.Instance.gameObject.SetActive(false);
 
         // Change state based on current state
         if (currentState == TriggerState.IdleOn)
@@ -119,14 +118,11 @@ public class Trigger : Interactable
         {
             ChangeState(TriggerState.IdleOn);
         }
-
-        Player.Instance.gameObject.GetComponent<Renderer>().enabled = true;
-
+            
         if (Player.Instance.Core.GetCoreComponent<Movement>().FacingDirection != this.transform.localScale.x) 
             Player.Instance.Core.GetCoreComponent<Movement>().Flip();
 
-        GameEvents.Instance.DeactivatePlayerInput(false);
-
+        Player.Instance.gameObject.SetActive(true);
 
         StartCoroutine(CheckConnectedGatesEventCompletion());
     }

@@ -38,16 +38,13 @@ public class PlayerIdleState : PlayerGroundedState
             }
             else if (yInput != 0 && isTouchingLadder)
             {
-                var canClimb = false;
-
-                if (yInput == -1 && CollisionSenses.LadderBottom) canClimb = true;
-                else if (yInput == 1 && CollisionSenses.LadderTop) canClimb = true;
-
-                if (canClimb)
+                if (yInput == -1 && CollisionSenses.LadderBottom || yInput == 1 && CollisionSenses.LadderTop)
                 {
                     player.PrepareClimb.SetClimbingDirection(yInput);
                     stateMachine.ChangeState(player.PrepareClimb);
                 }
+                else if(yInput == -1)
+                    stateMachine.ChangeState(player.CrouchIdleState);
             }
             else if (yInput == -1)
             {

@@ -64,7 +64,7 @@ public class PlayerGroundedState : PlayerState
 
         if (isOnSlope)
         {
-            if (xInput == 0.0f)
+            if (xInput == 0.0f || player.CrouchIdleState.isCrouching)
                 player.RigidBody2D.sharedMaterial = playerData.fullFriction;
             else
                 player.RigidBody2D.sharedMaterial = playerData.noFriction;

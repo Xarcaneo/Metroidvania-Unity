@@ -564,7 +564,7 @@ MonoBehaviour:
   ledgeCheckHorizontal: {fileID: 0}
   ledgeCheckVertical: {fileID: 1795069383799447302}
   ladderCheck: {fileID: 0}
-  groundCheckRadius: 0.3
+  groundCheckDistance: 1
   wallCheckDistance: 1
   ladderCheckRadius: 0
   ladderTopDistance: 0
@@ -815,8 +815,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0465b5baa4e571a448dc26fc7fbe3c6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDamagable: 1
   isBlockable: 0
+  immunityTime: 0
+  isDamagable: 1
 --- !u!61 &5158857642426065461
 BoxCollider2D:
   m_ObjectHideFlags: 0

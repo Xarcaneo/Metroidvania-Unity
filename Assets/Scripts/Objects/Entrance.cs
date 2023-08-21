@@ -15,6 +15,8 @@ public class Entrance : MonoBehaviour
     void EntranceEntered()
     {
         InputManager.Instance.isInputActive = false;
+
+        Player.Instance.gameObject.SetActive(false);
         
         if(transform.localScale.x == -1)
             GameManager.Instance.shouldFlipPlayer = true;

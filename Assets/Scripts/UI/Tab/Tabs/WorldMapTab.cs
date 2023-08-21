@@ -33,6 +33,7 @@ public class WorldMapTab : Tab
                 _worldMapManagerInstance.transform.SetParent(transform);
 
             _worldMapManagerInstance.gameObject.SetActive(true);
+            _worldMapManagerInstance.transform.SetSiblingIndex(0);
         }
 
         UpdateRectPosition();

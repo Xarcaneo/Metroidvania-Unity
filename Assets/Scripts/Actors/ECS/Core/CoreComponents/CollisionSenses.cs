@@ -39,7 +39,7 @@ public class CollisionSenses : CoreComponent
         private set => ladderCheck = value;
     }
 
-    public float GroundCheckRadius { get => groundCheckRadius; set => groundCheckRadius = value; }
+    public float GroundCheckDistance { get => groundCheckDistance; set => groundCheckDistance = value; }
     public float WallCheckDistance { get => wallCheckDistance; set => wallCheckDistance = value; }
     public LayerMask WhatIsGround { get => whatIsGround; set => whatIsGround = value; }
     public LayerMask WhatIsWall { get => whatIsWall; set => whatIsWall = value; }
@@ -50,7 +50,8 @@ public class CollisionSenses : CoreComponent
     [SerializeField] private Transform ledgeCheckVertical;
     [SerializeField] private Transform ladderCheck;
 
-    [SerializeField] private float groundCheckRadius;
+    [SerializeField] private float groundCheckDistance;
+    [SerializeField] private float groundCheckOffset;
     [SerializeField] private float wallCheckDistance;
     [SerializeField] private float ladderCheckRadius;
     [SerializeField] private float ladderTopDistance;
@@ -67,7 +68,16 @@ public class CollisionSenses : CoreComponent
 
     public bool Ground
     {
-        get => Physics2D.OverlapCircle(GroundCheck.position, groundCheckRadius, whatIsGround);
+        get
+        {
+            Vector2 leftRaycastOrigin = new Vector2(GroundCheck.position.x - groundCheckOffset, GroundCheck.position.y);
+            Vector2 rightRaycastOrigin = new Vector2(GroundCheck.position.x + groundCheckOffset, GroundCheck.position.y);
+
+            bool leftHit = Physics2D.Raycast(leftRaycastOrigin, Vector2.down, groundCheckDistance, whatIsGround);
+            bool rightHit = Physics2D.Raycast(rightRaycastOrigin, Vector2.down, groundCheckDistance, whatIsGround);
+
+            return leftHit || rightHit;
+        }
     }
 
     public bool WallFront
@@ -118,7 +128,7 @@ public class CollisionSenses : CoreComponent
         if (slopeHit)
         {
             Vector2 slopeNormalPerp = Vector2.Perpendicular(slopeHit.normal).normalized;
-            Debug.DrawRay(slopeHit.point, slopeNormalPerp, Color.yellow);
+            //Debug.DrawRay(slopeHit.point, slopeNormalPerp, Color.yellow);
 
             if (slopeNormalPerp.y > 0.1 || slopeNormalPerp.y < -0.1)
             {
@@ -138,8 +148,8 @@ public class CollisionSenses : CoreComponent
 
             slopeDownAngle = Vector2.Angle(groundHit.normal, Vector2.up);
  
-            Debug.DrawRay(groundHit.point, slopeNormalPerp, Color.blue);
-            Debug.DrawRay(groundHit.point, groundHit.normal, Color.green);
+            //Debug.DrawRay(groundHit.point, slopeNormalPerp, Color.blue);
+            //Debug.DrawRay(groundHit.point, groundHit.normal, Color.green);
  
             if (slopeDownAngle != 0.0)
             {
