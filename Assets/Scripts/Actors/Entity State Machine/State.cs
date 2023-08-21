@@ -92,7 +92,9 @@ public class State
 
     public virtual void OnDamage(float amount) // Called when the entity takes damage
     {
-        if (entity.StateMachine.CurrentState != entity.GetDeathState() && entity.GetHurtState() != null)
+        if (entity.StateMachine.CurrentState != entity.GetDeathState() && 
+                entity.StateMachine.CurrentState != entity.GetHurtState()  
+                    && entity.GetHurtState() != null)
             stateMachine.ChangeState(entity.GetHurtState());
     }
 

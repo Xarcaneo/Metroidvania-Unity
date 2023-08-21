@@ -10,6 +10,7 @@ public class InteractHandler : MonoBehaviour
     private Collider2D m_collider;
 
     protected bool playerInRange = false;
+    private bool canInteract = true;
 
     private void Start()
     {
@@ -34,7 +35,7 @@ public class InteractHandler : MonoBehaviour
     {
         if (playerInRange && isInteracting 
             && Player.Instance.StateMachine.CurrentState == Player.Instance.IdleState 
-            && interactableObject.canInteract)
+            && interactableObject.canInteract && canInteract)
         {
             interactableObject.canInteract = false;
             pictogramHandler.HidePictogram();
@@ -56,8 +57,16 @@ public class InteractHandler : MonoBehaviour
 
     private void DisableEnableInteraction(bool isItemDetected)
     {
-        if (isItemDetected) m_collider.enabled = false;
-        else m_collider.enabled = true;
+        if (isItemDetected)
+        {
+            pictogramHandler.HidePictogram();
+            canInteract = false;
+        }
+        else
+        {
+            ShowInteractPictogram();
+            canInteract = true;
+        }
     }
 
 
@@ -66,8 +75,13 @@ public class InteractHandler : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             Player.Instance.Core.GetCoreComponent<ItemDetector>().onItemDetected += DisableEnableInteraction;
+
             playerInRange = true;
-            ShowInteractPictogram();
+
+            if (Player.Instance.Core.GetCoreComponent<ItemDetector>().itemsDetected > 0) 
+                DisableEnableInteraction(true);
+            else
+                ShowInteractPictogram();
         }
     }
 

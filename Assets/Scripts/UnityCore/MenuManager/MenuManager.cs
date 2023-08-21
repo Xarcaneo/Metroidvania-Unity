@@ -117,6 +117,7 @@ namespace Menu
 
             EventSystem.current.SetSelectedGameObject(menuInstance.buttonToFocus, null);
             menuInstance.OnOpenMenu();
+
             menuInstance.gameObject.SetActive(true);
             _menuStack.Push(menuInstance);
         }

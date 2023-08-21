@@ -95,6 +95,15 @@ public class GameEvents : MonoBehaviour
         }
     }
 
+    public event Action onPlayerPositionSet;
+    public void PlayerPositionSet()
+    {
+        if (onPlayerPositionSet != null)
+        {
+            onPlayerPositionSet();
+        }
+    }
+
 
     public event Action<int> onRoomChanged;
     public void RoomChanged(int levelID)
@@ -147,6 +156,15 @@ public class GameEvents : MonoBehaviour
         if (onPlayerCrouchJump != null)
         {
             onPlayerCrouchJump();
+        }
+    }
+
+    public event Action onGameSaving;
+    public void GameSaving()
+    {
+        if (onGameSaving != null)
+        {
+            onGameSaving();
         }
     }
 }

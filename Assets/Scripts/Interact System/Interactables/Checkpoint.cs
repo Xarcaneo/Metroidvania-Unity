@@ -1,8 +1,5 @@
 using PixelCrushers;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Checkpoint : Interactable
 {
@@ -12,13 +9,11 @@ public class Checkpoint : Interactable
 
     public override void Interact()
     {
-        Player.Instance.GetComponent<PlayerPositionSaver>().isCheckpoint = true;
-        SaveSystem.SaveToSlot(GameManager.Instance.currentSaveSlot);
+        GameEvents.Instance.GameSaving();
 
-        GameEvents.Instance.DeactivatePlayerInput(true);
         Player.Instance.gameObject.transform.position = 
             new Vector3(this.transform.position.x + _playerXOffset, Player.Instance.gameObject.transform.position.y, 0);
-        Player.Instance.gameObject.GetComponent<Renderer>().enabled = false;
+        Player.Instance.gameObject.SetActive(false);
 
         Anim.SetBool("activated", true);
     }
@@ -30,12 +25,13 @@ public class Checkpoint : Interactable
 
     public void AnimationFinished()
     {
-        GameEvents.Instance.DeactivatePlayerInput(false);
-
         if (Player.Instance.Core.GetCoreComponent<Movement>().FacingDirection != this.transform.localScale.x)
             Player.Instance.Core.GetCoreComponent<Movement>().Flip();
 
-        Player.Instance.gameObject.GetComponent<Renderer>().enabled = true;
+        Player.Instance.gameObject.SetActive(true);
+
+        Player.Instance.GetComponent<PlayerPositionSaver>().isCheckpoint = true;
+        SaveSystem.SaveToSlot(GameManager.Instance.currentSaveSlot);
 
         CallInteractionCompletedEvent();
         Anim.SetBool("activated", false);

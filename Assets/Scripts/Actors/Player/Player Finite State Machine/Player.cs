@@ -28,6 +28,7 @@ public class Player : Entity
     public PlayerFinishClimb FinishClimb { get; private set; }
     public PlayerRecoverState RecoverState { get; private set; }
     public PlayerGroundHitState GroundHitState { get; private set; }
+    public PlayerSpawnedState SpawnedState { get; private set; }
 
     [SerializeField]
     private PlayerData playerData;
@@ -93,6 +94,7 @@ public class Player : Entity
         FinishClimb = new PlayerFinishClimb(this, StateMachine, playerData, "finishClimb");
         RecoverState = new PlayerRecoverState(this, StateMachine, playerData, "recover");
         GroundHitState = new PlayerGroundHitState(this, StateMachine, playerData, "groundHit");
+        SpawnedState = new PlayerSpawnedState(this, StateMachine, playerData, "spawned");
     }
 
     public override State GetDeathState()
@@ -119,7 +121,7 @@ public class Player : Entity
 
         InputHandler = GetComponent<PlayerInputHandler>();
 
-        StateMachine.Initialize(IdleState);
+        StateMachine.Initialize(SpawnedState);
 
         CheckIfShouldFlip();
 

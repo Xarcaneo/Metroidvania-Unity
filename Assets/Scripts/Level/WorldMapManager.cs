@@ -1,3 +1,4 @@
+using PixelCrushers.DialogueSystem;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ public class WorldMapManager : MonoBehaviour
     public void Initialize()
     {
         GameEvents.Instance.onRoomChanged += OnRoomChanged;
+        GameEvents.Instance.onGameSaving += OnGameSaving;
 
         foreach (Transform child in transform)
         {
@@ -23,8 +25,20 @@ public class WorldMapManager : MonoBehaviour
         }
     }
     
-    public void Deinitialize() => GameEvents.Instance.onRoomChanged -= OnRoomChanged;
-    
+    private void OnGameSaving()
+    {
+        foreach (var room in m_rooms)
+        {
+            if(room.gameObject.activeSelf)
+                DialogueLua.SetVariable("Room." + room.m_roomID, true);
+        }
+    }
+
+    public void Deinitialize()
+    {
+        GameEvents.Instance.onGameSaving -= OnGameSaving;
+        GameEvents.Instance.onRoomChanged -= OnRoomChanged;
+    }
 
     private void OnRoomChanged(int levelID)
     {
@@ -38,7 +52,6 @@ public class WorldMapManager : MonoBehaviour
 
                 m_activeRoom = room;
                 m_activeRoom.SetRoomActive();
-
                 return;
             }
         }

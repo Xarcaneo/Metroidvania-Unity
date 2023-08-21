@@ -11,11 +11,11 @@ public class LevelManager : MonoBehaviour
 
     private void OnEnable()
     {
-        StartCoroutine(SpawnPlayerWithDelay());
+        SpawnPlayer();
 
         Menu.GameMenu.Instance.locationNameIndicator.Cancelcoroutine();
 
-        if(m_areaName != "")
+        if (m_areaName != "")
             StartCoroutine(DelayedAreaChanged());
 
         QuantumConsole.Instance.canToggleConsole = true;
@@ -36,11 +36,8 @@ public class LevelManager : MonoBehaviour
         GameEvents.Instance.AreaChanged(m_areaName);
     }
 
-    private IEnumerator SpawnPlayerWithDelay()
+    private void SpawnPlayer()
     {
-        Bus musicBus = FMODUnity.RuntimeManager.GetBus("bus:/SFX");
-        musicBus.setMute(true);
-
         if (GameObject.FindGameObjectWithTag("SpawnPoint"))
         {
             var position = GameObject.FindGameObjectWithTag("SpawnPoint").transform.position;
@@ -48,11 +45,7 @@ public class LevelManager : MonoBehaviour
         }
         else
         {
-            Instantiate(m_playerPref, new Vector3(0, 0, 0), Quaternion.identity);
+            Instantiate(m_playerPref, new Vector3(-10, -10, 0), Quaternion.identity);
         }
-
-        yield return new WaitForSeconds(0.5f);
-
-        musicBus.setMute(false);
     }
 }
