@@ -13,8 +13,7 @@ public class DamageReceiver : Receiver, IDamageable
     {
         if (isDamagable && !IsImmune)
         {
-            if (CheckBlock(damageData))
-                return;
+            CheckBlock(damageData);
 
             if (Stats?.GetCurrentHealth() > 0)
             {
