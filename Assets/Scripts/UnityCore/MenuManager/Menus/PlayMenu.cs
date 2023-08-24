@@ -9,7 +9,7 @@ namespace Menu
 {
     public class PlayMenu : Menu<PlayMenu>
     {
-        [SerializeField] string m_startingArea = "Vestibule 0";
+        [SerializeField] string m_startingArea = "Area 0";
 
         public List<SaveSlot> saveSlots;
 

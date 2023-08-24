@@ -53,11 +53,7 @@ public class PlayerPrepareBlockState : PlayerAbilityState
         }
     }
 
-    private void OnSuccesfullBlock()
-    {
-        successfulBlock = true;
-        Debug.Log(successfulBlock);
-    }
+    private void OnSuccesfullBlock() => successfulBlock = true;
 
     public override void AnimationActionTrigger()
     {
