@@ -15,13 +15,16 @@ public abstract class Receiver : CoreComponent
     protected float ImmunityEndTime;
     [SerializeField] protected float immunityTime = 0f;
 
-    protected void CheckBlock(IDamageable.DamageData damageData)
+    protected bool CheckBlock(IDamageable.DamageData damageData)
     {
         if (isBlockable && Block.isBlocking && Block.IsBetween(damageData.Source))
         {
             damageData.Source.Core.GetCoreComponent<Receiver>().OnAttackBlockedByDefender?.Invoke();
             OnSuccessfulBlock?.Invoke();
+            return true;
         }
+
+        return false;
     }
 
     public event Action OnSuccessfulBlock;
