@@ -3,12 +3,11 @@ using UnityEngine;
 public class PlayerLadderClimbState : PlayerState
 {
     private int yInput;
+    private int xInput;
     private bool JumpInput;
 
     private bool isGrounded;
     private bool isTouchingLadderTop;
-
-    private float lastJumpTime;
 
     private Animator m_anim;
     private Rigidbody2D m_rigidbody;
@@ -62,16 +61,16 @@ public class PlayerLadderClimbState : PlayerState
         Movement?.SetVelocityY(0f);
 
         yInput = player.InputHandler.NormInputY;
+        xInput = player.InputHandler.NormInputX;
         JumpInput = player.InputHandler.JumpInput;
 
         if(!isTouchingLadderTop && yInput == 1)
         {
             stateMachine.ChangeState(player.FinishClimb);
         }
-        else if (JumpInput && player.JumpState.CanJump() && CheckIfCanJump())
+        else if (JumpInput && player.JumpState.CanJump() && xInput != 0)
         {
             Movement?.SetVelocityX(0f);
-            lastJumpTime = Time.time;
             stateMachine.ChangeState(player.JumpState);
         }
         else if (isGrounded && yInput == -1)
@@ -85,10 +84,5 @@ public class PlayerLadderClimbState : PlayerState
         }
         else
             m_anim.speed = 0;
-    }
-
-    public bool CheckIfCanJump()
-    {
-        return Time.time >= lastJumpTime + playerData.ladderJumpCooldown;
     }
 }
