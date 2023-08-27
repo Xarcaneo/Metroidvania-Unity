@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DeathState : State
 {
@@ -24,11 +26,15 @@ public class DeathState : State
         core.GetCoreComponent<HurtEffect>().EnableDisableComponent(false);
 
         Movement?.SetVelocityX(0f);
+
+        SceneManager.activeSceneChanged += ChangedActiveScene;
     }
 
     public override void Exit()
     {
         base.Exit();
+
+        SceneManager.activeSceneChanged -= ChangedActiveScene;
     }
 
     public override void LogicUpdate()
@@ -42,4 +48,6 @@ public class DeathState : State
     {
         base.PhysicsUpdate();
     }
+
+    private void ChangedActiveScene(Scene arg0, Scene arg1) => entity.gameObject.SetActive(false);
 }

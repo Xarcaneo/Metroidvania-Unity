@@ -1643,6 +1643,7 @@ GameObject:
   - component: {fileID: 5491530082688238785}
   - component: {fileID: 9204994131240477009}
   - component: {fileID: 6452655939724013412}
+  - component: {fileID: 6279471694532730047}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1685,10 +1686,10 @@ Camera:
   m_FocalLength: 0.86602545
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.14114584
-    y: 0.010185185
-    width: 0.33333334
-    height: 0.3333333
+    x: 0.259375
+    y: 0.075925924
+    width: 0.16666667
+    height: 0.16666666
   near clip plane: 0.1
   far clip plane: 1000
   field of view: 60
@@ -1859,6 +1860,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attenuationObject: {fileID: 0}
+--- !u!114 &6279471694532730047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7015856279492186317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ac0ec3d6ad5f4a3d9d184bc3773a3a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _pc2D: {fileID: 7015856279492186305}
+  _serializedAxis: 0
+  ShakePresets:
+  - {fileID: 11400000, guid: 3561acb02ee52cf43b5ff80a15a98f3e, type: 2}
+  ConstantShakePresets: []
+  StartConstantShakePreset: {fileID: 0}
+  CurrentConstantShakePreset: {fileID: 0}
 --- !u!1 &7379614752871116415
 GameObject:
   m_ObjectHideFlags: 0

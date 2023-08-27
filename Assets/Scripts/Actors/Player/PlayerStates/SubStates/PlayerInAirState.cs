@@ -108,7 +108,7 @@ public class PlayerInAirState : PlayerState
         {
             stateMachine.ChangeState(player.WallSlideState);
         }
-        else if (yInput == 1 && isTouchingLadder)
+        else if (yInput == 1 && isTouchingLadder && Movement?.CurrentVelocity.y <= 0)
         {
             stateMachine.ChangeState(player.LadderClimbState);
         }

@@ -117,6 +117,7 @@ MonoBehaviour:
   ledgeCheckVertical: {fileID: 8169427434976769757}
   ladderCheck: {fileID: 0}
   groundCheckDistance: 1
+  groundCheckOffset: 0
   wallCheckDistance: 1
   ladderCheckRadius: 0
   ladderTopDistance: 0
@@ -559,7 +560,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ItemCollectionRestrictionObjects: []
-  m_ItemCollectionData: []
+  m_ItemCollectionData:
+  - m_ObjectType: Opsive.UltimateInventorySystem.Core.InventoryCollections.ItemCollection
+    m_ValueHashes: 0d00eb25b769d11d5030ac3ef1f5543f666e77ff063d5314aacf0d993edd1331719c8809ffab97cf34df945eaa1351826791e7bfaf7e5032c9f13d91dd6f4cf47a52e37d619c5106
+    m_ValuePositions: 0000000009000000090000000d0000000d0000000e0000000f000000130000001300000017000000170000001b0000001b0000001f00000024000000280000002c0000002c000000
+    m_Values: 4974656d44726f7073060000000001ffffffff0100000001000000eadd12184272656164ce0cbef80000000000000000
+    m_UnityObjects:
+    - {fileID: 11400000, guid: a0f71f47e6107cb4ea5c5242ebb8050f, type: 2}
+    m_Version: 3.1
 --- !u!1 &4970596625883562115
 GameObject:
   m_ObjectHideFlags: 0
