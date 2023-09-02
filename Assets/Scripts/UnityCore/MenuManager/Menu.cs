@@ -77,7 +77,7 @@ namespace Menu
             InputManager.Instance.OnMenuDelete -= OnPlayerDeleteInput;
         }
 
-        private void OnSceneLoaded(Scene scene, LoadSceneMode mode) => SetCanvas();
+        public virtual void OnSceneLoaded(Scene scene, LoadSceneMode mode) => SetCanvas();
 
 
         public virtual void SetCanvas()

@@ -1,5 +1,3 @@
-using FMOD.Studio;
-using PixelCrushers;
 using QFSW.QC;
 using System.Collections;
 using UnityEngine;
