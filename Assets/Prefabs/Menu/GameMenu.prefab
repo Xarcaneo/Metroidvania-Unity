@@ -100,9 +100,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -190, y: 50}
-  m_SizeDelta: {x: 350, y: 80}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -63.25, y: 65}
+  m_SizeDelta: {x: 80, y: 48}
+  m_Pivot: {x: 1, y: 0}
 --- !u!222 &5365516457715646090
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -131,8 +131,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -2722212501383410460, guid: 41598248f978875478276ab1d1cac38f, type: 3}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 761c70b1b4547d14486547647bb3cc32, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -481,7 +481,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonToFocus: {fileID: 6068444750759665060}
   healthBarController: {fileID: 4103484478804867198}
-  dialogueUI: {fileID: 0}
+  gameHotbar: {fileID: 4106442233486272592}
   hintBox: {fileID: 8143233635193457884}
   locationNameIndicator: {fileID: 5198151853274689729}
 --- !u!114 &6941031755846061103
@@ -788,6 +788,10 @@ PrefabInstance:
     - target: {fileID: 757910490725885775, guid: df3c1fb67eabf724e910d80d4bf98fc3, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -10.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1187312297582499136, guid: df3c1fb67eabf724e910d80d4bf98fc3, type: 3}
+      propertyPath: m_ResetDrawOnOpen
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1233404157789816199, guid: df3c1fb67eabf724e910d80d4bf98fc3, type: 3}
       propertyPath: m_ID
@@ -1134,6 +1138,11 @@ PrefabInstance:
 --- !u!224 &766876109215078149 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1957269603950629585, guid: df3c1fb67eabf724e910d80d4bf98fc3, type: 3}
+  m_PrefabInstance: {fileID: 1264917310948902356}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4106442233486272592 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2986133822615481732, guid: df3c1fb67eabf724e910d80d4bf98fc3, type: 3}
   m_PrefabInstance: {fileID: 1264917310948902356}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8180695153295105701

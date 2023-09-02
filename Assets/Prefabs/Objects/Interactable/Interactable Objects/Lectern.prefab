@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 177277696098139582}
   - component: {fileID: 309115150337790525}
   - component: {fileID: 4378401539325571302}
+  - component: {fileID: 1757799965591871052}
   m_Layer: 0
   m_Name: Lectern
   m_TagString: Untagged
@@ -135,6 +136,79 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   muteSounds: 0
+--- !u!114 &1757799965591871052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6548608056995709888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2185d538298c73f418ba252c3e3e01ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_key: Lectern
+  m_appendSaverTypeToKey: 0
+  m_saveAcrossSceneChanges: 1
+  m_restoreStateOnStart: 0
+  m_forwardEventsToListeners: 0
+  m_includeInSavedGameData: 1
+  m_addNewQuestsSinceSavedGame: 0
+  m_questList:
+  - {fileID: 11400000, guid: 501cde4eaaa226a47ab81eed213f78d6, type: 2}
+  m_deletedStaticQuests: []
+  m_id:
+    m_text: Lectern
+    m_stringAsset: {fileID: 0}
+    m_textTable: {fileID: 0}
+    m_textTableFieldID: 0
+  m_displayName:
+    m_text: 
+    m_stringAsset: {fileID: 0}
+    m_textTable: {fileID: 0}
+    m_textTableFieldID: 0
+  m_image: {fileID: 0}
+  m_textTable: {fileID: 0}
+  m_noQuestsUIContents:
+    m_icon: {fileID: 0}
+    m_headingText:
+      m_text: 
+      m_stringAsset: {fileID: 0}
+      m_textTable: {fileID: 0}
+      m_textTableFieldID: 0
+    m_bodyText:
+      m_text: 
+      m_stringAsset: {fileID: 0}
+      m_textTable: {fileID: 0}
+      m_textTableFieldID: 0
+  m_offerableQuestsUIContents:
+    m_icon: {fileID: 0}
+    m_headingText:
+      m_text: 
+      m_stringAsset: {fileID: 0}
+      m_textTable: {fileID: 0}
+      m_textTableFieldID: 0
+    m_bodyText:
+      m_text: 
+      m_stringAsset: {fileID: 0}
+      m_textTable: {fileID: 0}
+      m_textTableFieldID: 0
+  m_activeQuestsUIContents:
+    m_icon: {fileID: 0}
+    m_headingText:
+      m_text: 
+      m_stringAsset: {fileID: 0}
+      m_textTable: {fileID: 0}
+      m_textTableFieldID: 0
+    m_bodyText:
+      m_text: 
+      m_stringAsset: {fileID: 0}
+      m_textTable: {fileID: 0}
+      m_textTableFieldID: 0
+  m_completedQuestDialogueMode: 0
+  m_questDialogueUI: {fileID: 0}
+  m_cooldownCheckFrequency: 0
 --- !u!1001 &7659073418053344031
 PrefabInstance:
   m_ObjectHideFlags: 0

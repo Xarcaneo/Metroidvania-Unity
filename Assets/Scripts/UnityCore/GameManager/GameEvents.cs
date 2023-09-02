@@ -167,4 +167,13 @@ public class GameEvents : MonoBehaviour
             onGameSaving();
         }
     }
+
+    public event Action<bool> onToggleUI;
+    public void ToggleUI(bool state)
+    {
+        if (onToggleUI != null)
+        {
+            onToggleUI(state);
+        }
+    }
 }

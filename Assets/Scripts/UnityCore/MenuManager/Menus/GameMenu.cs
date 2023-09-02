@@ -11,7 +11,7 @@ namespace Menu
     public class GameMenu : Menu<GameMenu>
     {
         [SerializeField] private PlayerHealthBarController healthBarController;
-        [SerializeField] private StandardDialogueUI dialogueUI;
+        [SerializeField] private GameObject gameHotbar;
 
         [SerializeField] public HintBox hintBox; 
         [SerializeField] public LocationNameIndicator locationNameIndicator;
@@ -27,7 +27,8 @@ namespace Menu
         {
             base.SetCanvas();
 
-            //DialogueManager.dialogueUI = dialogueUI;
+            gameHotbar.SetActive(false);
+            gameHotbar.SetActive(true);
         }
 
         protected override void OnEnable()
@@ -35,6 +36,7 @@ namespace Menu
             base.OnEnable();
 
             GameEvents.Instance.onPlayerDied += OnPlayerDied;
+            GameEvents.Instance.onToggleUI += OnToggleUI;
         }
 
         protected override void OnDisable()
@@ -42,6 +44,7 @@ namespace Menu
             base.OnDisable();
 
             GameEvents.Instance.onPlayerDied -= OnPlayerDied;
+            GameEvents.Instance.onToggleUI -= OnToggleUI;
         }
 
         public override void OnReturnInput() => OnPausePressed();
@@ -54,11 +57,19 @@ namespace Menu
 
             DeathMenu.Open();
         }
-        
 
         public void OnPausePressed()
         {
             PauseMenu.Open();
-        }        
+        }
+
+        private void OnToggleUI(bool state)
+        {
+            foreach (Transform child in transform)
+            {
+                child.gameObject.SetActive(state);
+            }
+        }
+
     }
 }

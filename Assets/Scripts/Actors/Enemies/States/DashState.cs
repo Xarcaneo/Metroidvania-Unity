@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class DashState : State
@@ -62,7 +63,7 @@ public class DashState : State
         Vector2 raycastDirection = new Vector2(-Movement.FacingDirection, 0);
 
         Vector3 groundRaycastPosition = entity.transform.position + stateData.raycastBottomPosition;
-        groundRaycastPosition.x += raycastDistance;
+        groundRaycastPosition.x += raycastDistance * -Movement.FacingDirection;
 
         bool bottomRaycastHit = Physics2D.Raycast(entity.transform.position + stateData.raycastBottomPosition, raycastDirection, raycastDistance, stateData.collisionLayer).collider != null;
         bool topRaycastHit = Physics2D.Raycast(entity.transform.position + stateData.raycastTopPosition, raycastDirection, raycastDistance, stateData.collisionLayer).collider != null;

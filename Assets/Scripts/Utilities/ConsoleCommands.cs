@@ -56,4 +56,16 @@ public class ConsoleCommands : MonoBehaviour
     {
         DialogueManager.StartConversation(conversationID);
     }
+
+    [Command("Hide-UI")]
+    private static void HideUI()
+    {
+        GameEvents.Instance.ToggleUI(false);
+    }
+
+    [Command("Show-UI")]
+    private static void ShowUI()
+    {
+        GameEvents.Instance.ToggleUI(true);
+    }
 }
