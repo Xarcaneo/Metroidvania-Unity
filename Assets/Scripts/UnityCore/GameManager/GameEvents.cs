@@ -104,6 +104,14 @@ public class GameEvents : MonoBehaviour
         }
     }
 
+    public event Action<State> onPlayerStateChanged;
+    public void PlayerStateChanged(State state)
+    {
+        if (onPlayerStateChanged != null)
+        {
+            onPlayerStateChanged(state);
+        }
+    }
 
     public event Action<int> onRoomChanged;
     public void RoomChanged(int levelID)

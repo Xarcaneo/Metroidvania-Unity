@@ -180,6 +180,10 @@ public class PlayerInputHandler : MonoBehaviour
     private void EnableDisablePlayerInput(bool disable)
     {
         DisableInput = disable;
-        if(!disable) NormInputX = 0;
+        if (disable)
+        {
+            NormInputX = 0;
+            NormInputY = 0;
+        }
     }
 }
