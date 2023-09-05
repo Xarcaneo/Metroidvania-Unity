@@ -7,44 +7,27 @@ using UnityEngine.UI;
 
 public class HintBox : MonoBehaviour
 {
-    [SerializeField] private float fadeDuration = 1.0f; // Duration of the fade effect in seconds
-    private CanvasGroup canvasGroup;
-    private bool isFading;
-    private Coroutine fadeCoroutine;
-    private float remainingFadeTime;
-    private float startAlpha;
-    private float targetAlpha;
-    private bool isPaused; // New variable to track pausing state
-
-    private void OnEnable() => GameEvents.Instance.onNewSession += ResetAlpha;
-
-
-    private void OnDisable()
-    {
-        GameEvents.Instance.onNewSession -= ResetAlpha;
-
-        // Check if the hint box is in the middle of fading and adjust the alpha accordingly
-        if (isFading)
-        {
-            canvasGroup.alpha = targetAlpha; // Set the alpha to the target value (max or 0)
-            StopCoroutine(fadeCoroutine);
-            isFading = false;
-        }
-    }
+    private Canvas canvas;
+    private SpriteRenderer spriteRenderer;
 
     private void Start()
     {
-        canvasGroup = GetComponent<CanvasGroup>();
-        if (canvasGroup == null)
+        canvas = GetComponentInChildren<Canvas>();
+        if (canvas == null)
         {
-            canvasGroup = gameObject.AddComponent<CanvasGroup>();
+            Debug.LogError("Canvas component not found in children.");
+            return;
         }
 
-        // Set the starting alpha to 0 to hide the object from the beginning
-        ResetAlpha();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        if (spriteRenderer == null)
+        {
+            Debug.LogError("SpriteRenderer component not found on this GameObject.");
+            return;
+        }
     }
 
-    public void SetHintText(string text)
+        public void SetHintText(string text)
     {
         // Assuming you have a TextMeshProUGUI component for the hint text
         TextMeshProUGUI hintText = GetComponentInChildren<TextMeshProUGUI>();
@@ -70,69 +53,30 @@ public class HintBox : MonoBehaviour
         }
 
         hintText.text = modifiedText;
-        localization.fieldName = "";
     }
-
-    public void FadeIn()
+    public void ShowHintBox()
     {
-        if (isFading)
+        if (canvas != null)
         {
-            // If already fading, stop the ongoing fade and start a new one from the current alpha
-            StopCoroutine(fadeCoroutine);
+            canvas.enabled = true;
         }
 
-        startAlpha = canvasGroup.alpha;
-        targetAlpha = 1f;
-        remainingFadeTime = fadeDuration * (1f - startAlpha);
-        fadeCoroutine = StartCoroutine(FadeCanvasGroupAlpha());
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.enabled = true;
+        }
     }
 
-    public void FadeOut()
+    public void HideHintBox()
     {
-        if (isFading)
+        if (canvas != null)
         {
-            // If already fading, stop the ongoing fade and start a new one from the current alpha
-            StopCoroutine(fadeCoroutine);
+            canvas.enabled = false;
         }
 
-        startAlpha = canvasGroup.alpha;
-        targetAlpha = 0f;
-        remainingFadeTime = fadeDuration * startAlpha;
-        fadeCoroutine = StartCoroutine(FadeCanvasGroupAlpha());
-    }
-
-    private IEnumerator FadeCanvasGroupAlpha()
-    {
-        isFading = true;
-
-        float elapsedTime = 0f;
-
-        while (elapsedTime < remainingFadeTime)
+        if (spriteRenderer != null)
         {
-            if (isPaused)
-            {
-                // Pause the fading process by saving the remaining time
-                yield return null;
-            }
-            else
-            {
-                elapsedTime += Time.deltaTime;
-                float t = Mathf.Clamp01(elapsedTime / remainingFadeTime);
-                canvasGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, t);
-                yield return null;
-            }
+            spriteRenderer.enabled = false;
         }
-
-        canvasGroup.alpha = targetAlpha;
-        isFading = false;
-    }
-
-    public void ResetAlpha()
-    {
-        // Set the alpha value to 0 to hide the object
-        if(canvasGroup)
-            canvasGroup.alpha = 0f;
-        isFading = false;
-        isPaused = false; // Reset the pausing state when resetting the alpha
     }
 }

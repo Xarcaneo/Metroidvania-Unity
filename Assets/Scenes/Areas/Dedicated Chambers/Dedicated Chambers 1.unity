@@ -58314,11 +58314,19 @@ PrefabInstance:
       propertyPath: m_Name
       value: HintTrigger
       objectReference: {fileID: 0}
+    - target: {fileID: 6226381068075814910, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -11.621466
+      objectReference: {fileID: 0}
+    - target: {fileID: 6226381068075814910, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.24105072
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
---- !u!4 &2009508405 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1727324615543367607, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
+--- !u!224 &2009508405 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6226381068075814910, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
   m_PrefabInstance: {fileID: 2009508404}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2020372868

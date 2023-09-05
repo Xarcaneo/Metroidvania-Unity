@@ -908,6 +908,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1722128853}
     m_Modifications:
+    - target: {fileID: 1604151456, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
+      propertyPath: hintID
+      value: '#001'
+      objectReference: {fileID: 0}
     - target: {fileID: 1727324615543367607, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -956,11 +960,19 @@ PrefabInstance:
       propertyPath: m_Name
       value: HintTrigger
       objectReference: {fileID: 0}
+    - target: {fileID: 6226381068075814910, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -2.511469
+      objectReference: {fileID: 0}
+    - target: {fileID: 6226381068075814910, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -1.4836211
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
---- !u!4 &629917077 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1727324615543367607, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
+--- !u!224 &629917077 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6226381068075814910, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
   m_PrefabInstance: {fileID: 629917076}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &666868529

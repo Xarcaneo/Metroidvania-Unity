@@ -26,15 +26,11 @@ public class DeathState : State
         core.GetCoreComponent<HurtEffect>().EnableDisableComponent(false);
 
         Movement?.SetVelocityX(0f);
-
-        SceneManager.activeSceneChanged += ChangedActiveScene;
     }
 
     public override void Exit()
     {
         base.Exit();
-
-        SceneManager.activeSceneChanged -= ChangedActiveScene;
     }
 
     public override void LogicUpdate()
@@ -49,5 +45,9 @@ public class DeathState : State
         base.PhysicsUpdate();
     }
 
-    private void ChangedActiveScene(Scene arg0, Scene arg1) => entity.gameObject.SetActive(false);
+    private void ChangedActiveScene(Scene arg0, Scene arg1)
+    {
+        if(entity.gameObject.activeSelf)
+            entity.gameObject.SetActive(false);
+    }
 }

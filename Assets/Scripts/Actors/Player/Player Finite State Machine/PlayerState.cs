@@ -12,4 +12,11 @@ public class PlayerState : State
         this.player = player;
         this.playerData = playerData;
     }
+
+    public override void Enter()
+    {
+        base.Enter();
+
+        GameEvents.Instance.PlayerStateChanged(this);
+    }
 }

@@ -356,8 +356,8 @@ MonoBehaviour:
         destinationDialogueID: 2
         isConnector: 0
         priority: 2
-      conditionsString: CurrentQuestState("In Search of Loyal Servant") == "active"
-      userScript: 
+      conditionsString: 
+      userScript: GiveQuest("Lectern", "In Search of Loyal Servant")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -812,13 +812,13 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: SendMessageSystem("Conversation", "Loyal Servant")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 200
+        x: 197.82608
         y: 155
         width: 160
         height: 30
@@ -2613,7 +2613,7 @@ MonoBehaviour:
         height: 30
     entryGroups: []
     canvasScrollPosition: {x: 0, y: 0}
-    canvasZoom: 0.5500004
+    canvasZoom: 0.34000045
   syncInfo:
     syncActors: 0
     syncItems: 0

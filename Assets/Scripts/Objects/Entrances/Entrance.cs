@@ -5,26 +5,18 @@ using UnityEngine;
 
 public class Entrance : MonoBehaviour
 {
-    [SerializeField] private ScenePortal scenePortal;
+    [SerializeField] protected ScenePortal scenePortal;
 
-    void Start()
+    public virtual void Start()
     {
         scenePortal.onUsePortal.AddListener(EntranceEntered);
     }
 
-    void OnDestroy()
+    public virtual void OnDestroy()
     {
         scenePortal.onUsePortal.RemoveListener(EntranceEntered);
         InputManager.Instance.isInputActive = true;
     }
 
-    void EntranceEntered()
-    {
-        InputManager.Instance.isInputActive = false;
-
-        Player.Instance.gameObject.SetActive(false);
-        
-        if(transform.localScale.x == -1)
-            GameManager.Instance.shouldFlipPlayer = true;
-    }
+    public virtual void EntranceEntered() {}
 }
