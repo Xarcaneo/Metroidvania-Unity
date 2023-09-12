@@ -1146,10 +1146,13 @@ namespace QFSW.QC
         /// </summary>
         public void Deactivate()
         {
-            IsActive = false;
-            _containerRect.gameObject.SetActive(false);
+            if (_containerRect)
+            {
+                IsActive = false;
+                _containerRect.gameObject.SetActive(false);
 
-            OnDeactivate?.Invoke();
+                OnDeactivate?.Invoke();
+            }
         }
 
         private void DebugIntercept(string condition, string stackTrace, LogType type)

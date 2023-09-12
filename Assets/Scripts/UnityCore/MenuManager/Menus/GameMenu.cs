@@ -26,8 +26,11 @@ namespace Menu
         {
             base.SetCanvas();
 
-            gameHotbar.SetActive(false);
-            gameHotbar.SetActive(true);
+            if (gameHotbar.activeSelf == true)
+            {
+                gameHotbar.SetActive(false);
+                gameHotbar.SetActive(true);
+            }
         }
 
         protected override void OnEnable()
@@ -36,6 +39,7 @@ namespace Menu
 
             GameEvents.Instance.onPlayerDied += OnPlayerDied;
             GameEvents.Instance.onToggleUI += OnToggleUI;
+            GameEvents.Instance.onNewSession += onNewSession;
         }
 
         protected override void OnDisable()
@@ -44,6 +48,7 @@ namespace Menu
 
             GameEvents.Instance.onPlayerDied -= OnPlayerDied;
             GameEvents.Instance.onToggleUI -= OnToggleUI;
+            GameEvents.Instance.onNewSession -= onNewSession;
         }
 
         public override void OnReturnInput() => OnPausePressed();
@@ -70,5 +75,6 @@ namespace Menu
             }
         }
 
+        private void onNewSession() => gameHotbar.SetActive(true);
     }
 }

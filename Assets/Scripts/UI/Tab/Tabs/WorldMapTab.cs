@@ -47,9 +47,12 @@ public class WorldMapTab : Tab
 
     private void OnNewSession()
     {
-        _worldMapManagerInstance = Instantiate(m_worldMapManager);
-        scrollRect.content = _worldMapManagerInstance.GetComponent<RectTransform>();
-        _worldMapManagerInstance.Initialize();
+        if (_worldMapManagerInstance == null)
+        {
+            _worldMapManagerInstance = Instantiate(m_worldMapManager);
+            scrollRect.content = _worldMapManagerInstance.GetComponent<RectTransform>();
+            _worldMapManagerInstance.Initialize();
+        }
     }
 
     private void OnEndSession()

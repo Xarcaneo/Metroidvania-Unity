@@ -1,43 +1,23 @@
 using PixelCrushers;
-using System.Collections;
-using System.Collections.Generic;
+using PixelCrushers.DialogueSystem;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class HintBox : MonoBehaviour
 {
-    private Canvas canvas;
-    private SpriteRenderer spriteRenderer;
+    [SerializeField] private Canvas canvas;
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] public TextMeshProUGUI hintText;
+    [SerializeField] private LocalizeUI localization;
 
-    private void Start()
+    public void SetHintText()
     {
-        canvas = GetComponentInChildren<Canvas>();
-        if (canvas == null)
-        {
-            Debug.LogError("Canvas component not found in children.");
-            return;
-        }
+        localization.enabled = true;
+        string language = Localization.language;
 
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        if (spriteRenderer == null)
-        {
-            Debug.LogError("SpriteRenderer component not found on this GameObject.");
-            return;
-        }
-    }
-
-        public void SetHintText(string text)
-    {
-        // Assuming you have a TextMeshProUGUI component for the hint text
-        TextMeshProUGUI hintText = GetComponentInChildren<TextMeshProUGUI>();
-        LocalizeUI localization = GetComponentInChildren<LocalizeUI>();
-
-        localization.fieldName = text;
-        localization.UpdateText();
+        string modifiedText = hintText.text;
 
         // Find all placeholders in the text (e.g., {Attack}) and replace them with keybindings
-        string modifiedText = hintText.text;
         int startPlaceholderIndex = modifiedText.IndexOf('{');
         while (startPlaceholderIndex >= 0)
         {
@@ -52,8 +32,9 @@ public class HintBox : MonoBehaviour
             startPlaceholderIndex = modifiedText.IndexOf('{', endPlaceholderIndex + 1);
         }
 
-        hintText.text = modifiedText;
+        hintText.SetText(modifiedText);
     }
+
     public void ShowHintBox()
     {
         if (canvas != null)

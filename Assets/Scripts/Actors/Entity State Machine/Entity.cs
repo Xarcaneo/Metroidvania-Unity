@@ -16,6 +16,11 @@ public abstract class Entity : MonoBehaviour
     public Rigidbody2D RigidBody2D { get; private set; }
     #endregion
 
+    #region Colliders
+    [SerializeField] private BoxCollider2D m_combatCollider;
+
+    #endregion
+
     #region Other Variables
     protected Vector2 workspace;
     #endregion
@@ -47,6 +52,31 @@ public abstract class Entity : MonoBehaviour
     #endregion
 
     #region Other Functions
+    public void SetColliderHeight(float height)
+    {
+        Vector2 center = MovementCollider.offset;
+        workspace.Set(MovementCollider.size.x, height);
+
+        center.y += (height - MovementCollider.size.y) / 2;
+
+        MovementCollider.size = workspace;
+        MovementCollider.offset = center;
+
+        m_combatCollider.size = new Vector2(m_combatCollider.size.x, workspace.y);
+        m_combatCollider.offset = center;
+    }
+
+    public void SetColliderWidth(float width)
+    {
+        Vector2 center = MovementCollider.offset;
+        workspace.Set(width, MovementCollider.size.y);
+        MovementCollider.size = workspace;
+
+        // Update m_combatCollider as well
+        m_combatCollider.size = new Vector2(width, m_combatCollider.size.y);
+        m_combatCollider.offset = center;
+    }
+
     protected void AnimationTrigger() => StateMachine.CurrentState.AnimationTrigger();
     protected void AnimationFinishTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
     protected void AnimationActionTrigger() => StateMachine.CurrentState.AnimationActionTrigger();
