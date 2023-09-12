@@ -107,7 +107,7 @@ namespace Opsive.UltimateInventorySystem.UI.Panels
 
                 var panelOwnerInventoryIdentifier = InventorySystemManager.GetInventoryIdentifier(m_PanelOwnerInventoryIdentifierID);
                 if (panelOwnerInventoryIdentifier == null) {
-                    Debug.LogWarning("No Panel Owner was found yet, disabling the UI until a panel owner is set");
+                    Debug.LogWarning("No Panel Owner was found yet, disabling the UI until a panel owner is set");    
                     gameObject.SetActive(false);
                     return;
                 }

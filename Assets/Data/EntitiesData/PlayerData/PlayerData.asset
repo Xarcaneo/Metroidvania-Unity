@@ -14,10 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   standColliderHeight: 1.87
   movementVelocity: 10
-  flatSurfaceGravity: 7
-  slopeSurfaceGravity: 25
   noFriction: {fileID: 6200000, guid: 04f4dbe619046474987fd401a611d668, type: 2}
   fullFriction: {fileID: 6200000, guid: e601778952baef74384b7e967ec60bee, type: 2}
+  groundAlignOffset: 0.5
   jumpVelocity: 22
   amountOfJumps: 1
   wallJumpVelocity: {x: 25, y: 25}
@@ -46,3 +45,4 @@ MonoBehaviour:
   breakComboTime: 1
   climbingVelocity: 5
   ladderJumpCooldown: 1
+  velocityToHit: -30

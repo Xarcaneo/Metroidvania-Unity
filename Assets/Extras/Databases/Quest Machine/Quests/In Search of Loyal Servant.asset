@@ -39,7 +39,25 @@ MonoBehaviour:
     m_valueType: 0
     m_intValue: 0
     m_stringValue: 
---- !u!114 &-8394675747393483188
+--- !u!114 &-1966226864131612342
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0ed0c4e68ee98946bb5016adda42373, type: 3}
+  m_Name: BodyTextQuestContent
+  m_EditorClassIdentifier: 
+  m_contentID: -1
+  m_bodyText:
+    m_text: <color=#00008B>Find Loyal Servant
+    m_stringAsset: {fileID: 0}
+    m_textTable: {fileID: 0}
+    m_textTableFieldID: 0
+--- !u!114 &-1078216986244564484
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -59,7 +77,7 @@ MonoBehaviour:
     m_textTable: {fileID: 0}
     m_textTableFieldID: 0
   m_headingLevel: 1
---- !u!114 &-1966226864131612342
+--- !u!114 &-1065342134911408411
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -68,35 +86,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0ed0c4e68ee98946bb5016adda42373, type: 3}
-  m_Name: BodyTextQuestContent
+  m_Script: {fileID: 11500000, guid: c47e1bb9cdd9a474c8d3f5d555d7533a, type: 3}
+  m_Name: HeadingTextQuestContent
   m_EditorClassIdentifier: 
   m_contentID: -1
-  m_bodyText:
-    m_text: 'Upon reading the letter found on the lectern, you have learned of the
-      dire situation within the Castle of Eternal Vigilance. The castle''s protective
-      magic is waning, and the demonic invasion is escalating. The letter is a desperate
-      plea for help from the Loyal Servant, a devoted member of the Circle of Mages
-      who has invaluable knowledge.
-
-
-
-      Your mission is to embark on the perilous
-      journey to locate and rescue the Loyal Servant. His insights and guidance are
-      crucial to understanding the castle''s predicament and restoring its magical
-      defenses. The path ahead is fraught with danger as you delve deeper into the
-      castle''s passages, facing powerful demons and uncovering the mysteries behind
-      the weakening magic.
-
-
-
-      As you venture forth, keep a watchful eye, wield
-      your newfound physical abilities, and gather strength from the defeated demons
-      to aid in your quest. The fate of the castle, and perhaps the world, hinges
-      on your success in this Rescue of the Loyal Servant quest.'
+  m_useQuestTitle: 1
+  m_headingText:
+    m_text: 
     m_stringAsset: {fileID: 0}
     m_textTable: {fileID: 0}
     m_textTableFieldID: 0
+  m_headingLevel: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,7 +218,8 @@ MonoBehaviour:
     - m_actionList: []
       m_categorizedContentList:
       - m_contentList: []
-      - m_contentList: []
+      - m_contentList:
+        - {fileID: -1065342134911408411}
       - m_contentList: []
     - m_actionList: []
       m_categorizedContentList:
@@ -230,11 +231,107 @@ MonoBehaviour:
       m_conditionCountMode: 0
       m_minConditionCount: 0
       m_numTrueConditions: 0
-    m_childIndexList: 02000000
+    m_childIndexList: 0200000001000000
+    m_canvasRect:
+      serializedVersion: 2
+      x: 105
+      y: 48
+      width: 120
+      height: 48
+  - m_id:
+      m_text: Description 1
+      m_stringAsset: {fileID: 0}
+      m_textTable: {fileID: 0}
+      m_textTableFieldID: 0
+    m_internalName:
+      m_text: 
+      m_stringAsset: {fileID: 0}
+      m_textTable: {fileID: 0}
+      m_textTableFieldID: 0
+    m_nodeType: 4
+    m_isOptional: 0
+    m_state: 0
+    m_speaker:
+      m_text: 
+      m_stringAsset: {fileID: 0}
+      m_textTable: {fileID: 0}
+      m_textTableFieldID: 0
+    m_stateInfoList:
+    - m_actionList: []
+      m_categorizedContentList:
+      - m_contentList: []
+      - m_contentList: []
+      - m_contentList: []
+    - m_actionList: []
+      m_categorizedContentList:
+      - m_contentList: []
+      - m_contentList:
+        - {fileID: -1078216986244564484}
+        - {fileID: 2639589996378488417}
+      - m_contentList: []
+    - m_actionList: []
+      m_categorizedContentList:
+      - m_contentList: []
+      - m_contentList: []
+      - m_contentList: []
+    m_conditionSet:
+      m_conditionList: []
+      m_conditionCountMode: 1
+      m_minConditionCount: 0
+      m_numTrueConditions: 0
+    m_childIndexList: 03000000
+    m_canvasRect:
+      serializedVersion: 2
+      x: 180
+      y: 120
+      width: 120
+      height: 48
+  - m_id:
+      m_text: Condition 1
+      m_stringAsset: {fileID: 0}
+      m_textTable: {fileID: 0}
+      m_textTableFieldID: 0
+    m_internalName:
+      m_text: 
+      m_stringAsset: {fileID: 0}
+      m_textTable: {fileID: 0}
+      m_textTableFieldID: 0
+    m_nodeType: 4
+    m_isOptional: 0
+    m_state: 0
+    m_speaker:
+      m_text: 
+      m_stringAsset: {fileID: 0}
+      m_textTable: {fileID: 0}
+      m_textTableFieldID: 0
+    m_stateInfoList:
+    - m_actionList: []
+      m_categorizedContentList:
+      - m_contentList: []
+      - m_contentList: []
+      - m_contentList: []
+    - m_actionList: []
+      m_categorizedContentList:
+      - m_contentList: []
+      - m_contentList:
+        - {fileID: -1966226864131612342}
+      - m_contentList: []
+    - m_actionList: []
+      m_categorizedContentList:
+      - m_contentList: []
+      - m_contentList: []
+      - m_contentList: []
+    m_conditionSet:
+      m_conditionList:
+      - {fileID: -9114232138305177426}
+      m_conditionCountMode: 1
+      m_minConditionCount: 0
+      m_numTrueConditions: 0
+    m_childIndexList: 03000000
     m_canvasRect:
       serializedVersion: 2
       x: 30
-      y: 48
+      y: 120
       width: 120
       height: 48
   - m_id:
@@ -279,59 +376,35 @@ MonoBehaviour:
     m_childIndexList: 
     m_canvasRect:
       serializedVersion: 2
-      x: 30
-      y: 184
+      x: 105
+      y: 192
       width: 120
       height: 35
-  - m_id:
-      m_text: Condition
-      m_stringAsset: {fileID: 0}
-      m_textTable: {fileID: 0}
-      m_textTableFieldID: 0
-    m_internalName:
-      m_text: 
-      m_stringAsset: {fileID: 0}
-      m_textTable: {fileID: 0}
-      m_textTableFieldID: 0
-    m_nodeType: 4
-    m_isOptional: 0
-    m_state: 0
-    m_speaker:
-      m_text: 
-      m_stringAsset: {fileID: 0}
-      m_textTable: {fileID: 0}
-      m_textTableFieldID: 0
-    m_stateInfoList:
-    - m_actionList: []
-      m_categorizedContentList:
-      - m_contentList: []
-      - m_contentList: []
-      - m_contentList: []
-    - m_actionList: []
-      m_categorizedContentList:
-      - m_contentList: []
-      - m_contentList:
-        - {fileID: -8394675747393483188}
-        - {fileID: -1966226864131612342}
-      - m_contentList: []
-    - m_actionList: []
-      m_categorizedContentList:
-      - m_contentList: []
-      - m_contentList: []
-      - m_contentList: []
-    m_conditionSet:
-      m_conditionList:
-      - {fileID: -9114232138305177426}
-      m_conditionCountMode: 1
-      m_minConditionCount: 0
-      m_numTrueConditions: 0
-    m_childIndexList: 01000000
-    m_canvasRect:
-      serializedVersion: 2
-      x: 30
-      y: 110
-      width: 120
-      height: 48
   m_textTable: {fileID: 0}
   m_goalEntityTypeName: 
   m_nextContentID: 0
+--- !u!114 &2639589996378488417
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0ed0c4e68ee98946bb5016adda42373, type: 3}
+  m_Name: BodyTextQuestContent
+  m_EditorClassIdentifier: 
+  m_contentID: -1
+  m_bodyText:
+    m_text: "Upon reading a desperate letter on the lectern, you've learned of the
+      dire situation in the Castle of Eternal Vigilance. Its protective magic is
+      waning, and a demonic invasion is escalating.\r\n\r\nYour mission: Find and
+      rescue the Loyal Servant, a vital member of the Circle of Mages. His insights
+      are crucial for understanding the castle's troubles and restoring its defenses.
+      The path is perilous as you face powerful demons, uncover mysteries, and gather
+      strength.\r\n\r\nVenture forth, wield newfound abilities, and save the castle\u2014and
+      perhaps the world\u2014in this Rescue of the Loyal Servant quest.\n\nObjectives:"
+    m_stringAsset: {fileID: 0}
+    m_textTable: {fileID: 0}
+    m_textTableFieldID: 0

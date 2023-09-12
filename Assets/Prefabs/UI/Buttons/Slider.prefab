@@ -162,7 +162,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5865929312796622139}
   - component: {fileID: 2491242206799420586}
-  - component: {fileID: 1154443080836281092}
   - component: {fileID: 4190545870329456985}
   m_Layer: 5
   m_Name: Slider
@@ -219,21 +218,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &1154443080836281092
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 980330688205230731}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7de41b4a04bc3284e8796e536bc4acbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_textTable: {fileID: 11400000, guid: 6e81d7d258335c64ebe2b9085326655e, type: 2}
-  m_localizedFonts: {fileID: 0}
-  m_fieldName: 
 --- !u!222 &4190545870329456985
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -253,6 +237,7 @@ GameObject:
   - component: {fileID: 7149580048102450660}
   - component: {fileID: 6933847527582260428}
   - component: {fileID: 6612969221082288516}
+  - component: {fileID: 5592528640398005622}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -377,6 +362,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5592528640398005622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1199351906202327337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7de41b4a04bc3284e8796e536bc4acbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_textTable: {fileID: 11400000, guid: 6e81d7d258335c64ebe2b9085326655e, type: 2}
+  m_localizedFonts: {fileID: 0}
+  m_fieldName: 
 --- !u!1 &1550240912638497587
 GameObject:
   m_ObjectHideFlags: 0
