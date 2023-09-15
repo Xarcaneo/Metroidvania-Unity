@@ -77,7 +77,7 @@ namespace Opsive.UltimateInventorySystem.UI.Monitors
         /// <summary>
         /// Initialize the component on awake.
         /// </summary>
-        private void Awake()
+        protected virtual void Awake()
         {
             if (m_MonitorContent == null) { m_MonitorContent = transform as RectTransform; }
 
@@ -226,7 +226,7 @@ namespace Opsive.UltimateInventorySystem.UI.Monitors
         /// <summary>
         /// Start listening to events.
         /// </summary>
-        private void OnEnable()
+        protected virtual void OnEnable()
         {
             StartListening();
         }
@@ -454,7 +454,7 @@ namespace Opsive.UltimateInventorySystem.UI.Monitors
         /// <summary>
         /// Stop listening to events.
         /// </summary>
-        private void OnDestroy()
+        protected virtual void OnDestroy()
         {
             StopListening();
         }
@@ -462,7 +462,7 @@ namespace Opsive.UltimateInventorySystem.UI.Monitors
         /// <summary>
         /// Stop listening to events.
         /// </summary>
-        private void OnDisable()
+        protected virtual void OnDisable()
         {
             if (m_ItemDisplays == null) { return; }
 

@@ -55,5 +55,16 @@ namespace Opsive.UltimateInventorySystem.UI.Panels
         /// </summary>
         public virtual void OnOpenBack()
         { }
+
+        /// <summary>
+        /// Unitiliaze the binding.
+        /// </summary>
+        /// <param name="displayPanel">The display panel bound.</param>
+        public virtual void UnInitialize(DisplayPanel displayPanel)
+        {
+            if(m_IsInitialized == false){ return; }
+
+            m_IsInitialized = false;
+        }
     }
 }

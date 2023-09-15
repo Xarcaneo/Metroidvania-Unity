@@ -78,7 +78,7 @@ namespace Opsive.UltimateInventorySystem.UI.Item
         /// </summary>
         /// <param name="itemInfo">The item.</param>
         /// <param name="slot">The item slot.</param>
-        protected override void AssignItemToSlot(ItemInfo itemInfo, int slot)
+        public override void AssignItemToSlot(ItemInfo itemInfo, int slot)
         {
             if (m_SwapItemViewOnAssign) {
                 m_ItemViewDrawer.DrawView(slot, slot, itemInfo);
@@ -86,6 +86,15 @@ namespace Opsive.UltimateInventorySystem.UI.Item
             }
 
             base.AssignItemToSlot(itemInfo, slot);
+        }
+        
+        /// <summary>
+        /// Unassign an item in slot.
+        /// </summary>
+        /// <param name="slot">The item slot.</param>
+        public virtual void UnAssignSlot(int slot)
+        {
+            AssignItemToSlot(ItemInfo.None, slot);
         }
 
         /// <summary>

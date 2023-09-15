@@ -46,7 +46,7 @@ namespace Opsive.UltimateInventorySystem.Interactions
         /// <summary>
         /// Initialize.
         /// </summary>
-        private void Awake()
+        protected virtual void Awake()
         {
             m_InteractableBehavior = GetComponent<InteractableBehavior>();
             if (m_InteractableBehavior != null) {
@@ -159,7 +159,7 @@ namespace Opsive.UltimateInventorySystem.Interactions
         public virtual bool Deselect(IInteractor interactor)
         {
             if (!CanInteract(interactor)) { return false; }
-
+            
             m_OnDeselect.Invoke();
             EventHandler.ExecuteEvent<IInteractor>(gameObject, EventNames.c_Interactable_OnDeselect_IInteractor, interactor);
             return true;
@@ -193,7 +193,7 @@ namespace Opsive.UltimateInventorySystem.Interactions
         /// <summary>
         /// Remove from the interactable list in the component is disabled or destroyed.
         /// </summary>
-        private void OnDisable()
+        protected virtual void OnDisable()
         {
             if (m_LastInteractor != null) {
                 m_LastInteractor.RemoveInteractable(this);

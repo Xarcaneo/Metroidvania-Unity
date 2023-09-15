@@ -19,7 +19,7 @@ namespace Opsive.UltimateInventorySystem.Exchange
         /// <summary>
         /// Initialize on awake.
         /// </summary>
-        private void Awake()
+        protected virtual void Awake()
         {
             if (m_CurrencyAmount == null) {
                 m_CurrencyAmount = new CurrencyCollection();
@@ -147,7 +147,7 @@ namespace Opsive.UltimateInventorySystem.Exchange
         /// <summary>
         /// Unregister listener to events.
         /// </summary>
-        private void OnDestroy()
+        protected virtual void OnDestroy()
         {
             EventHandler.UnregisterEvent(
                 m_CurrencyAmount, EventNames.c_CurrencyCollection_OnUpdate, NotifyChange);

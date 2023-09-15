@@ -398,6 +398,11 @@ namespace Opsive.UltimateInventorySystem.Editor.Managers.UIDesigner
 
             var valid = result.isValid;
             var message = result.message;
+            
+            if (gameObject == null)
+            {
+                return (valid, message);
+            }
 
             var foundGameplayPanel = false;
             var foundMainMenu = false;

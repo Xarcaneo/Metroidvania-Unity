@@ -43,7 +43,7 @@ namespace Opsive.UltimateInventorySystem.Input
         /// <summary>
         /// Initialize the default values.
         /// </summary>
-        private void Awake()
+        protected virtual void Awake()
         {
             m_GameObjectToEventSystemMap = new Dictionary<GameObject, EventSystem>();
         }
@@ -51,7 +51,7 @@ namespace Opsive.UltimateInventorySystem.Input
         /// <summary>
         /// The object has been enabled.
         /// </summary>
-        private void OnEnable()
+        protected virtual void OnEnable()
         {
             // The object may have been enabled outside of the scene unloading.
             if (s_Instance == null) {
@@ -75,7 +75,7 @@ namespace Opsive.UltimateInventorySystem.Input
         /// <summary>
         /// The object has been disabled.
         /// </summary>
-        private void OnDisable()
+        protected virtual void OnDisable()
         {
             SceneManager.sceneUnloaded += SceneUnloaded;
         }

@@ -582,10 +582,19 @@ namespace Opsive.UltimateInventorySystem.Core.InventoryCollections
         /// <summary>
         /// Remove all the items in the inventory.
         /// </summary>
+        /// <returns>Returns the number of items added, 0 if no item was removed.</returns>
+        public void RemoveAllItems()
+        {
+            RemoveAllItems(false, true);
+        }
+        
+        /// <summary>
+        /// Remove all the items in the inventory.
+        /// </summary>
         /// <param name="removeItemsFromIgnoredCollections">Should items be removed from ignored collections such as loadouts or Hide.</param>
         /// <param name="disableEventsWhileRemoving">Should .</param>
         /// <returns>Returns the number of items added, 0 if no item was removed.</returns>
-        public virtual void RemoveAllItems(bool removeItemsFromIgnoredCollections = false, bool disableEventsWhileRemoving = true)
+        public virtual void RemoveAllItems(bool removeItemsFromIgnoredCollections, bool disableEventsWhileRemoving)
         {
             var previous = m_UpdateEventDisabled;
             if (disableEventsWhileRemoving) {
@@ -967,7 +976,7 @@ namespace Opsive.UltimateInventorySystem.Core.InventoryCollections
         /// <summary>
         /// Unregister on destroy.
         /// </summary>
-        private void OnDestroy()
+        protected virtual void OnDestroy()
         {
             if (m_ItemCollections != null) {
                 for (int i = 0; i < m_ItemCollections.Count; i++) {

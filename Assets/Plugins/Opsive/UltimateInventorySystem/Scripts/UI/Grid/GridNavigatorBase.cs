@@ -39,7 +39,7 @@ namespace Opsive.UltimateInventorySystem.UI.Grid
         /// <summary>
         /// Initialize.
         /// </summary>
-        private void Awake()
+        protected virtual void Awake()
         {
             Initialize(false);
         }

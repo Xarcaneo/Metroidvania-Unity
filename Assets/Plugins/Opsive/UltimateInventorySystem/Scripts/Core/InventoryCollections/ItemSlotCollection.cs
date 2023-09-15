@@ -10,6 +10,7 @@ namespace Opsive.UltimateInventorySystem.Core.InventoryCollections
     using Opsive.UltimateInventorySystem.Storage;
     using System;
     using System.Collections.Generic;
+    using Opsive.Shared.Utility;
     using UnityEngine;
 
     /// <summary>
@@ -30,6 +31,8 @@ namespace Opsive.UltimateInventorySystem.Core.InventoryCollections
         protected ItemStack[] m_ItemsBySlot;
 
         public int SlotCount => m_ItemSlotSet?.ItemSlots?.Count ?? 0;
+
+        public IReadOnlyList<ItemStack> ItemsBySlot => m_ItemsBySlot;
 
         /// <summary>
         /// Default constructor.
@@ -58,9 +61,18 @@ namespace Opsive.UltimateInventorySystem.Core.InventoryCollections
                 return;
             }
 
-            m_ItemsBySlot = new ItemStack[m_ItemSlotSet?.ItemSlots?.Count ?? 0];
-
             base.Initialize(owner, force);
+            
+            // Pre-add the itemStacks by slot. They will be added and removed from the itemstack list dynamically.
+            // The AddItemInternal and RemoveItemInternal functions are overriden
+            // which means the item stacks will be reused 
+            // Therefore there is no guarantee that the ItemsBySlot index matches the ItemStacks indexes.
+            m_ItemsBySlot = new ItemStack[m_ItemSlotSet?.ItemSlots?.Count ?? 0];
+            for (int i = 0; i < m_ItemsBySlot.Length; i++) {
+                var itemStack = new ItemStack();
+                itemStack.Initialize(ItemAmount.None, this);
+                m_ItemsBySlot[i] = itemStack;
+            }
 
             // Do not perform any validity checks when the game isn't active. This is to prevent logs from being shown when the collection is being edited.
             if (!Application.isPlaying) {
@@ -162,6 +174,8 @@ namespace Opsive.UltimateInventorySystem.Core.InventoryCollections
             var temp = m_ItemsBySlot[slotIndex1];
             m_ItemsBySlot[slotIndex1] = m_ItemsBySlot[slotIndex2];
             m_ItemsBySlot[slotIndex2] = temp;
+            
+            UpdateCollection();
 
             return true;
         }
@@ -229,13 +243,11 @@ namespace Opsive.UltimateInventorySystem.Core.InventoryCollections
                 return (0, itemInfo.Item, this);
             }
 
-            if (!m_NewItemPriority && item.IsUnique && m_ItemsBySlot[slotIndex] != null) {
+            if (!m_NewItemPriority && item.IsUnique && m_ItemsBySlot[slotIndex].Item != null) {
                 return (0, itemInfo.Item, this);
             }
 
-            var currentAmount = GetItemAmount(item);
-
-            var setItemInfo = SetItemAmount((amount + currentAmount, itemInfo), slotIndex, true);
+            var setItemInfo = SetItemAmount((amount, itemInfo), slotIndex, true);
             if (setItemInfo.HasValue) {
                 return setItemInfo.Value;
             } else {
@@ -262,7 +274,8 @@ namespace Opsive.UltimateInventorySystem.Core.InventoryCollections
             var amount = itemInfo.Amount;
             if (currentStack != null) {
                 if (itemInfo.Item.StackableEquivalentTo(currentStack.Item)) {
-                    amount -= currentStack.Amount;
+                    // The items are the same, lets merge them.
+                    amount += currentStack.Amount;
                 } else if (removePreviousItem) {
                     var removedItem = RemoveItem((ItemInfo)currentStack);
                     if (removedItem.Amount > 0) {
@@ -280,7 +293,7 @@ namespace Opsive.UltimateInventorySystem.Core.InventoryCollections
             }
 
             var itemToAdd = (amount, itemInfo);
-            var itemInfoAdded = AddInternal(itemToAdd, null, false);
+            var itemInfoAdded = AddInternal(itemToAdd, currentStack, false);
 
             m_ItemsBySlot[slotIndex] = itemInfoAdded.ItemStack;
 
@@ -288,7 +301,101 @@ namespace Opsive.UltimateInventorySystem.Core.InventoryCollections
 
             return itemInfoAdded;
         }
+        
+        /// <summary>
+        /// Add an Item Amount in an organized way.
+        /// </summary>
+        /// <param name="itemInfo">The Item info being added to the item collection.</param>
+        /// <param name="stackTarget">The item stack where you would like the item to be added (can be null).</param>
+        protected override ItemInfo AddInternal(ItemInfo itemInfo, ItemStack stackTarget, bool notifyAdd = true)
+        {
+            if (stackTarget == null) {
+                Debug.LogWarning("The ItemSlotCollection stack target cannot be null.");
+                return ItemInfo.None;
+            }
 
+            var addedItemStack = stackTarget;
+            stackTarget.Reset();
+            stackTarget.Initialize(itemInfo.ItemAmount, this);
+            if (m_ItemStacks.Contains(stackTarget) == false && stackTarget.Item != null) {
+                m_ItemStacks.Add(stackTarget);
+            }
+            
+            itemInfo.Item.AddItemCollection(this);
+
+            if (notifyAdd) { NotifyAdd(itemInfo, addedItemStack); }
+
+            return (ItemInfo)(itemInfo.Item, itemInfo.Amount, this, addedItemStack);
+        }
+        
+        /// <summary>
+        /// Internal method which removes an ItemAmount from the collection.
+        /// </summary>
+        /// <param name="itemInfo">The item info to remove.</param>
+        /// <returns>Returns the number of items removed, 0 if no item was removed.</returns>
+        protected override ItemInfo RemoveInternal(ItemInfo itemInfo)
+        {
+            var removed = 0;
+            ItemStack itemStackToRemove = itemInfo.ItemStack;
+
+            if (itemStackToRemove != null && itemStackToRemove.Item != null && itemStackToRemove.Item.ID == itemInfo.Item.ID) {
+                removed = SimpleInternalItemRemove(itemInfo, removed, itemStackToRemove);
+            }
+
+            if (removed < itemInfo.Amount) {
+                for (int i = m_ItemsBySlot.Length - 1; i >= 0; i--) {
+                    if(m_ItemsBySlot[i].Item == null){ continue; }
+                    if (m_ItemsBySlot[i].Item.ID != itemInfo.Item.ID) { continue; }
+
+                    itemStackToRemove = m_ItemsBySlot[i];
+                    removed = SimpleInternalItemRemove(itemInfo, removed, itemStackToRemove);
+                    if (removed >= itemInfo.Amount) { break; }
+                }
+            }
+
+            if (removed == 0) {
+                return (removed, itemInfo.Item, this);
+            }
+
+            var removedItemInfo = (ItemInfo)(removed, itemInfo.Item, this, itemStackToRemove);
+            
+            NotifyItemRemoved(removedItemInfo);
+
+            //Debug.Log(Name+" ItemCollection Removed item "+removedItemInfo);
+            return removedItemInfo;
+        }
+
+        /// <summary>
+        /// Simple remove of an item from a specific item stack.
+        /// </summary>
+        /// <param name="itemInfo">The item Info to remove.</param>
+        /// <param name="removed">The amount already removed.</param>
+        /// <param name="itemStackToRemove">The item stack to remove the amount from.</param>
+        /// <returns>The amount removed (includes the amount previously removed).</returns>
+        private int SimpleInternalItemRemove(ItemInfo itemInfo, int removed, ItemStack itemStackToRemove)
+        {
+            var remainingToRemove = itemInfo.Amount - removed;
+            var newAmount = itemStackToRemove.Amount - remainingToRemove;
+            if (newAmount <= 0) {
+                // Remove the item from the item collection.
+                itemStackToRemove.Item?.RemoveItemCollection(this);
+                
+                removed += itemStackToRemove.Amount;
+                itemStackToRemove.Reset();
+                itemStackToRemove.Initialize(ItemAmount.None, this);
+                if (m_ItemStacks.Contains(itemStackToRemove)) {
+                    m_ItemStacks.Remove(itemStackToRemove);
+                }
+
+                
+            } else {
+                removed += remainingToRemove;
+                itemStackToRemove.SetAmount(newAmount);
+            }
+
+            return removed;
+        }
+        
         /// <summary>
         /// Removes the item at the specified slot and item index.
         /// </summary>
@@ -319,11 +426,7 @@ namespace Opsive.UltimateInventorySystem.Core.InventoryCollections
             var amountToRemove = amount > 0 ? amount : itemToRemove.Amount;
             var removed = RemoveInternal((itemToRemove.Item, amountToRemove, this, itemToRemove));
 
-            if (removed.ItemStack.IsInitialized && removed.ItemStack.ItemCollection == this) {
-                m_ItemsBySlot[slotIndex] = removed.ItemStack;
-            } else {
-                m_ItemsBySlot[slotIndex] = null;
-            }
+            m_ItemsBySlot[slotIndex] = removed.ItemStack;
 
             return removed;
         }
@@ -365,7 +468,7 @@ namespace Opsive.UltimateInventorySystem.Core.InventoryCollections
 
                 matchingCategoryUsedSlot = i;
 
-                if (m_ItemsBySlot[i] == null) {
+                if (m_ItemsBySlot[i] == null || m_ItemsBySlot[i].Item == null) {
                     if (matchingCategoryEmptySlot != -1) { continue; }
                     matchingCategoryEmptySlot = i;
                     continue;
@@ -396,6 +499,8 @@ namespace Opsive.UltimateInventorySystem.Core.InventoryCollections
                 }
 
                 if (m_ItemsBySlot[i] == null) { continue; }
+                
+                if (m_ItemsBySlot[i].Item == null) { continue; }
 
                 if (m_ItemsBySlot[i].Item == item) { return i; }
 

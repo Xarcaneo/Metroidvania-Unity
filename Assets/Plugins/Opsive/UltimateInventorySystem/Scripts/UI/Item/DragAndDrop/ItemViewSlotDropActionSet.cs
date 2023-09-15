@@ -108,12 +108,14 @@ namespace Opsive.UltimateInventorySystem.UI.Item.DragAndDrop
         /// Handle Item View Slot drop.
         /// </summary>
         /// <param name="itemViewDropHandler">The item view drop handler.</param>
-        public void HandleItemViewSlotDrop(ItemViewDropHandler itemViewDropHandler)
+        /// <returns>Returns the index of the dropped action condition.</returns>
+        public int HandleItemViewSlotDrop(ItemViewDropHandler itemViewDropHandler)
         {
             var index = GetFirstPassingConditionIndex(itemViewDropHandler);
-            if (index == -1) { return; }
+            if (index == -1) { return -1; }
 
             m_ActionsWithConditions[index].Drop(itemViewDropHandler);
+            return index;
         }
 
         /// <summary>

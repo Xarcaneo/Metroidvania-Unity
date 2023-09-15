@@ -85,10 +85,11 @@ namespace Opsive.UltimateInventorySystem.Editor.Inspectors
                 "Item Attributes",
                 "Item Definition Attributes",
                 "Category Attributes",
+                "Order",
             }, 0, ShowAttributeTab);
             m_AttributesBox.Add(m_AttributeCollectionsTabToolbar);
 
-            m_AttributesReorderableList = new ReorderableList(null, MakeItem, BindItem, null, null, null, null, null);
+            m_AttributesReorderableList = new ReorderableList(null, MakeItem, BindItem, null, null, null, null, OnReorder);
             m_AttributesBox.Add(m_AttributesReorderableList);
 
             Refresh();
@@ -192,9 +193,27 @@ namespace Opsive.UltimateInventorySystem.Editor.Inspectors
             var attributeBindings = m_AttributeBindings;
             var allAttributeCount = m_ItemCategory.GetAttributesCount();
             var newBindings = new AttributeBindingBase[allAttributeCount];
+            var attributeFoundHashset = new HashSet<AttributeBase>();
+
+            var count = 0;
+            //existing attribute bindings first.
+            for (int i = 0; i < attributeBindings.Count; i++) {
+                var attributeBinding = attributeBindings[i];
+                var attribute = m_ItemCategory.GetAttribute(attributeBinding.AttributeName);
+                if (attribute != null) {
+                    newBindings[count] = FindMatchOrCreate(attributeBindings, attribute);
+                    attributeFoundHashset.Add(attribute);
+                    count++;
+                }
+            }
+            
+            //Add all the other attributes.
             for (int i = 0; i < allAttributeCount; i++) {
                 var attribute = m_ItemCategory.GetAttributesAt(i);
-                newBindings[i] = FindMatchOrCreate(attributeBindings, attribute);
+                //Ignore if it already has the attribute
+                if(attributeFoundHashset.Contains(attribute)){ continue; }
+                newBindings[count] = FindMatchOrCreate(attributeBindings, attribute);
+                count++;
             }
 
             m_AttributeBindings = new List<AttributeBindingBase>(newBindings);
@@ -224,7 +243,6 @@ namespace Opsive.UltimateInventorySystem.Editor.Inspectors
             }
             
             // Match not Found.
-
             AttributeBindingBase newAttributeBinding;
             if (m_ObjectType == null) {
                 newAttributeBinding =
@@ -264,28 +282,59 @@ namespace Opsive.UltimateInventorySystem.Editor.Inspectors
             if (m_AttributeBindings == null) { return null; }
 
             var list = new List<(AttributeBase, AttributeBindingBase)>();
+            AttributeBase attribute = null;
 
-            var offset = 0;
-            ResizableArray<AttributeBase> attributes;
+            for (int i = 0; i < m_AttributeBindings.Count; i++) {
+                var attributeName = m_AttributeBindings[i].AttributeName;
+                
+                // Item Only
+                if (index == 0 && category.TryGetItemAttribute(attributeName, out attribute) == false) {
+                    continue;
+                }
+                
+                // Definition Only
+                if (index == 1 &&
+                    category.TryGetDefinitionAttribute(attributeName, out attribute) == false) {
+                    continue;
+                }
+                
+                // Category Only
+                if (index == 2 &&
+                    category.TryGetCategoryAttribute(attributeName, out attribute) == false) {
+                    continue;
+                }
 
-            if (index == 0) { // Item Attributes.
-                offset = category.ItemCategoryAttributeCollection.Count + category.ItemDefinitionAttributeCollection.Count;
-                attributes = category.ItemAttributeCollection.Attributes;
-            } else if (index == 1) { // Item Definition Attributes.
-                offset = category.ItemCategoryAttributeCollection.Count;
-                attributes = category.ItemDefinitionAttributeCollection.Attributes;
-            } else { // Item Category Attributes.
-                offset = 0;
-                attributes = category.ItemCategoryAttributeCollection.Attributes;
-            }
-
-            for (int i = 0; i < attributes.Count; i++) {
-                //The attributes in the binding may not exist
-                if (i + offset >= m_AttributeBindings.Count) { continue; }
-                list.Add((attributes[i], m_AttributeBindings[i + offset]));
+                // All
+                if(index == 3) {
+                    attribute = category.GetAttribute(attributeName);
+                }
+                
+                if(attribute == null){ continue; }
+                
+                // Add to the list.
+                list.Add((attribute, m_AttributeBindings[i]));
             }
 
             return list;
+        }
+
+        /// <summary>
+        /// Reorder the attribute bindings.
+        /// </summary>
+        /// <param name="previousIndex">previous Index.</param>
+        /// <param name="newIndex">new Index.</param>
+        protected virtual void OnReorder(int previousIndex, int newIndex)
+        {
+            if (previousIndex < 0 && previousIndex >= m_AttributeBindings.Count) {
+                return;
+            }
+            if (newIndex < 0 && newIndex >= m_AttributeBindings.Count) {
+                return;
+            }
+            
+            m_AttributeBindings.Move(previousIndex, newIndex);
+
+            OnAttributeBindingsChanged?.Invoke(m_AttributeBindings);
         }
     }
 

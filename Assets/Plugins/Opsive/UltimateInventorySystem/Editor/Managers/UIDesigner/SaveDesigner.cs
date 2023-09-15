@@ -49,7 +49,14 @@ namespace Opsive.UltimateInventorySystem.Editor.Managers.UIDesigner
             var result = base.BuildCondition(logWarnings);
             if (result == false) { return false; }
 
-            if (GameObject.FindObjectsOfType<SaveSystemManager>() == null) {
+#if UNITY_2023_1_OR_NEWER
+             var saveSystemMangers = GameObject.FindObjectsByType<SaveSystemManager>(FindObjectsSortMode.None);
+#else
+            var saveSystemMangers = GameObject.FindObjectsOfType<SaveSystemManager>();
+#endif
+
+           
+            if (saveSystemMangers == null) {
                 m_ConditionHelpBox.SetMessage("You must set up the Saver Manager before creating the Saver UI. Use the Main Setup Manager to do so.");
                 return false;
             }
@@ -183,7 +190,13 @@ namespace Opsive.UltimateInventorySystem.Editor.Managers.UIDesigner
         public override void Refresh(SaveMenu menu)
         {
             base.Refresh(menu);
+           
+            
+#if UNITY_2023_1_OR_NEWER
+             m_SaveSystemManager = GameObject.FindFirstObjectByType<SaveSystemManager>();
+#else
             m_SaveSystemManager = GameObject.FindObjectOfType<SaveSystemManager>();
+#endif
 
             m_Savers.Clear();
             m_Savers.AddRange(UIDesignerUtility.FindAllObjectsOfType<SaverBase>());

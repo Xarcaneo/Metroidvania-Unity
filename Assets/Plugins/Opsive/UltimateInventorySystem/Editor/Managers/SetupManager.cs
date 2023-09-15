@@ -155,7 +155,14 @@ namespace Opsive.UltimateInventorySystem.Editor.Managers
             // Create the "Game" components if it doesn't already exists.
             Scheduler scheduler;
             GameObject gameGameObject;
-            if ((scheduler = GameObject.FindObjectOfType<Scheduler>()) == null) {
+            
+#if UNITY_2023_1_OR_NEWER
+            scheduler = GameObject.FindFirstObjectByType<Scheduler>();
+#else
+            scheduler = GameObject.FindObjectOfType<Scheduler>();
+#endif
+            
+            if (scheduler == null) {
                 gameGameObject = new GameObject("Game");
             } else {
                 gameGameObject = scheduler.gameObject;
@@ -286,7 +293,13 @@ namespace Opsive.UltimateInventorySystem.Editor.Managers
         {
             // Setup the managers.
             AddSceneComponents();
+            
+#if UNITY_2023_1_OR_NEWER
+            var gameGameObject = GameObject.FindFirstObjectByType<InventorySystemManager>().gameObject;
+#else
             var gameGameObject = GameObject.FindObjectOfType<InventorySystemManager>().gameObject;
+#endif
+            
             InspectorUtility.AddComponent<SaveSystem.SaveSystemManager>(gameGameObject);
             InspectorUtility.AddComponent<SaveSystem.InventorySystemManagerItemSaver>(gameGameObject);
 

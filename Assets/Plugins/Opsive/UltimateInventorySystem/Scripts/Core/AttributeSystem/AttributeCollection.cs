@@ -481,7 +481,7 @@ namespace Opsive.UltimateInventorySystem.Core.AttributeSystem
                 var attributeFamily = attributeSource.GetAttributeFamily();
                 for (int i = 0; i < attributeFamily.Count; i++) {
                     var attachedObject = attributeFamily[i].GetAttachedObject();
-                    if (attachedObject != null && previousAttributes.ContainsKey(attachedObject)) { continue; }
+                    if (attachedObject == null || previousAttributes.ContainsKey(attachedObject)) { continue; }
 
                     previousAttributes.Add(attachedObject, attributeFamily[i]);
                 }
@@ -501,6 +501,11 @@ namespace Opsive.UltimateInventorySystem.Core.AttributeSystem
                 for (int i = 0; i < attributeFamily.Count; i++) {
                     var otherAttribute = attributeFamily[i];
                     var otherObject = otherAttribute.GetAttachedObject();
+
+                    if (otherObject == null) {
+                        Debug.LogWarning($"Attached Object is null for Attribute {i}:'{otherAttribute}' in family");
+                        continue;
+                    }
 
                     if (previousAttributes.ContainsKey(otherObject) == false) { continue; }
 

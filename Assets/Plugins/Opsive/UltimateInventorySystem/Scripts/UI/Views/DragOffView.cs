@@ -111,10 +111,10 @@ namespace Opsive.UltimateInventorySystem.UI.Views
         /// <param name="movingSource">started moving or stopped?</param>
         public void SetAsMovingSource(bool movingSource)
         {
-            ActivateGameObjects(m_ActivateOnDragSource, true);
-            ActivateGameObjects(m_DeactivateOnDragSource, false);
-            EnableComponents(m_EnableOnDragSource, true);
-            EnableComponents(m_DisableOnDragSource, false);
+            ActivateGameObjects(m_ActivateOnDragSource, movingSource);
+            ActivateGameObjects(m_DeactivateOnDragSource, !movingSource);
+            EnableComponents(m_EnableOnDragSource, movingSource);
+            EnableComponents(m_DisableOnDragSource, !movingSource);
             
             m_OnDragSource?.Invoke();
         }

@@ -31,6 +31,7 @@ namespace Opsive.UltimateInventorySystem.UI.Grid
 
         [Tooltip("The filter sorter.")]
         [SerializeField] protected internal FilterSorter m_FilterSorterBase;
+        
 
         protected ViewDrawer<T> m_ViewDrawer;
         protected ResizableArray<T> m_Elements;
@@ -43,6 +44,7 @@ namespace Opsive.UltimateInventorySystem.UI.Grid
             SetRealElementCountAsMax?
                 (m_Elements?.Count ?? 0)
                 : MaxElementCount;
+        public FilterSorter SerializedFilterSorter => m_FilterSorterBase;
         public IFilterSorter<T> FilterSorter => m_FilterSorter;
 
         /// <summary>

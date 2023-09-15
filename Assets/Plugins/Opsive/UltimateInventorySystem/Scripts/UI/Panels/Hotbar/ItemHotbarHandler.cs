@@ -42,7 +42,7 @@ namespace Opsive.UltimateInventorySystem.UI.Panels.Hotbar
         /// <summary>
         /// Initialize and listen to events.
         /// </summary>
-        private void Start()
+        protected virtual void Start()
         {
             if (m_ItemHotbar == null) { m_ItemHotbar = GetComponent<ItemHotbar>(); }
 
@@ -67,7 +67,7 @@ namespace Opsive.UltimateInventorySystem.UI.Panels.Hotbar
         /// <summary>
         /// Check for the input in update.
         /// </summary>
-        private void Update()
+        protected virtual void Update()
         {
             for (int i = 0; i < m_HotbarInput.Length; i++) {
                 if ( m_HotbarInput[i].Index < 0 || m_ItemHotbar.SlotCount < m_HotbarInput[i].Index) {
@@ -107,7 +107,7 @@ namespace Opsive.UltimateInventorySystem.UI.Panels.Hotbar
         /// <summary>
         /// Unregister input on destroy.
         /// </summary>
-        private void OnDestroy()
+        protected virtual void OnDestroy()
         {
             if (m_PlayerInput == null || (m_PlayerInput as Component) == null || m_PlayerInput.gameObject == null) {
                 return;

@@ -133,6 +133,21 @@ namespace Opsive.UltimateInventorySystem.Editor.VisualElements
                 };
                 m_ItemAmountsView.OnRemoveItem += (itemAmount, index) =>
                 {
+                    var allItemStack = m_ItemCollection.GetAllItemStacks();
+                    if (index < 0 || index >= allItemStack.Count)
+                    {
+                        return;
+                    }
+
+                    //get that index in the item stacks at runtime
+                    var itemStackToEdit = allItemStack[index];
+
+                    // This can happen id an Item was added or removed.
+                    if (itemStackToEdit.Item != itemAmount.Item)
+                    {
+                        return;
+                    }
+                    
                     m_ItemCollection.RemoveItem((ItemInfo)itemAmount);
                 };
                 m_ItemAmountsView.OnChange += (index, previousItemAmount, newItemAmount) =>

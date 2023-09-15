@@ -57,7 +57,7 @@ namespace Opsive.UltimateInventorySystem.Equipping
         /// <summary>
         /// Awake.
         /// </summary>
-        private void Awake()
+        protected virtual void Awake()
         {
             Initialize();
         }
@@ -90,7 +90,7 @@ namespace Opsive.UltimateInventorySystem.Equipping
             enabled = enable;
         }
 
-        private void Update()
+        protected virtual void Update()
         {
             for (int i = 0; i < m_Inputs.Length; i++) {
                 if (m_Inputs[i].CheckInput(m_PlayerInput)) {
@@ -106,13 +106,7 @@ namespace Opsive.UltimateInventorySystem.Equipping
         /// <param name="itemActionIndex">The item action index to use.</param>
         public void UseItem(int itemObjectIndex, int itemActionIndex)
         {
-            if (itemObjectIndex < 0 || itemObjectIndex >= m_Equipper.Slots.Length) {
-                return;
-            }
-
-            var slot = m_Equipper.Slots[itemObjectIndex];
-
-            var itemObject = slot.ItemObject;
+            var itemObject = m_Equipper.GetEquippedItemObject(itemObjectIndex);
 
             if (itemObject == null) { return; }
 
@@ -135,7 +129,7 @@ namespace Opsive.UltimateInventorySystem.Equipping
         /// <summary>
         /// Unregister input on destroy.
         /// </summary>
-        private void OnDestroy()
+        protected virtual void OnDestroy()
         {
             if(m_PlayerInput == null){ return; }
             EventHandler.UnregisterEvent<bool>(m_PlayerInput.gameObject, EventNames.c_CharacterGameObject_OnEnableGameplayInput_Bool, HandleEnableGameplayInput);

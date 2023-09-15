@@ -63,6 +63,53 @@ namespace Opsive.UltimateInventorySystem.UI.Item.DragAndDrop.DropActions
             return base.ToString() + string.Format("[{0},{1}]", add, remove);
         }
     }
+    
+    /// <summary>
+    /// The Item View Drop Container Give Action.
+    /// </summary>
+    [Serializable]
+    public class ItemViewDropContainerRemoveAction : ItemViewDropAction
+    {
+        [Tooltip("Only used if the ItemBoxDropActionsWithConditions is null.")]
+        [SerializeField] protected bool m_RemoveFromSourceContainer = true;
+
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
+        public ItemViewDropContainerRemoveAction()
+        {
+        }
+
+        /// <summary>
+        /// Constructor with overloads.
+        /// </summary>
+        public ItemViewDropContainerRemoveAction(bool removeFromSource)
+        {
+            m_RemoveFromSourceContainer = removeFromSource;
+        }
+
+        /// <summary>
+        /// Drop Action.
+        /// </summary>
+        /// <param name="itemViewDropHandler">The Item View Drop Handler.</param>
+        public override void Drop(ItemViewDropHandler itemViewDropHandler)
+        {
+            if (m_RemoveFromSourceContainer) {
+                itemViewDropHandler.StreamData.SourceItemInfo = itemViewDropHandler.SourceContainer.RemoveItem(itemViewDropHandler.StreamData.SourceItemInfo, itemViewDropHandler.SourceIndex);
+            }
+        }
+
+        /// <summary>
+        /// To string.
+        /// </summary>
+        /// <returns>The string.</returns>
+        public override string ToString()
+        {
+            var remove = m_RemoveFromSourceContainer ? "-" : "";
+
+            return base.ToString() + string.Format("[{0}]", remove);
+        }
+    }
 
     /// <summary>
     /// The Item View Drop Container Exchange Action.

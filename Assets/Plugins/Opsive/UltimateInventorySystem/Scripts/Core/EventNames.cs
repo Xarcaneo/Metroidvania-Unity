@@ -23,6 +23,10 @@ namespace Opsive.UltimateInventorySystem.Core
 
         //The Equipper had item equipped or unequipped.
         public const string c_Equipper_OnChange = "Equipper_OnChange";
+        //The Equipper had an item equipped, the item and index are passed as parameter.
+        public const string c_Equipper_OnEquipped_Item_Index = "c_Equipper_OnEquipped_Item_Index";
+        //The Equipper had an item unequipped, the item and index are passed as parameter.
+        public const string c_Equipper_OnUnequipped_Item_Index = "c_Equipper_OnEquipped_Item_Index";
 
         //The interactable was interacted with by an interactor.
         public const string c_Interactable_OnInteract_IInteractor = "Interactable_OnInteract_IInteractor";
@@ -84,6 +88,8 @@ namespace Opsive.UltimateInventorySystem.Core
         public const string c_InventoryGameObject_OnCraftRemoveItem_CraftingProecessor_ItemInfoListSlice_ActionBoolSucces = "InventoryGameObject_OnCraftRemoveItem_CraftingProecessor_ItemInfoListSlice_ActionBoolSucces";
 
         //The panel was opened or closed. The target game object is the panel owner assigned in the PanelManager.
+        public const string c_OnPanelOwnerChange_GameObjectPanelOwner_DisplayPanelManager = "OnPanelOwnerChange_GameObjectPanelOwner_DisplayPanelManager";
+        //The panel was opened or closed. The target game object is the panel owner assigned in the PanelManager.
         public const string c_GameObject_OnPanelOpenClose_PanelEventData = "GameObject_OnPanelOpenClose_PanelEventData";
         //Similar to the OpenClose event but only happens if the selected panel is different. Used to know when the panel manager selects a new panel. The target game object is the panel owner assigned in the PanelManager.
         public const string c_GameObject_OnNewPanelSelected_PanelEventData = "GameObject_OnNewPanelSelected_PanelEventData";
@@ -103,6 +109,10 @@ namespace Opsive.UltimateInventorySystem.Core
         //This event fires when the Item View Slot Cursor Manager stops to move an item.
         public const string c_ItemViewSlotCursorManagerGameobject_EndMove = "c_ItemViewSlotCursorManagerGameobject_EndMove";
 
+        //A new Saver was registered in the Save System Manager.
+        public const string c_OnSaverRegistered_SaverBase = "c_OnSaverRegistered_SaverBase";
+        //A saver was unregistered from the Save system Manager.
+        public const string c_OnSaverUnregistered_SaverBase = "c_OnSaverUnregistered_SaverBase";
         //The save system is about to start saving.
         public const string c_WillStartSaving_Index = "c_WillStartSaving";
         //The save system finished saving.
@@ -115,6 +125,14 @@ namespace Opsive.UltimateInventorySystem.Core
         public const string c_WillDeleteSave_Index = "c_WillDeleteSave";
         //The save system deleted the save data.
         public const string c_DeleteSaveComplete_Index = "c_DeleteSaveComplete";
+        //The inventory component is about to start saving.
+        public const string c_WillStartSaving_Inventory = "c_WillStartSaving_Inventory";
+        //The inventory component finished saving.
+        public const string c_SavingComplete_Inventory_InventorySaveData = "c_SavingComplete_Inventory_InventorySaveData";
+        //The inventory component is about to start loading.
+        public const string c_WillStartLoadingSave_Inventory_NullableInventorySaveData = "c_WillStartLoadingSave_Inventory_NullableInventorySaveData";
+        //The inventory component finished loading.
+        public const string c_LoadingSaveComplete_Inventory_InventorySaveData = "c_LoadingSaveComplete_Inventory_InventorySaveData";
 
         
         public const string c_CharacterGameObject_UsedItemActionWithCooldown_ItemAction_ItemInfo_Float =

@@ -75,7 +75,12 @@ namespace Opsive.UltimateInventorySystem.SaveSystem
             get {
                 if (IsNull) {
 
+                    
+#if UNITY_2023_1_OR_NEWER
+                    s_Instance = FindFirstObjectByType<SaveSystemManager>();
+#else
                     s_Instance = FindObjectOfType<SaveSystemManager>();
+#endif
 
                     if (s_Instance == null) {
                         s_Instance = new GameObject("SaveSystemManager").AddComponent<SaveSystemManager>();
@@ -409,6 +414,7 @@ namespace Opsive.UltimateInventorySystem.SaveSystem
                 return;
             }
             m_Savers.Add(saver);
+            EventHandler.ExecuteEvent<SaverBase>(EventNames.c_OnSaverRegistered_SaverBase,saver);
         }
 
         /// <summary>
@@ -417,7 +423,11 @@ namespace Opsive.UltimateInventorySystem.SaveSystem
         /// <param name="saver">The saver.</param>
         protected virtual void UnregisterSaverInternal(SaverBase saver)
         {
+            if (m_Savers.Contains(saver) == false) {
+                return;
+            }
             m_Savers.Remove(saver);
+            EventHandler.ExecuteEvent<SaverBase>(EventNames.c_OnSaverUnregistered_SaverBase,saver);
         }
 
         /// <summary>

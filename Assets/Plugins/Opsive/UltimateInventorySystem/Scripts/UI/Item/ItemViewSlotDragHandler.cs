@@ -8,6 +8,7 @@ namespace Opsive.UltimateInventorySystem.UI.Item
 {
     using System;
     using UnityEngine;
+    using UnityEngine.Events;
     using UnityEngine.EventSystems;
     using UnityEngine.Serialization;
 
@@ -50,7 +51,11 @@ namespace Opsive.UltimateInventorySystem.UI.Item
         [SerializeField] protected bool m_KeepOffset = true;
         [Tooltip("Take the offset into account")]
         [SerializeField] protected MouseInput m_MouseInput = (MouseInput)7;
-
+        [Tooltip("This event is invoked when an item is dropped.")]
+        [SerializeField] protected UnityEvent m_OnDragStartedEvent;
+        [Tooltip("This event is invoked when an item is dropped.")]
+        [SerializeField] protected UnityEvent m_OnDragEndedEvent;
+        
         protected ItemViewSlotsContainerBase m_ViewSlotsContainer;
         protected bool m_IsInitialized = false;
         protected Vector3[] m_RectWorldCorners;
@@ -59,11 +64,14 @@ namespace Opsive.UltimateInventorySystem.UI.Item
             get => m_ViewSlotsContainer;
             set => m_ViewSlotsContainer = value;
         }
+        
+        public UnityEvent OnDragStartedEvent => m_OnDragStartedEvent;
+        public UnityEvent OnDragEndedEvent => m_OnDragEndedEvent;
 
         /// <summary>
         /// Awake.
         /// </summary>
-        private void Awake()
+        protected virtual void Awake()
         {
             Initialize();
         }
@@ -153,6 +161,7 @@ namespace Opsive.UltimateInventorySystem.UI.Item
             
             m_ItemViewSlotCursorManager.StartMove(eventData, position, true);
             OnDragStarted?.Invoke(eventData);
+            m_OnDragStartedEvent?.Invoke();
         }
 
         /// <summary>
@@ -173,6 +182,7 @@ namespace Opsive.UltimateInventorySystem.UI.Item
         {
             m_ItemViewSlotCursorManager.DragEnded();
             OnDragEnded?.Invoke(eventData);
+            m_OnDragEndedEvent?.Invoke();
         }
     }
 }

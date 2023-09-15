@@ -211,13 +211,22 @@ namespace Opsive.UltimateInventorySystem.Editor.Managers.UIDesigner
                 return (UIDesignerSchema.ValidationState.HasErrors,
                     "A database must be selected before UIDesigner can be used.");
             }
+            
+#if UNITY_2023_1_OR_NEWER
+            var panelManager = GameObject.FindFirstObjectByType<DisplayPanelManager>();
+            var inventorySystemManager = GameObject.FindFirstObjectByType<InventorySystemManager>();
+#else
+            var panelManager = GameObject.FindObjectOfType<DisplayPanelManager>();
+            var inventorySystemManager = GameObject.FindObjectOfType<InventorySystemManager>();
+#endif
 
-            if (GameObject.FindObjectOfType<InventorySystemManager>() == null) {
+            
+            if (inventorySystemManager == null) {
                 return (UIDesignerSchema.ValidationState.HasErrors,
                     "An Inventory System Manager must be present in the scene, use the Editor Setup Manager to create one.");
             }
 
-            if (GameObject.FindObjectOfType<DisplayPanelManager>() == null) {
+            if (panelManager == null) {
                 return (UIDesignerSchema.ValidationState.HasErrors,
                     "At least one Display Panel Manager must be present in the scene, please use the Create Canvas Manager 'Setup' Button above.");
             }
@@ -825,7 +834,14 @@ namespace Opsive.UltimateInventorySystem.Editor.Managers.UIDesigner
         /// </summary>
         protected void SelectFirstAvailableTarget()
         {
+            
+            
+#if UNITY_2023_1_OR_NEWER
+            m_Target = GameObject.FindFirstObjectByType<T>();
+#else
             m_Target = GameObject.FindObjectOfType<T>();
+#endif
+            
             m_TargetObject = m_Target?.gameObject;
         }
 

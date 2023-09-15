@@ -389,7 +389,13 @@ namespace Opsive.UltimateInventorySystem.Core
             get {
                 if (!IsNull) { return s_Instance; }
 
+                
+#if UNITY_2023_1_OR_NEWER
+                s_Instance = FindFirstObjectByType<InventorySystemManager>();
+#else
                 s_Instance = FindObjectOfType<InventorySystemManager>();
+#endif
+
                 if (s_Instance == null) {
                     s_Instance = new GameObject("InventorySystemManager").AddComponent<InventorySystemManager>();
                 }
@@ -648,11 +654,6 @@ namespace Opsive.UltimateInventorySystem.Core
 
             if (ReferenceEquals(s_Manager, this)) { s_Manager = null; }
 
-        }
-
-        public static object GetGlobal<T>(object itemObjectSpawnerID)
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

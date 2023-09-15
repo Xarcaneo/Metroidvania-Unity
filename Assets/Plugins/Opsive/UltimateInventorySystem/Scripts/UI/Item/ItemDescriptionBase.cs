@@ -21,14 +21,6 @@ namespace Opsive.UltimateInventorySystem.UI.Item
         /// <summary>
         /// Initialize.
         /// </summary>
-        protected virtual void Awake()
-        {
-            Initialize(false);
-        }
-
-        /// <summary>
-        /// Initialize.
-        /// </summary>
         public virtual void Initialize()
         {
             Initialize(false);

@@ -29,7 +29,7 @@ namespace Opsive.UltimateInventorySystem.DropsAndPickups
         /// <summary>
         /// Register to the global Register.
         /// </summary>
-        private void Awake()
+        protected virtual void Awake()
         {
             InventorySystemManager.GlobalRegister.Set(this, m_ID);
         }

@@ -27,7 +27,7 @@ namespace Opsive.UltimateInventorySystem.Exchange.Shops
         /// <summary>
         /// Register the event listener.
         /// </summary>
-        private void Awake()
+        protected virtual void Awake()
         {
             if (m_Shop == null) {
                 m_Shop = GetComponent<ShopBase>();

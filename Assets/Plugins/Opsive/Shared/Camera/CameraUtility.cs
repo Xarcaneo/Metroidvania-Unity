@@ -65,7 +65,11 @@ namespace Opsive.Shared.Camera
                 (cameraController = mainCamera.GetComponent<Shared.Camera.ICamera>()) != null && (character == null || cameraController.Character == character)) {
                 return mainCamera;
             }
+#if UNITY_2023_1_OR_NEWER
+            var cameras = UnityEngine.Object.FindObjectsByType<Camera>(FindObjectsSortMode.None);
+#else
             var cameras = UnityEngine.Object.FindObjectsOfType<Camera>();
+#endif
             for (int i = 0; i < cameras.Length; ++i) {
                 var iCamera = cameras[i].GetComponent<Shared.Camera.ICamera>();
                 if (iCamera == null) {

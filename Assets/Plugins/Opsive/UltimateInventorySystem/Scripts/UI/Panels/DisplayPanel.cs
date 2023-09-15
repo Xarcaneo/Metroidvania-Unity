@@ -137,11 +137,28 @@ namespace Opsive.UltimateInventorySystem.UI.Panels
                 m_Bindings[i].Initialize(this, force);
             }
         }
+        
+        /// <summary>
+        /// UnInitialize the display panel.
+        /// </summary>
+        /// <param name="displayPanelManager"></param>
+        public virtual void UnInitialize(DisplayPanelManager displayPanelManager)
+        {
+            if (m_IsSetup == false) { return; }
+
+            m_IsSetup = false;
+            
+            for (int i = 0; i < m_Bindings.Count; i++) {
+                if(m_Bindings[i] == null){ continue; }
+                
+                m_Bindings[i].UnInitialize(this);
+            }
+        }
 
         /// <summary>
         /// Open the menu on start.
         /// </summary>
-        private void Start()
+        protected virtual void Start()
         {
             if (m_OpenOnStart) {
                 SmartOpen();
@@ -380,5 +397,7 @@ namespace Opsive.UltimateInventorySystem.UI.Panels
         {
             m_UniqueName = panelName;
         }
+
+        
     }
 }

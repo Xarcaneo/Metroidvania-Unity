@@ -90,7 +90,7 @@ namespace Opsive.Shared.Editor.Inspectors.Input
         /// <param name="axisType">The type of axis that should be found.</param>
         /// <param name="autoCreate">Should a property be automatically created if it does not exist?</param>
         /// <returns>The found axis property.</returns>
-        public static SerializedProperty FindAxisProperty(SerializedProperty axisProperty, string name, string positiveButton, string altPositiveButton, AxisType axisType,bool autoCreate = true)
+        public static SerializedProperty FindAxisProperty(SerializedProperty axisProperty, string name, string positiveButton, string altPositiveButton, AxisType axisType, bool autoCreate = true)
         {
             SerializedProperty foundProperty = null;
             for (int i = 0; i < axisProperty.arraySize; ++i) {

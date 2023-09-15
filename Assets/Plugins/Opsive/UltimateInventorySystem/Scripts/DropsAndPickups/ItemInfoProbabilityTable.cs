@@ -41,8 +41,6 @@ namespace Opsive.UltimateInventorySystem.DropsAndPickups
             m_ProbabilitySum = 0;
             for (int i = 0; i < m_ItemInfos.Length; i++) {
                 m_ProbabilitySum += itemAmount[i].Amount;
-                var item = itemAmount[i].Item;
-                if (item.IsMutable) { item = Item.Create(item); }
                 m_ItemInfos[i] = (m_ProbabilitySum, (ItemInfo)itemAmount[i]);
             }
         }
@@ -59,8 +57,6 @@ namespace Opsive.UltimateInventorySystem.DropsAndPickups
             m_ProbabilitySum = 0;
             for (int i = 0; i < m_ItemInfos.Length; i++) {
                 m_ProbabilitySum += itemInfos[i].Amount;
-                var item = itemInfos[i].Item;
-                if (item.IsMutable) { item = Item.Create(item); }
                 m_ItemInfos[i] = (m_ProbabilitySum, itemInfos[i]);
             }
         }
@@ -77,8 +73,6 @@ namespace Opsive.UltimateInventorySystem.DropsAndPickups
             m_ProbabilitySum = 0;
             for (int i = 0; i < m_ItemInfos.Length; i++) {
                 m_ProbabilitySum += itemStacks[i].Amount;
-                var item = itemStacks[i].Item;
-                if (item.IsMutable) { item = Item.Create(item); }
                 m_ItemInfos[i] = (m_ProbabilitySum, (ItemInfo)itemStacks[i]);
             }
         }

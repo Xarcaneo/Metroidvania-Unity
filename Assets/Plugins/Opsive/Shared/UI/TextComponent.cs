@@ -19,5 +19,9 @@ namespace Opsive.Shared.UI
         public string text { get => m_Text.text; set => m_Text.text = value; }
 
         public Color color { get => m_Text.color; set => m_Text.color = value; }
+
+        public TextAlignment alignment { get => m_Text.alignment; set => m_Text.alignment = value; }
+
+        public float fontSize { get => m_Text.fontSize; set => m_Text.fontSize = value; }
     }
 }

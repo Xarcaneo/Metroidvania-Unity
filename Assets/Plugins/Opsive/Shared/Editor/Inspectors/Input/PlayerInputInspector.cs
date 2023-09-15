@@ -60,11 +60,13 @@ namespace Opsive.Shared.Editor.Inspectors.Input
                     EditorGUILayout.PropertyField(PropertyFromName("m_LookAccelerationThreshold"));
                     EditorGUI.indentLevel--;
                 }
+                EditorGUILayout.PropertyField(PropertyFromName("m_DoublePressTapTimeout"));
                 EditorGUILayout.PropertyField(PropertyFromName("m_FrameWaitCount"));
                 EditorGUILayout.PropertyField(PropertyFromName("m_ControllerConnectedCheckRate"));
 #if FIRST_PERSON_CONTROLLER || THIRD_PERSON_CONTROLLER
                 EditorGUILayout.PropertyField(PropertyFromName("m_ConnectedControllerState"));
 #endif
+                EditorGUILayout.PropertyField(PropertyFromName("m_DisableOnDeath"));
 
                 DrawInputFields();
 

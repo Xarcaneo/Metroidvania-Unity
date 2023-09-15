@@ -17,7 +17,7 @@ namespace Opsive.UltimateInventorySystem.UI.Panels
         /// <summary>
         /// Initialize.
         /// </summary>
-        private void Awake()
+        protected virtual void Awake()
         {
             var displayPanelManager = InventorySystemManager.GetDisplayPanelManager(m_DisplayPanelManagerID);
             if (displayPanelManager == null) {

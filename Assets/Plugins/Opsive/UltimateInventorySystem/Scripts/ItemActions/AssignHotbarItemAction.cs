@@ -119,7 +119,12 @@ namespace Opsive.UltimateInventorySystem.ItemActions
                 panelManager = m_PanelParentPanel?.Manager;
 
                 if (panelManager == null) {
+                   
+#if UNITY_2023_1_OR_NEWER
+                     panelManager = GameObject.FindFirstObjectByType<DisplayPanelManager>();
+#else
                     panelManager = GameObject.FindObjectOfType<DisplayPanelManager>();
+#endif
                     if (panelManager == null) {
                         Debug.LogError("The Assign Hotbar Item Action could not find the display panel manager.");
                         return false;

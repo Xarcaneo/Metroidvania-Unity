@@ -56,7 +56,7 @@ namespace Opsive.Shared.Editor.Inspectors
 
             property = propertySerializedObject.FindProperty(propertyName);
             if (property == null) {
-                Debug.LogError($"Unable to find property {propertyName}.");
+                Debug.LogError("Unable to find property " + propertyName);
                 return null;
             }
             m_PropertyStringMap.Add(propertyName, property);

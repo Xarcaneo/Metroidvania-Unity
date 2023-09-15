@@ -299,6 +299,10 @@ namespace Opsive.UltimateInventorySystem.UI.Grid
             var x = position.x;
             var y = position.y;
 
+            if (info.Item == null) {
+                return false;
+            }
+            
             if (info.Item.TryGetAttributeValue<ItemShape>(ShapeAttributeName, out var shape) == false
                 || shape.Count <= 1) {
 
@@ -716,6 +720,9 @@ namespace Opsive.UltimateInventorySystem.UI.Grid
                     return m_ItemCollectionGroup.AddItem(itemInfo);
                 } else {
                     var itemCollection = GetItemCollectionToAddItemTo(itemInfo);
+                    if (itemCollection == null) {
+                        return ItemInfo.None;
+                    }
                     return itemCollection.AddItem(itemInfo);
                 }
             }

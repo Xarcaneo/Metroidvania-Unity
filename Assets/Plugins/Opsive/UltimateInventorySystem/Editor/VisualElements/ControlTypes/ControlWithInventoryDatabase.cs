@@ -93,7 +93,12 @@ namespace Opsive.UltimateInventorySystem.Editor.VisualElements.ControlTypes
 
             if (m_Database == null) {
                 if (Application.isPlaying == false || InventorySystemManager.IsNull) {
+                   
+#if UNITY_2023_1_OR_NEWER
+                     m_Database = Object.FindFirstObjectByType<InventorySystemManager>()?.Database;
+#else
                     m_Database = Object.FindObjectOfType<InventorySystemManager>()?.Database;
+#endif
                 } else {
                     m_Database = InventorySystemManager.Instance.Database;
                 }

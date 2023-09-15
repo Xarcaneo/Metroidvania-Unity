@@ -57,7 +57,7 @@ namespace Opsive.UltimateInventorySystem.UI.Views
         /// <summary>
         /// Initialize on start.
         /// </summary>
-        private void Start()
+        protected virtual void Start()
         {
             Initialize(false);
         }
@@ -167,6 +167,8 @@ namespace Opsive.UltimateInventorySystem.UI.Views
         {
             GameObject objectToRemove = null;
             if (m_UseViewSlot) {
+                if(index < 0 || index >= m_ViewSlots.Length){ return null; }
+                
                 if (m_ViewSlots[index] != null && m_ViewSlots[index].View != null) {
                     objectToRemove = m_ViewSlots[index].View.gameObject;
                 }
@@ -257,6 +259,8 @@ namespace Opsive.UltimateInventorySystem.UI.Views
         public void ActivateViewSlot(int index, bool activate)
         {
             if(m_UseViewSlot == false){ return; }
+            if(index < 0 || index >= m_ViewSlots.Length){ return; }
+            
             var viewSlot = m_ViewSlots[index];
             if (viewSlot != null) {
                 viewSlot.gameObject.SetActive(activate);
@@ -288,7 +292,7 @@ namespace Opsive.UltimateInventorySystem.UI.Views
                 view = InstantiateView(viewIndex, elementIndex, element);
 
                 if (view == null) {
-                    Debug.LogWarning("The Box Drawer BoxUI Prefab does not have a BoxUI component or it is not of the correct Type");
+                    Debug.LogWarning("The ViewDrawer View Prefab does not have a View component or it is not of the correct Type", this);
                     return null;
                 }
             }

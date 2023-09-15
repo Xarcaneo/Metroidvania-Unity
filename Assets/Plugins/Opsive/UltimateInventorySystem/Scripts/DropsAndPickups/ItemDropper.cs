@@ -109,11 +109,11 @@ namespace Opsive.UltimateInventorySystem.DropsAndPickups
                 if (m_DropCopies) {
                     if (m_SplitUniqueItems) {
                         for (int j = 0; j < itemInfo.Amount; j++) {
-                            var itemCopy = InventorySystemManager.Factory.CreateItem(itemInfo.Item);
+                            var itemCopy = InventorySystemManager.CreateItem(itemInfo.Item);
                             m_CachedItemInfoList.Add( new ItemInfo(1, itemCopy) );
                         }
                     } else {
-                        var itemCopy = InventorySystemManager.Factory.CreateItem(itemInfo.Item);
+                        var itemCopy = InventorySystemManager.CreateItem(itemInfo.Item);
                         m_CachedItemInfoList.Add( new ItemInfo(itemInfo.Amount, itemCopy) );
                     }
                 } else {
@@ -193,7 +193,7 @@ namespace Opsive.UltimateInventorySystem.DropsAndPickups
 
             var itemObject = itemPickup.ItemObject;
             if (m_DropCopies) {
-                var itemCopy = InventorySystemManager.Factory.CreateItem(itemInfo.Item);
+                var itemCopy = InventorySystemManager.CreateItem(itemInfo.Item);
                 itemObject.SetItem((ItemInfo)(itemInfo.Amount, itemCopy));
             } else {
                 itemObject.SetItem(itemInfo);

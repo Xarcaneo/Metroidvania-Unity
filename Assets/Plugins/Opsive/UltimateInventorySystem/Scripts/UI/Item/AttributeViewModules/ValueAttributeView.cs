@@ -7,7 +7,6 @@
 namespace Opsive.UltimateInventorySystem.UI.Item.AttributeViewModules
 {
     using Opsive.UltimateInventorySystem.Core.DataStructures;
-    using Opsive.UltimateInventorySystem.UI.CompoundElements;
     using UnityEngine;
     using Text = Opsive.Shared.UI.Text;
 

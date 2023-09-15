@@ -36,7 +36,7 @@ namespace Opsive.UltimateInventorySystem.UI.Panels.ItemViewSlotContainers.GridFi
         /// <summary>
         /// Initialize.
         /// </summary>
-        private void Awake()
+        protected virtual void Awake()
         {
             m_Dropdown.onValueChanged.AddListener(HandleValueChange);
         }

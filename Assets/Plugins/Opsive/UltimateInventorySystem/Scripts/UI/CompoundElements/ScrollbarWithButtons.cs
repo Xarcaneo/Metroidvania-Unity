@@ -44,7 +44,7 @@ namespace Opsive.UltimateInventorySystem.UI.CompoundElements
         /// <summary>
         /// Initialize the component.
         /// </summary>
-        private void OnEnable()
+        protected virtual void OnEnable()
         {
             if (m_Initialized) { return; }
 

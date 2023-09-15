@@ -14,6 +14,7 @@ namespace Opsive.UltimateInventorySystem.UI.Item
     using Opsive.UltimateInventorySystem.UI.Item.ItemViewModules;
     using Opsive.UltimateInventorySystem.UI.Views;
     using UnityEngine;
+    using UnityEngine.Events;
 
     /// <summary>
     /// The item view slot cursor manager.
@@ -30,6 +31,10 @@ namespace Opsive.UltimateInventorySystem.UI.Item
         [SerializeField] protected bool m_UseContainerToSpawnItemView = true;
         [Tooltip("The Category Item View Set used to spawn the moving Item View.")]
         [SerializeField] protected CategoryItemViewSet m_CategoryItemViewSet;
+        [Tooltip("This event is invoked when an item is dropped.")]
+        [SerializeField] protected UnityEvent m_OnStartMoveEvent;
+        [Tooltip("This event is invoked when an item is dropped.")]
+        [SerializeField] protected UnityEvent m_OnEndMoveEvent;
 
         protected bool m_IsInitialized = false;
 
@@ -40,6 +45,9 @@ namespace Opsive.UltimateInventorySystem.UI.Item
         protected bool m_UsingDrag = false;
 
         protected ItemViewSlotEventData m_SourceSlotEventData;
+        
+        public UnityEvent StartMoveEvent => m_OnStartMoveEvent;
+        public UnityEvent EndMoveEvent => m_OnEndMoveEvent;
 
         public uint ID => m_ID;
 
@@ -85,7 +93,7 @@ namespace Opsive.UltimateInventorySystem.UI.Item
         /// <summary>
         /// Awake.
         /// </summary>
-        private void Awake()
+        protected virtual void Awake()
         {
             Initialize();
         }
@@ -163,6 +171,7 @@ namespace Opsive.UltimateInventorySystem.UI.Item
             }
 
             EventHandler.ExecuteEvent(gameObject, EventNames.c_ItemViewSlotCursorManagerGameobject_StartMove);
+            m_OnStartMoveEvent?.Invoke();
         }
 
         /// <summary>
@@ -293,6 +302,7 @@ namespace Opsive.UltimateInventorySystem.UI.Item
         public void RemoveItemView()
         {
             EventHandler.ExecuteEvent(gameObject, EventNames.c_ItemViewSlotCursorManagerGameobject_EndMove);
+            m_OnEndMoveEvent?.Invoke();
             
             if (m_SourceItemViewSlot != null) {
                 SetItemViewAsMovingSource(m_SourceItemViewSlot, false);

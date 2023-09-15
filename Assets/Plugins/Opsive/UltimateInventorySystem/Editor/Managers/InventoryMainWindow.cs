@@ -205,7 +205,12 @@ namespace Opsive.UltimateInventorySystem.Editor.Managers
 
             // Initialize the database.
             if (Application.isPlaying) {
-                m_Database = FindObjectOfType<InventorySystemManager>().Database;
+                
+#if UNITY_2023_1_OR_NEWER
+                m_Database = FindFirstObjectByType<InventorySystemManager>()?.Database;
+#else
+                m_Database = FindObjectOfType<InventorySystemManager>()?.Database;
+#endif
             } else  if (!string.IsNullOrEmpty(DatabaseGUID)) {
                 m_Database = Shared.Editor.Utility.EditorUtility.LoadAsset<InventorySystemDatabase>(DatabaseGUID);
             }
@@ -255,7 +260,12 @@ namespace Opsive.UltimateInventorySystem.Editor.Managers
         private void UpdateDatabase(InventorySystemDatabase database)
         {
             if (Application.isPlaying) {
+                
+#if UNITY_2023_1_OR_NEWER
+                var loadedDatabase = FindFirstObjectByType<InventorySystemManager>().Database;
+#else
                 var loadedDatabase = FindObjectOfType<InventorySystemManager>().Database;
+#endif
 
                 if (loadedDatabase != database) {
                     Debug.LogWarning("The database in the main manager must matched the database loaded in the scene.");

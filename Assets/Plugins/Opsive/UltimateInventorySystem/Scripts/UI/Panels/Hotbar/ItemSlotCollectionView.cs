@@ -210,6 +210,11 @@ namespace Opsive.UltimateInventorySystem.UI.Panels.Hotbar
         /// <returns>The item info added.</returns>
         public override ItemInfo RemoveItem(ItemInfo itemInfo, int index)
         {
+            // If the index is defined remove amount from that index.
+            if (index != -1) {
+                return m_ItemSlotCollection.RemoveItem(index, itemInfo.Amount);
+            }
+            
             return m_ItemSlotCollection.RemoveItem(itemInfo);
         }
 
@@ -225,6 +230,11 @@ namespace Opsive.UltimateInventorySystem.UI.Panels.Hotbar
             if (canAddBase == false) { return false; }
 
             if (Inventory.CanAddItem(itemInfo, m_ItemSlotCollection) == null) { return false; }
+            
+            //Check if the item you are trying to add isn't already in this collection at that index:
+            if (itemInfo.ItemStack == GetItemAt(index).ItemStack && itemInfo.Item.ID == itemInfo.ItemStack.Item.ID) {
+                return false;
+            }
 
             return true;
         }
@@ -289,14 +299,10 @@ namespace Opsive.UltimateInventorySystem.UI.Panels.Hotbar
         {
             if (CanMoveItem(sourceIndex, destinationIndex) == false) { return; }
 
-            var sourceItem = m_ItemSlotCollection.RemoveItem(sourceIndex);
-            var destination = m_ItemSlotCollection.RemoveItem(destinationIndex);
-            
-            m_ItemSlotCollection.AddItem(sourceItem, destinationIndex);
-            m_ItemSlotCollection.AddItem(destination, sourceIndex);
-            
-            AssignItemToSlot(destination, sourceIndex);
-            AssignItemToSlot(sourceItem, destinationIndex);
+            m_ItemSlotCollection.SwapItemSlot(sourceIndex, destinationIndex);
+
+            AssignItemToSlot(new ItemInfo(m_ItemSlotCollection.GetItemStackAtSlot(sourceIndex)), sourceIndex);
+            AssignItemToSlot(new ItemInfo(m_ItemSlotCollection.GetItemStackAtSlot(destinationIndex)), destinationIndex);
         }
 
         #endregion

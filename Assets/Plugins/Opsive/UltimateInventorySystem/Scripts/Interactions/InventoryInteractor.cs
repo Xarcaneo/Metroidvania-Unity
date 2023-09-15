@@ -49,7 +49,7 @@ namespace Opsive.UltimateInventorySystem.Interactions
         /// <summary>
         /// Set the interactables.
         /// </summary>
-        private void Start()
+        protected virtual void Start()
         {
             if (m_Inventory == null) { m_Inventory = GetComponent<Inventory>(); }
 
@@ -89,7 +89,7 @@ namespace Opsive.UltimateInventorySystem.Interactions
         /// <summary>
         /// Check for the input.
         /// </summary>
-        private void Update()
+        protected virtual void Update()
         {
             if(m_PlayerInput == null){ return; }
 
@@ -192,7 +192,7 @@ namespace Opsive.UltimateInventorySystem.Interactions
         /// <summary>
         /// Unregister input on destroy.
         /// </summary>
-        private void OnDestroy()
+        protected virtual void OnDestroy()
         {
             EventHandler.UnregisterEvent<bool>(gameObject, EventNames.c_CharacterGameObject_OnEnableGameplayInput_Bool, HandleEnableGameplayInput);
         }

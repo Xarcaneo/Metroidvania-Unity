@@ -25,7 +25,7 @@ namespace Opsive.Shared.Editor
             EventHandler.DomainReset();
             GameObjectExtensions.DomainReset();
             ObjectPoolBase.DomainReset();
-            Scheduler.DomainReset();
+            SchedulerBase.DomainReset();
         }
     }
 }
