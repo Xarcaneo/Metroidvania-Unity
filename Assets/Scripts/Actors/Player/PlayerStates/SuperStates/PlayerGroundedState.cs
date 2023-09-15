@@ -64,6 +64,7 @@ public class PlayerGroundedState : PlayerState
 
         if (isOnSlope)
         {
+            Movement?.SetVelocityY(0.0f);;
             if (xInput == 0.0f || player.CrouchIdleState.isCrouching)
                 player.RigidBody2D.sharedMaterial = playerData.fullFriction;
             else
@@ -91,7 +92,7 @@ public class PlayerGroundedState : PlayerState
         {
             stateMachine.ChangeState(player.RollState);
         }
-        else if (JumpInput && player.JumpState.CanJump() && !player.CrouchIdleState.isCrouching)
+        else if (JumpInput && player.JumpState.CanJump() && !player.CrouchIdleState.isCrouching && Movement?.CurrentVelocity.y == 0.00f)
         {
             stateMachine.ChangeState(player.JumpState);
         }
