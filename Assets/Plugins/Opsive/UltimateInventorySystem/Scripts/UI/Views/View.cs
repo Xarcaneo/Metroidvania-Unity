@@ -39,7 +39,7 @@ namespace Opsive.UltimateInventorySystem.UI.Views
         /// <summary>
         /// Initialize the box modules array.
         /// </summary>
-        private void Awake()
+        protected virtual void Awake()
         {
             Initialize(false);
         }

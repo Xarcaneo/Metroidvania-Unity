@@ -97,7 +97,12 @@ namespace Opsive.UltimateInventorySystem.Editor.Managers.UIDesigner
             canvasGameObject.AddComponent<DisplayPanelManagerHandler>();
             var panelManager = canvasGameObject.AddComponent<DisplayPanelManager>();
 
+           
+#if UNITY_2023_1_OR_NEWER
+             var eventSystem = GameObject.FindFirstObjectByType<EventSystem>();
+#else
             var eventSystem = GameObject.FindObjectOfType<EventSystem>();
+#endif
             if (eventSystem == null) {
                 eventSystem = new GameObject("Event System").AddComponent<EventSystem>();
                 eventSystem.gameObject.AddComponent<StandaloneInputModule>();
@@ -164,7 +169,12 @@ namespace Opsive.UltimateInventorySystem.Editor.Managers.UIDesigner
 
             m_PanelManagerField = new ObjectField("DisplayManager");
             m_PanelManagerField.objectType = typeof(DisplayPanelManager);
+           
+#if UNITY_2023_1_OR_NEWER
+             m_PanelManagerField.value = GameObject.FindFirstObjectByType<DisplayPanelManager>();
+#else
             m_PanelManagerField.value = GameObject.FindObjectOfType<DisplayPanelManager>();
+#endif
             m_PanelManagerField.RegisterValueChangedCallback(evt => { Refresh(); });
             Add(m_PanelManagerField);
 
@@ -255,7 +265,12 @@ namespace Opsive.UltimateInventorySystem.Editor.Managers.UIDesigner
             }
 
             if (m_PanelManagerField.value == null) {
-                m_PanelManagerField.SetValueWithoutNotify(GameObject.FindObjectOfType<DisplayPanelManager>());
+#if UNITY_2023_1_OR_NEWER
+                 var panelManager = GameObject.FindFirstObjectByType<DisplayPanelManager>();
+#else
+                var panelManager = GameObject.FindObjectOfType<DisplayPanelManager>();
+#endif
+                m_PanelManagerField.SetValueWithoutNotify(panelManager);
             }
 
             m_ValidateResultContainer.Clear();

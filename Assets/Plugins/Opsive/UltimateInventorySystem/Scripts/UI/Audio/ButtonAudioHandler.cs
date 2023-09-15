@@ -26,7 +26,7 @@ namespace Opsive.UltimateInventorySystem.UI.Audio
         /// <summary>
         /// Get the references if they are missing.
         /// </summary>
-        private void Awake()
+        protected virtual void Awake()
         {
             if (m_Button == null) { m_Button = GetComponent<Button>(); }
             if (m_ActionButton == null) { m_ActionButton = GetComponent<ActionButton>(); }
@@ -35,7 +35,7 @@ namespace Opsive.UltimateInventorySystem.UI.Audio
         /// <summary>
         /// Listen to the events.
         /// </summary>
-        private void Start()
+        protected virtual void Start()
         {
             if (m_ButtonAudio == null) {
                 Debug.LogWarning("The audio asset is missing from the button audio, no audio will be played.", gameObject);

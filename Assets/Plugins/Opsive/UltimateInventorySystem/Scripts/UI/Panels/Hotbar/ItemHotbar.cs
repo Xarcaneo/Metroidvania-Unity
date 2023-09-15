@@ -21,6 +21,8 @@ namespace Opsive.UltimateInventorySystem.UI.Panels.Hotbar
     {
         [Tooltip("Use the item assigned to this slot when clicked.")]
         [SerializeField] protected ItemViewSlotsContainerItemActionBindingBase m_ItemActionsBinding;
+        [Tooltip("If true the items removed from the inventory will be removed from the hotbar")]
+        [SerializeField] protected bool m_RemoveItemIfAmountIs0;
 
         public ItemUser ItemUser => m_ItemActionsBinding.ItemUser;
 
@@ -82,12 +84,20 @@ namespace Opsive.UltimateInventorySystem.UI.Panels.Hotbar
                 if (amount == 0) {
                     var result = itemInfo.Inventory?.GetItemInfo(itemInfo.Item);
 
-                    if (result.HasValue) { newItemInfo = result.Value; } else { newItemInfo = (0, itemInfo); }
+                    if (result.HasValue) {
+                        newItemInfo = result.Value;
+                    } else {
+                        newItemInfo = (0, itemInfo);
+                    }
                 } else {
                     newItemInfo = (amount, itemInfo);
                 }
 
-                slots[i].SetItemInfo(newItemInfo);
+                if (m_RemoveItemIfAmountIs0 && newItemInfo.Amount == 0) {
+                    slots[i].SetItemInfo(ItemInfo.None);
+                } else {
+                    slots[i].SetItemInfo(newItemInfo);
+                }
             }
         }
 

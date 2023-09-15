@@ -7,8 +7,11 @@
 namespace Opsive.UltimateInventorySystem.UI.Menus.Crafting
 {
     using System;
+    using System.Collections.Generic;
+    using Opsive.Shared.Utility;
     using Opsive.UltimateInventorySystem.Core.InventoryCollections;
     using Opsive.UltimateInventorySystem.Crafting;
+    using Opsive.UltimateInventorySystem.UI.Grid;
     using Opsive.UltimateInventorySystem.UI.Panels;
     using Opsive.UltimateInventorySystem.UI.Panels.Crafting;
     using Opsive.UltimateInventorySystem.UI.Panels.ItemViewSlotContainers;
@@ -26,6 +29,14 @@ namespace Opsive.UltimateInventorySystem.UI.Menus.Crafting
         [SerializeField] protected internal CraftingRecipeGrid m_CraftingRecipeGrid;
         [Tooltip("The selected recipe panel.")]
         [SerializeField] protected internal RecipePanel m_RecipePanel;
+        [Tooltip("An Event called when the crafting is done.")]
+        [SerializeField] protected bool m_BindFilterSortersToGrid = true;
+        [Tooltip("An Event called when the crafting is done.")]
+        [SerializeField] protected bool m_UseGridFilterSorter = true;
+        [Tooltip("An Event called when the crafting is done.")]
+        [SerializeField] protected bool m_UseTabControlTabData = true;
+        [Tooltip("The selected recipe panel.")]
+        [SerializeField] protected CraftingRecipeFilterSorterBase[] m_FiltersAndSorters;
         [Tooltip("Draw recipes on open.")]
         [SerializeField] protected bool m_DrawRecipesOnOpen = true;
         [Tooltip("An Event called when the crafting is done.")]
@@ -35,6 +46,10 @@ namespace Opsive.UltimateInventorySystem.UI.Menus.Crafting
 
         public Crafter Crafter => m_Crafter;
         public CraftingRecipe SelectedRecipe => m_SelectedRecipe;
+
+        protected MultiCraftingRecipeFilterSorter m_MultiFilterSorters = new MultiCraftingRecipeFilterSorter();
+        
+        public MultiCraftingRecipeFilterSorter MultiFilterSorters => m_MultiFilterSorters;
 
         public override void Initialize(DisplayPanel display, bool force)
         {
@@ -57,21 +72,35 @@ namespace Opsive.UltimateInventorySystem.UI.Menus.Crafting
                 m_CraftingRecipeGrid.OnEmptySelected += (x) => CraftingRecipeSelected(null, x);
                 m_CraftingRecipeGrid.OnElementClicked += CraftingRecipeClicked;
 
-                var tabControl = m_CraftingRecipeGrid.TabControl;
+                for (int i = 0; i < m_FiltersAndSorters.Length; i++) {
+                    m_MultiFilterSorters.GridFilters.Add(m_FiltersAndSorters[i]);
+                }
 
-                if (tabControl != null) {
-                    tabControl.Initialize(false);
-                    tabControl.OnTabChange += HandleTabChange;
+                if (m_UseGridFilterSorter) {
+                    m_MultiFilterSorters.GridFilters.Add(m_CraftingRecipeGrid.FilterSorter);
+                }
 
-                    for (int i = 0; i < tabControl.TabCount; i++) {
-                        var tab = tabControl.TabToggles[i];
-                        var craftingTabData = tab.GetComponent<CraftingTabData>();
-                        if (craftingTabData != null) {
-                            craftingTabData.Initialize(false);
+                if (m_BindFilterSortersToGrid) {
+                    m_CraftingRecipeGrid.BindGridFilterSorter(m_MultiFilterSorters);
+                }
+
+                if (m_UseTabControlTabData) {
+                    var tabControl = m_CraftingRecipeGrid.TabControl;
+
+                    if (tabControl != null) {
+                        tabControl.Initialize(false);
+                        tabControl.OnTabChange += HandleTabChange;
+
+                        for (int i = 0; i < tabControl.TabCount; i++) {
+                            var tab = tabControl.TabToggles[i];
+                            var craftingTabData = tab.GetComponent<CraftingTabData>();
+                            if (craftingTabData != null) {
+                                craftingTabData.Initialize(false);
+                            }
                         }
-                    }
 
-                    HandleTabChange(-1, tabControl.TabIndex, false);
+                        HandleTabChange(-1, tabControl.TabIndex, false);
+                    }
                 }
             }
         }
@@ -145,6 +174,15 @@ namespace Opsive.UltimateInventorySystem.UI.Menus.Crafting
         {
             if (previousIndex == newIndex) { return; }
 
+            var tabToggles = m_CraftingRecipeGrid.TabControl.TabToggles;
+
+            if (previousIndex >= 0 && previousIndex < tabToggles.Count) {
+                var previousTabData = tabToggles[previousIndex]?.GetComponent<CraftingTabData>();
+                if (previousTabData != null && previousTabData.CraftingFilter != null) {
+                    m_MultiFilterSorters.GridFilters.Remove(previousTabData.CraftingFilter);
+                }
+            }
+
             var craftingTabData = m_CraftingRecipeGrid.TabControl.CurrentTab.GetComponent<CraftingTabData>();
 
             if (craftingTabData == null) {
@@ -152,8 +190,8 @@ namespace Opsive.UltimateInventorySystem.UI.Menus.Crafting
                 return;
             }
 
-            if (craftingTabData.CraftingFilter != null) {
-                m_CraftingRecipeGrid.BindGridFilterSorter(craftingTabData.CraftingFilter);
+            if (craftingTabData.CraftingFilter != null && m_MultiFilterSorters.GridFilters.Contains(craftingTabData.CraftingFilter) == false) {
+                m_MultiFilterSorters.GridFilters.Add(craftingTabData.CraftingFilter);
             }
 
             if (draw) {
@@ -238,6 +276,32 @@ namespace Opsive.UltimateInventorySystem.UI.Menus.Crafting
         public virtual void OnCraftComplete(CraftingResult result, CraftingRecipe selectedRecipe, Inventory inventory, int quantity)
         {
             m_OnCraftComplete.Invoke(result.Success);
+        }
+        
+        [Serializable]
+        public class MultiCraftingRecipeFilterSorter : IFilterSorter<CraftingRecipe>
+        {
+            [Tooltip("A list of frig filters and sorters.")]
+            [SerializeField] protected List<IFilterSorter<CraftingRecipe>> m_GridFilters = new List<IFilterSorter<CraftingRecipe>>();
+
+            public List<IFilterSorter<CraftingRecipe>> GridFilters => m_GridFilters;
+
+            /// <summary>
+            /// Filter the list of item infos.
+            /// </summary>
+            /// <param name="input">The input.</param>
+            /// <param name="outputPooledArray">Reference to the output.</param>
+            /// <returns>The list slice of filter.</returns>
+            public ListSlice<CraftingRecipe> Filter(ListSlice<CraftingRecipe> input, ref CraftingRecipe[] outputPooledArray)
+            {
+                var list = input;
+                for (int i = 0; i < m_GridFilters.Count; i++) {
+                    if(m_GridFilters[i] == this){ continue; }
+                    list = m_GridFilters[i].Filter(list, ref outputPooledArray);
+                }
+
+                return list;
+            }
         }
     }
 }

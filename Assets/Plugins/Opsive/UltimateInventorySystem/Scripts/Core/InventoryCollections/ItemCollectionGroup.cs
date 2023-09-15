@@ -138,7 +138,7 @@ namespace Opsive.UltimateInventorySystem.Core.InventoryCollections
                     var itemCollection = inventory.GetItemCollection(itemCollectionNames[i]);
                     if (itemCollection == null) {
                         if (logWarningIfMissing) {
-                            Debug.LogWarning($"The Item Collection with the name '{m_ItemCollections[i]}' does not exist in the inventory.");
+                            Debug.LogWarning($"The Item Collection with the name '{itemCollectionNames[i]}' does not exist in the inventory.");
                         }
                         continue;
                     }

@@ -10,6 +10,22 @@ namespace Opsive.Shared.UI
     using UnityEngine;
 
     /// <summary>
+    /// Specifies the text alignment.
+    /// </summary>
+    public enum TextAlignment
+    { 
+        TopLeft,        // The text should be aligned to the top left. 
+        TopCenter,      // The text should be aligned to the top center. 
+        TopRight,       // The text should be aligned to the top right. 
+        MiddleLeft,     // The text should be aligned to the middle left. 
+        MiddleCenter,   // The text should be aligned to the middle center. 
+        MiddleRight,    // The text should be aligned to the middle right. 
+        BottomLeft,     // The text should be aligned to the bottom left. 
+        BottomCenter,   // The text should be aligned to the bottom center. 
+        BottomRight     // The text should be aligned to the bottom right. 
+    }
+
+    /// <summary>
     /// A struct that allows you to choose whether to use TMP_Text or UnityEngine.UI.Text.
     /// </summary>
     [Serializable]
@@ -90,7 +106,11 @@ namespace Opsive.Shared.UI
                     return m_TextMeshProText.enabled;
                 }
 #endif
-                return m_UnityText?.gameObject;
+                if (m_UnityText != null) {
+                    return m_UnityText.enabled;
+                }
+
+                return false;
             }
             set {
 #if TEXTMESH_PRO_PRESENT
@@ -139,6 +159,157 @@ namespace Opsive.Shared.UI
             if (m_TextMeshProText != null) { m_TextMeshProText.color = newColor; return; }
 #endif
             if (m_UnityText != null) { m_UnityText.color = newColor; return; }
+        }
+
+        public float fontSize
+        {
+            get
+            {
+#if TEXTMESH_PRO_PRESENT
+                return m_TextMeshProText?.fontSize ?? m_UnityText?.fontSize ?? 0;
+#else
+                return m_UnityText?.fontSize ?? 0;
+#endif
+            }
+            set
+            {
+#if TEXTMESH_PRO_PRESENT
+                if (m_TextMeshProText != null) { m_TextMeshProText.fontSize = value; return; }
+#endif
+                if (m_UnityText != null) { m_UnityText.fontSize = (int)value; }
+            }
+        }
+
+        public TextAlignment alignment
+        {
+            get
+            {
+#if TEXTMESH_PRO_PRESENT
+                if (m_TextMeshProText != null)
+                {
+                    switch (m_TextMeshProText.alignment)
+                    {
+                        case TMPro.TextAlignmentOptions.TopLeft:
+                            return TextAlignment.TopLeft;
+                        case TMPro.TextAlignmentOptions.Top:
+                            return TextAlignment.TopCenter;
+                        case TMPro.TextAlignmentOptions.TopRight:
+                            return TextAlignment.TopRight;
+                        case TMPro.TextAlignmentOptions.Left:
+                            return TextAlignment.MiddleLeft;
+                        case TMPro.TextAlignmentOptions.Midline:
+                            return TextAlignment.MiddleCenter;
+                        case TMPro.TextAlignmentOptions.Right:
+                            return TextAlignment.MiddleRight;
+                        case TMPro.TextAlignmentOptions.BottomLeft:
+                            return TextAlignment.BottomLeft;
+                        case TMPro.TextAlignmentOptions.Bottom:
+                            return TextAlignment.BottomCenter;
+                        case TMPro.TextAlignmentOptions.BottomRight:
+                            return TextAlignment.BottomRight;
+                    }
+                }
+#endif
+                if (m_UnityText != null)
+                {
+                    switch (m_UnityText.alignment)
+                    {
+                        case TextAnchor.UpperLeft:
+                            return TextAlignment.TopLeft;
+                        case TextAnchor.UpperCenter:
+                            return TextAlignment.TopCenter;
+                        case TextAnchor.UpperRight:
+                            return TextAlignment.TopRight;
+                        case TextAnchor.MiddleLeft:
+                            return TextAlignment.MiddleLeft;
+                        case TextAnchor.MiddleCenter:
+                            return TextAlignment.MiddleCenter;
+                        case TextAnchor.MiddleRight:
+                            return TextAlignment.MiddleRight;
+                        case TextAnchor.LowerLeft:
+                            return TextAlignment.BottomLeft;
+                        case TextAnchor.LowerCenter:
+                            return TextAlignment.BottomCenter;
+                        case TextAnchor.LowerRight:
+                            return TextAlignment.BottomRight;
+                    }
+                }
+                return TextAlignment.MiddleCenter;
+            }
+
+            set
+            {
+#if TEXTMESH_PRO_PRESENT
+                if (m_TextMeshProText != null)
+                {
+                    switch (value)
+                    {
+                        case TextAlignment.TopLeft:
+                            m_TextMeshProText.alignment = TMPro.TextAlignmentOptions.TopLeft;
+                            break;
+                        case TextAlignment.TopCenter:
+                            m_TextMeshProText.alignment = TMPro.TextAlignmentOptions.Top;
+                            break;
+                        case TextAlignment.TopRight:
+                            m_TextMeshProText.alignment = TMPro.TextAlignmentOptions.TopRight;
+                            break;
+                        case TextAlignment.MiddleLeft:
+                            m_TextMeshProText.alignment = TMPro.TextAlignmentOptions.Left;
+                            break;
+                        case TextAlignment.MiddleCenter:
+                            m_TextMeshProText.alignment = TMPro.TextAlignmentOptions.Midline;
+                            break;
+                        case TextAlignment.MiddleRight:
+                            m_TextMeshProText.alignment = TMPro.TextAlignmentOptions.Right;
+                            break;
+                        case TextAlignment.BottomLeft:
+                            m_TextMeshProText.alignment = TMPro.TextAlignmentOptions.BottomLeft;
+                            break;
+                        case TextAlignment.BottomCenter:
+                            m_TextMeshProText.alignment = TMPro.TextAlignmentOptions.Bottom;
+                            break;
+                        case TextAlignment.BottomRight:
+                            m_TextMeshProText.alignment = TMPro.TextAlignmentOptions.BottomRight;
+                            break;
+                    }
+
+                    return;
+                }
+#endif
+                if (m_UnityText)
+                {
+                    switch (value)
+                    {
+                        case TextAlignment.TopLeft:
+                            m_UnityText.alignment = TextAnchor.UpperLeft;
+                            break;
+                        case TextAlignment.TopCenter:
+                            m_UnityText.alignment = TextAnchor.UpperCenter;
+                            break;
+                        case TextAlignment.TopRight:
+                            m_UnityText.alignment = TextAnchor.UpperRight;
+                            break;
+                        case TextAlignment.MiddleLeft:
+                            m_UnityText.alignment = TextAnchor.MiddleLeft;
+                            break;
+                        case TextAlignment.MiddleCenter:
+                            m_UnityText.alignment = TextAnchor.MiddleCenter;
+                            break;
+                        case TextAlignment.MiddleRight:
+                            m_UnityText.alignment = TextAnchor.MiddleRight;
+                            break;
+                        case TextAlignment.BottomLeft:
+                            m_UnityText.alignment = TextAnchor.LowerLeft;
+                            break;
+                        case TextAlignment.BottomCenter:
+                            m_UnityText.alignment = TextAnchor.LowerCenter;
+                            break;
+                        case TextAlignment.BottomRight:
+                            m_UnityText.alignment = TextAnchor.LowerRight;
+                            break;
+                    }
+                }
+            }
         }
     }
 }

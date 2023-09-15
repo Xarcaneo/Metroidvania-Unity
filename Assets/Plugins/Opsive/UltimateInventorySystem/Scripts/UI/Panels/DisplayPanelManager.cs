@@ -10,6 +10,7 @@ namespace Opsive.UltimateInventorySystem.UI.Panels
     using Opsive.UltimateInventorySystem.Input;
     using System;
     using System.Collections.Generic;
+    using Opsive.Shared.Utility;
     using UnityEngine;
     using UnityEngine.EventSystems;
     using UnityEngine.UI;
@@ -64,7 +65,7 @@ namespace Opsive.UltimateInventorySystem.UI.Panels
         public DisplayPanel SelectedDisplayPanel => m_SelectedDisplayPanel;
         public DisplayPanel SelectedDisplayMenu => m_SelectedDisplayMenu;
 
-        protected DisplayPanel[] m_AllUIPanels;
+        protected List<DisplayPanel> m_AllUIPanels;
 
         protected bool m_Initialized = false;
         protected bool m_HasPanelOwner = false;
@@ -73,7 +74,7 @@ namespace Opsive.UltimateInventorySystem.UI.Panels
         /// <summary>
         /// Initialize the listener and set up all the panels.
         /// </summary>
-        private void Awake()
+        protected virtual void Awake()
         {
             Initialize(false);
         }
@@ -81,7 +82,7 @@ namespace Opsive.UltimateInventorySystem.UI.Panels
         /// <summary>
         /// Initialize the component.
         /// </summary>
-        private void Start()
+        protected virtual void Start()
         {
             if (m_GameplayPanel == null) { return; }
 
@@ -94,20 +95,20 @@ namespace Opsive.UltimateInventorySystem.UI.Panels
         /// Initialize all the UI components.
         /// </summary>
         /// <param name="force">Force Initialize?</param>
-        public void Initialize(bool force)
+        public virtual void Initialize(bool force)
         {
             if (m_Initialized && !force) { return; }
 
             InventorySystemManager.DisplayPanelManagerRegister.Register(this);
 
             m_PanelsByName = new Dictionary<string, DisplayPanel>();
-            m_AllUIPanels = GetComponentsInChildren<DisplayPanel>(true);
+            m_AllUIPanels = new List<DisplayPanel>(GetComponentsInChildren<DisplayPanel>(true));
 
             if (m_PanelOwner == null) {
 
                 var panelOwnerInventoryIdentifier = InventorySystemManager.GetInventoryIdentifier(m_PanelOwnerInventoryIdentifierID);
                 if (panelOwnerInventoryIdentifier == null) {
-                    Debug.LogWarning("No Panel Owner was found yet, disabling the UI until a panel owner is set");    
+                    Debug.LogWarning("No Panel Owner was found yet, disabling the UI until a panel owner is set");
                     gameObject.SetActive(false);
                     return;
                 }
@@ -116,6 +117,30 @@ namespace Opsive.UltimateInventorySystem.UI.Panels
             }
 
             SetPanelOwner(m_PanelOwner);
+        }
+        
+        /// <summary>
+        /// UnInitialize all the UI components.
+        /// </summary>
+        public virtual void UnInitialize()
+        {
+            if (m_Initialized == false) { return; }
+
+            m_Initialized = false;
+            InventorySystemManager.DisplayPanelManagerRegister.Unregister(this);
+
+            if (m_PanelOwner != null) {
+                EventHandler.UnregisterEvent<PanelEventData>(m_PanelOwner, EventNames.c_GameObject_OnPanelOpenClose_PanelEventData, PanelOpenedOrClosed);
+            }
+            
+            if (m_ArePanelsSetup == false) { return; }
+
+            for (int i = 0; i < m_AllUIPanels.Count; i++) {
+                if(m_AllUIPanels[i] == null){ continue; }
+                m_AllUIPanels[i].UnInitialize(this);
+            }
+            
+            m_PanelOwner = null;
         }
 
         /// <summary>
@@ -126,7 +151,10 @@ namespace Opsive.UltimateInventorySystem.UI.Panels
         {
             if (m_ArePanelsSetup && !force) { return; }
 
-            for (int i = 0; i < m_AllUIPanels.Length; i++) { m_AllUIPanels[i].Setup(this, force); }
+            for (int i = 0; i < m_AllUIPanels.Count; i++) {
+                if(m_AllUIPanels[i] == null){ continue; }
+                m_AllUIPanels[i].Setup(this, force);
+            }
         }
 
         /// <summary>
@@ -156,6 +184,7 @@ namespace Opsive.UltimateInventorySystem.UI.Panels
             if (gameObject.activeInHierarchy == false) {
                 gameObject.SetActive(true);
             }
+            EventHandler.ExecuteEvent<GameObject, DisplayPanelManager>(EventNames.c_OnPanelOwnerChange_GameObjectPanelOwner_DisplayPanelManager, panelOwner, this);
         }
 
         /// <summary>
@@ -166,6 +195,9 @@ namespace Opsive.UltimateInventorySystem.UI.Panels
         {
             if (displayPanel == null) { return; }
 
+            if (m_AllUIPanels.Contains(displayPanel) == false) {
+                m_AllUIPanels.Add(displayPanel);
+            }
 
             if (string.IsNullOrWhiteSpace(displayPanel.UniqueName)) { return; }
 
@@ -238,13 +270,16 @@ namespace Opsive.UltimateInventorySystem.UI.Panels
         /// Get the display panel with the name provided.
         /// </summary>
         /// <param name="uniqueName">The unique name.</param>
+        /// <param name="selectPrevious">Should the previous panel be selected when this panel is closed.</param>
         /// <returns>The display panel.</returns>
-        public void ClosePanel(string uniqueName)
+        public DisplayPanel ClosePanel(string uniqueName, bool selectPrevious = true)
         {
             var panel = GetPanel(uniqueName);
             if (panel != null) {
-                panel.Close();
+                panel.Close(selectPrevious);
             }
+
+            return panel;
         }
 
         /// <summary>
@@ -400,9 +435,10 @@ namespace Opsive.UltimateInventorySystem.UI.Panels
         /// <summary>
         /// Stop listening.
         /// </summary>
-        private void OnDestroy()
+        protected virtual void OnDestroy()
         {
             EventHandler.UnregisterEvent<PanelEventData>(m_PanelOwner, EventNames.c_GameObject_OnPanelOpenClose_PanelEventData, PanelOpenedOrClosed);
+            UnInitialize();
         }
     }
 }

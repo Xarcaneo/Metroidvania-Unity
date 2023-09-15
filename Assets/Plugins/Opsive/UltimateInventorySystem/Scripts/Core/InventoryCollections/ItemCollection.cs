@@ -705,6 +705,8 @@ namespace Opsive.UltimateInventorySystem.Core.InventoryCollections
 
             if (removed <= itemInfo.Amount) {
                 for (int i = m_ItemStacks.Count - 1; i >= 0; i--) {
+                    if(m_ItemStacks[i].Item == null){ continue; }
+                    
                     if (m_ItemStacks[i].Item.ID != itemInfo.Item.ID) { continue; }
 
                     itemStackToRemove = m_ItemStacks[i];
@@ -928,6 +930,8 @@ namespace Opsive.UltimateInventorySystem.Core.InventoryCollections
             var count = 0;
 
             for (int i = 0; i < m_ItemStacks.Count; i++) {
+                if(m_ItemStacks[i].Item == null){ continue; }
+                
                 if (similarItem) {
                     if (m_ItemStacks[i].Item.SimilarTo(item)) {
                         count += m_ItemStacks[i].Amount;
@@ -955,6 +959,8 @@ namespace Opsive.UltimateInventorySystem.Core.InventoryCollections
 
             var count = 0;
             for (int i = 0; i < m_ItemStacks.Count; i++) {
+                if(m_ItemStacks[i].Item == null){ continue; }
+                
                 if (checkInherently) {
                     if (itemDefinition.InherentlyContains(m_ItemStacks[i].Item) == false) { continue; }
                 } else {
@@ -979,6 +985,8 @@ namespace Opsive.UltimateInventorySystem.Core.InventoryCollections
 
             var count = 0;
             for (int i = 0; i < m_ItemStacks.Count; i++) {
+                if(m_ItemStacks[i].Item == null){ continue; }
+                
                 if (checkInherently) {
                     if (itemCategory.InherentlyContains(m_ItemStacks[i].Item) == false) { continue; }
                 } else {
@@ -1002,6 +1010,8 @@ namespace Opsive.UltimateInventorySystem.Core.InventoryCollections
             ItemInfo? similarItemInfo = null;
 
             for (int i = 0; i < m_ItemStacks.Count; i++) {
+                if(m_ItemStacks[i].Item == null){ continue; }
+                
                 if (!item.IsUnique && m_ItemStacks[i].Item.ItemDefinition == item.ItemDefinition) {
                     similarItemInfo = (ItemInfo)m_ItemStacks[i];
                 }
@@ -1027,7 +1037,8 @@ namespace Opsive.UltimateInventorySystem.Core.InventoryCollections
             ItemInfo? similarItemInfo = null;
 
             for (int i = 0; i < m_ItemStacks.Count; i++) {
-
+                if(m_ItemStacks[i].Item == null){ continue; }
+                
                 if (m_ItemStacks[i].Item.ItemDefinition == itemDefinition) {
                     return (ItemInfo)m_ItemStacks[i];
                 }
@@ -1055,7 +1066,8 @@ namespace Opsive.UltimateInventorySystem.Core.InventoryCollections
             ItemInfo? similarItemInfo = null;
 
             for (int i = 0; i < m_ItemStacks.Count; i++) {
-
+                if(m_ItemStacks[i].Item == null){ continue; }
+                
                 if (m_ItemStacks[i].Item.Category == itemCategory) {
                     return (ItemInfo)m_ItemStacks[i];
                 }
@@ -1167,6 +1179,8 @@ namespace Opsive.UltimateInventorySystem.Core.InventoryCollections
 
             var index = 0;
             for (int i = 0; i < m_ItemStacks.Count; i++) {
+                if(m_ItemStacks[i].Item == null){ continue; }
+                
                 if (checkInherently) {
                     if (category.InherentlyContains(m_ItemStacks[i].Item) == false) { continue; }
                 } else {
@@ -1195,7 +1209,8 @@ namespace Opsive.UltimateInventorySystem.Core.InventoryCollections
 
             var index = 0;
             for (int i = 0; i < m_ItemStacks.Count; i++) {
-
+                if(m_ItemStacks[i].Item == null){ continue; }
+                
                 if (checkInherently) {
                     if (itemDefinition.InherentlyContains(m_ItemStacks[i].Item) == false) { continue; }
                 } else {

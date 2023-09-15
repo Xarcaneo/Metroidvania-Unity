@@ -17,6 +17,10 @@ namespace Opsive.Shared.Input
         GameObject gameObject { get; }
         string HorizontalLookInputName { get; set; }
         string VerticalLookInputName { get; set; }
+        string ControllerHorizontalLookInputName { get; set; }
+        string ControllerVerticalLookInputName { get; set; }
+        string ActiveHorizontalLookInputName { get; }
+        string ActiveVerticalLookInputName { get; }
         PlayerInput.LookVectorMode LookMode { get; set; }
         Vector2 LookSensitivity { get; set; }
         float LookSensitivityMultiplier { get; set; }
@@ -24,6 +28,7 @@ namespace Opsive.Shared.Input
         float SmoothLookWeight { get; set; }
         float SmoothExponent { get; set; }
         float LookAccelerationThreshold { get; set; }
+        float DoublePressTapTimeout { get; set; }
         float ControllerConnectedCheckRate { get; set; }
 #if FIRST_PERSON_CONTROLLER || THIRD_PERSON_CONTROLLER
         string ConnectedControllerState { get; set; }
@@ -33,6 +38,7 @@ namespace Opsive.Shared.Input
         Vector2 RawLookVector { set; }
         Vector2 CurrentLookVector { set; }
         bool ControllerConnected { get; }
+        bool DisableOnDeath { get; }
 
         /// <summary>
         /// Returns true if the button is being pressed.

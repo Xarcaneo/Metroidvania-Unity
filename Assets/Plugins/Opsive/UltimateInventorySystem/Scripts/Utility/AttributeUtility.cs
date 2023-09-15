@@ -23,7 +23,7 @@ namespace Opsive.UltimateInventorySystem.Utility
         /// <param name="itemAmount">The item with the attribute.</param>
         /// <param name="perAmount"> multiply the sum by the item amount in each slot.</param>
         /// <returns>The numeric value.</returns>
-        private static float GetNumericValue(string attributeName, ItemAmount itemAmount, bool perAmount = false)
+        public static float GetNumericValue(string attributeName, ItemAmount itemAmount, bool perAmount = false)
         {
             float stat = 0;
             if (itemAmount.Item.TryGetAttributeValue<int>(attributeName, out var intAttributeValue)) {
@@ -38,6 +38,17 @@ namespace Opsive.UltimateInventorySystem.Utility
             }
 
             return stat;
+        }
+        
+        /// <summary>
+        /// Get the numeric value of an attribute whether it is int or float.
+        /// </summary>
+        /// <param name="attributeName">The attribute name.</param>
+        /// <param name="item">The item with the attribute.</param>
+        /// <returns>The numeric value.</returns>
+        public static float GetNumericValue(string attributeName, Item item)
+        {
+            return GetNumericValue(attributeName, new ItemAmount(1, item));
         }
         
         /// <summary>

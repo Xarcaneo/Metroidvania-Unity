@@ -706,6 +706,9 @@ namespace Opsive.UltimateInventorySystem.Core
         /// <returns>True if the other Item Definition.</returns>
         public bool InherentlyContains(ItemDefinition other)
         {
+            if (other == null) {
+                return false;
+            }
             var itemDefs = GenericObjectPool.Get<ItemDefinition[]>();
 
             var otherAllParentsCount = other.GetAllParents(ref itemDefs, true);
@@ -725,7 +728,7 @@ namespace Opsive.UltimateInventorySystem.Core
         /// <returns>True if the the item is child.</returns>
         public bool InherentlyContains(Item item)
         {
-            return InherentlyContains(item.ItemDefinition);
+            return InherentlyContains(item?.ItemDefinition);
         }
 
         /// <summary>
@@ -749,7 +752,7 @@ namespace Opsive.UltimateInventorySystem.Core
         /// <returns>True if the other itemDefinition.</returns>
         public bool DirectlyContains(Item item)
         {
-            return item.ItemDefinition == this;
+            return item?.ItemDefinition == this;
         }
 
         /// <summary>

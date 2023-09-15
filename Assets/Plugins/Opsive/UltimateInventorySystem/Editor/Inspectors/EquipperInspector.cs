@@ -65,16 +65,16 @@ namespace Opsive.UltimateInventorySystem.Editor.Inspectors
             {
                 m_Equipper.ItemSlotSet = evt.newValue as ItemSlotSet;
                 m_Equipper.ValidateSlots();
-                m_List = new List<ItemObjectSlot>(m_Equipper.Slots);
+                m_List = new List<ItemObjectSlot>(m_Equipper.ItemObjectSlots);
                 OnValueChanged();
             });
             container.Add(m_ItemSetSlotField);
 
-            if (m_Equipper.Slots == null) {
-                m_Equipper.Slots = new ItemObjectSlot[0];
+            if (m_Equipper.ItemObjectSlots == null) {
+                m_Equipper.ItemObjectSlots = new ItemObjectSlot[0];
             }
 
-            m_List = new List<ItemObjectSlot>(m_Equipper.Slots);
+            m_List = new List<ItemObjectSlot>(m_Equipper.ItemObjectSlots);
             m_ReorderableList = new ReorderableList(
                 m_List,
                 (parent, index) =>
@@ -165,7 +165,7 @@ namespace Opsive.UltimateInventorySystem.Editor.Inspectors
         /// </summary>
         private void OnValueChanged()
         {
-            m_Equipper.Slots = m_List.ToArray();
+            m_Equipper.ItemObjectSlots = m_List.ToArray();
             m_ReorderableList.Refresh(m_List);
             Shared.Editor.Utility.EditorUtility.SetDirty(m_Equipper);
             Select(m_ReorderableList.SelectedIndex);

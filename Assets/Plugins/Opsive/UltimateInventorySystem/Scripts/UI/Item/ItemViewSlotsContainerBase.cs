@@ -329,7 +329,7 @@ namespace Opsive.UltimateInventorySystem.UI.Item
 
             UnregisterFromInventoryUpdate();
 
-            var previousInventory = inventory;
+            var previousInventory = m_Inventory;
             m_Inventory = inventory;
             OnInventoryChanged(previousInventory, m_Inventory);
 
@@ -409,7 +409,7 @@ namespace Opsive.UltimateInventorySystem.UI.Item
         /// </summary>
         /// <param name="itemInfo">The item.</param>
         /// <param name="slot">The item slot.</param>
-        protected virtual void AssignItemToSlot(ItemInfo itemInfo, int slot)
+        public virtual void AssignItemToSlot(ItemInfo itemInfo, int slot)
         {
             m_ItemViewSlots[slot].SetItemInfo(itemInfo);
         }

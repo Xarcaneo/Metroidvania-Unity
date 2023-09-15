@@ -141,7 +141,7 @@ namespace Opsive.UltimateInventorySystem.UI.Panels.ItemViewSlotContainers
             }
         }
 
-        private void OnDestroy()
+        protected virtual void OnDestroy()
         {
             if(m_ItemViewSlotsContainer == null){ return; }
             m_ItemViewSlotsContainer.OnItemViewSlotSelected -= HandleSlotSelected;

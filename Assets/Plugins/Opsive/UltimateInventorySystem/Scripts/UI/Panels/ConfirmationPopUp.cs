@@ -33,7 +33,7 @@ namespace Opsive.UltimateInventorySystem.UI.Panels
         /// <summary>
         /// Set the events to the buttons.
         /// </summary>
-        private void Awake()
+        protected virtual void Awake()
         {
             m_ConfirmButton.onClick.AddListener(OnConfirmClick);
             m_CancelButton.onClick.AddListener(OnCancelClick);

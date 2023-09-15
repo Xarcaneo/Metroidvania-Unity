@@ -29,7 +29,7 @@ namespace Opsive.UltimateInventorySystem.UI.DataContainers
         /// <summary>
         /// Initialize on awake
         /// </summary>
-        private void Awake()
+        protected virtual void Awake()
         {
             if (m_CategoriesItemActions == null) { return; }
             for (int i = 0; i < m_CategoriesItemActions.Length; i++) {

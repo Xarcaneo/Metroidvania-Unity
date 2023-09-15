@@ -10,6 +10,7 @@ namespace Opsive.UltimateInventorySystem.UI.Item.DragAndDrop
     using Opsive.UltimateInventorySystem.Core.DataStructures;
     using Opsive.UltimateInventorySystem.UI.Item.ItemViewModules;
     using UnityEngine;
+    using UnityEngine.Events;
 
     /// <summary>
     /// Interface for Item View Slot Drop Hover Selectable, used to preview that a drop could happen.
@@ -95,6 +96,14 @@ namespace Opsive.UltimateInventorySystem.UI.Item.DragAndDrop
         [SerializeField] protected ItemViewSlotCursorManager m_ItemViewSlotCursorManager;
         [Tooltip("Should the item be dropped on the slot under the mouse or on the last selected ItemView which can be selected by keyboard or by code?")]
         [SerializeField] protected bool m_DropOnLastSelectedView;
+        [Tooltip("This event is invoked when an item view slot is selected and can be dropped on.")]
+        [SerializeField] protected UnityEvent m_OnSelectCanDropEvent;
+        [Tooltip("This event is invoked when an item view slot is selected and cannot be dropped on.")]
+        [SerializeField] protected UnityEvent m_OnSelectCannotDropEvent;
+        [Tooltip("This event is invoked when an item was dropped successfully.")]
+        [SerializeField] protected UnityEvent m_OnDropSuccessEvent;
+        [Tooltip("This event is invoked when an item failed to drop successfully.")]
+        [SerializeField] protected UnityEvent m_OnDropFailEvent;
 
         [Tooltip("The Item View Slot Drop Action Set.")]
         [SerializeField] internal ItemViewSlotDropActionSet m_ItemViewSlotDropActionSet;
@@ -104,6 +113,7 @@ namespace Opsive.UltimateInventorySystem.UI.Item.DragAndDrop
         protected ItemViewSlotDropHandlerStreamData m_StreamData;
         protected ItemViewSlotEventData m_DropSlotEventData;
         protected Vector2 m_MoveItemShapeOffset;
+        protected int m_LastPassedConditionIndex;
 
         public uint CursorManagerID => m_CursorManagerID;
         public ItemViewSlotCursorManager SlotCursorManager => m_ItemViewSlotCursorManager;
@@ -136,6 +146,16 @@ namespace Opsive.UltimateInventorySystem.UI.Item.DragAndDrop
             get => m_ViewSlotsContainer;
             set => m_ViewSlotsContainer = value;
         }
+
+        public int LastPassedConditionIndex
+        {
+            get => m_LastPassedConditionIndex;
+        }
+        
+        public UnityEvent OnSelectCanDropEvent => m_OnSelectCanDropEvent;
+        public UnityEvent OnSelectCannotDropEvent => m_OnSelectCannotDropEvent;
+        public UnityEvent OnDropSuccessEvent => m_OnDropSuccessEvent;
+        public UnityEvent OnDropFailEvent => m_OnDropFailEvent;
 
         /// <summary>
         /// Initialize.
@@ -255,8 +275,17 @@ namespace Opsive.UltimateInventorySystem.UI.Item.DragAndDrop
         /// </summary>
         protected virtual void HandleItemViewSlotDropInternal()
         {
-            if (m_ItemViewSlotDropActionSet == null) { return; }
-            m_ItemViewSlotDropActionSet.HandleItemViewSlotDrop(this);
+            if (m_ItemViewSlotDropActionSet == null) {
+                InvokeOnDropFail();
+                return;
+            }
+            
+            m_LastPassedConditionIndex = m_ItemViewSlotDropActionSet.HandleItemViewSlotDrop(this);
+            if (m_LastPassedConditionIndex == -1) {
+                InvokeOnDropFail();
+            } else {
+                InvokeOnDropSuccess();
+            }
 
             if (SourceContainer != null) {
                 SourceContainer.Draw();
@@ -278,7 +307,14 @@ namespace Opsive.UltimateInventorySystem.UI.Item.DragAndDrop
             m_DropSlotEventData = eventdata;
             m_StreamData.Reset(SourceItemViewSlot, m_ItemViewSlotCursorManager.SourceSlotEventData, eventdata);
 
-            m_DebugPassedConditionIndex = m_ItemViewSlotDropActionSet.GetFirstPassingConditionIndex(this);
+            m_LastPassedConditionIndex = m_ItemViewSlotDropActionSet.GetFirstPassingConditionIndex(this);
+            m_DebugPassedConditionIndex = m_LastPassedConditionIndex;
+
+            if (m_LastPassedConditionIndex == -1) {
+                InvokeOnSelectCannotDrop();
+            } else {
+                InvokedOnSelectCanDrop();
+            }
 
             var selectedItemView = eventdata.ItemView;
 
@@ -296,8 +332,6 @@ namespace Opsive.UltimateInventorySystem.UI.Item.DragAndDrop
             
                 m_ItemViewSlotCursorManager.SetPosition(viewPosition);
             }
-            
-            
         }
 
         /// <summary>
@@ -314,6 +348,38 @@ namespace Opsive.UltimateInventorySystem.UI.Item.DragAndDrop
                     module.DeselectWith(this);
                 }
             }
+        }
+        
+        /// <summary>
+        /// Invoke an event when on select an item view which can be dropped on.
+        /// </summary>
+        protected virtual void InvokedOnSelectCanDrop()
+        {
+            m_OnSelectCanDropEvent?.Invoke();
+        }
+
+        /// <summary>
+        /// Invoke an event when on select an item view which cannot be dropped on.
+        /// </summary>
+        protected virtual void InvokeOnSelectCannotDrop()
+        {
+            m_OnSelectCannotDropEvent?.Invoke();
+        }
+        
+        /// <summary>
+        /// Invoke an event when the item failed to pass the condition to drop.
+        /// </summary>
+        protected virtual void InvokeOnDropFail()
+        {
+            m_OnDropFailEvent?.Invoke();
+        }
+
+        /// <summary>
+        /// Invoke an event when the item successfully dropped.
+        /// </summary>
+        protected virtual void InvokeOnDropSuccess()
+        {
+            m_OnDropSuccessEvent?.Invoke();
         }
     }
 }

@@ -43,7 +43,7 @@ namespace Opsive.UltimateInventorySystem.UI.DataContainers
         {
             if (recipe == null) {
                 if (m_EmptyRecipeView == null) {
-                    Debug.LogWarning($"The Empty Recipe Box must be specified.");
+                    Debug.LogWarning($"The Empty Recipe View must be specified in the CategoryRecipeViewSet {name}.", this);
                 }
 
                 return m_EmptyRecipeView;
@@ -70,7 +70,7 @@ namespace Opsive.UltimateInventorySystem.UI.DataContainers
 
             if (selectedCategoryRecipeBoxUI.RecipeViewPrefab == null
                 || selectedCategoryRecipeBoxUI.RecipeViewPrefab.GetComponent<View<CraftingRecipe>>() == null) {
-                Debug.LogWarning($"Missing an itemBoxUi type for {recipe?.Category?.name} category.");
+                Debug.LogWarning($"Missing a RecipeView prefab for {recipe?.Category?.name} category in the CategoryRecipeViewSet {name}.", this);
             }
 
             return selectedCategoryRecipeBoxUI.RecipeViewPrefab;

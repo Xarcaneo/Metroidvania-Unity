@@ -411,13 +411,15 @@ namespace Opsive.UltimateInventorySystem.UI.Panels.ItemViewSlotContainers
         {
             var itemViewSlot = m_ItemViewSlotsContainer.GetItemViewSlot(index);
             
+            // Must refresh actions to check if the item has item actions.
+            RefreshItemActions(itemInfo);
+            
             if (CannotOpenItemActionPanel(itemInfo)) {
                 NotifyCannotOpenPanel(itemViewSlot);
 
                 return;
             }
 
-            RefreshItemActions(itemInfo);
             m_ActionPanel.AssignActions(m_ItemActionListSlice, itemInfo, m_ItemUser, m_ItemViewSlotsContainer, index);
 
             if (m_ItemViewSlotsContainer.Panel == null) {
@@ -446,12 +448,11 @@ namespace Opsive.UltimateInventorySystem.UI.Panels.ItemViewSlotContainers
         protected virtual bool CannotOpenItemActionPanel(ItemInfo itemInfo)
         {
             if (m_ActionPanel == null) { return true; }
+
             if (m_DisableActionOnEmptySlots && (itemInfo.Item == null || itemInfo.Amount <= 0)) { return true; }
 
-            // Must refresh actions to check if the item has item actions.
-            RefreshItemActions(itemInfo);
+            if (m_PreventOpenWhenNoAction && m_ItemActionListSlice.Count == 0) { return true;}
 
-            if (m_PreventOpenWhenNoAction && m_ItemActionListSlice.Count == 0) { return true; }
             return false;
         }
 

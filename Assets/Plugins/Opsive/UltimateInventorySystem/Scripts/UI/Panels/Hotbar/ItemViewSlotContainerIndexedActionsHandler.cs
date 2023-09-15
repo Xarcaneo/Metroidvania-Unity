@@ -46,7 +46,7 @@ namespace Opsive.UltimateInventorySystem.UI.Panels.Hotbar
         /// <summary>
         /// Initialize and listen to events.
         /// </summary>
-        private void Start()
+        protected virtual void Start()
         {
             if (m_ItemViewSlotsContainer == null) { m_ItemViewSlotsContainer = GetComponent<ItemSlotCollectionView>(); }
 
@@ -73,7 +73,7 @@ namespace Opsive.UltimateInventorySystem.UI.Panels.Hotbar
         /// <summary>
         /// Check for the input in update.
         /// </summary>
-        private void Update()
+        protected virtual void Update()
         {
             for (int i = 0; i < m_Input.Length; i++) {
                 if ( m_Input[i].Index < 0 || m_ItemViewSlotsContainer.SlotCount < m_Input[i].Index) {
@@ -115,7 +115,7 @@ namespace Opsive.UltimateInventorySystem.UI.Panels.Hotbar
         /// <summary>
         /// Unregister input on destroy.
         /// </summary>
-        private void OnDestroy()
+        protected virtual void OnDestroy()
         {
             if (m_PlayerInput == null) {
                 return;

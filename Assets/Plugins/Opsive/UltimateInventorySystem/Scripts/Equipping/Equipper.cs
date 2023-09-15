@@ -19,7 +19,7 @@ namespace Opsive.UltimateInventorySystem.Equipping
     /// <summary>
     /// The Equipper component is used to equip items by converting them to ItemObjects.
     /// </summary>
-    public class Equipper : MonoBehaviour, IEquipper, IDatabaseSwitcher
+    public class Equipper : MonoBehaviour, IDatabaseSwitcher
     {
         [Tooltip("The equippers inventory.")]
         [SerializeField] protected Inventory m_Inventory;
@@ -47,7 +47,7 @@ namespace Opsive.UltimateInventorySystem.Equipping
             get => m_ItemSlotSet;
             internal set => m_ItemSlotSet = value;
         }
-        public ItemObjectSlot[] Slots
+        public ItemObjectSlot[] ItemObjectSlots
         {
             get => m_Slots;
             internal set => m_Slots = value;

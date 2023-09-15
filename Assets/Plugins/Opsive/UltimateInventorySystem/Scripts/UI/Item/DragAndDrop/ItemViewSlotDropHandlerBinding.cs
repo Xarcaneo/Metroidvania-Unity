@@ -28,7 +28,7 @@ namespace Opsive.UltimateInventorySystem.UI.Item.DragAndDrop
         /// <summary>
         /// Listen to the events.
         /// </summary>
-        private void Awake()
+        protected virtual void Awake()
         {
             if (m_ItemViewSlot == null) {
                 m_ItemViewSlot = GetComponent<ItemViewSlot>();

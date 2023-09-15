@@ -13,7 +13,7 @@ namespace Opsive.UltimateInventorySystem.Editor.Utility
     {
         public static string Version
         {
-            get { return "1.2.13"; }
+            get { return "1.2.18"; }
         }
 
         public static string Name

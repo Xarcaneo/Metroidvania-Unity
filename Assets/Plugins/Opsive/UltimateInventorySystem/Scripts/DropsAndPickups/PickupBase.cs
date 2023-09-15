@@ -77,7 +77,7 @@ namespace Opsive.UltimateInventorySystem.DropsAndPickups
         /// <summary>
         /// Set the pickup interactable.
         /// </summary>
-        private void OnEnable()
+        protected virtual void OnEnable()
         {
             if (m_Interactable == null) {
                 m_Interactable = GetComponent<Interactable>();

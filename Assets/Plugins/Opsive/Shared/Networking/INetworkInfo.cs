@@ -24,6 +24,12 @@ namespace Opsive.Shared.Networking
         bool IsServer();
 
         /// <summary>
+        /// Does the network instance have authority?
+        /// </summary>
+        /// <returns>True if the instance has authority.</returns>
+        bool HasAuthority();
+
+        /// <summary>
         /// Is the character the local player?
         /// </summary>
         /// <returns>True if the character is the local player.</returns>

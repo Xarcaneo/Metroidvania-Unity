@@ -510,13 +510,13 @@ namespace Opsive.Shared.Audio
             if (m_ShareAudioSource) {
                 for (int i = 0; i < audioSourceGroup.SharedAudioSources.Count; i++) {
                     var sharedAudioSource = audioSourceGroup.SharedAudioSources[i];
-                    if (sharedAudioSource.isPlaying) {
+                    if (sharedAudioSource != null && sharedAudioSource.isPlaying) {
                         return sharedAudioSource;
                     }
                 }
             } else if (audioSourceGroup.AudioSourceListByAudioConfig.TryGetValue(this, out var linkedAudioSources)) {
                 for (int i = 0; i < linkedAudioSources.Count; i++) {
-                    if (linkedAudioSources[i].isPlaying) {
+                    if (linkedAudioSources[i] != null && linkedAudioSources[i].isPlaying) {
                         return linkedAudioSources[i];
                     }
                 }

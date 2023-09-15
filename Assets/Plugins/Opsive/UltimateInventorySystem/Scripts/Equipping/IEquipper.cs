@@ -15,16 +15,6 @@ namespace Opsive.UltimateInventorySystem.Equipping
     public interface IEquipper
     {
         /// <summary>
-        /// Get the item slot set.
-        /// </summary>
-        ItemSlotSet ItemSlotSet { get; }
-
-        /// <summary>
-        /// Get the item object slots.
-        /// </summary>
-        ItemObjectSlot[] Slots { get; }
-
-        /// <summary>
         /// Equip an item.
         /// </summary>
         /// <param name="item">The item to equip.</param>
@@ -94,5 +84,12 @@ namespace Opsive.UltimateInventorySystem.Equipping
         /// </summary>
         /// <param name="index">The slot.</param>
         void UnEquip(int index);
+
+        /// <summary>
+        /// Get the ItemObject assigned to the slot index.
+        /// </summary>
+        /// <param name="index">The slot index where the item object is assigned.</param>
+        /// <returns>The itemObject at the slot index provided</returns>
+        ItemObject GetEquippedItemObject(int index);
     }
 }

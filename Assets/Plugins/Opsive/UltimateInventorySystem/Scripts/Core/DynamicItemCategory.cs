@@ -9,6 +9,7 @@ namespace Opsive.UltimateInventorySystem.Core
     using Opsive.UltimateInventorySystem.Crafting;
     using Opsive.UltimateInventorySystem.Exchange;
     using System;
+    using Opsive.Shared.Inventory;
     using UnityEngine;
 
     /// <summary>
@@ -58,6 +59,29 @@ namespace Opsive.UltimateInventorySystem.Core
         public static implicit operator DynamicItemCategoryArray(ItemCategory[] x)
         {
             return new DynamicItemCategoryArray(x);
+        }
+
+        /// <summary>
+        /// Returns true if any category has a child that contains the item item provided.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <param name="trueIfArrayIsEmpty">Return true if the array is empty.</param>
+        /// <returns>True if the item is part of any category.</returns>
+        public bool InherentlyContains(IItemIdentifier item, bool trueIfArrayIsEmpty)
+        {
+            var array = Value;
+            if (array == null || array.Length == 0) {
+                return trueIfArrayIsEmpty;
+            }
+
+            for (int i = 0; i < array.Length; i++) {
+                if (array[i].InherentlyContains(item) == false)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 

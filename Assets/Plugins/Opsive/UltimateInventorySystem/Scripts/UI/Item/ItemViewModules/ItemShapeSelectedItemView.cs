@@ -86,7 +86,7 @@ namespace Opsive.UltimateInventorySystem.UI.Item.ItemViewModules
         /// </summary>
         protected virtual void UpdateFilter(ItemInfo itemInfo, Vector2Int itemPosition, Color color, bool enableFilter)
         {
-            if (itemInfo.Item == null ||
+            if (itemInfo.Item == null || ItemShapeGridData == null ||
                 itemInfo.Item.TryGetAttributeValue<ItemShape>(ItemShapeGridData.ShapeAttributeName, out var itemShape) == false
                 || itemShape.Count <= 1) {
 

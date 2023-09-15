@@ -21,6 +21,10 @@ namespace Opsive.Shared.Input
 
         public string HorizontalLookInputName { get => m_PlayerInput.HorizontalLookInputName; set => m_PlayerInput.HorizontalLookInputName = value; }
         public string VerticalLookInputName { get => m_PlayerInput.VerticalLookInputName; set => m_PlayerInput.VerticalLookInputName = value; }
+        public string ControllerHorizontalLookInputName { get => m_PlayerInput.ControllerHorizontalLookInputName; set => m_PlayerInput.ControllerHorizontalLookInputName = value; }
+        public string ControllerVerticalLookInputName { get => m_PlayerInput.ControllerVerticalLookInputName; set => m_PlayerInput.ControllerVerticalLookInputName = value; }
+        public string ActiveHorizontalLookInputName { get => m_PlayerInput.ActiveHorizontalLookInputName; }
+        public string ActiveVerticalLookInputName { get => m_PlayerInput.ActiveVerticalLookInputName; }
         public PlayerInput.LookVectorMode LookMode { get => m_PlayerInput.LookMode; set => m_PlayerInput.LookMode = value; }
         public Vector2 LookSensitivity { get => m_PlayerInput.LookSensitivity; set => m_PlayerInput.LookSensitivity = value; }
         public float LookSensitivityMultiplier { get => m_PlayerInput.LookSensitivityMultiplier; set => m_PlayerInput.LookSensitivityMultiplier = value; }
@@ -28,6 +32,7 @@ namespace Opsive.Shared.Input
         public float SmoothLookWeight { get => m_PlayerInput.SmoothLookWeight; set => m_PlayerInput.SmoothLookWeight = value; }
         public float SmoothExponent { get => m_PlayerInput.SmoothExponent; set => m_PlayerInput.SmoothExponent = value; }
         public float LookAccelerationThreshold { get => m_PlayerInput.LookAccelerationThreshold; set => m_PlayerInput.LookAccelerationThreshold = value; }
+        public float DoublePressTapTimeout { get => m_PlayerInput.DoublePressTapTimeout; set => m_PlayerInput.DoublePressTapTimeout = value; }
         public float ControllerConnectedCheckRate { get => m_PlayerInput.ControllerConnectedCheckRate; set => m_PlayerInput.ControllerConnectedCheckRate = value; }
 #if FIRST_PERSON_CONTROLLER || THIRD_PERSON_CONTROLLER
         public string ConnectedControllerState { get => m_PlayerInput.ConnectedControllerState; set => m_PlayerInput.ConnectedControllerState = value; }
@@ -37,6 +42,7 @@ namespace Opsive.Shared.Input
         public Vector2 RawLookVector { set => m_PlayerInput.RawLookVector = value; }
         public Vector2 CurrentLookVector { set => m_PlayerInput.CurrentLookVector = value; }
         public bool ControllerConnected { get => m_PlayerInput.ControllerConnected; }
+        public bool DisableOnDeath { get => m_PlayerInput.DisableOnDeath; }
 
         /// <summary>
         /// Initializes the default values.
@@ -55,7 +61,11 @@ namespace Opsive.Shared.Input
 
             Transform parent;
             // Move the PlayerInput GameObject to a GameObject that will never be disabled.
+#if UNITY_2023_1_OR_NEWER
+            var scheduler = FindFirstObjectByType<Game.SchedulerBase>();
+#else
             var scheduler = FindObjectOfType<Game.SchedulerBase>();
+#endif
             if (scheduler != null) {
                 parent = scheduler.transform;
             } else {

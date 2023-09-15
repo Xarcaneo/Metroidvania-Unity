@@ -31,7 +31,7 @@ namespace Opsive.UltimateInventorySystem.Core
         /// <summary>
         /// Set the binding.
         /// </summary>
-        private void Awake()
+        protected virtual void Awake()
         {
             InitializeAttributeBindings();
             var allAttributesCount = m_ItemCategory.GetAttributesCount();

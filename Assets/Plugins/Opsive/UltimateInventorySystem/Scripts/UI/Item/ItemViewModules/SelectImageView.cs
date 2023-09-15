@@ -49,7 +49,7 @@ namespace Opsive.UltimateInventorySystem.UI.Item.ItemViewModules
         /// Select the box.
         /// </summary>
         /// <param name="select">select or unselect.</param>
-        public void Select(bool select)
+        public virtual void Select(bool select)
         {
             m_Image.sprite = select ? m_Selected : m_Default;
         }

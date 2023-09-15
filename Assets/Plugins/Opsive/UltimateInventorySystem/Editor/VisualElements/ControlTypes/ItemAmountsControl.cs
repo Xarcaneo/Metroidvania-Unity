@@ -118,7 +118,7 @@ namespace Opsive.UltimateInventorySystem.Editor.VisualElements.ControlTypes
                     return;
                 }
                 var itemAmount = m_ObjectAmounts[index];
-                OnRemoveItem?.Invoke(itemAmount,  m_ReorderableList.ItemsSource.Count);
+                OnRemoveItem?.Invoke(itemAmount,  index);
             } else {
                 base.Remove(index);
             }

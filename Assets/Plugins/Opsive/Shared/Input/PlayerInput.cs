@@ -64,6 +64,8 @@ namespace Opsive.Shared.Input
         [SerializeField] protected float m_SmoothExponent = 1.05f;
         [Tooltip("If using look smoothing, specifies a maximum acceleration value of the smoothed look value (0 to disable).")]
         [SerializeField] protected float m_LookAccelerationThreshold = 0.4f;
+        [Tooltip("The amount of time that the button must be pressed to be considered a double press or tap.")]
+        [SerializeField] protected float m_DoublePressTapTimeout = 0.2f;
         [Tooltip("The number of frames to wait until input is accepted. When Unity loads it can return a large invalid axis value.")]
         [SerializeField] protected int m_FrameWaitCount = 4;
         [Tooltip("The rate (in seconds) the component checks to determine if a controller is connected.")]
@@ -72,6 +74,8 @@ namespace Opsive.Shared.Input
         [Tooltip("The state that should be activated when a controller is connected.")]
         [SerializeField] protected string m_ConnectedControllerState = "ConnectedController";
 #endif
+        [Tooltip("Should the input be disabled when the OnDeath event is sent?")]
+        [SerializeField] protected bool m_DisableOnDeath = true;
         [Tooltip("Unity event invoked when the gameplay input is enabled or disabled.")]
         [SerializeField] protected UnityBoolEvent m_EnableGamplayInputEvent;
 
@@ -79,6 +83,24 @@ namespace Opsive.Shared.Input
         public string VerticalLookInputName { get { return m_VerticalLookInputName; } set { m_VerticalLookInputName = value; } }
         public string ControllerHorizontalLookInputName { get { return m_ControllerHorizontalLookInputName; } set { m_ControllerHorizontalLookInputName = value; } }
         public string ControllerVerticalLookInputName { get { return m_ControllerVerticalLookInputName; } set { m_ControllerVerticalLookInputName = value; } }
+        public string ActiveHorizontalLookInputName
+        {
+            get {
+                if (IsControllerConnected() && !m_MouseControllerUpdate) {
+                    return m_ControllerHorizontalLookInputName;
+                }
+                return m_HorizontalLookInputName;
+            }
+        }
+        public string ActiveVerticalLookInputName
+        {
+            get {
+                if (IsControllerConnected() && !m_MouseControllerUpdate) {
+                    return m_ControllerVerticalLookInputName;
+                }
+                return m_VerticalLookInputName;
+            }
+        }
         public float ControllerInputMultiplier { get { return m_ControllerInputMultiplier; } set { m_ControllerInputMultiplier = value; } }
         public LookVectorMode LookMode
         {
@@ -96,10 +118,12 @@ namespace Opsive.Shared.Input
         public float SmoothLookWeight { get { return m_SmoothLookWeight; } set { m_SmoothLookWeight = value; } }
         public float SmoothExponent { get { return m_SmoothExponent; } set { m_SmoothExponent = value; } }
         public float LookAccelerationThreshold { get { return m_LookAccelerationThreshold; } set { m_LookAccelerationThreshold = value; } }
+        public float DoublePressTapTimeout { get { return m_DoublePressTapTimeout; } set { m_DoublePressTapTimeout = value; } }
         public float ControllerConnectedCheckRate { get { return m_ControllerConnectedCheckRate; } set { m_ControllerConnectedCheckRate = value; } }
 #if FIRST_PERSON_CONTROLLER || THIRD_PERSON_CONTROLLER
         public string ConnectedControllerState { get { return m_ConnectedControllerState; } set { m_ConnectedControllerState = value; } }
 #endif
+        public bool DisableOnDeath { get { return m_DisableOnDeath; } set { m_DisableOnDeath = value; } }
         public UnityBoolEvent EnableGameplayInputEvent { get { return m_EnableGamplayInputEvent; } set { m_EnableGamplayInputEvent = value; } }
 
         [System.NonSerialized] private GameObject m_GameObject;
@@ -113,8 +137,8 @@ namespace Opsive.Shared.Input
         private Dictionary<string, float> m_ButtonDownTime;
         private Dictionary<string, float> m_ButtonUpTime;
         private ScheduledEventBase m_ControllerCheckEvent;
-        private bool m_AllowInput = true;
-        private bool m_Focus = true;
+        protected bool m_AllowInput = true;
+        protected bool m_Focus = true;
         private bool m_Death;
         private Vector3 m_RawLookVectorAccumulation;
         private Vector3 m_UnitySmoothLookVectorAccumulation;
@@ -238,7 +262,7 @@ namespace Opsive.Shared.Input
                     m_ButtonDownTime = new Dictionary<string, float>();
                 }
                 if (m_ButtonDownTime.TryGetValue(buttonName, out var time)) {
-                    if (time != Time.unscaledTime && time + 0.2f > Time.unscaledTime) {
+                    if (time != Time.unscaledTime && time + m_DoublePressTapTimeout > Time.unscaledTime) {
                         return true;
                     }
                     m_ButtonDownTime[buttonName] = Time.unscaledTime;
@@ -273,7 +297,7 @@ namespace Opsive.Shared.Input
                 }
             } else if (m_ButtonDownTime != null && m_ButtonDownTime.TryGetValue(buttonName, out var time)) {
                 m_ButtonDownTime.Remove(buttonName);
-                if (time != Time.unscaledTime && time + 0.2f > Time.unscaledTime) {
+                if (time != Time.unscaledTime && time + m_DoublePressTapTimeout > Time.unscaledTime) {
                     return true;
                 }
             }
@@ -564,6 +588,10 @@ namespace Opsive.Shared.Input
         /// <param name="attacker">The GameObject that killed the character.</param>
         private void OnDeath(Vector3 position, Vector3 force, GameObject attacker)
         {
+            if (!m_DisableOnDeath) {
+                return;
+            }
+
             m_Death = true;
             enabled = m_AllowInput && !m_Death;
         }

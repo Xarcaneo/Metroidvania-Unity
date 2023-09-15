@@ -138,6 +138,12 @@ namespace Opsive.UltimateInventorySystem.SaveSystem
                         continue;
                     }
 
+                    if (item.IsMutable == false && item.IsUnique == false) {
+                        if (item != item.ItemDefinition.DefaultItem) {
+                            Debug.LogWarning("Saving custom Immutable Items is not supported. Make sure to set the items as Mutable if you are editing the ItemAttributes.");
+                        }
+                    }
+
                     //The item must be serialized such that its attributes can be saved.
                     item.Serialize();
                     itemsToSave.Push(item);

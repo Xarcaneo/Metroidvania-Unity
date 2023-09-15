@@ -68,7 +68,7 @@ namespace Opsive.UltimateInventorySystem.UI.Grid
         /// <summary>
         /// Initialize.
         /// </summary>
-        private void Awake()
+        protected virtual void Awake()
         {
             if (m_Content == null) { m_Content = transform; }
 
@@ -98,7 +98,12 @@ namespace Opsive.UltimateInventorySystem.UI.Grid
                     }
                     m_Buttons[i] = Instantiate(m_ButtonPrefab, m_Content).GetComponent<ActionButton>();
                 } else {
-                    m_Buttons[i] = m_Content.GetChild(i).GetComponent<ActionButton>();
+                    var actionButton = m_Content.GetChild(i).GetComponent<ActionButton>();
+                    if (actionButton == null) {
+                        Debug.LogError($"The child {i} of the content '{m_Content}' is null or missing the ActionButton component, Please ensure only ActionButtons (ItemViewSlots) are child of the content.", gameObject);
+                        continue;
+                    }
+                    m_Buttons[i] = actionButton;
                 }
 
                 var localIndex = i;

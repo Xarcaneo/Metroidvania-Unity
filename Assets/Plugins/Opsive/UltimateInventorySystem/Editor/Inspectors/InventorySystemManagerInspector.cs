@@ -266,7 +266,12 @@ namespace Opsive.UltimateInventorySystem.Editor.Inspectors
             var scene = EditorSceneManager.GetActiveScene();
             Debug.Log("Modifying scene: " + scene.name);
 
+            
+#if UNITY_2023_1_OR_NEWER
+            var inventorySystemManager = FindFirstObjectByType<InventorySystemManager>();
+#else
             var inventorySystemManager = FindObjectOfType<InventorySystemManager>();
+#endif
             if (inventorySystemManager != null) { inventorySystemManager.Database = database; }
 
             GameObject[] rootGameObjects = scene.GetRootGameObjects();
@@ -340,11 +345,18 @@ namespace Opsive.UltimateInventorySystem.Editor.Inspectors
             m_DatabaseField.objectType = typeof(InventorySystemDatabase);
             m_DatabaseField.style.flexGrow = 1;
             m_DatabaseField.style.flexShrink = 1;
-
-            if (m_DatabaseField.value == null) {
-                var manager = FindObjectOfType<InventorySystemManager>();
-                m_DatabaseField.value = manager?.Database ?? InventoryMainWindow.InventorySystemDatabase;
+            
+            if (m_InventorySystemManager.Database == null)
+            {
+                var inventorySystemDatabase = InventoryMainWindow.InventorySystemDatabase;
+                if (inventorySystemDatabase != null)
+                {
+                    m_InventorySystemManager.Database = inventorySystemDatabase;
+                    EditorUtility.SetDirty(m_InventorySystemManager);
+                    
+                }
             }
+            m_DatabaseField.value = m_InventorySystemManager.Database;
 
             m_DatabaseField.RegisterValueChangedCallback(evt =>
             {
@@ -367,7 +379,8 @@ namespace Opsive.UltimateInventorySystem.Editor.Inspectors
         private void DatabaseChanged()
         {
             m_InventorySystemManager.Database = m_DatabaseField.value as InventorySystemDatabase;
-
+            EditorUtility.SetDirty(m_InventorySystemManager);
+            
             if (m_InventorySystemManager.Database == null) {
                 Debug.LogWarning("The database cannot be set to null.");
                 return;

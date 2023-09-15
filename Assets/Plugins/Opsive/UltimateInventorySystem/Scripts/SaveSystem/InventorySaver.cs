@@ -54,6 +54,8 @@ namespace Opsive.UltimateInventorySystem.SaveSystem
         public override Serialization SerializeSaveData()
         {
             if (m_Inventory == null) { return null; }
+            
+            EventHandler.ExecuteEvent<Inventory>(EventNames.c_WillStartSaving_Inventory,m_Inventory);
 
             var itemCollectionCount = m_Inventory.GetItemCollectionCount();
             var newItemAmountsArray = new IDAmountSaveData[itemCollectionCount][];
@@ -63,19 +65,33 @@ namespace Opsive.UltimateInventorySystem.SaveSystem
 
                 var itemCollection = m_Inventory.GetItemCollection(i);
 
-                var allItemAmounts = itemCollection.GetAllItemStacks();
+                IReadOnlyList<ItemStack> allItemStacks;
+                // Get the items by slot to save the correct index
+                if (itemCollection is ItemSlotCollection itemSlotCollection) {
+                    allItemStacks = itemSlotCollection.ItemsBySlot;
+                } else {
+                    allItemStacks = itemCollection.GetAllItemStacks();
+                }
 
-                var itemAmounts = new IDAmountSaveData[allItemAmounts.Count];
+                var itemAmounts = new IDAmountSaveData[allItemStacks?.Count ?? 0];
                 for (int j = 0; j < itemAmounts.Length; j++) {
 
-                    var itemAmount = allItemAmounts[j];
+                    var itemStack = allItemStacks[j];
 
+                    if (itemStack?.Item == null) {
+                        itemAmounts[j] = new IDAmountSaveData() {
+                            ID = 0,
+                            Amount = 0
+                        };
+                        continue;
+                    }
+                    
                     itemAmounts[j] = new IDAmountSaveData() {
-                        ID = itemAmount.Item.ID,
-                        Amount = itemAmount.Amount
+                        ID = itemStack.Item.ID,
+                        Amount = itemStack.Amount
                     };
 
-                    listItemIDs.Add(itemAmount.Item.ID);
+                    listItemIDs.Add(itemStack.Item.ID);
                 }
 
                 newItemAmountsArray[i] = itemAmounts;
@@ -86,6 +102,8 @@ namespace Opsive.UltimateInventorySystem.SaveSystem
             var saveData = new InventorySaveData {
                 ItemIDAmountsPerCollection = newItemAmountsArray
             };
+            
+            EventHandler.ExecuteEvent<Inventory,InventorySaveData>(EventNames.c_SavingComplete_Inventory_InventorySaveData,m_Inventory, saveData);
 
             return Serialization.Serialize(saveData);
         }
@@ -98,6 +116,10 @@ namespace Opsive.UltimateInventorySystem.SaveSystem
         {
             if (m_Inventory == null) { return; }
             
+            var savedData = serializedSaveData.DeserializeFields(MemberVisibility.All) as InventorySaveData?;
+            
+            EventHandler.ExecuteEvent<Inventory,InventorySaveData?>(EventNames.c_WillStartLoadingSave_Inventory_NullableInventorySaveData,m_Inventory, savedData);
+
             if (!m_Additive) {
                 var itemCollectionCount = m_Inventory.GetItemCollectionCount();
 
@@ -105,8 +127,6 @@ namespace Opsive.UltimateInventorySystem.SaveSystem
                     m_Inventory.GetItemCollection(i).RemoveAll();
                 }
             }
-
-            var savedData = serializedSaveData.DeserializeFields(MemberVisibility.All) as InventorySaveData?;
 
             if (savedData.HasValue == false) {
                 return;
@@ -123,22 +143,37 @@ namespace Opsive.UltimateInventorySystem.SaveSystem
                 var itemIDAmounts = inventorySaveData.ItemIDAmountsPerCollection[i];
                 var itemAmounts = new ItemAmount[itemIDAmounts.Length];
                 for (int j = 0; j < itemIDAmounts.Length; j++) {
-                    if (InventorySystemManager.ItemRegister.TryGetValue(itemIDAmounts[j].ID, out var item) == false) {
-                        Debug.LogWarning($"Saved Item ID {itemIDAmounts[j].ID} could not be retrieved from the Inventory System Manager.");
+                    var idAmountSaveData = itemIDAmounts[j];
+                    // The id can be 0 for item slot collections.
+                    if(idAmountSaveData.ID == 0){ continue;}
+                    
+                    if (InventorySystemManager.ItemRegister.TryGetValue(idAmountSaveData.ID, out var item) == false) {
+                        Debug.LogWarning($"Saved Item ID {idAmountSaveData.ID} could not be retrieved from the Inventory System Manager.");
                         continue;
                     }
-                    itemAmounts[j] = new ItemAmount(item, itemIDAmounts[j].Amount);
+                    itemAmounts[j] = new ItemAmount(item, idAmountSaveData.Amount);
                 }
 
                 var itemCollection = m_Inventory.GetItemCollection(i);
                 if (itemCollection == null) {
                     Debug.LogWarning("Item Collection from save data is missing in the scene.");
                 } else {
-                    m_Inventory.GetItemCollection(i).AddItems(itemAmounts);
+                    if (itemCollection is ItemSlotCollection itemSlotCollection) {
+                        for (int j = 0; j < itemAmounts.Length; j++) {
+                            var itemAmount = itemAmounts[j];
+                            if(itemAmount.Item == null){ continue; }
+                            itemSlotCollection.AddItem(new ItemInfo(itemAmount), j);
+                        }
+                    } else {
+                        itemCollection.AddItems(itemAmounts);
+                    }
+                    
                 }
             }
             
             EventHandler.ExecuteEvent(m_Inventory.gameObject, EventNames.c_InventoryGameObject_InventoryMonitorListen_Bool, true);
+
+            EventHandler.ExecuteEvent<Inventory,InventorySaveData>(EventNames.c_LoadingSaveComplete_Inventory_InventorySaveData,m_Inventory, savedData.Value);
 
         }
     }

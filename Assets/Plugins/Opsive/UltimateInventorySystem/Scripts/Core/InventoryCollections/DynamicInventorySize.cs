@@ -140,7 +140,7 @@ namespace Opsive.UltimateInventorySystem.Core.InventoryCollections
         public ItemCollectionGroup BagsItemCollections => m_BagsItemCollections;
         public ItemCollectionGroup RestrictedItemCollections => m_RestrictedItemCollections;
 
-        private void Start()
+        protected virtual void Start()
         {
             if (m_Inventory == null) { m_Inventory = GetComponent<Inventory>(); }
             Initialize(m_Inventory, false);

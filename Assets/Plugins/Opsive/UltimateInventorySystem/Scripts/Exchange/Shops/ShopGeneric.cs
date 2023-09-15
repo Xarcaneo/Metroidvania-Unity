@@ -116,7 +116,7 @@ namespace Opsive.UltimateInventorySystem.Exchange.Shops
                 
                 if (itemInfo.Item.IsMutable && itemInfo.Item.IsUnique) {
                     for (int i = 0; i < itemInfo.Amount; i++) {
-                        itemCollection.AddItem(Item.Create(itemInfo.Item));
+                        itemCollection.AddItem(InventorySystemManager.CreateItem(itemInfo.Item));
                     }
                 } else {
                     itemCollection.AddItem(itemInfo);

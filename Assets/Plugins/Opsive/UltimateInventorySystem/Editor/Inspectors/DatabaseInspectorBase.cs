@@ -124,7 +124,12 @@ namespace Opsive.UltimateInventorySystem.Editor.Inspectors
             m_DatabaseField.objectType = typeof(InventorySystemDatabase);
 
             if (Application.isPlaying == false || InventorySystemManager.IsNull) {
+                
+#if UNITY_2023_1_OR_NEWER
+                m_Database = FindFirstObjectByType<InventorySystemManager>()?.Database;
+#else
                 m_Database = FindObjectOfType<InventorySystemManager>()?.Database;
+#endif
             } else {
                 m_Database = InventorySystemManager.Instance.Database;
             }

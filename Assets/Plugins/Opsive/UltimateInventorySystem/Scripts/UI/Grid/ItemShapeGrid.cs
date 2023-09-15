@@ -230,6 +230,9 @@ namespace Opsive.UltimateInventorySystem.UI.Grid
             if (canAddBase == false) { return false; }
 
             var gridDataCollection = m_ItemShapeGridData.GetItemCollectionToAddItemTo(itemInfo);
+            if (gridDataCollection == null) {
+                return false;
+            }
 
             if (Inventory.CanAddItem(itemInfo, gridDataCollection) == null) { return false; }
 
@@ -362,7 +365,7 @@ namespace Opsive.UltimateInventorySystem.UI.Grid
                 view = viewGO.GetComponent<ItemView>();
 
                 if (view == null) {
-                    Debug.LogWarning("The Box Drawer BoxUI Prefab does not have a BoxUI component or it is not of the correct Type");
+                    Debug.LogWarning("The ItemViewDrawer ItemView Prefab does not have a ItemView component or it is not of the correct Type", this);
                     return;
                 }
                 

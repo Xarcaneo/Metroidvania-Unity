@@ -21,7 +21,7 @@ namespace Opsive.Shared.Editor.Inspectors.Utility
         private static int s_KeybordControl;
         private static int s_ArraySize;
         private static bool s_EditingArray;
-        private static int s_FocusHash;
+        private static long s_FocusHash;
         private static HashSet<int> s_DrawnObjects;
         private static string[] s_LayerNames;
         private static int[] s_MaskValues;
@@ -44,7 +44,7 @@ namespace Opsive.Shared.Editor.Inspectors.Utility
         /// <param name="drawNoFieldsNotice">Should a notice be drawn if no fields can be drawn?</param>
         /// <param name="hashPrefix">The prefix of the hash from the parent class. This value will prevent collisions with similarly named objects.</param>
         /// <returns>The updated object value based on the drawn fields.</returns>
-        private static object DrawFields(object obj, bool drawNoFieldsNotice, int hashPrefix)
+        private static object DrawFields(object obj, bool drawNoFieldsNotice, long hashPrefix)
         {
             if (obj == null) {
                 return null;
@@ -97,17 +97,34 @@ namespace Opsive.Shared.Editor.Inspectors.Utility
         /// <param name="startDrawElementCallback">Callback issued before the elements are drawn.</param>
         /// <param name="endDrawElementCallback">Callback issued after the elemts are drawn.</param>
         /// <returns>The updated object value based on the drawn properties.</returns>
-        public static object DrawProperties(Type type, object obj, int hashPrefix, Dictionary<int, int> valuePositionMap, Serialization serialization, MemberVisibility visibility, Action startDrawElementCallback, Func<int, List<int>, bool> endDrawElementCallback)
+        public static object DrawProperties(Type type, object obj, long hashPrefix, Dictionary<long, int> valuePositionMap, Serialization serialization, MemberVisibility visibility, Action startDrawElementCallback, Func<int, List<int>, bool> endDrawElementCallback)
         {
             // Only the serialized properties need to be drawn.
             var properties = Serialization.GetSerializedProperties(type, visibility);
-            var bitwiseHash = new Version(serialization.Version).CompareTo(new Version("3.1")) >= 0;
+            var hashType = Serialization.GetHashType(serialization.Version);
+
+            long[] valueHashes;
+            if (serialization.LongValueHashes != null && serialization.LongValueHashes.Length > 0) {
+                valueHashes = serialization.LongValueHashes;
+            } else if (serialization.ValueHashes != null) {
+                valueHashes = new long[serialization.ValueHashes.Length];
+                for (int i = 0; i < valueHashes.Length; ++i) {
+                    valueHashes[i] = serialization.ValueHashes[i];
+                }
+            } else {
+                valueHashes = new long[0];
+            }
+
             for (int i = 0; i < properties.Length; ++i) {
-                int hash;
-                if (bitwiseHash) {
-                    hash = (hashPrefix * Serialization.HashMultiplier) ^ (Serialization.StringHash(properties[i].PropertyType.FullName) + Serialization.StringHash(properties[i].Name));
+                long hash;
+                if (hashType == Serialization.HashType.BitwiseLong) {
+                    hash = (hashPrefix * Serialization.HashMultiplier) ^ (Serialization.StringHash(properties[i].PropertyType.FullName) +
+                            Serialization.StringHash(properties[i].Name));
+                } else if (hashType == Serialization.HashType.Bitwise) {
+                    hash = ((int)hashPrefix * Serialization.HashMultiplier) ^ (Serialization.StringIntHash(properties[i].PropertyType.FullName) + 
+                            Serialization.StringIntHash(properties[i].Name));
                 } else {
-                    hash = hashPrefix + Serialization.StringHash(properties[i].PropertyType.FullName) + Serialization.StringHash(properties[i].Name);
+                    hash = (int)hashPrefix + Serialization.StringIntHash(properties[i].PropertyType.FullName) + Serialization.StringIntHash(properties[i].Name);
                 }
                 // The value may not be serialized.
                 if (!valuePositionMap.ContainsKey(hash)) {
@@ -119,14 +136,14 @@ namespace Opsive.Shared.Editor.Inspectors.Utility
                     startDrawElementCallback();
                 }
                 var value = Serializer.BytesToValue(properties[i].PropertyType, properties[i].Name, valuePositionMap, hashPrefix, serialization.Values,
-                                                    serialization.ValuePositions, serialization.UnityObjects, false, visibility, bitwiseHash);
+                                                    serialization.ValuePositions, serialization.UnityObjects, false, visibility, hashType);
 
                 EditorGUI.BeginChangeCheck();
 
                 // Get a list of Unity Objects before the property is drawn. This will be used if the property is deleted and the Unity Object array needs to be cleaned up.
                 var unityObjectIndexes = new List<int>();
-                Serialization.GetUnityObjectIndexes(ref unityObjectIndexes, properties[i].PropertyType, properties[i].Name, hashPrefix, valuePositionMap, serialization.ValueHashes, serialization.ValuePositions,
-                                                    serialization.Values, false, visibility, bitwiseHash);
+                Serialization.GetUnityObjectIndexes(ref unityObjectIndexes, properties[i].PropertyType, properties[i].Name, hashPrefix, valuePositionMap, valueHashes, serialization.ValuePositions,
+                                                    serialization.Values, false, visibility, hashType);
 
                 // Draw the property.
                 value = DrawObject(new GUIContent(ObjectNames.NicifyVariableName(properties[i].Name)), properties[i].PropertyType, obj, value, properties[i].Name, hashPrefix, valuePositionMap, serialization, properties[i], false);
@@ -154,7 +171,7 @@ namespace Opsive.Shared.Editor.Inspectors.Utility
 
                     // Remove the current element and then add it back at the end. The order of the values doesn't matter and this prevents each subsequent element from needing to be modified because the current
                     // value could have changed sizes.
-                    Serialization.RemoveProperty(i, unityObjectIndexes, serialization, visibility, bitwiseHash);
+                    Serialization.RemoveProperty(i, unityObjectIndexes, serialization, visibility, hashType);
 
                     // Add the property to the Serialization data.
                     Serialization.AddProperty(properties[i], value, unityObjectIndexes, serialization, visibility);
@@ -179,7 +196,7 @@ namespace Opsive.Shared.Editor.Inspectors.Utility
         /// <param name="fieldProperty">A reference to the field or property that is being drawn.</param>
         /// <param name="drawFields">Should the fields be drawn? If false the properties will be drawn.</param>
         /// <returns>The drawn object.</returns>
-        public static object DrawObject(GUIContent guiContent, Type type, object parent, object value, string name, int hashPrefix, Dictionary<int, int> valuePositionMap, Serialization serialization, object fieldProperty, bool drawFields)
+        public static object DrawObject(GUIContent guiContent, Type type, object parent, object value, string name, long hashPrefix, Dictionary<long, int> valuePositionMap, Serialization serialization, object fieldProperty, bool drawFields)
         {
             if (typeof(IList).IsAssignableFrom(type)) {
                 return DrawArrayObject(guiContent, type, parent, value, name, hashPrefix, valuePositionMap, serialization, fieldProperty, drawFields);
@@ -202,7 +219,7 @@ namespace Opsive.Shared.Editor.Inspectors.Utility
         /// <param name="fieldProperty">A reference to the field or property that is being drawn.</param>
         /// <param name="drawFields">Should the fields be drawn? If false the properties will be drawn.</param>
         /// <returns>The drawn object.</returns>
-        private static object DrawArrayObject(GUIContent guiContent, Type type, object parent, object value, string name, int hashPrefix, Dictionary<int, int> valuePositionMap, Serialization serialization, object fieldProperty, bool drawFields)
+        private static object DrawArrayObject(GUIContent guiContent, Type type, object parent, object value, string name, long hashPrefix, Dictionary<long, int> valuePositionMap, Serialization serialization, object fieldProperty, bool drawFields)
         {
             // Arrays and lists operate differently when retrieving the element type.
             Type elementType;
@@ -285,14 +302,15 @@ namespace Opsive.Shared.Editor.Inspectors.Utility
                     s_ArraySize = size;
                 }
 
-                hash = hashPrefix + Serialization.StringHash(type.FullName) + Serialization.StringHash(name);
+                var hashType = Serialization.GetHashType(serialization.Version);
                 for (int i = 0; i < list.Count; ++i) {
                     GUILayout.BeginHorizontal();
                     if (list[i] == null && !typeof(UnityEngine.Object).IsAssignableFrom(elementType) && elementType != typeof(string)) {
                         list[i] = Activator.CreateInstance(elementType);
                     }
                     guiContent.text = "Element " + i;
-                    list[i] = DrawObject(guiContent, elementType, parent, list[i], name, hash / (i + 2), valuePositionMap, serialization, fieldProperty, drawFields);
+                    var elementHash = hashType != Serialization.HashType.Legacy ? (hash + i + 1) : (hash / (i + 2));
+                    list[i] = DrawObject(guiContent, elementType, parent, list[i], name, elementHash, valuePositionMap, serialization, fieldProperty, drawFields);
                     GUILayout.Space(6);
                     GUILayout.EndHorizontal();
                 }
@@ -315,7 +333,7 @@ namespace Opsive.Shared.Editor.Inspectors.Utility
         /// <param name="fieldProperty">A reference to the field or property that is being drawn.</param>
         /// <param name="drawFields">Should the fields be drawn? If false the properties will be drawn.</param>
         /// <returns>The drawn object.</returns>
-        private static object DrawSingleObject(GUIContent guiContent, Type type, object value, string name, int hashPrefix, Dictionary<int, int> valuePositionMap, Serialization serialization, object fieldProperty, bool drawFields)
+        private static object DrawSingleObject(GUIContent guiContent, Type type, object value, string name, long hashPrefix, Dictionary<long, int> valuePositionMap, Serialization serialization, object fieldProperty, bool drawFields)
         {
             if (type == typeof(int)) {
                 return EditorGUILayout.IntField(guiContent, (int)value);
@@ -422,13 +440,15 @@ namespace Opsive.Shared.Editor.Inspectors.Utility
                         }
                         if (InspectorUtility.Foldout(value, guiContent)) {
                             EditorGUI.indentLevel++;
+
+                            var objHash = hashPrefix + Serialization.StringHash(type.FullName) + Serialization.StringHash(name);
                             var inspectorDrawer = InspectorDrawerUtility.InspectorDrawerForType(type);
                             if (inspectorDrawer != null) {
                                 inspectorDrawer.OnInspectorGUI(value, null);
                             } else if (drawFields) {
-                                value = DrawFields(value, true, hashPrefix + Serialization.StringHash(type.FullName) + Serialization.StringHash(name));
+                                value = DrawFields(value, true, objHash);
                             } else {
-                                value = DrawProperties(type, value, hashPrefix + Serialization.StringHash(type.FullName) + Serialization.StringHash(name), valuePositionMap, serialization, MemberVisibility.Public, null, null);
+                                value = DrawProperties(type, value, objHash, valuePositionMap, serialization, MemberVisibility.Public, null, null);
                             }
                             EditorGUI.indentLevel--;
                         }

@@ -68,7 +68,7 @@ namespace Opsive.UltimateInventorySystem.Core
         /// <summary>
         /// Set the item.
         /// </summary>
-        private void Start()
+        protected virtual void Start()
         {
             RefreshBinding();
         }

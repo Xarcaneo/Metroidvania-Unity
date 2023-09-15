@@ -43,7 +43,7 @@ namespace Opsive.UltimateInventorySystem.Core
         /// <summary>
         /// Initialize the component.
         /// </summary>
-        private void Awake()
+        protected virtual void Awake()
         {
             Initialize(true);
         }
@@ -64,7 +64,7 @@ namespace Opsive.UltimateInventorySystem.Core
         /// <summary>
         /// Initialize the item object.
         /// </summary>
-        private void Start()
+        protected virtual void Start()
         {
             if (m_ItemObject != null) { return; }
 

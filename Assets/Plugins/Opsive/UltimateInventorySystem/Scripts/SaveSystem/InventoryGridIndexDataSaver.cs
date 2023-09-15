@@ -6,7 +6,6 @@
     using Opsive.Shared.Utility;
     using Opsive.UltimateInventorySystem.Core.DataStructures;
     using Opsive.UltimateInventorySystem.Core.InventoryCollections;
-    using Opsive.UltimateInventorySystem.UI.Item;
     using Opsive.UltimateInventorySystem.UI.Panels.ItemViewSlotContainers;
     using UnityEngine;
 

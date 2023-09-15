@@ -75,11 +75,22 @@ namespace Opsive.UltimateInventorySystem.UI.Menus.Chest
             if (OnValidateUtility.IsPrefab(this)) { return; }
 
             if (m_ChestMenu == null) {
+               
+                                    
+#if UNITY_2023_1_OR_NEWER
+                 m_ChestMenu = FindFirstObjectByType<ChestMenu>();
+#else
                 m_ChestMenu = FindObjectOfType<ChestMenu>();
+#endif
             }
 
             if (m_PanelManager == null) {
+                
+#if UNITY_2023_1_OR_NEWER
+                m_PanelManager = FindFirstObjectByType<DisplayPanelManager>();
+#else
                 m_PanelManager = FindObjectOfType<DisplayPanelManager>();
+#endif
             }
 
             if (m_Inventory == null) {

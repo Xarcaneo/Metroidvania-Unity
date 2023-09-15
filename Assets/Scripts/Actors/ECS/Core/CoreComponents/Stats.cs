@@ -18,7 +18,7 @@ public class Stats : CoreComponent
 
     private float currentHealth;
 
-    private IEquipper m_Equipper;
+    private Equipper m_Equipper;
 
     //Events
     public event Action HealthZero;
@@ -35,7 +35,7 @@ public class Stats : CoreComponent
 
         currentHealth = maxHealth;
 
-        m_Equipper = transform.root.GetComponent<IEquipper>();
+        m_Equipper = transform.root.GetComponent<Equipper>();
 
         if (m_Equipper != null)
         {

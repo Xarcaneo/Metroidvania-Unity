@@ -47,7 +47,7 @@ namespace Opsive.UltimateInventorySystem.Crafting
         /// <summary>
         /// Initialize.
         /// </summary>
-        private void Awake()
+        protected virtual void Awake()
         {
             Initialize(false);
         }

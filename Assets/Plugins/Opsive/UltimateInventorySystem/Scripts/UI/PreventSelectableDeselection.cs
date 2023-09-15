@@ -30,7 +30,7 @@ namespace Opsive.UltimateInventorySystem.UI
         /// <summary>
         /// Register to the Display Manager event.
         /// </summary>
-        private void Awake()
+        protected virtual void Awake()
         {
             if (m_DisplayManager == null) {
                 m_DisplayManager = GetComponent<DisplayPanelManager>();

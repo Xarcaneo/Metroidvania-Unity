@@ -35,7 +35,8 @@ namespace Opsive.UltimateInventorySystem.UI.Item
 
         public int Index => m_Index;
         public ItemInfo ItemInfo => m_ItemView == null ? ItemInfo.None : m_ItemView.ItemInfo;
-        public ItemView ItemView {
+        public ItemView ItemView
+        {
             get => m_ItemView;
         }
 
@@ -47,7 +48,8 @@ namespace Opsive.UltimateInventorySystem.UI.Item
         protected override void Awake()
         {
             base.Awake();
-            if (m_ItemView == null) {
+            if (m_ItemView == null)
+            {
                 m_ItemView = GetComponentInChildren<ItemView>(true);
             }
 
@@ -71,15 +73,19 @@ namespace Opsive.UltimateInventorySystem.UI.Item
         /// <param name="itemInfo">The item info.</param>
         public virtual void SetItemInfo(ItemInfo itemInfo)
         {
-            if (itemInfo.Item == null || RandomID.IsIDEmpty(itemInfo.Item.ID)) {
+            if (itemInfo.Item == null || RandomID.IsIDEmpty(itemInfo.Item.ID))
+            {
                 m_ItemView.Clear();
                 UpdateUI();
-            } else {
+            }
+            else
+            {
                 m_ItemView.SetValue(itemInfo);
                 UpdateUI();
             }
 
-            if (m_Selected) {
+            if (m_Selected)
+            {
                 OnSelect(null);
             }
         }
@@ -97,7 +103,8 @@ namespace Opsive.UltimateInventorySystem.UI.Item
 
             m_ItemView.SetViewSlot(this);
 
-            if (m_Selected) {
+            if (m_Selected)
+            {
                 OnSelect(null);
             }
         }
@@ -109,14 +116,15 @@ namespace Opsive.UltimateInventorySystem.UI.Item
         {
             base.OnSelect(eventData);
 
-            if (m_ItemView != null) {
+            if (m_ItemView != null)
+            {
                 m_ItemView.Select(true);
 
-            if (m_Frame)
-            {
-                m_Frame.gameObject.transform.position = this.gameObject.transform.position - m_FrameOffset;
-                m_Frame.SetActive(true);
-            }
+                if (m_Frame)
+                {
+                    m_Frame.gameObject.transform.position = this.gameObject.transform.position - m_FrameOffset;
+                    m_Frame.SetActive(true);
+                }
             }
         }
 
@@ -128,10 +136,11 @@ namespace Opsive.UltimateInventorySystem.UI.Item
         {
             base.OnDeselect(eventData);
 
-            if (m_ItemView != null) {
+            if (m_ItemView != null)
+            {
                 m_ItemView.Select(false);
 
-                if(m_Frame) m_Frame.SetActive(false);
+                if (m_Frame) m_Frame.SetActive(false);
             }
         }
 
@@ -150,13 +159,15 @@ namespace Opsive.UltimateInventorySystem.UI.Item
         /// </summary>
         public void DisableImage()
         {
-            if (image != null) {
+            if (image != null)
+            {
                 image.enabled = false;
                 return;
             }
 
             image = gameObject.GetCachedComponent<Image>();
-            if (image != null) {
+            if (image != null)
+            {
                 image.enabled = false;
             }
 
@@ -221,7 +232,8 @@ namespace Opsive.UltimateInventorySystem.UI.Item
         /// <returns>True if it can contain.</returns>
         public bool CanContain(ItemInfo itemInfo)
         {
-            for (int i = 0; i < m_ItemViewSlotRestrictions.Length; i++) {
+            for (int i = 0; i < m_ItemViewSlotRestrictions.Length; i++)
+            {
                 if (m_ItemViewSlotRestrictions[i].CanContain(itemInfo) == false) { return false; }
             }
 
