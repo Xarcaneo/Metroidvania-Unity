@@ -53,7 +53,7 @@ public class Skeleton_ChaseState : ChaseState
         base.LogicUpdate();
 
         EnemyDamageHitBox?.MeleeAttack(m_damageData);
-        EnemyDamageHitBox?.Knockback(Movement.FacingDirection);
+        EnemyDamageHitBox?.Knockback(m_damageData, Movement.FacingDirection);
 
         if (EntityDetector.entityToRight != Movement.FacingDirection)
             Movement.Flip();

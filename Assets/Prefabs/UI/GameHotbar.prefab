@@ -807,6 +807,12 @@ MonoBehaviour:
   m_PositionOffset: {x: 0, y: 0}
   m_UseContainerToSpawnItemView: 1
   m_CategoryItemViewSet: {fileID: 0}
+  m_OnStartMoveEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnEndMoveEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &4953084972861452410
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1593,8 +1599,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3179230752594667320}
   - component: {fileID: 2810493341451053297}
-  - component: {fileID: 3507809712921751190}
-  - component: {fileID: 2612951160800107942}
   - component: {fileID: 1822512476409220306}
   m_Layer: 5
   m_Name: Equipment Item View Slot Container
@@ -1655,39 +1659,6 @@ MonoBehaviour:
   - {fileID: 1694441122476447644}
   - {fileID: 3202873786982345493}
   - {fileID: 280375199306759942}
---- !u!114 &3507809712921751190
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5679524035737537867}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b118dcbe58b4b93a089576d0498f26e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ItemViewSlotCursorManager: {fileID: 0}
-  m_DisableDragOnEmptySlot: 1
-  m_KeepOffset: 1
-  m_MouseInput: 7
---- !u!114 &2612951160800107942
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5679524035737537867}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6dd3ab65f95847a0b0c491d5ca77be5b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_DebugPassedConditionIndex: 0
-  m_CursorManagerID: 1
-  m_ItemViewSlotCursorManager: {fileID: 0}
-  m_DropOnLastSelectedView: 0
-  m_ItemViewSlotDropActionSet: {fileID: 11400000, guid: 08cabcce067a4584cb0d3e7a73989aef, type: 2}
 --- !u!114 &1822512476409220306
 MonoBehaviour:
   m_ObjectHideFlags: 0

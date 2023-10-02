@@ -51,18 +51,36 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Drop Item",
+                    "name": "Block",
                     "type": "Button",
-                    "id": "f9215113-4263-4687-9d09-9feaa524f454",
+                    "id": "9e3df05f-304c-4201-912e-b3336f1bf741",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Block",
+                    "name": "HotbarAction",
                     "type": "Button",
-                    "id": "9e3df05f-304c-4201-912e-b3336f1bf741",
+                    "id": "359a37f1-748b-4db5-a97f-6001443cb343",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ItemSwitchLeft",
+                    "type": "Button",
+                    "id": "3752015f-0b5b-43d9-85f5-6acd240a16f9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ItemSwitchRight",
+                    "type": "Button",
+                    "id": "5ff9213d-e608-4cab-85cd-865524099b69",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -160,17 +178,6 @@
                 },
                 {
                     "name": "",
-                    "id": "fe37c31f-a304-4add-bcb3-e5cddd63a028",
-                    "path": "<Keyboard>/r",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Drop Item",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "a5ba2be9-c9a4-4776-bff1-72a6ecac787c",
                     "path": "<Keyboard>/e",
                     "interactions": "",
@@ -188,6 +195,39 @@
                     "processors": "",
                     "groups": "",
                     "action": "Block",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c50534f9-586a-4074-8c4d-13c1a4b523e0",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HotbarAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bb582248-e31c-4240-b1c2-c25dbac5b827",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ItemSwitchLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "65ade190-e9e2-49a9-9843-0da39521cfd8",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ItemSwitchRight",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

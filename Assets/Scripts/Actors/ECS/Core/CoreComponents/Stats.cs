@@ -24,6 +24,7 @@ public class Stats : CoreComponent
     public event Action HealthZero;
     public event Action StatsUpdated;
     public event Action<float> Damaged;
+    public event Action<float> Healed;
 
     protected override void Awake()
     {
@@ -59,6 +60,7 @@ public class Stats : CoreComponent
 
     public void IncreaseHealth(float amount)
     {
+        Healed?.Invoke(amount);
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
     }
 

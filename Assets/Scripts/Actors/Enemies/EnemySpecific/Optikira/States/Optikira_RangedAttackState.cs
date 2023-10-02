@@ -15,7 +15,7 @@ public class Optikira_RangedAttackState : RangedAttackState
     {
         base.Enter();
 
-        m_damageData.canBlock = false;
+        m_damageData.CanBlock = false;
     }
 
     public override void LogicUpdate()

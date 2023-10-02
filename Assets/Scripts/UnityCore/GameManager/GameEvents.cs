@@ -158,15 +158,6 @@ public class GameEvents : MonoBehaviour
         }
     }
 
-    public event Action onPlayerCrouchJump;
-    public void PlayerCrouchJump()
-    {
-        if (onPlayerCrouchJump != null)
-        {
-            onPlayerCrouchJump();
-        }
-    }
-
     public event Action onGameSaving;
     public void GameSaving()
     {

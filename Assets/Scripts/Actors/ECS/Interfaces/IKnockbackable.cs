@@ -4,6 +4,6 @@ using UnityEngine;
 
 public interface IKnockbackable
 {
-    void ReceiveKnockback(int direction);
+    void ReceiveKnockback(IDamageable.DamageData damageData, int direction);
     void ReceiveKnockback();
 }

@@ -26,8 +26,6 @@ public class KnockbackReceiver : Receiver, IKnockbackable
     {
         if (isKnockable && !IsImmune && Stats?.GetCurrentHealth() > 0)
         {
-            CheckBlock(new IDamageable.DamageData()); // You need to create a dummy DamageData object or adjust the method signature accordingly
-
             Movement.SetVelocity(m_knockbackData.knockbackStrength, m_knockbackData.knockbackAngle, direction);
             Movement.CanSetVelocity = false;
             isKnockbackActive = true;
@@ -39,7 +37,13 @@ public class KnockbackReceiver : Receiver, IKnockbackable
         }
     }
 
-    public void ReceiveKnockback(int direction) => ApplyKnockback(direction);
+    public void ReceiveKnockback(IDamageable.DamageData damageData, int direction)
+    {
+        if (CheckBlock(damageData))
+            return;
+
+        ApplyKnockback(direction);
+    }
     public void ReceiveKnockback() => ApplyKnockback(-Movement.FacingDirection);
 
     private void CheckKnockback()

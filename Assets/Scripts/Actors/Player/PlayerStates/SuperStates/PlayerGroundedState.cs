@@ -7,7 +7,7 @@ public class PlayerGroundedState : PlayerState
     protected int xInput;
     protected int yInput;
 
-    protected bool JumpInput;
+    private bool jumpInput;
     private bool attackInput;
     private bool blockInput;
     private bool isGrounded;
@@ -57,7 +57,7 @@ public class PlayerGroundedState : PlayerState
 
         xInput = player.InputHandler.NormInputX;
         yInput = player.InputHandler.NormInputY;
-        JumpInput = player.InputHandler.JumpInput;
+        jumpInput = player.InputHandler.JumpInput;
         dashInput = player.InputHandler.RollOrDashInput;
         attackInput = player.InputHandler.AttackInput;
         blockInput = player.InputHandler.BlockInput;
@@ -92,7 +92,7 @@ public class PlayerGroundedState : PlayerState
         {
             stateMachine.ChangeState(player.RollState);
         }
-        else if (JumpInput && player.JumpState.CanJump() && !player.CrouchIdleState.isCrouching && Movement?.CurrentVelocity.y == 0.00f)
+        else if (jumpInput && player.JumpState.CanJump() && !player.CrouchIdleState.isCrouching && Movement?.CurrentVelocity.y == 0.00f)
         {
             stateMachine.ChangeState(player.JumpState);
         }

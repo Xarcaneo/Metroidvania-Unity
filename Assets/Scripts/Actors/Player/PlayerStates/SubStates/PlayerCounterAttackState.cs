@@ -50,6 +50,6 @@ public class PlayerCounterAttackState : PlayerState
 
         //Checks what IDamageable entities intersects with weapon collider and damage them
         DamageHitBox?.MeleeAttack(m_damageData);
-        DamageHitBox?.Knockback(Movement.FacingDirection);
+        DamageHitBox?.Knockback(m_damageData, Movement.FacingDirection);
     }
 }

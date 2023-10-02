@@ -19,6 +19,7 @@ public class PlayerHealthBarController : HealthBarController
         }
 
         stats.Damaged += TakeDamage;
+        stats.Healed += RestoreHealth;
     }
 
     public void Initialize()

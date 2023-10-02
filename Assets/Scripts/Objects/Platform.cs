@@ -8,12 +8,11 @@ public class Platform : MonoBehaviour
 {
     [SerializeField] private float timeToRevertCollision = 0.5f;
 
+    private PlayerInputHandler m_playerInputHandler;
+
     private PlatformEffector2D effector;
 
     private bool playerOnPlatform = false;
-
-    private void OnEnable() => GameEvents.Instance.onPlayerCrouchJump += OnPlayerCrouchJump;
-    private void OnDisable() => GameEvents.Instance.onPlayerCrouchJump -= OnPlayerCrouchJump;
 
     private void Start() => effector = GetComponent<PlatformEffector2D>();
     
@@ -25,6 +24,22 @@ public class Platform : MonoBehaviour
             effector.colliderMask &= ~(1 << LayerMask.NameToLayer("Player"));
             Player.Instance.JumpState.canJump = false;
             StartCoroutine(RevertCollision());
+        }
+    }
+
+    private void Update()
+    {
+        if (m_playerInputHandler == null)
+        {
+            m_playerInputHandler = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInputHandler>();
+        }
+        else
+        {
+            var yInput = m_playerInputHandler.NormInputY;
+            var jumpInput = m_playerInputHandler.JumpInput;
+
+            if(jumpInput && yInput == -1)
+                OnPlayerCrouchJump();
         }
     }
 

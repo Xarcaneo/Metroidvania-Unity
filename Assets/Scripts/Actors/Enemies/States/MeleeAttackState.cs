@@ -14,6 +14,6 @@ public class MeleeAttackState : AttackState
 
         //Checks what IDamageable entities intersects with weapon collider and damage them
         EnemyDamageHitBox?.MeleeAttack(m_damageData);
-        EnemyDamageHitBox?.Knockback(Movement.FacingDirection);
+        EnemyDamageHitBox?.Knockback(m_damageData, Movement.FacingDirection);
     }
 }
