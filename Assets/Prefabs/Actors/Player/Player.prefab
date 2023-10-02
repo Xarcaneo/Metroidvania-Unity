@@ -46,7 +46,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0465b5baa4e571a448dc26fc7fbe3c6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isBlockable: 1
   immunityTime: 2
   isDamagable: 1
 --- !u!114 &3745032278966499276
@@ -61,7 +60,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52b8561a32df37a4c9f112523c2e3c8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isBlockable: 1
   immunityTime: 2
   isKnockable: 1
   m_knockbackData: {fileID: 11400000, guid: e61a604f083f19e46a7e6b6a1060b287, type: 2}
@@ -782,10 +780,6 @@ MonoBehaviour:
     m_ActionId: 5ff4bea1-e8b1-455a-ad2b-0580302b1c78
     m_ActionName: Gameplay/Interact[/Keyboard/e]
   - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: f9215113-4263-4687-9d09-9feaa524f454
-    m_ActionName: Gameplay/Drop Item[/Keyboard/r]
-  - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 5445145942140402602}
         m_TargetAssemblyTypeName: PlayerInputHandler, Assembly-CSharp
@@ -801,6 +795,54 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 9e3df05f-304c-4201-912e-b3336f1bf741
     m_ActionName: Gameplay/Block[/Keyboard/q]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5445145942140402602}
+        m_TargetAssemblyTypeName: PlayerInputHandler, Assembly-CSharp
+        m_MethodName: OnHotbarActionInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 359a37f1-748b-4db5-a97f-6001443cb343
+    m_ActionName: Gameplay/HotbarAction[/Keyboard/f]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5445145942140402602}
+        m_TargetAssemblyTypeName: PlayerInputHandler, Assembly-CSharp
+        m_MethodName: OnItemSwitchLeftInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 3752015f-0b5b-43d9-85f5-6acd240a16f9
+    m_ActionName: Gameplay/ItemSwitchLeft[/Keyboard/s]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5445145942140402602}
+        m_TargetAssemblyTypeName: PlayerInputHandler, Assembly-CSharp
+        m_MethodName: OnItemSwitchRightInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 5ff9213d-e608-4cab-85cd-865524099b69
+    m_ActionName: Gameplay/ItemSwitchRight[/Keyboard/d]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay

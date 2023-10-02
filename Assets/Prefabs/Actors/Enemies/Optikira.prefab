@@ -176,12 +176,13 @@ MonoBehaviour:
   m_ItemCollectionRestrictionObjects: []
   m_ItemCollectionData:
   - m_ObjectType: Opsive.UltimateInventorySystem.Core.InventoryCollections.ItemCollection
-    m_ValueHashes: 0d00eb25b769d11d5030ac3ef1f5543f666e77ff063d5314aacf0d993edd1331719c8809ffab97cf34df945eaa1351826791e7bfaf7e5032c9f13d91dd6f4cf47a52e37d619c5106
+    m_ValueHashes: 
+    m_LongValueHashes: 0d00eb254f8d1b29b769d11dc3e477ff5030ac3e5febf136f1f5543f3d512d18666e77ffb2d00a8c063d5314a435cf41aacf0d9965f975d03edd133125d4485e719c8809cfab0a4bffab97cf7a3470d434df945e2edc1868aa135182f676c90c6791e7bf01f176fdaf7e503207f176fdc9f13d9193da0d6add6f4cf489f9a9877a52e37d7f6acb20619c5106fa41607a
     m_ValuePositions: 0000000009000000090000000d0000000d0000000e0000000f000000130000001300000017000000170000001b0000001b0000001f00000022000000260000002a0000002a000000
     m_Values: 4974656d44726f7073060000000001ffffffff010000000100000073037a10457965f97651f80000000000000000
     m_UnityObjects:
     - {fileID: 11400000, guid: 35e8a4681fb98a742b505c67c210a584, type: 2}
-    m_Version: 3.1
+    m_Version: 3.2
 --- !u!114 &2231230252808823618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -230,6 +231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 063889993a32cc24eac7d5aa31800a5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_combatCollider: {fileID: 0}
   entityData: {fileID: 11400000, guid: e76341c03f47c1d43ab67c840040c518, type: 2}
   idleStateData: {fileID: 11400000, guid: e822d6ab743d7c345ba8865c0601951d, type: 2}
   rangedAttackData: {fileID: 11400000, guid: 53a485c252f868241b9295ecd3e33c3c, type: 2}
@@ -262,7 +264,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1079822928050946512}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -282,7 +284,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectionWidth: 26
-  detectionHeight: 2
+  detectionHeight: 1
   entityLayer:
     serializedVersion: 2
     m_Bits: 8192

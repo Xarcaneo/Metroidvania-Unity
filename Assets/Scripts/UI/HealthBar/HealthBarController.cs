@@ -20,6 +20,7 @@ public class HealthBarController : MonoBehaviour
         if (stats)
         {
             stats.Damaged -= TakeDamage;
+            stats.Healed -= RestoreHealth;
         }
     }
 

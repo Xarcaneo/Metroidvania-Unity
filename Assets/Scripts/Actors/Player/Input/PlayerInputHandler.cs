@@ -19,6 +19,9 @@ public class PlayerInputHandler : MonoBehaviour
     public bool RollOrDashInput { get; private set; }
     public bool AttackInput { get; private set; }
     public bool BlockInput { get; private set; }
+    public bool HotbarActionInput { get; private set; }
+    public bool ItemSwitchLeftInput { get; private set; }
+    public bool ItemSwitchRightInput { get; private set; }
 
     [SerializeField]
     private float inputHoldTime = 0.2f;
@@ -90,6 +93,54 @@ public class PlayerInputHandler : MonoBehaviour
             }
         }
     }
+    public void OnHotbarActionInput(InputAction.CallbackContext context)
+    {
+        if (!DisableInput)
+        {
+            if (context.started)
+            {
+                HotbarActionInput = true;
+            }
+
+            if (context.canceled)
+            {
+                HotbarActionInput = false;
+            }
+        }
+    }
+
+    public void OnItemSwitchLeftInput(InputAction.CallbackContext context)
+    {
+        if (!DisableInput)
+        {
+            if (context.started)
+            {
+                ItemSwitchLeftInput = true;
+            }
+
+            if (context.canceled)
+            {
+                ItemSwitchLeftInput = false;
+            }
+        }
+    }
+
+    public void OnItemSwitchRightInput(InputAction.CallbackContext context)
+    {
+        if (!DisableInput)
+        {
+            if (context.started)
+            {
+                ItemSwitchRightInput = true;
+            }
+
+            if (context.canceled)
+            {
+                ItemSwitchRightInput = false;
+            }
+        }
+    }
+
     public void OnMoveInput(InputAction.CallbackContext context)
     {
         if (!DisableInput)
@@ -160,6 +211,9 @@ public class PlayerInputHandler : MonoBehaviour
 
     public void UseAttackInput() => AttackInput = false;
     public void UseBlockInput() => BlockInput = false;
+    public void UseHotbarActionInput() => HotbarActionInput = false;
+    public void UseItemSwitchLeftInput() => ItemSwitchLeftInput = false;
+    public void UseItemSwitchRightInput() => ItemSwitchRightInput = false;
 
     private void CheckJumpInputHoldTime()
     {

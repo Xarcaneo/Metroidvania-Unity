@@ -25,7 +25,7 @@ public class Skeleton_MeleeAttackState : AttackState
         base.LogicUpdate();
 
         EnemyDamageHitBox?.MeleeAttack(m_damageData);
-        EnemyDamageHitBox?.Knockback(Movement.FacingDirection);
+        EnemyDamageHitBox?.Knockback(m_damageData, Movement.FacingDirection);
 
         if (Movement.FacingDirection != EnemyDamageHitBox.entityToRight)
         {

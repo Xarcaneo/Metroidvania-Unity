@@ -32,11 +32,6 @@ public class PlayerCrouchIdleState : PlayerGroundedState
 
         Movement?.SetVelocityX(0f);
 
-        if (JumpInput)
-        {
-            GameEvents.Instance.PlayerCrouchJump();
-        }
-
         if (!isExitingState)
         {
             if (yInput != -1)

@@ -34,7 +34,7 @@ public class Reaver_MeleeAttackState : MeleeAttackState
 
         Movement?.SetVelocityX(0f);
 
-        m_damageData.canBlock = true; 
+        m_damageData.CanBlock = true; 
     }
 
     public override void Exit()

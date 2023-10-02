@@ -112,7 +112,7 @@ public class Projectile : MonoBehaviour
             IKnockbackable knockbackable = collision.GetComponent<IKnockbackable>();
             if (knockbackable != null)
             {
-                knockbackable.ReceiveKnockback(direction);
+                knockbackable.ReceiveKnockback(damageData, direction);
                 should_destroy = true;
                 rb.gravityScale = 0f;
                 rb.velocity = Vector2.zero;

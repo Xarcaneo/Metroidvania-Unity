@@ -3,8 +3,6 @@ using UnityEngine;
 
 public abstract class Receiver : CoreComponent
 {
-    [SerializeField] protected bool isBlockable = false;
-
     protected Block Block { get => block ?? core.GetCoreComponent(ref block); }
     private Block block;
 
@@ -17,7 +15,7 @@ public abstract class Receiver : CoreComponent
 
     protected bool CheckBlock(IDamageable.DamageData damageData)
     {
-        if (isBlockable && Block.isBlocking && Block.IsBetween(damageData.Source))
+        if (damageData.CanBlock && Block.isBlocking && Block.IsBetween(damageData.Source))
         {
             damageData.Source.Core.GetCoreComponent<Receiver>().OnAttackBlockedByDefender?.Invoke();
             OnSuccessfulBlock?.Invoke();

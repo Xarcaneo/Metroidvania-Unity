@@ -34,12 +34,12 @@ public class DamageHitBox : CoreComponent
         }
     }    
 
-    public void Knockback(int facingDirection)
+    public void Knockback(IDamageable.DamageData damageData, int facingDirection)
     {
         // loop through all detected knockbackables and apply knockback to each one
         foreach (IKnockbackable item in detectedKnockbackables.ToList())
         {
-            item.ReceiveKnockback(facingDirection);
+            item.ReceiveKnockback(damageData, facingDirection);
         }
     }
 }

@@ -172,6 +172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abbcba9e6401c5745af67d214a6488c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_combatCollider: {fileID: 0}
   entityData: {fileID: 11400000, guid: d8152c96d47aa7147974f79b97869596, type: 2}
   idleStateData: {fileID: 11400000, guid: 2f53f30b06f334a4a9756aded3a02069, type: 2}
   moveStateData: {fileID: 11400000, guid: 7abe10eb2c646394ab8992a9e9b0490a, type: 2}
@@ -194,6 +195,7 @@ MonoBehaviour:
   m_ItemCollectionData:
   - m_ObjectType: Opsive.UltimateInventorySystem.Core.InventoryCollections.ItemCollection
     m_ValueHashes: 0d00eb25b769d11d5030ac3ef1f5543f666e77ff063d5314aacf0d993edd1331719c8809ffab97cf34df945eaa1351826791e7bfaf7e5032c9f13d91dd6f4cf47a52e37d619c5106
+    m_LongValueHashes: 
     m_ValuePositions: 0000000009000000090000000d0000000d0000000e0000000f000000130000001300000017000000170000001b0000001b0000001f00000023000000270000002b0000002b000000
     m_Values: 4974656d44726f7073060000000001ffffffff0100000001000000227c8e55486f726e40304edd0000000000000000
     m_UnityObjects:
@@ -565,6 +567,7 @@ MonoBehaviour:
   ledgeCheckVertical: {fileID: 1795069383799447302}
   ladderCheck: {fileID: 0}
   groundCheckDistance: 1
+  groundCheckOffset: 0
   wallCheckDistance: 1
   ladderCheckRadius: 0
   ladderTopDistance: 0
@@ -762,7 +765,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectionWidth: 13
-  detectionHeight: 2
+  detectionHeight: 1
   entityLayer:
     serializedVersion: 2
     m_Bits: 8192
