@@ -11,7 +11,7 @@ namespace Menu
     public class GameMenu : Menu<GameMenu>
     {
         [SerializeField] private PlayerHealthBarController healthBarController;
-        [SerializeField] private GameObject gameHotbar;
+        [SerializeField] public GameHotbar gameHotbar;
 
         [SerializeField] public LocationNameIndicator locationNameIndicator;
 
@@ -26,10 +26,10 @@ namespace Menu
         {
             base.SetCanvas();
 
-            if (gameHotbar.activeSelf == true)
+            if (gameHotbar.gameObject.activeSelf == true)
             {
-                gameHotbar.SetActive(false);
-                gameHotbar.SetActive(true);
+                gameHotbar.gameObject.SetActive(false);
+                gameHotbar.gameObject.SetActive(true);
             }
         }
 
@@ -75,6 +75,6 @@ namespace Menu
             }
         }
 
-        private void onNewSession() => gameHotbar.SetActive(true);
+        private void onNewSession() => gameHotbar.gameObject.SetActive(true);
     }
 }

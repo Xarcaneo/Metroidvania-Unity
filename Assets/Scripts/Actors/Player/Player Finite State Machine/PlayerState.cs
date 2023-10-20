@@ -16,7 +16,6 @@ public class PlayerState : State
     public override void Enter()
     {
         base.Enter();
-
         GameEvents.Instance.PlayerStateChanged(this);
     }
 }

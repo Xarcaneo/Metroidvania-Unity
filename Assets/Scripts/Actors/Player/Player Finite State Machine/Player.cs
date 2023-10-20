@@ -29,6 +29,7 @@ public class Player : Entity
     public PlayerRecoverState RecoverState { get; private set; }
     public PlayerGroundHitState GroundHitState { get; private set; }
     public PlayerSpawnedState SpawnedState { get; private set; }
+    public PlayerUseHotbarItem UseHotbarItem { get; private set; }
 
     [SerializeField]
     private PlayerData playerData;
@@ -90,6 +91,7 @@ public class Player : Entity
         RecoverState = new PlayerRecoverState(this, StateMachine, playerData, "recover");
         GroundHitState = new PlayerGroundHitState(this, StateMachine, playerData, "groundHit");
         SpawnedState = new PlayerSpawnedState(this, StateMachine, playerData, "spawned");
+        UseHotbarItem = new PlayerUseHotbarItem(this, StateMachine, playerData, "useHotbarItem");
     }
 
     public override State GetDeathState()

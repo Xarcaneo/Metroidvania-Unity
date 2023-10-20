@@ -32,6 +32,18 @@ public class GameHotbar : MonoBehaviour
         maxIndex -= 1;
     }
 
+    public void UseItem() => m_itemHotbar.UseItem(itemSlotIndex);
+
+    public bool IsSlotEmpty()
+    {
+        var item = m_itemHotbar.GetItemAt(itemSlotIndex);
+
+        if (item.Amount > 0)
+            return false;
+        else
+            return true;
+    }
+
     private void Update()
     {
         if (m_playerInputHandler == null)
@@ -41,15 +53,8 @@ public class GameHotbar : MonoBehaviour
         }
         else
         {
-            var hotbarActionInput = m_playerInputHandler.HotbarActionInput;
             var itemSwitchLeftInput = m_playerInputHandler.ItemSwitchLeftInput;
             var itemSwitchRightInput = m_playerInputHandler.ItemSwitchRightInput;
-
-            if (hotbarActionInput)
-            {
-                m_itemHotbar.UseItem(itemSlotIndex);
-                m_playerInputHandler.UseHotbarActionInput();
-            }
 
             if (itemSwitchRightInput)
             {
