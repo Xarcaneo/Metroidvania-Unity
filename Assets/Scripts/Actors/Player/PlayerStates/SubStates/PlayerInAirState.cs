@@ -100,7 +100,7 @@ public class PlayerInAirState : PlayerState
             player.WallJumpState.DetermineWallJumpDirection(isTouchingWall);
             stateMachine.ChangeState(player.WallJumpState);
         }
-        else if (jumpInput && player.JumpState.CanJump())
+        else if (jumpInput && player.JumpState.CanJump() && Movement?.CurrentVelocity.y == 0.00f)
         {
             stateMachine.ChangeState(player.JumpState);
         }

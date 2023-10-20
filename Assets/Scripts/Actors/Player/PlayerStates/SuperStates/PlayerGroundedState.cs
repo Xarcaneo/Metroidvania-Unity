@@ -6,13 +6,14 @@ public class PlayerGroundedState : PlayerState
 {
     protected int xInput;
     protected int yInput;
-
+    protected bool useHotbarItemInput;
     private bool jumpInput;
     private bool attackInput;
     private bool blockInput;
+    private bool dashInput;
+
     private bool isGrounded;
     protected bool isTouchingLadder;
-    private bool dashInput;
     protected bool isOnSlope;
     protected bool isTouchingWall;
 
@@ -61,14 +62,16 @@ public class PlayerGroundedState : PlayerState
         dashInput = player.InputHandler.RollOrDashInput;
         attackInput = player.InputHandler.AttackInput;
         blockInput = player.InputHandler.BlockInput;
+        useHotbarItemInput = player.InputHandler.HotbarActionInput;
 
         if (isOnSlope)
         {
-            Movement?.SetVelocityY(0.0f);;
             if (xInput == 0.0f || player.CrouchIdleState.isCrouching)
                 player.RigidBody2D.sharedMaterial = playerData.fullFriction;
             else
                 player.RigidBody2D.sharedMaterial = playerData.noFriction;
+
+            Movement?.SetVelocityY(0.0f);
         }
         else
         {
@@ -82,6 +85,10 @@ public class PlayerGroundedState : PlayerState
         else if (blockInput)
         {
             stateMachine.ChangeState(player.PrepareBlockState);
+        }
+        else if (useHotbarItemInput && !Menu.GameMenu.Instance.gameHotbar.IsSlotEmpty())
+        {
+            stateMachine.ChangeState(player.UseHotbarItem);
         }
         else if (!isGrounded)
         {
