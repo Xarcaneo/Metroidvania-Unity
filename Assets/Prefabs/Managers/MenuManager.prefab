@@ -53,12 +53,14 @@ MonoBehaviour:
   pauseMenuPrefab: {fileID: 8011963482466455185, guid: b274e63f346eb7a429b6256edae7e836, type: 3}
   playMenuPrefab: {fileID: 8033880925134065758, guid: da19b0f46571c544b824e2088fd302e3, type: 3}
   gameSettingsMenuPrefab: {fileID: 8414178781327764311, guid: 63fc27f808a9e3f4aa0386391077bc6a, type: 3}
-  controlsMenuPrefab: {fileID: 0}
-  graphicSettingsMenu: {fileID: 0}
-  resolutionSettingsMenu: {fileID: 0}
-  audioSettingsMenu: {fileID: 0}
-  languageSettingsMenu: {fileID: 0}
-  playerMenu: {fileID: 0}
+  controlsMenuPrefab: {fileID: 7912072195383310810, guid: 985f3045cc8e28e41947ecd548a8c2bf, type: 3}
+  graphicSettingsMenu: {fileID: 7432303603603539630, guid: 797e9fa373f86b440bada800a03aa29e, type: 3}
+  resolutionSettingsMenu: {fileID: 2701183770396773496, guid: baa24514f8a7f9b46b843cd08cdeaf15, type: 3}
+  audioSettingsMenu: {fileID: 5401171395149296611, guid: 377a32d02d7176747af96d41ccc841ef, type: 3}
+  languageSettingsMenu: {fileID: 8846484711877335732, guid: 8139a88a142298d4f8f57f4d796c742e, type: 3}
+  playerMenu: {fileID: 247148568258883016, guid: d4a568c7d2c81414d8b44f8b02dd1357, type: 3}
+  deathMenuPrefab: {fileID: -6322259228835397112, guid: 3f36d86f82cee73489fc909011b70ef1, type: 3}
+  flamePuzzleMenu: {fileID: 3134903212335629531, guid: 70cf7260a65d165408cec21e6669c8fe, type: 3}
   _menuParent: {fileID: 0}
 --- !u!1 &3229281074225307700
 GameObject:
@@ -121,7 +123,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 0
-  orthographic size: 5
+  orthographic size: 5.625
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
