@@ -20,14 +20,5 @@ namespace Menu
         {
             GameSettingsMenu.Open();
         }
-
-        public override void OnBackPressed()
-        {
-            // or add extra logic here
-
-            base.OnBackPressed();
-
-            // add extra logic here
-        }
     }
 }

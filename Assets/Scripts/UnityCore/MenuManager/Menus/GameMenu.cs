@@ -8,8 +8,13 @@ using UnityEngine.InputSystem;
 
 namespace Menu
 {
+
+
     public class GameMenu : Menu<GameMenu>
     {
+        public enum GameMode { GAMEPLAY, MINIGAME };
+        public GameMode gameMode = GameMode.GAMEPLAY;
+
         [SerializeField] private PlayerHealthBarController healthBarController;
         [SerializeField] public GameHotbar gameHotbar;
 
@@ -64,7 +69,10 @@ namespace Menu
 
         public void OnPausePressed()
         {
-            PauseMenu.Open();
+            if(gameMode == GameMode.GAMEPLAY)
+                PauseMenu.Open();
+            else
+               gameMode = GameMode.GAMEPLAY;
         }
 
         private void OnToggleUI(bool state)
