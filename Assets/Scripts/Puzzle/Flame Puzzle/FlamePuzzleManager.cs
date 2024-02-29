@@ -1,3 +1,5 @@
+using PixelCrushers.DialogueSystem;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,8 +11,9 @@ public class FlamePuzzleManager : MonoBehaviour
 
     public static FlamePuzzleManager Instance { get => _instance; }
 
-    [SerializeField]
-    private GameObject[] puzzlePrefabs;
+    [SerializeField] private GameObject[] puzzlePrefabs;
+    private int m_triggerID;
+    public event Action PuzzleCompleted;
 
     private void Awake()
     {
@@ -25,7 +28,7 @@ public class FlamePuzzleManager : MonoBehaviour
     }
 
     // Function to instantiate a GameObject in a specific scene based on ID
-    public GameObject InstantiateObject(int puzzleID, string sceneName)
+    public GameObject InstantiateObject(int triggerID, int puzzleID, string sceneName)
     {
         if (puzzleID >= 0 && puzzleID < puzzlePrefabs.Length)
         {
@@ -34,6 +37,7 @@ public class FlamePuzzleManager : MonoBehaviour
 
             if (targetScene.IsValid())
             {
+                m_triggerID = triggerID;
                 GameObject instance = Instantiate(prefabToInstantiate, Vector3.zero, Quaternion.identity);
                 SceneManager.MoveGameObjectToScene(instance, targetScene);
                 SceneManager.SetActiveScene(targetScene);
@@ -50,5 +54,12 @@ public class FlamePuzzleManager : MonoBehaviour
         }
 
         return null;
+    }
+
+    public void OnPuzzleCompleted()
+    {
+        PuzzleCompleted?.Invoke();
+        DialogueLua.SetVariable("Trigger." + m_triggerID, true);
+        GameEvents.Instance.TriggerStateChanged(m_triggerID);
     }
 }

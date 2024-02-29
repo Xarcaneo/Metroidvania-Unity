@@ -5,7 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class FlamePuzzleTrigger : Interactable
 {
-    [SerializeField] int puzzleID = 0;
+    [SerializeField] int m_puzzleID = 0;
+    [SerializeField] int m_triggerID = 1;
 
     private void OnEnable()
     {
@@ -28,7 +29,8 @@ public class FlamePuzzleTrigger : Interactable
 
             if (puzzleManager != null)
             {
-                puzzleManager.InstantiateObject(puzzleID, "Flame Puzzle");
+                puzzleManager.InstantiateObject(m_triggerID, m_puzzleID, "Flame Puzzle");
+                puzzleManager.PuzzleCompleted += OnReturnInput;
             }
         }
     }
@@ -41,6 +43,14 @@ public class FlamePuzzleTrigger : Interactable
             CallInteractionCompletedEvent();
             SceneManager.UnloadSceneAsync("Flame Puzzle");
         }
+    }
+
+    private void OnPuzzleCompleted()
+    {
+        canInteract = false;
+        GameEvents.Instance.DeactivatePlayerInput(false);
+        CallInteractionCompletedEvent();
+        SceneManager.UnloadSceneAsync("Flame Puzzle");          
     }
 
     public override void Interact()
