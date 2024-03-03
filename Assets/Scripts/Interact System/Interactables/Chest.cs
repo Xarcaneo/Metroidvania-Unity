@@ -16,7 +16,7 @@ public class Chest : Interactable
         chestAnim = GetComponent<Animator>();
 
         yield return new WaitForEndOfFrame();
-        var chestState = DialogueLua.GetVariable("Chest" + m_ChestID).asBool;
+        var chestState = DialogueLua.GetVariable("Chest." + m_ChestID).asBool;
   
         if (chestState) SetOpened();
     }
@@ -37,7 +37,7 @@ public class Chest : Interactable
     void OnAnimationTrigger()
     {
         SetOpened();
-        DialogueLua.SetVariable("Chest" + m_ChestID, true);
+        DialogueLua.SetVariable("Chest." + m_ChestID, true);
 
         m_randomItemDropper.Drop();
     }

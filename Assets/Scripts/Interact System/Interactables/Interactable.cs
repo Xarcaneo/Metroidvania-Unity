@@ -20,5 +20,5 @@ public class Interactable : MonoBehaviour
         isInteracting = false;
     }
 
-    protected void CallInteractionCompletedEvent() => onInteractionCompleted();
+    protected virtual void CallInteractionCompletedEvent() => onInteractionCompleted();
 }

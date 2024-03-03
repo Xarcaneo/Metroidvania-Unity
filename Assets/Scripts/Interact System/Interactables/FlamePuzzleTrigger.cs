@@ -1,23 +1,44 @@
+using PixelCrushers.DialogueSystem;
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class FlamePuzzleTrigger : Interactable
 {
-    [SerializeField] int m_puzzleID = 0;
-    [SerializeField] int m_triggerID = 1;
+    [SerializeField] private int m_puzzleID = 0;
+    [SerializeField] private int m_triggerID = 1;
+    private bool isCompleted = false;
+
+    private Animator puzzleAnim;
 
     private void OnEnable()
     {
-        InputManager.Instance.OnMenuReturn += OnReturnInput;
         SceneManager.sceneLoaded += OnSceneLoaded;
+        SceneManager.sceneUnloaded += OnSceneUnloaded;
     }
 
     private void OnDisable()
     {
-        InputManager.Instance.OnMenuReturn -= OnReturnInput;
         SceneManager.sceneLoaded -= OnSceneLoaded;
+        SceneManager.sceneUnloaded -= OnSceneUnloaded;
+    }
+
+    IEnumerator Start()
+    {
+        puzzleAnim = GetComponent<Animator>();
+
+        yield return new WaitForEndOfFrame();
+        var  triggerState = DialogueLua.GetVariable("FlamePuzzle." + m_triggerID).asBool;
+
+        if (triggerState) SetCompleted();
+    }
+
+    private void SetCompleted()
+    {
+        canInteract = false;
+        isCompleted = true;
+        puzzleAnim.SetBool("isCompleted", true);
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -30,27 +51,31 @@ public class FlamePuzzleTrigger : Interactable
             if (puzzleManager != null)
             {
                 puzzleManager.InstantiateObject(m_triggerID, m_puzzleID, "Flame Puzzle");
-                puzzleManager.PuzzleCompleted += OnReturnInput;
+                FlamePuzzleManager.Instance.PuzzleCompleted += OnPuzzleCompleted;
             }
         }
     }
 
-    private void OnReturnInput()
+    private void OnSceneUnloaded(Scene scene)
     {
-        if (Menu.GameMenu.Instance.gameMode == Menu.GameMenu.GameMode.MINIGAME)
+        if (scene.name == "Flame Puzzle")
         {
             GameEvents.Instance.DeactivatePlayerInput(false);
-            CallInteractionCompletedEvent();
-            SceneManager.UnloadSceneAsync("Flame Puzzle");
+
+            if (FlamePuzzleManager.Instance)
+                FlamePuzzleManager.Instance.PuzzleCompleted -= OnPuzzleCompleted;
+
+            if (!isCompleted)
+                CallInteractionCompletedEvent();
         }
     }
 
     private void OnPuzzleCompleted()
     {
-        canInteract = false;
+        SetCompleted();
+        DialogueLua.SetVariable("FlamePuzzle." + m_triggerID, true);
         GameEvents.Instance.DeactivatePlayerInput(false);
-        CallInteractionCompletedEvent();
-        SceneManager.UnloadSceneAsync("Flame Puzzle");          
+        GameEvents.Instance.PuzzleClose("Flame Puzzle");
     }
 
     public override void Interact()
@@ -58,7 +83,6 @@ public class FlamePuzzleTrigger : Interactable
         base.Interact();
 
         GameEvents.Instance.DeactivatePlayerInput(true);
-        Menu.GameMenu.Instance.gameMode = Menu.GameMenu.GameMode.MINIGAME;
-        SceneManager.LoadScene("Flame Puzzle", LoadSceneMode.Additive);
+        GameEvents.Instance.PuzzleOpen("Flame Puzzle");
     }
 }

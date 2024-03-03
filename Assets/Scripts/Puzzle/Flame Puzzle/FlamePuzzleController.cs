@@ -46,9 +46,5 @@ public class FlamePuzzleController : MonoBehaviour
         {
             FlamePuzzleManager.Instance.OnPuzzleCompleted();
         }
-        else
-        {
-            Debug.Log("Activated slots: " + activatedSlotsCount);
-        }
     }
 }

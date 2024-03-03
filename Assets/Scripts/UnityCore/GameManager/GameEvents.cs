@@ -175,4 +175,22 @@ public class GameEvents : MonoBehaviour
             onToggleUI(state);
         }
     }
+
+    public event Action<string> onPuzzleOpen;
+    public void PuzzleOpen(string puzzleName)
+    {
+        if (onPuzzleOpen != null)
+        {
+            onPuzzleOpen(puzzleName);
+        }
+    }
+
+    public event Action<string> onPuzzleClose;
+    public void PuzzleClose(string puzzleName)
+    {
+        if (onPuzzleClose != null)
+        {
+            onPuzzleClose(puzzleName);
+        }
+    }
 }

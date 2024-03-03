@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 namespace Menu
 {
@@ -14,6 +15,7 @@ namespace Menu
     {
         public enum GameMode { GAMEPLAY, MINIGAME };
         public GameMode gameMode = GameMode.GAMEPLAY;
+        private string minigameOpened;
 
         [SerializeField] private PlayerHealthBarController healthBarController;
         [SerializeField] public GameHotbar gameHotbar;
@@ -45,6 +47,8 @@ namespace Menu
             GameEvents.Instance.onPlayerDied += OnPlayerDied;
             GameEvents.Instance.onToggleUI += OnToggleUI;
             GameEvents.Instance.onNewSession += onNewSession;
+            GameEvents.Instance.onPuzzleOpen += onPuzzleOpen;
+            GameEvents.Instance.onPuzzleClose += onPuzzleClose;
         }
 
         protected override void OnDisable()
@@ -54,6 +58,8 @@ namespace Menu
             GameEvents.Instance.onPlayerDied -= OnPlayerDied;
             GameEvents.Instance.onToggleUI -= OnToggleUI;
             GameEvents.Instance.onNewSession -= onNewSession;
+            GameEvents.Instance.onPuzzleOpen -= onPuzzleOpen;
+            GameEvents.Instance.onPuzzleClose -= onPuzzleClose;
         }
 
         public override void OnReturnInput() => OnPausePressed();
@@ -66,13 +72,12 @@ namespace Menu
 
             DeathMenu.Open();
         }
-
         public void OnPausePressed()
         {
-            if(gameMode == GameMode.GAMEPLAY)
+            if (gameMode == GameMode.GAMEPLAY)
                 PauseMenu.Open();
             else
-               gameMode = GameMode.GAMEPLAY;
+                onPuzzleClose(minigameOpened);
         }
 
         private void OnToggleUI(bool state)
@@ -84,5 +89,19 @@ namespace Menu
         }
 
         private void onNewSession() => gameHotbar.gameObject.SetActive(true);
+        private void onPuzzleClose(string puzzleName)
+        {
+            if (SceneManager.GetSceneByName(puzzleName).isLoaded)
+            {
+                SceneManager.UnloadSceneAsync(puzzleName);
+                gameMode = GameMode.GAMEPLAY;
+            }
+        }
+        private void onPuzzleOpen(string puzzleName)
+        {
+            gameMode = GameMode.MINIGAME;
+            minigameOpened = puzzleName;
+            SceneManager.LoadScene(puzzleName, LoadSceneMode.Additive);
+        }
     }
 }
