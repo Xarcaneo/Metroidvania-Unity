@@ -29,13 +29,14 @@ public class PlayerDashState : PlayerAbilityState
 
         if (!isExitingState)
         {
-            Movement?.SetVelocity(playerData.dashVelocity, playerData.dashAngle, Movement.FacingDirection);
-
-            if (Time.time >= startTime + playerData.dashTime || isTouchingWall || isOnSlope && isGrounded || isTouchingLedge || Movement?.CurrentVelocity.x == 0)
+            if (Time.time >= startTime + playerData.dashTime || isTouchingWall || isOnSlope && isGrounded || isTouchingLedge)
             {
                 isAbilityDone = true;
                 lastDashTime = Time.time;
+                Movement?.SetVelocityZero();
             }
+            else
+                Movement?.SetVelocity(playerData.dashVelocity, playerData.dashAngle, Movement.FacingDirection);
         }
     }
 

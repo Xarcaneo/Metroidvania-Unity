@@ -63,8 +63,8 @@ public class PlayerLadderClimbState : PlayerState
         yInput = player.InputHandler.NormInputY;
         xInput = player.InputHandler.NormInputX;
         JumpInput = player.InputHandler.JumpInput;
-
-        if(!isTouchingLadderTop && yInput == 1)
+ 
+        if(!isTouchingLadderTop && yInput == 1 && isGrounded)
         {
             stateMachine.ChangeState(player.FinishClimb);
         }

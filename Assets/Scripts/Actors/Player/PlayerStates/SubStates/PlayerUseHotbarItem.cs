@@ -4,13 +4,37 @@ using UnityEngine;
 
 public class PlayerUseHotbarItem : PlayerState
 {
+    protected bool isOnSlope;
+    private CollisionSenses CollisionSenses { get => collisionSenses ?? core.GetCoreComponent(ref collisionSenses); }
+    private CollisionSenses collisionSenses;
+
     public PlayerUseHotbarItem(Player player, StateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }
 
+    public override void DoChecks()
+    {
+        base.DoChecks();
+
+        if (CollisionSenses)
+        {
+            isOnSlope = CollisionSenses.SlopeCheck();
+        }
+    }
+
+
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+
+        if (isOnSlope)
+        {
+            player.RigidBody2D.sharedMaterial = playerData.fullFriction;
+        }
+        else
+        {
+            player.RigidBody2D.sharedMaterial = playerData.noFriction;
+        }
 
         if (!isExitingState && isAnimationFinished)
         {
