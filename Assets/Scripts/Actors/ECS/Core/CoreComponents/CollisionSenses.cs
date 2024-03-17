@@ -43,6 +43,7 @@ public class CollisionSenses : CoreComponent
     public float WallCheckDistance { get => wallCheckDistance; set => wallCheckDistance = value; }
     public LayerMask WhatIsGround { get => whatIsGround; set => whatIsGround = value; }
     public LayerMask WhatIsWall { get => whatIsWall; set => whatIsWall = value; }
+    public LayerMask WhatIsGripWall { get => whatIsGripWall; set => whatIsGripWall = value; }
 
     [SerializeField] private Transform groundCheck;
     [SerializeField] private Transform wallCheck;
@@ -62,6 +63,7 @@ public class CollisionSenses : CoreComponent
     [SerializeField] private LayerMask whatIsGround;
     [SerializeField] private LayerMask whatIsWall;
     [SerializeField] private LayerMask whatIsLadder;
+    [SerializeField] private LayerMask whatIsGripWall;
 
     private int raycastDirection;
     #endregion
@@ -84,10 +86,13 @@ public class CollisionSenses : CoreComponent
     {
         get => Physics2D.Raycast(WallCheck.position, Vector2.right * Movement.FacingDirection, wallCheckDistance, whatIsWall);
     }
-
     public bool WallBack
     {
         get => Physics2D.Raycast(WallCheck.position, Vector2.right * -Movement.FacingDirection, wallCheckDistance, whatIsWall);
+    }
+    public bool GripWall
+    {
+        get => Physics2D.Raycast(WallCheck.position, Vector2.right * Movement.FacingDirection, wallCheckDistance, whatIsGripWall);
     }
     public bool LedgeVertical
     {

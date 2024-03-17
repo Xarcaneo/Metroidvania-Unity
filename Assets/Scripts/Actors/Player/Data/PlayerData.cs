@@ -21,7 +21,7 @@ public class PlayerData : ScriptableObject
 
     [Header("Wall Jump State")]
     public Vector2 wallJumpVelocity = new Vector2(25, 25);
-    public float wallJumpTime = 0.2f;
+    public float wallJumpTime = 0.1f;
     public Vector2 wallJumpAngle = new Vector2(1, 2);
     public float wallTouchTime = 0.1f;
 

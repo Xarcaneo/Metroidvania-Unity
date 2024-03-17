@@ -10,7 +10,7 @@ public class PlayerGroundedState : PlayerState
     private bool jumpInput;
     private bool attackInput;
     private bool blockInput;
-    private bool dashInput;
+    private bool actionInput;
 
     private bool isGrounded;
     protected bool isTouchingLadder;
@@ -59,7 +59,7 @@ public class PlayerGroundedState : PlayerState
         xInput = player.InputHandler.NormInputX;
         yInput = player.InputHandler.NormInputY;
         jumpInput = player.InputHandler.JumpInput;
-        dashInput = player.InputHandler.RollOrDashInput;
+        actionInput = player.InputHandler.ActionInput;
         attackInput = player.InputHandler.AttackInput;
         blockInput = player.InputHandler.BlockInput;
         useHotbarItemInput = player.InputHandler.HotbarActionInput;
@@ -95,7 +95,7 @@ public class PlayerGroundedState : PlayerState
             player.InAirState.StartCoyoteTime();
             stateMachine.ChangeState(player.InAirState);
         }
-        else if (dashInput && player.RollState.CheckIfCanRoll())
+        else if (actionInput && player.RollState.CheckIfCanRoll())
         {
             stateMachine.ChangeState(player.RollState);
         }

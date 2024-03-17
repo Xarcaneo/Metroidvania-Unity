@@ -9,7 +9,7 @@ public class PlayerInAirState : PlayerState
     private int yInput;
     private bool jumpInput;
     private bool jumpInputStop;
-    private bool dashInput;
+    private bool actionInput;
 
     //Checks
     private bool isGrounded;
@@ -77,7 +77,7 @@ public class PlayerInAirState : PlayerState
         yInput = player.InputHandler.NormInputY;
         jumpInput = player.InputHandler.JumpInput;
         jumpInputStop = player.InputHandler.JumpInputStop;
-        dashInput = player.InputHandler.RollOrDashInput;
+        actionInput = player.InputHandler.ActionInput;
 
         CheckJumpMultiplier();
 
@@ -93,13 +93,6 @@ public class PlayerInAirState : PlayerState
         {
             stateMachine.ChangeState(player.LedgeClimbState);
         }
-        else if (jumpInput && wallJumpCoyoteTime && (isTouchingWall || isTouchingWallBack))
-        {
-            StopWallJumpCoyoteTime();
-            isTouchingWall = CollisionSenses.WallFront;
-            player.WallJumpState.DetermineWallJumpDirection(isTouchingWall);
-            stateMachine.ChangeState(player.WallJumpState);
-        }
         else if (jumpInput && player.JumpState.CanJump() && Movement?.CurrentVelocity.y == 0.00f)
         {
             stateMachine.ChangeState(player.JumpState);
@@ -112,7 +105,7 @@ public class PlayerInAirState : PlayerState
         {
             stateMachine.ChangeState(player.LadderClimbState);
         }
-        else if (dashInput && player.DashState.CheckIfCanDash())
+        else if (actionInput && player.DashState.CheckIfCanDash())
         {
             stateMachine.ChangeState(player.DashState);
         }

@@ -129,7 +129,7 @@ MonoBehaviour:
     m_Bits: 256
   whatIsWall:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 2304
   whatIsLadder:
     serializedVersion: 2
     m_Bits: 0
@@ -564,6 +564,7 @@ MonoBehaviour:
   m_ItemCollectionData:
   - m_ObjectType: Opsive.UltimateInventorySystem.Core.InventoryCollections.ItemCollection
     m_ValueHashes: 0d00eb25b769d11d5030ac3ef1f5543f666e77ff063d5314aacf0d993edd1331719c8809ffab97cf34df945eaa1351826791e7bfaf7e5032c9f13d91dd6f4cf47a52e37d619c5106
+    m_LongValueHashes: 
     m_ValuePositions: 0000000009000000090000000d0000000d0000000e0000000f000000130000001300000017000000170000001b0000001b0000001f00000024000000280000002c0000002c000000
     m_Values: 4974656d44726f7073060000000001ffffffff0100000001000000eadd12184272656164ce0cbef80000000000000000
     m_UnityObjects:
@@ -937,7 +938,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0465b5baa4e571a448dc26fc7fbe3c6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isBlockable: 0
   immunityTime: 0
   isDamagable: 1
 --- !u!61 &8982500360272993991

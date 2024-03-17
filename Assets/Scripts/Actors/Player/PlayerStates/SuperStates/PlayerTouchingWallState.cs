@@ -4,14 +4,12 @@ using UnityEngine;
 
 public class PlayerTouchingWallState : PlayerState
 {
-    private float touchingWallTime = 0.0f;
-    private bool canWallJump = false;
-
     protected bool isGrounded;
     protected bool isTouchingWall;
-    protected bool jumpInput;
+    protected bool isTouchingGripWall;
     protected int xInput;
     protected int yInput;
+    protected bool attackInput;
 
     protected Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
     protected CollisionSenses CollisionSenses { get => collisionSenses ?? core.GetCoreComponent(ref collisionSenses); }
@@ -41,14 +39,13 @@ public class PlayerTouchingWallState : PlayerState
         {
             isGrounded = CollisionSenses.Ground;
             isTouchingWall = CollisionSenses.WallFront;
+            isTouchingGripWall = collisionSenses.GripWall;
         }
     }
 
     public override void Enter()
     {
         base.Enter();
-
-        touchingWallTime = Time.time;
     }
 
     public override void LogicUpdate()
@@ -57,29 +54,20 @@ public class PlayerTouchingWallState : PlayerState
 
         xInput = player.InputHandler.NormInputX;
         yInput = player.InputHandler.NormInputY;
-        jumpInput = player.InputHandler.JumpInput;
-
-        CheckIfCanWallJump();
+        attackInput = player.InputHandler.AttackInput;
 
         if (!isTouchingWall || xInput != Movement?.FacingDirection)
         {
             stateMachine.ChangeState(player.InAirState);
         }
-        else if (jumpInput && canWallJump)
+        else if(isTouchingGripWall && attackInput)
         {
-            player.WallJumpState.DetermineWallJumpDirection(isTouchingWall);
-            stateMachine.ChangeState(player.WallJumpState);
+            stateMachine.ChangeState(player.GripWallState);
         }
         else if (isGrounded)
         {
             stateMachine.ChangeState(player.IdleState);
         }
-    }
-
-    private void CheckIfCanWallJump()
-    {
-        if (Time.time > touchingWallTime + playerData.wallTouchTime) canWallJump = true;
-        else canWallJump = false;
     }
 
     public override void PhysicsUpdate()

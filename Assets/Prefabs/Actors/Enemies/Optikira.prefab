@@ -400,7 +400,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0465b5baa4e571a448dc26fc7fbe3c6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isBlockable: 0
   immunityTime: 0
   isDamagable: 1
 --- !u!61 &4910031430768354196
@@ -713,7 +712,7 @@ MonoBehaviour:
     m_Bits: 256
   whatIsWall:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 2304
   whatIsLadder:
     serializedVersion: 2
     m_Bits: 0
