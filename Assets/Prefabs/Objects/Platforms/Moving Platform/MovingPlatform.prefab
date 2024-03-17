@@ -79,7 +79,7 @@ GameObject:
   - component: {fileID: 80350588732218860}
   - component: {fileID: 2941544368741364036}
   - component: {fileID: 8720361835871849442}
-  - component: {fileID: 8150991585300179530}
+  - component: {fileID: 8709277898301578442}
   m_Layer: 9
   m_Name: Platform
   m_TagString: Untagged
@@ -232,8 +232,8 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
---- !u!68 &8150991585300179530
-EdgeCollider2D:
+--- !u!61 &8709277898301578442
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -245,16 +245,19 @@ EdgeCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 1
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.3}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 4, y: 1.5}
+    newSize: {x: 4, y: 1.5}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 3, y: 0.1}
   m_EdgeRadius: 0
-  m_Points:
-  - {x: -1.2982895, y: 0.3700502}
-  - {x: -0.14393376, y: 0.3716193}
-  - {x: 1.185993, y: 0.37689292}
-  m_AdjacentStartPoint: {x: 0, y: 0}
-  m_AdjacentEndPoint: {x: 0, y: 0}
-  m_UseAdjacentStartPoint: 0
-  m_UseAdjacentEndPoint: 0
 --- !u!1 &3279927817357790528
 GameObject:
   m_ObjectHideFlags: 0
