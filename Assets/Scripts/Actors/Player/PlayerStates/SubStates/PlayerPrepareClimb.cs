@@ -18,9 +18,9 @@ public class PlayerPrepareClimb : PlayerState
         base.Exit();
 
         if (climbingDirection == 1)
-            Player.Instance.gameObject.transform.position += new Vector3(0, 1f, 0);
+            Player.Instance.gameObject.transform.position += new Vector3(0, playerData.startPosUp, 0);
         else if (climbingDirection == -1)
-            Player.Instance.gameObject.transform.position -= new Vector3(0, 1f, 0);
+            Player.Instance.gameObject.transform.position -= new Vector3(0, playerData.startPosDown, 0);
 
         climbingDirection = 0;
     }

@@ -14,7 +14,7 @@ public class PlayerInAirState : PlayerState
     //Checks
     private bool isGrounded;
     private bool isTouchingWall;
-    private bool isTouchingWallBack;
+    private bool isNearPlatform;
     private bool isTouchingLadder;
 
     private bool coyoteTime;
@@ -42,7 +42,7 @@ public class PlayerInAirState : PlayerState
         {
             isGrounded = CollisionSenses.Ground;
             isTouchingWall = CollisionSenses.WallFront;
-            isTouchingWallBack = CollisionSenses.WallBack;
+            isNearPlatform = CollisionSenses.Platform;
             isTouchingLedge = CollisionSenses.LedgeHorizontal;
             isTouchingLadder = collisionSenses.Ladder;
         }
@@ -58,7 +58,6 @@ public class PlayerInAirState : PlayerState
         base.Exit();
 
         isTouchingWall = false;
-        isTouchingWallBack = false;
 
         maxReachedVelocityY = 0.0f;
     }
@@ -89,7 +88,7 @@ public class PlayerInAirState : PlayerState
         {
             stateMachine.ChangeState(player.LandState);
         }
-        else if (isTouchingWall && !isTouchingLedge && !isGrounded)
+        else if (isTouchingWall && !isTouchingLedge && !isGrounded && !isNearPlatform)
         {
             stateMachine.ChangeState(player.LedgeClimbState);
         }

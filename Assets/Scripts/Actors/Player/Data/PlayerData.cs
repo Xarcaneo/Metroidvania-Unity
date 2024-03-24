@@ -63,6 +63,13 @@ public class PlayerData : ScriptableObject
     [Header("Ladder Climb State")]
     public float climbingVelocity = 5f;
     public float ladderJumpCooldown = 1.0f;
+    public float climbFinishThresholdUp = 1.0f;
+    public float ladderTopRaycastLength = 2.0f;
+    public float groundOffset = 1.0f;
+
+    [Header("Prepare Ladder Climb State")]
+    public float startPosUp = 2f;
+    public float startPosDown = 2f;
 
     [Header("GroundHit State")]
     public float velocityToHit = -30f;

@@ -11,6 +11,7 @@ public class PlayerAbilityState : PlayerState
     protected bool isGrounded;
     protected bool isTouchingWall;
     protected bool isTouchingLedge;
+    protected bool isNearPlatform;
     protected bool isOnSlope;
 
     //References to Movement and CollisionSenses components
@@ -36,6 +37,7 @@ public class PlayerAbilityState : PlayerState
             isTouchingWall = CollisionSenses.WallFront;
             isTouchingLedge = CollisionSenses.LedgeHorizontal;
             isOnSlope = CollisionSenses.SlopeCheck();
+            isNearPlatform = CollisionSenses.Platform;
         }
     }
 
@@ -63,7 +65,7 @@ public class PlayerAbilityState : PlayerState
                 player.WallSlideState.DisableWallJumpCoyoteTime();
                 stateMachine.ChangeState(player.WallSlideState);
             }
-            else if (isTouchingWall && !isTouchingLedge && !isGrounded)
+            else if (isTouchingWall && !isTouchingLedge && !isGrounded && !isNearPlatform)
             {
                 stateMachine.ChangeState(player.LedgeClimbState);
             }

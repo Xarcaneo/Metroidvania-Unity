@@ -99,9 +99,13 @@ public class PlayerGroundedState : PlayerState
         {
             stateMachine.ChangeState(player.RollState);
         }
-        else if (jumpInput && player.JumpState.CanJump() && !player.CrouchIdleState.isCrouching && Movement?.CurrentVelocity.y == 0.00f)
+        else if (jumpInput && player.JumpState.CanJump() && !player.CrouchIdleState.isCrouching)
         {
-            stateMachine.ChangeState(player.JumpState);
+            float velocityThreshold = 0.01f; // Adjust the threshold value as needed
+            if (Mathf.Abs(Movement.CurrentVelocity.y) < velocityThreshold)
+            {
+                stateMachine.ChangeState(player.JumpState);
+            }
         }
     }
 

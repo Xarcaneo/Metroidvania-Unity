@@ -39,17 +39,25 @@ public class CollisionSenses : CoreComponent
         private set => ladderCheck = value;
     }
 
+    public Transform PlatformCheck
+    {
+        get => GenericNotImplementedError<Transform>.TryGet(platformCheck, core.transform.parent.name);
+        private set => platformCheck = value;
+    }
+
     public float GroundCheckDistance { get => groundCheckDistance; set => groundCheckDistance = value; }
     public float WallCheckDistance { get => wallCheckDistance; set => wallCheckDistance = value; }
     public LayerMask WhatIsGround { get => whatIsGround; set => whatIsGround = value; }
     public LayerMask WhatIsWall { get => whatIsWall; set => whatIsWall = value; }
     public LayerMask WhatIsGripWall { get => whatIsGripWall; set => whatIsGripWall = value; }
+    public LayerMask WhatIsPlatform { get => whatIsPlatform; set => whatIsPlatform = value; }
 
     [SerializeField] private Transform groundCheck;
     [SerializeField] private Transform wallCheck;
     [SerializeField] private Transform ledgeCheckHorizontal;
     [SerializeField] private Transform ledgeCheckVertical;
     [SerializeField] private Transform ladderCheck;
+    [SerializeField] private Transform platformCheck;
 
     [SerializeField] private float groundCheckDistance;
     [SerializeField] private float groundCheckOffset;
@@ -58,12 +66,14 @@ public class CollisionSenses : CoreComponent
     [SerializeField] private float ladderTopDistance;
     [SerializeField] private float ladderBottomDistance;
     [SerializeField] private float slopeCheckDistance;
+    [SerializeField] private float platformCheckRadius;
     [SerializeField] private BoxCollider2D boxCollider2D;
 
     [SerializeField] private LayerMask whatIsGround;
     [SerializeField] private LayerMask whatIsWall;
     [SerializeField] private LayerMask whatIsLadder;
     [SerializeField] private LayerMask whatIsGripWall;
+    [SerializeField] private LayerMask whatIsPlatform;
 
     private int raycastDirection;
     #endregion
@@ -114,6 +124,11 @@ public class CollisionSenses : CoreComponent
     public bool LadderTop
     {
         get => Physics2D.OverlapCircle(LadderCheck.position - new Vector3(0, ladderTopDistance, 0), ladderCheckRadius, whatIsLadder);
+    }
+
+    public bool Platform
+    {
+        get => Physics2D.OverlapCircle(platformCheck.position, platformCheckRadius, whatIsPlatform);
     }
 
     public bool SlopeCheck()
