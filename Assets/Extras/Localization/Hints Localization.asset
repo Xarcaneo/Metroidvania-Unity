@@ -17,7 +17,7 @@ MonoBehaviour:
   - en
   - pl
   m_languageValues: 000000000100000002000000
-  m_fieldKeys: 080000000a0000000b0000000d0000000f000000090000000c0000000e000000
+  m_fieldKeys: 080000000a0000000b0000000d0000000f000000090000000e000000100000000c000000
   m_fieldValues:
   - m_fieldName: '#000'
     m_keys: 000000000100000002000000
@@ -56,17 +56,22 @@ MonoBehaviour:
     - 
     - Access your Toolkit by hitting <color="red>I</color>, and navigate with <color="red>J</color>
       and <color="red>K</color>.
+  - m_fieldName: '#007'
+    m_keys: 000000000100000002000000
+    m_values:
+    - 
+    - Defend with <color="red>{Block}</color> to repel enemy attacks
+    - 
+  - m_fieldName: '#008'
+    m_keys: 01000000
+    m_values:
+    - 'Approach the edge: Jump near a ledge with <color="red">{Jump}</color> to automatically
+      grasp it'
   - m_fieldName: '#00?'
     m_keys: 000000000100000002000000
     m_values:
     - 
     - Dash with <color="red>{Action}</color> to conquer obstacles and explore swiftly.
     - 
-  - m_fieldName: '#00?'
-    m_keys: 000000000100000002000000
-    m_values:
-    - 
-    - Defend with <color="red>{Block}</color> to repel enemy attacks
-    - 
   m_nextLanguageID: 3
-  m_nextFieldID: 16
+  m_nextFieldID: 17

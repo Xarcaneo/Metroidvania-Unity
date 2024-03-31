@@ -566,6 +566,7 @@ MonoBehaviour:
   ledgeCheckHorizontal: {fileID: 0}
   ledgeCheckVertical: {fileID: 1795069383799447302}
   ladderCheck: {fileID: 0}
+  platformCheck: {fileID: 0}
   groundCheckDistance: 1
   groundCheckOffset: 0
   wallCheckDistance: 1
@@ -573,14 +574,21 @@ MonoBehaviour:
   ladderTopDistance: 0
   ladderBottomDistance: 0
   slopeCheckDistance: 0
+  platformCheckRadius: 0
   boxCollider2D: {fileID: 0}
   whatIsGround:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 768
   whatIsWall:
     serializedVersion: 2
     m_Bits: 2304
   whatIsLadder:
+    serializedVersion: 2
+    m_Bits: 0
+  whatIsGripWall:
+    serializedVersion: 2
+    m_Bits: 0
+  whatIsPlatform:
     serializedVersion: 2
     m_Bits: 0
 --- !u!1 &1795069385611182496

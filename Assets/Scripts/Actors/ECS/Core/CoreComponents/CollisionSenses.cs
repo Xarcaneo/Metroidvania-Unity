@@ -179,4 +179,17 @@ public class CollisionSenses : CoreComponent
 
         return isOnSlope;
     }
+
+    public Vector3? GetLadderPosition()
+    {
+        Collider2D collider = Physics2D.OverlapCircle(LadderCheck.position, ladderCheckRadius, whatIsLadder);
+        if (collider != null)
+        {
+            return collider.transform.position;
+        }
+        else
+        {
+            return null;
+        }
+    }
 }

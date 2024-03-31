@@ -46,6 +46,8 @@ public class PlayerLadderClimbState : PlayerState
         m_anim.speed = 0;
         prevGravityScale = m_rigidbody.gravityScale;
         m_rigidbody.gravityScale = 0;
+
+        AlignPlayerWithLadderCenter();
     }
 
     public override void Exit()
@@ -124,6 +126,20 @@ public class PlayerLadderClimbState : PlayerState
         {
             // Return a large value if there's no ground detected in the chosen direction
             return float.MaxValue;
+        }
+    }
+
+    private void AlignPlayerWithLadderCenter()
+    {
+        if (CollisionSenses)
+        {
+            Vector3? ladderPosition = CollisionSenses.GetLadderPosition();
+            if (ladderPosition.HasValue)
+            {
+                // Correctly use the .Value property to access the Vector3 inside the nullable Vector3?
+                Vector3 newPosition = new Vector3(ladderPosition.Value.x, player.transform.position.y, player.transform.position.z);
+                player.transform.position = newPosition;
+            }
         }
     }
 }

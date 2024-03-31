@@ -7,8 +7,9 @@ namespace Menu
 {
     public class DeathMenu : Menu<DeathMenu>
     {
-        private bool canReturn = false;
+        [SerializeField] string startingLocation = "Vestibule 0";
 
+        private bool canReturn = false;
         public override void OnStart()
         {
             base.OnStart();
@@ -42,7 +43,7 @@ namespace Menu
                 }
                 else
                 {
-                    SaveSystem.RestartGame("Area 0");
+                    SaveSystem.RestartGame(startingLocation);
                 }
             }
 
