@@ -55,14 +55,17 @@ public class PlayerGripWallState : PlayerState
             player.transform.position = gripPos;
         }
 
-        if (jumpInput && canWallJump)
+        if (isAnimationFinished)
         {
-            player.WallJumpState.DetermineWallJumpDirection(isTouchingWall);
-            stateMachine.ChangeState(player.WallJumpState);
-        }
-        else if (yInput == -1)
-        {
-            stateMachine.ChangeState(player.InAirState);
+            if (jumpInput && canWallJump)
+            {
+                player.WallJumpState.DetermineWallJumpDirection(isTouchingWall);
+                stateMachine.ChangeState(player.WallJumpState);
+            }
+            else if (yInput == -1)
+            {
+                stateMachine.ChangeState(player.InAirState);
+            }
         }
     }
 

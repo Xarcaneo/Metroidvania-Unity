@@ -63,15 +63,16 @@ MonoBehaviour:
     - Defend with <color="red>{Block}</color> to repel enemy attacks
     - 
   - m_fieldName: '#008'
-    m_keys: 01000000
+    m_keys: 0100000000000000
     m_values:
     - 'Approach the edge: Jump near a ledge with <color="red">{Jump}</color> to automatically
       grasp it'
-  - m_fieldName: '#00?'
+    - 
+  - m_fieldName: '#009'
     m_keys: 000000000100000002000000
     m_values:
     - 
-    - Dash with <color="red>{Action}</color> to conquer obstacles and explore swiftly.
+    - Dash with <color="red>{Action}</color> to conquer obstacles when jumping <color="red>{Jump}</color>.
     - 
   m_nextLanguageID: 3
   m_nextFieldID: 17
