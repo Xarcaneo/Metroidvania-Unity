@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class SaveSlot : MyButton
 {
@@ -38,12 +39,21 @@ public class SaveSlot : MyButton
         }
     }
 
+    protected override void OnPressed()
+    {
+        if (Menu.PlayMenu.Instance.currentMode == Menu.PlayMenu.MenuMode.SelectLoad)
+        {
+            base.OnPressed();
+        }
+    }
+
     protected override void OnSelectAction()
     {
-        base.OnPressedAction();
+        base.OnSelectAction();
 
-        GameManager.Instance.currentSaveSlot = SlotNumber;
+        GameManager.Instance.currentSaveSlot = SlotNumber;  
     }
+
     private void UpdateContent()
     {
         var savedGameData = SaveSystem.storer.RetrieveSavedGameData(SlotNumber);

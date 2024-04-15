@@ -21,7 +21,7 @@ public class MyButton : MonoBehaviour, ISelectHandler
         OnSelectAction();
     }
 
-    public void OnPressed()
+    protected virtual void OnPressed()
     {
         PlaySound(onPressedSoundPath);
         OnPressedAction();

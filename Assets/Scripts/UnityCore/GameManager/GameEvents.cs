@@ -1,4 +1,3 @@
-using PixelCrushers.DialogueSystem;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,16 +8,6 @@ public class GameEvents : MonoBehaviour
     private static GameEvents _instance;
 
     public static GameEvents Instance { get => _instance; }
-
-    void OnEnable()
-    {
-        Lua.RegisterFunction(nameof(CameraNewTarget), this, SymbolExtensions.GetMethodInfo(() => CameraNewTarget(string.Empty)));
-    }
-
-    void OnDisable()
-    {
-        Lua.UnregisterFunction(nameof(CameraNewTarget)); // <-- Only if not on Dialogue Manager.
-    }
 
     private void Awake()
     {
