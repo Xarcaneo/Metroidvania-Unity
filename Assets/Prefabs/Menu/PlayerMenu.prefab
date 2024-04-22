@@ -2680,6 +2680,7 @@ GameObject:
   - component: {fileID: 7569074926682789822}
   - component: {fileID: 1468510735325078396}
   - component: {fileID: 639417218058526608}
+  - component: {fileID: 8181755769364653583}
   m_Layer: 5
   m_Name: Header
   m_TagString: Untagged
@@ -2762,8 +2763,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 26
-  m_fontSizeBase: 26
+  m_fontSize: 22
+  m_fontSizeBase: 22
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2804,6 +2805,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &8181755769364653583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1144499547756550012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7de41b4a04bc3284e8796e536bc4acbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_textTable: {fileID: 11400000, guid: 6e81d7d258335c64ebe2b9085326655e, type: 2}
+  m_localizedFonts: {fileID: 0}
+  m_fieldName: Inventory
 --- !u!1 &1147531557348571120
 GameObject:
   m_ObjectHideFlags: 0
@@ -9590,8 +9606,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a315e7b8dd748b1ace55391f8419663, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ItemDescriptionPanel: {fileID: 0}
-  m_ItemDescription: {fileID: 1291989789451311138}
+  m_ItemDescriptionPanel: {fileID: 6051266230105478172}
+  m_ItemDescription: {fileID: 9108058717756693135}
   m_HideIfSelectedItemIsNull: 0
   m_DrawOnSelect: 1
   m_DrawOnClick: 0
@@ -11269,6 +11285,7 @@ GameObject:
   - component: {fileID: 3404469323058011328}
   - component: {fileID: 7165685675792029285}
   - component: {fileID: 5372476041225169843}
+  - component: {fileID: 5717343228347291184}
   m_Layer: 5
   m_Name: Header
   m_TagString: Untagged
@@ -11351,8 +11368,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 26
-  m_fontSizeBase: 26
+  m_fontSize: 22
+  m_fontSizeBase: 22
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -11393,6 +11410,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5717343228347291184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2001341457043848295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7de41b4a04bc3284e8796e536bc4acbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_textTable: {fileID: 11400000, guid: 6e81d7d258335c64ebe2b9085326655e, type: 2}
+  m_localizedFonts: {fileID: 0}
+  m_fieldName: Quests
 --- !u!1 &2033194406400073248
 GameObject:
   m_ObjectHideFlags: 0
@@ -11678,8 +11710,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a315e7b8dd748b1ace55391f8419663, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ItemDescriptionPanel: {fileID: 0}
-  m_ItemDescription: {fileID: 1291989789451311138}
+  m_ItemDescriptionPanel: {fileID: 6051266230105478172}
+  m_ItemDescription: {fileID: 9108058717756693135}
   m_HideIfSelectedItemIsNull: 0
   m_DrawOnSelect: 1
   m_DrawOnClick: 0
@@ -13302,6 +13334,7 @@ GameObject:
   - component: {fileID: 3778438414417510569}
   - component: {fileID: 4345612267937222904}
   - component: {fileID: 2373935811426547765}
+  - component: {fileID: 4430896235863739802}
   m_Layer: 5
   m_Name: Header
   m_TagString: Untagged
@@ -13384,8 +13417,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 26
-  m_fontSizeBase: 26
+  m_fontSize: 22
+  m_fontSizeBase: 22
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -13426,6 +13459,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &4430896235863739802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2810912865398831541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7de41b4a04bc3284e8796e536bc4acbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_textTable: {fileID: 11400000, guid: 6e81d7d258335c64ebe2b9085326655e, type: 2}
+  m_localizedFonts: {fileID: 0}
+  m_fieldName: Spellbook
 --- !u!1 &2818663605166028909
 GameObject:
   m_ObjectHideFlags: 0
@@ -15664,7 +15712,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75160f9031ce4e3ab442af4e74522092, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ItemDescription: {fileID: 1291989789451311138}
+  m_ItemDescription: {fileID: 9108058717756693135}
 --- !u!1 &3511141783536658240
 GameObject:
   m_ObjectHideFlags: 0
@@ -16051,6 +16099,7 @@ GameObject:
   - component: {fileID: 2218922701446506553}
   - component: {fileID: 8606666642216492541}
   - component: {fileID: 4763532487717735125}
+  - component: {fileID: 8339091708895055004}
   m_Layer: 5
   m_Name: Header
   m_TagString: Untagged
@@ -16133,8 +16182,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 26
-  m_fontSizeBase: 26
+  m_fontSize: 22
+  m_fontSizeBase: 22
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -16175,6 +16224,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &8339091708895055004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3558315439715692980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7de41b4a04bc3284e8796e536bc4acbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_textTable: {fileID: 11400000, guid: 6e81d7d258335c64ebe2b9085326655e, type: 2}
+  m_localizedFonts: {fileID: 0}
+  m_fieldName: Worldmap
 --- !u!1 &3587642477311029934
 GameObject:
   m_ObjectHideFlags: 0
@@ -28739,8 +28803,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a315e7b8dd748b1ace55391f8419663, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ItemDescriptionPanel: {fileID: 0}
-  m_ItemDescription: {fileID: 1291989789451311138}
+  m_ItemDescriptionPanel: {fileID: 6051266230105478172}
+  m_ItemDescription: {fileID: 9108058717756693135}
   m_HideIfSelectedItemIsNull: 0
   m_DrawOnSelect: 1
   m_DrawOnClick: 0
@@ -28937,8 +29001,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2151834177928114949}
   - component: {fileID: 3033136333367522461}
-  - component: {fileID: 1291989789451311138}
   - component: {fileID: 2748264066649126104}
+  - component: {fileID: 9108058717756693135}
   m_Layer: 5
   m_Name: Item Description
   m_TagString: Untagged
@@ -28977,7 +29041,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8015698893073283848}
   m_CullTransparentMesh: 0
---- !u!114 &1291989789451311138
+--- !u!225 &2748264066649126104
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8015698893073283848}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &9108058717756693135
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -28986,7 +29062,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8015698893073283848}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e41ea0ee3bba09847a488e3eb60d945b, type: 3}
+  m_Script: {fileID: 11500000, guid: 055b253f47c49a847823d687f30464c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_TargetGraphic: {fileID: 0}
@@ -29000,20 +29076,10 @@ MonoBehaviour:
   m_DescriptionText:
     m_UnityText: {fileID: 0}
     m_TextMeshProText: {fileID: 4822981851480495062}
-  m_NoItemSelectedMessage: No Item Selected
-  m_NoDescriptionMessage: The item does not have a description.
---- !u!225 &2748264066649126104
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8015698893073283848}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
+  m_NoItemSelectedMessage: 
+  m_NoDescriptionMessage: 
+  m_DescriptionTextTable: {fileID: 11400000, guid: 9b42eedc3daccc6438a8a5564a51008f, type: 2}
+  m_ItemNameTextTable: {fileID: 11400000, guid: 343b92b102b96bf4797749c0ba9fcfce, type: 2}
 --- !u!1 &8094819224351907950
 GameObject:
   m_ObjectHideFlags: 0

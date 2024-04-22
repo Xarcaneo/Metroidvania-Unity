@@ -25,6 +25,7 @@ public class LevelManager : MonoBehaviour
     private IEnumerator DelayedAreaChanged()
     {
         yield return new WaitForSeconds(0.5f);
+        GameEvents.Instance.AreaChanged(m_areaName);
     }
 
     private void SpawnPlayer()

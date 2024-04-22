@@ -1,4 +1,5 @@
-using System;
+using PixelCrushers;
+using PixelCrushers.DialogueSystem;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -8,6 +9,7 @@ public class LocationNameIndicator : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI locationName;
     [SerializeField] private Image locationNameBackground;
+    [SerializeField] private TextTable myTextTable;
 
     private float fadeInTime = 1f;
     private float timeBeforeFadeOut = 2f;
@@ -68,7 +70,7 @@ public class LocationNameIndicator : MonoBehaviour
     {
         if (locationName.text != areaName)
         {
-            locationName.text = areaName;
+            locationName.text = myTextTable.GetFieldTextForLanguage(areaName, Localization.Language);
             StartFadeCoroutine();
         }
     }
