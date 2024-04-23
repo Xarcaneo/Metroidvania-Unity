@@ -68,10 +68,22 @@ namespace Opsive.UltimateInventorySystem.DropsAndPickups
         /// </summary>
         /// <param name="minAmount">Minimum amount of items.</param>
         /// <param name="maxAmount">Maximum amount of items.</param>
+        /// <param name="amountDistributionCurve">The animation curve representing the amount distrubution, 0->minAmount, 1->MaxAmount (Can be null).</param>
         /// <returns>A random list of item amounts.</returns>
-        public IReadOnlyList<ItemAmount> GetRandomItemAmounts(int minAmount, int maxAmount)
+        public IReadOnlyList<ItemAmount> GetRandomItemAmounts(int minAmount, int maxAmount, AnimationCurve amountDistributionCurve)
         {
-            var randomAmount = Random.Range(minAmount, maxAmount + 1);
+            int randomAmount;
+            if (amountDistributionCurve == null || amountDistributionCurve.keys == null ||
+                amountDistributionCurve.keys.Length == 0)
+            {
+                randomAmount = Random.Range(minAmount, maxAmount + 1);
+            }
+            else
+            {
+                var randomDistributionSample = Mathf.Clamp01(amountDistributionCurve.Evaluate(Random.value));
+                randomAmount = Mathf.RoundToInt((float)minAmount + randomDistributionSample * (float)(maxAmount - minAmount));
+            }
+
             m_RandomResultItemAmounts.Clear();
 
             for (int i = 0; i < randomAmount; i++) {

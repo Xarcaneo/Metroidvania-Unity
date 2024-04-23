@@ -19,6 +19,8 @@ namespace Opsive.UltimateInventorySystem.DropsAndPickups
         [SerializeField] protected int m_MinAmount = 1;
         [Tooltip("The maximum amount of item that can be dropped.")]
         [SerializeField] protected int m_MaxAmount = 2;
+        [Tooltip("An animation curve to specify the probability of the amount dropped, 0->minAmount, 1->maxAmount.")]
+        [SerializeField] protected AnimationCurve m_AmountProbabilityDistribution;
 
         protected ItemInfoProbabilityTable m_ItemAmountProbabilityTable;
 
@@ -44,7 +46,7 @@ namespace Opsive.UltimateInventorySystem.DropsAndPickups
         protected override ListSlice<ItemInfo> GetItemsToDropInternal()
         {
             var randomItemAmounts =
-                m_ItemAmountProbabilityTable.GetRandomItemInfos(m_MinAmount, m_MaxAmount);
+                m_ItemAmountProbabilityTable.GetRandomItemInfos(m_MinAmount, m_MaxAmount, m_AmountProbabilityDistribution);
             return randomItemAmounts.ToListSlice();
         }
     }
