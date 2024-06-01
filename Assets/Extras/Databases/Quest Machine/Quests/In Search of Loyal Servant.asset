@@ -57,46 +57,6 @@ MonoBehaviour:
     m_stringAsset: {fileID: 0}
     m_textTable: {fileID: 0}
     m_textTableFieldID: 0
---- !u!114 &-1078216986244564484
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c47e1bb9cdd9a474c8d3f5d555d7533a, type: 3}
-  m_Name: HeadingTextQuestContent
-  m_EditorClassIdentifier: 
-  m_contentID: -1
-  m_useQuestTitle: 1
-  m_headingText:
-    m_text: 
-    m_stringAsset: {fileID: 0}
-    m_textTable: {fileID: 0}
-    m_textTableFieldID: 0
-  m_headingLevel: 1
---- !u!114 &-1065342134911408411
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c47e1bb9cdd9a474c8d3f5d555d7533a, type: 3}
-  m_Name: HeadingTextQuestContent
-  m_EditorClassIdentifier: 
-  m_contentID: -1
-  m_useQuestTitle: 1
-  m_headingText:
-    m_text: 
-    m_stringAsset: {fileID: 0}
-    m_textTable: {fileID: 0}
-    m_textTableFieldID: 0
-  m_headingLevel: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,72 +178,25 @@ MonoBehaviour:
     - m_actionList: []
       m_categorizedContentList:
       - m_contentList: []
-      - m_contentList:
-        - {fileID: -1065342134911408411}
+      - m_contentList: []
       - m_contentList: []
     - m_actionList: []
       m_categorizedContentList:
       - m_contentList: []
-      - m_contentList: []
+      - m_contentList:
+        - {fileID: 3258569508802339420}
+        - {fileID: 9123424240530219214}
       - m_contentList: []
     m_conditionSet:
       m_conditionList: []
       m_conditionCountMode: 0
       m_minConditionCount: 0
       m_numTrueConditions: 0
-    m_childIndexList: 0200000001000000
+    m_childIndexList: 01000000
     m_canvasRect:
       serializedVersion: 2
       x: 105
       y: 48
-      width: 120
-      height: 48
-  - m_id:
-      m_text: Description 1
-      m_stringAsset: {fileID: 0}
-      m_textTable: {fileID: 0}
-      m_textTableFieldID: 0
-    m_internalName:
-      m_text: 
-      m_stringAsset: {fileID: 0}
-      m_textTable: {fileID: 0}
-      m_textTableFieldID: 0
-    m_nodeType: 4
-    m_isOptional: 0
-    m_state: 0
-    m_speaker:
-      m_text: 
-      m_stringAsset: {fileID: 0}
-      m_textTable: {fileID: 0}
-      m_textTableFieldID: 0
-    m_stateInfoList:
-    - m_actionList: []
-      m_categorizedContentList:
-      - m_contentList: []
-      - m_contentList: []
-      - m_contentList: []
-    - m_actionList: []
-      m_categorizedContentList:
-      - m_contentList: []
-      - m_contentList:
-        - {fileID: -1078216986244564484}
-        - {fileID: 2639589996378488417}
-      - m_contentList: []
-    - m_actionList: []
-      m_categorizedContentList:
-      - m_contentList: []
-      - m_contentList: []
-      - m_contentList: []
-    m_conditionSet:
-      m_conditionList: []
-      m_conditionCountMode: 1
-      m_minConditionCount: 0
-      m_numTrueConditions: 0
-    m_childIndexList: 03000000
-    m_canvasRect:
-      serializedVersion: 2
-      x: 180
-      y: 120
       width: 120
       height: 48
   - m_id:
@@ -327,11 +240,11 @@ MonoBehaviour:
       m_conditionCountMode: 1
       m_minConditionCount: 0
       m_numTrueConditions: 0
-    m_childIndexList: 03000000
+    m_childIndexList: 02000000
     m_canvasRect:
       serializedVersion: 2
-      x: 30
-      y: 120
+      x: 104
+      y: 119
       width: 120
       height: 48
   - m_id:
@@ -383,7 +296,27 @@ MonoBehaviour:
   m_textTable: {fileID: 0}
   m_goalEntityTypeName: 
   m_nextContentID: 0
---- !u!114 &2639589996378488417
+--- !u!114 &3258569508802339420
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c47e1bb9cdd9a474c8d3f5d555d7533a, type: 3}
+  m_Name: HeadingTextQuestContent
+  m_EditorClassIdentifier: 
+  m_contentID: -1
+  m_useQuestTitle: 1
+  m_headingText:
+    m_text: 
+    m_stringAsset: {fileID: 0}
+    m_textTable: {fileID: 0}
+    m_textTableFieldID: 0
+  m_headingLevel: 1
+--- !u!114 &9123424240530219214
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}

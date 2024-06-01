@@ -68,9 +68,10 @@ public class LocationNameIndicator : MonoBehaviour
 
     private void OnAreaChanged(string areaName)
     {
+        areaName = myTextTable.GetFieldTextForLanguage(areaName, Localization.Language);
         if (locationName.text != areaName)
         {
-            locationName.text = myTextTable.GetFieldTextForLanguage(areaName, Localization.Language);
+            locationName.text = areaName;
             StartFadeCoroutine();
         }
     }

@@ -8,6 +8,9 @@ public class PlayerUseHotbarItem : PlayerState
     private CollisionSenses CollisionSenses { get => collisionSenses ?? core.GetCoreComponent(ref collisionSenses); }
     private CollisionSenses collisionSenses;
 
+    private Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
+    private Movement movement;
+
     public PlayerUseHotbarItem(Player player, StateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }
@@ -26,6 +29,8 @@ public class PlayerUseHotbarItem : PlayerState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+
+        Movement?.SetVelocityX(0f);
 
         if (isOnSlope)
         {

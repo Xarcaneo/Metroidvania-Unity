@@ -4,6 +4,7 @@ using PixelCrushers.QuestMachine;
 using TMPro;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using System;
 
 public class QuestMonitor : MonoBehaviour, IMessageHandler
 {
@@ -12,7 +13,8 @@ public class QuestMonitor : MonoBehaviour, IMessageHandler
 
     [SerializeField] private float timeToReturnToIdle = 2.0f;
 
-    private bool isLoadingScene;
+    private bool isLoadingScene = false;
+    private bool isPlayerDead = false;
 
     enum QuestAnimationMode { New, Update, Completed};
     private QuestAnimationMode questAnimationMode;
@@ -23,6 +25,7 @@ public class QuestMonitor : MonoBehaviour, IMessageHandler
         MessageSystem.AddListener(this, QuestMachineMessages.QuestStateChangedMessage, string.Empty);
         SaveSystem.saveDataApplied += OnSaveDataApplied;
         SceneManager.sceneLoaded += OnSceneLoaded; // Subscribe to the sceneLoaded event
+        GameEvents.Instance.onPlayerDied += OnPlayerDied;
     }
 
     private void OnDisable()
@@ -30,15 +33,21 @@ public class QuestMonitor : MonoBehaviour, IMessageHandler
         // Stop listening:
         MessageSystem.RemoveListener(this);
         SaveSystem.saveDataApplied -= OnSaveDataApplied;
-        SceneManager.sceneLoaded -= OnSceneLoaded; // Unsubscribe to avoid memory leaks
+        SceneManager.sceneLoaded -= OnSceneLoaded; 
+        GameEvents.Instance.onPlayerDied -= OnPlayerDied;
     }
 
+    private void OnPlayerDied() => isPlayerDead = true;
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode) => isLoadingScene = true; // Set isLoadingScene to true when a new scene is loaded
-    private void OnSaveDataApplied() => isLoadingScene = false;
-    
+    private void OnSaveDataApplied()
+    {
+        isLoadingScene = false;
+        isPlayerDead = false;
+    }
+
     public void OnMessage(MessageArgs messageArgs)
     {
-        if (isLoadingScene) return;
+        if (isLoadingScene || isPlayerDead) return;
         
         // We received a quest state changed message. Log the state.
         // Parameter: Quest ID. 
