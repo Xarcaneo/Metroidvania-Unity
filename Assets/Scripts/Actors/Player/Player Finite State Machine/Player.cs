@@ -31,6 +31,7 @@ public class Player : Entity
     public PlayerSpawnedState SpawnedState { get; private set; }
     public PlayerUseHotbarItem UseHotbarItem { get; private set; }
     public PlayerGripWallState GripWallState { get; private set; }
+    public PlayerJumpAttackState JumpAttackState { get; private set; }
 
     [SerializeField]
     private PlayerData playerData;
@@ -94,6 +95,7 @@ public class Player : Entity
         SpawnedState = new PlayerSpawnedState(this, StateMachine, playerData, "spawned");
         UseHotbarItem = new PlayerUseHotbarItem(this, StateMachine, playerData, "useHotbarItem");
         GripWallState = new PlayerGripWallState(this, StateMachine, playerData, "gripWall");
+        JumpAttackState = new PlayerJumpAttackState(this, StateMachine, playerData, "jumpAttack");
     }
 
     public override State GetDeathState()

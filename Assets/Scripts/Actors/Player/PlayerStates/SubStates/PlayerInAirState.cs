@@ -10,6 +10,7 @@ public class PlayerInAirState : PlayerState
     private bool jumpInput;
     private bool jumpInputStop;
     private bool actionInput;
+    private bool attackInput;
 
     //Checks
     private bool isGrounded;
@@ -24,7 +25,7 @@ public class PlayerInAirState : PlayerState
     private float maxReachedVelocityY;
     private float startWallJumpCoyoteTime;
 
-    private Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
+    protected Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
     private Movement movement;
 
     private CollisionSenses CollisionSenses { get => collisionSenses ?? core.GetCoreComponent(ref collisionSenses); }
@@ -77,12 +78,17 @@ public class PlayerInAirState : PlayerState
         jumpInput = player.InputHandler.JumpInput;
         jumpInputStop = player.InputHandler.JumpInputStop;
         actionInput = player.InputHandler.ActionInput;
+        attackInput = player.InputHandler.AttackInput;
 
         CheckJumpMultiplier();
 
         if (isGrounded && maxReachedVelocityY <= playerData.velocityToHit)
         {
             stateMachine.ChangeState(player.GroundHitState);
+        }
+        else if (attackInput)
+        {
+            stateMachine.ChangeState(player.JumpAttackState);
         }
         else if (isGrounded && Movement?.CurrentVelocity.y < 0.01f)
         {
@@ -136,13 +142,8 @@ public class PlayerInAirState : PlayerState
         }
     }
 
-    public override void PhysicsUpdate()
-    {
-        base.PhysicsUpdate();
-    }
-
     private void CheckCoyoteTime()
-    {
+    {   
         if (coyoteTime && Time.time > startTime + playerData.coyoteTime)
         {
             coyoteTime = false;
