@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerAttackState : PlayerAbilityState
 {
-    private float velocityToSet;
     private bool blockInput;
 
     private DamageHitBox DamageHitBox { get => damageHitBox ?? core.GetCoreComponent(ref damageHitBox); }
@@ -24,7 +23,6 @@ public class PlayerAttackState : PlayerAbilityState
 
         m_damageData.SetData(player, Stats.GetAttack());
         player.InputHandler.UseAttackInput();
-        SettAttackVelocity();
     }
 
     public override void Exit()
@@ -32,14 +30,13 @@ public class PlayerAttackState : PlayerAbilityState
         base.Exit();
 
         Movement?.SetVelocityX(0f);
-        velocityToSet = 0;
     }
 
     public override void LogicUpdate()
     {
         base.LogicUpdate();
 
-        Movement?.SetVelocityX(velocityToSet * Movement.FacingDirection);
+        Movement?.SetVelocityX(0f);
 
         blockInput = player.InputHandler.BlockInput;
 
@@ -62,18 +59,7 @@ public class PlayerAttackState : PlayerAbilityState
             isAbilityDone = true;       
         }
     }
-    
-    private void SettAttackVelocity()
-    {
-        if(isGrounded)
-        {
-            velocityToSet = playerData.attackMovementSpeed[0];
-        }
-        else
-        {
-            velocityToSet = 0;
-        }
-    }
+
 
     public override void AnimationActionTrigger()
     {
