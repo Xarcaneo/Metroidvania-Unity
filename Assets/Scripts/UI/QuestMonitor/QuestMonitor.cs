@@ -4,117 +4,73 @@ using PixelCrushers.QuestMachine;
 using TMPro;
 using System.Collections;
 using UnityEngine.SceneManagement;
-using System;
 
 public class QuestMonitor : MonoBehaviour, IMessageHandler
 {
     [SerializeField] private TextMeshProUGUI questName;
     [SerializeField] private Animator questImageAnimator;
 
-    [SerializeField] private float timeToReturnToIdle = 2.0f;
+    [SerializeField] private float timeToReturnToIdle = 25.0f;
 
-    private bool isLoadingScene = false;
-    private bool isPlayerDead = false;
-
-    enum QuestAnimationMode { New, Update, Completed};
+    private enum QuestAnimationMode { New, Update, Completed }
     private QuestAnimationMode questAnimationMode;
 
     private void OnEnable()
     {
-        // Listen for Quest State Changed messages:
+        // Listen for Quest State Changed messages
         MessageSystem.AddListener(this, QuestMachineMessages.QuestStateChangedMessage, string.Empty);
-        SaveSystem.saveDataApplied += OnSaveDataApplied;
-        SceneManager.sceneLoaded += OnSceneLoaded; // Subscribe to the sceneLoaded event
-        GameEvents.Instance.onPlayerDied += OnPlayerDied;
     }
 
     private void OnDisable()
     {
-        // Stop listening:
+        // Stop listening
         MessageSystem.RemoveListener(this);
-        SaveSystem.saveDataApplied -= OnSaveDataApplied;
-        SceneManager.sceneLoaded -= OnSceneLoaded; 
-        GameEvents.Instance.onPlayerDied -= OnPlayerDied;
-    }
-
-    private void OnPlayerDied() => isPlayerDead = true;
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode) => isLoadingScene = true; // Set isLoadingScene to true when a new scene is loaded
-    private void OnSaveDataApplied()
-    {
-        isLoadingScene = false;
-        isPlayerDead = false;
     }
 
     public void OnMessage(MessageArgs messageArgs)
     {
-        if (isLoadingScene || isPlayerDead) return;
-        
-        // We received a quest state changed message. Log the state.
-        // Parameter: Quest ID. 
-        // Argument 0: [StringField] Quest node ID, or null for main quest state.
-        // Argument 1: [QuestState] / [QuestNodeState] New state.
-
         string questID = messageArgs.parameter;
-        if (messageArgs.values[0] == null) // (null means this message is for main quest state)
+        if (messageArgs.values[0] == null)
         {
             QuestState state = (QuestState)messageArgs.values[1];
             questName.text = questID;
 
-            if (state.ToString() == "Active")
+            switch (state)
             {
-                questImageAnimator.Play("Intro");
-                questAnimationMode = QuestAnimationMode.New;
+                case QuestState.Active:
+                    questAnimationMode = QuestAnimationMode.New;
+                    break;
+                case QuestState.Successful:
+                    questAnimationMode = QuestAnimationMode.Completed;
+                    break;
             }
-            else if (state.ToString() == "Successful")
-            {
-                questImageAnimator.Play("Intro");
-                questAnimationMode = QuestAnimationMode.Completed;
-            }
-
-            //Debug.Log($"Quest '{questID}' changed to state {state}");
         }
         else
         {
             StringField nodeID = (StringField)messageArgs.values[0];
             QuestNodeState state = (QuestNodeState)messageArgs.values[1];
 
-            // Check if the node ID contains the string "Condition"
-            if (nodeID.value.Contains("Condition"))
+            if (nodeID.value.Contains("Condition") && state == QuestNodeState.True)
             {
-                if (state.ToString() == "True")
-                {
-                    questImageAnimator.Play("Intro");
-                    questAnimationMode = QuestAnimationMode.Update;
-                }
-                //Debug.Log($"Quest '{questID}' node '{nodeID}' changed to state {state}");
+                questAnimationMode = QuestAnimationMode.Update;
             }
-        }   
+        }
+        PlayAnimation();
     }
 
-    IEnumerator ReturnToIdleAfterTime(float time)
-    {
-        yield return new WaitForSeconds(time);
-
-        questImageAnimator.Play("Idle");
-    }
-
-    public void OnIntroAnimationFinished()
+    private void PlayAnimation()
     {
         switch (questAnimationMode)
         {
             case QuestAnimationMode.New:
                 questImageAnimator.Play("NewQuest");
                 break;
-
             case QuestAnimationMode.Update:
-                questImageAnimator.Play("NewQuest");
+                questImageAnimator.Play("UpdateQuest");
                 break;
-
             case QuestAnimationMode.Completed:
-                questImageAnimator.Play("NewQuest");
+                questImageAnimator.Play("CompletedQuest");
                 break;
-
         }
-        StartCoroutine(ReturnToIdleAfterTime(timeToReturnToIdle));
     }
 }

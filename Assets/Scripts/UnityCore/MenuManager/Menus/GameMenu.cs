@@ -9,8 +9,6 @@ using UnityEngine.SceneManagement;
 
 namespace Menu
 {
-
-
     public class GameMenu : Menu<GameMenu>
     {
         public enum GameMode { GAMEPLAY, MINIGAME };
@@ -19,8 +17,8 @@ namespace Menu
 
         [SerializeField] private PlayerHealthBarController healthBarController;
         [SerializeField] public GameHotbar gameHotbar;
-
         [SerializeField] public LocationNameIndicator locationNameIndicator;
+        [SerializeField] private GameObject m_QuestMonitor;
 
         public override void OnStart()
         {
@@ -49,18 +47,27 @@ namespace Menu
             GameEvents.Instance.onNewSession += onNewSession;
             GameEvents.Instance.onPuzzleOpen += onPuzzleOpen;
             GameEvents.Instance.onPuzzleClose += onPuzzleClose;
+            SceneManager.sceneUnloaded += onSceneUnloaded;
+            SaveSystem.saveDataApplied += OnSaveDataApplied;
         }
 
         protected override void OnDisable()
         {
             base.OnDisable();
 
+            m_QuestMonitor.SetActive(false);
+
             GameEvents.Instance.onPlayerDied -= OnPlayerDied;
             GameEvents.Instance.onToggleUI -= OnToggleUI;
             GameEvents.Instance.onNewSession -= onNewSession;
             GameEvents.Instance.onPuzzleOpen -= onPuzzleOpen;
             GameEvents.Instance.onPuzzleClose -= onPuzzleClose;
+            SceneManager.sceneUnloaded -= onSceneUnloaded;
+            SaveSystem.saveDataApplied -= OnSaveDataApplied;
         }
+
+        private void OnSaveDataApplied() => m_QuestMonitor.SetActive(true);
+        private void onSceneUnloaded(Scene arg0) => m_QuestMonitor.SetActive(false);
 
         public override void OnReturnInput() => OnPausePressed();
         public override void OnPlayerMenuInput() => PlayerMenu.Open();

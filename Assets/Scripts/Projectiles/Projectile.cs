@@ -8,9 +8,9 @@ public class Projectile : MonoBehaviour
     private IDamageable.DamageData damageData;
 
     private float speed;
-    private int direction;
+    private Vector2 direction;
     private float travelDistance;
-    private float xStartPos;
+    private Vector2 startPos;
 
     [SerializeField]
     private float gravity;
@@ -37,19 +37,17 @@ public class Projectile : MonoBehaviour
         anim = gameObject.GetComponent<Animator>();
 
         rb.gravityScale = 0.0f;
-        rb.velocity = transform.right * speed;
+        rb.velocity = direction * speed;
 
         isGravityOn = false;
 
-        xStartPos = transform.position.x;
+        startPos = transform.position;
     }
 
     private void Update()
     {
         if (!hasHitGround)
         {
-            // attackDetails.position = transform.position;
-
             if (isGravityOn)
             {
                 // Calculate the angle based on the velocity direction
@@ -85,8 +83,7 @@ public class Projectile : MonoBehaviour
                 should_destroy = true;
             }
 
-
-            if (Mathf.Abs(xStartPos - transform.position.x) >= travelDistance && !isGravityOn)
+            if (Vector2.Distance(startPos, transform.position) >= travelDistance && !isGravityOn)
             {
                 isGravityOn = true;
                 rb.gravityScale = gravity;
@@ -96,6 +93,7 @@ public class Projectile : MonoBehaviour
         if (should_destroy)
             anim.SetBool("Destroy", true);
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!hasHitGround)
@@ -112,7 +110,7 @@ public class Projectile : MonoBehaviour
             IKnockbackable knockbackable = collision.GetComponent<IKnockbackable>();
             if (knockbackable != null)
             {
-                knockbackable.ReceiveKnockback(damageData, direction);
+                knockbackable.ReceiveKnockback(damageData, (int)direction.x);
                 should_destroy = true;
                 rb.gravityScale = 0f;
                 rb.velocity = Vector2.zero;
@@ -120,10 +118,10 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    public void FireProjectile(float speed, float travelDistance, IDamageable.DamageData damageData, int direction)
+    public void FireProjectile(float speed, float travelDistance, IDamageable.DamageData damageData, Vector2 direction)
     {
-        this.speed = speed * direction;
-        this.direction = direction;
+        this.speed = speed;
+        this.direction = direction.normalized;
         this.travelDistance = travelDistance;
         this.damageData = damageData;
     }

@@ -35,7 +35,6 @@ public class Optikira : Enemy
         return deathState;
     }
 
-
     public override void Start()
     {
         base.Start();

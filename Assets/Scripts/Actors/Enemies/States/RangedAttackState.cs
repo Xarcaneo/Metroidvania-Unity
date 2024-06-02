@@ -23,7 +23,26 @@ public class RangedAttackState : AttackState
 
         projectileScript = projectile.GetComponent<Projectile>();
 
+        Vector2 projectileDirection = Vector2.zero;
+
+        if (stateData.horizontalProjectile && stateData.verticalProjectile)
+        {
+            // Get player's position
+            Transform playerTransform = Player.Instance.transform;
+            Vector2 playerPosition = playerTransform.position;
+
+            // Calculate direction from projectile to player
+            projectileDirection = playerPosition - (Vector2)attackPosition.position;
+        }
+        else
+        {
+            if (stateData.horizontalProjectile)
+                projectileDirection.x = (int)entity.transform.localScale.x;
+            if (stateData.verticalProjectile)
+                projectileDirection.y = (int)entity.transform.localScale.y;
+        }
+
         projectileScript.FireProjectile(stateData.projectileSpeed,
-            stateData.projectileTravelDistance, m_damageData, (int)entity.transform.localScale.x);
+            stateData.projectileTravelDistance, m_damageData, projectileDirection);
     }
 }
