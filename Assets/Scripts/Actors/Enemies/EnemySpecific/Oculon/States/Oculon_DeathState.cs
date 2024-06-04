@@ -6,9 +6,6 @@ public class Oculon_DeathState : DeathState
 {
     private Oculon enemy;
 
-    private EnemyDeath EnemyDeath { get => enemyDeath ?? core.GetCoreComponent(ref enemyDeath); }
-    private EnemyDeath enemyDeath;
-
     public Oculon_DeathState(Entity entity, StateMachine stateMachine, string animBoolName, Oculon enemy) : base(entity, stateMachine, animBoolName)
     {
         this.enemy = enemy;

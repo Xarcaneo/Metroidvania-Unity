@@ -48,7 +48,7 @@ public class Stats : CoreComponent
     public void DecreaseHealth(float amount)
     {
         var damage = CalculateDamageReceived(amount);
-        Debug.Log(damage);
+  
         currentHealth -= damage;
         Damaged?.Invoke(damage);
 

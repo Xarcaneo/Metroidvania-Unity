@@ -6,9 +6,6 @@ public class Optikira_DeathState : DeathState
 {
     private Optikira enemy;
 
-    private EnemyDeath EnemyDeath { get => enemyDeath ?? core.GetCoreComponent(ref enemyDeath); }
-    private EnemyDeath enemyDeath;
-
     public Optikira_DeathState(Entity entity, StateMachine stateMachine, string animBoolName, Optikira enemy) : base(entity, stateMachine, animBoolName)
     {
         this.enemy = enemy;

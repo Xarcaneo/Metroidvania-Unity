@@ -5,8 +5,6 @@ using UnityEngine;
 public class Skeleton_DeathState : DeathState
 {
     private readonly Skeleton enemy;
-    private EnemyDeath EnemyDeath { get => enemyDeath ?? core.GetCoreComponent(ref enemyDeath); }
-    private EnemyDeath enemyDeath;
 
     public Skeleton_DeathState(Entity entity, StateMachine stateMachine, string animBoolName) : base(entity, stateMachine, animBoolName)
     {

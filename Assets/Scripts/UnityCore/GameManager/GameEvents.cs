@@ -182,4 +182,14 @@ public class GameEvents : MonoBehaviour
             onPuzzleClose(puzzleName);
         }
     }
+
+    public event Action<int> onSoulsReceived;
+    public void SoulsReceived(int soulsAmount)
+    {
+        if (onSoulsReceived != null)
+        {
+            onSoulsReceived(soulsAmount);
+        }
+    }
+
 }

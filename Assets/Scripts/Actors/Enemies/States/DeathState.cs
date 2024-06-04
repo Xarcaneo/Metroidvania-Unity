@@ -8,6 +8,8 @@ public class DeathState : State
 {
     private Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
     private Movement movement;
+    protected EnemyDeath EnemyDeath { get => enemyDeath ?? core.GetCoreComponent(ref enemyDeath); }
+    private EnemyDeath enemyDeath;
 
     public DeathState(Entity entity, StateMachine stateMachine, string animBoolName) : base(entity, stateMachine, animBoolName)
     {
@@ -21,6 +23,8 @@ public class DeathState : State
     public override void Enter()
     {
         base.Enter();
+
+        GameEvents.Instance.SoulsReceived(EnemyDeath.souls);
 
         core.GetCoreComponent<HurtArea>().EnableDisableComponent(false);
         core.GetCoreComponent<HurtEffect>().EnableDisableComponent(false);
