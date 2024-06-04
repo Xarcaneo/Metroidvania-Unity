@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerBlockState : PlayerState
 {
+    private Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
+    private Movement movement;
+
     public PlayerBlockState(Player player, StateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }
@@ -23,6 +26,8 @@ public class PlayerBlockState : PlayerState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+
+        Movement?.SetVelocityX(0f);
 
         if (!isExitingState && isAnimationFinished)
         {

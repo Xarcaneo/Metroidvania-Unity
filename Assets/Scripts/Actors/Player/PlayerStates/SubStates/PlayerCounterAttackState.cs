@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerCounterAttackState : PlayerState
 {
-    protected Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
+    private Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
     private Movement movement;
 
     private DamageHitBox DamageHitBox { get => damageHitBox ?? core.GetCoreComponent(ref damageHitBox); }
@@ -37,6 +37,8 @@ public class PlayerCounterAttackState : PlayerState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+
+        Movement?.SetVelocityX(0f);
 
         if (!isExitingState && isAnimationFinished)
         {

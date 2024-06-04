@@ -116,6 +116,8 @@ public class Player : Entity
         }
     }
 
+    public void SetPlayerStateToIdle() => StateMachine.Initialize(IdleState);
+
     public override void Start()
     {
         base.Start();

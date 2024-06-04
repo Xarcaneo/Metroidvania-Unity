@@ -9,9 +9,6 @@ public class QuestMonitor : MonoBehaviour, IMessageHandler
 {
     [SerializeField] private TextMeshProUGUI questName;
     [SerializeField] private Animator questImageAnimator;
-
-    [SerializeField] private float timeToReturnToIdle = 25.0f;
-
     private enum QuestAnimationMode { New, Update, Completed }
     private QuestAnimationMode questAnimationMode;
 

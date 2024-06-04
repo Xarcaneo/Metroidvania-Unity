@@ -123,6 +123,7 @@ public class Trigger : Interactable
             Player.Instance.Core.GetCoreComponent<Movement>().Flip();
 
         Player.Instance.gameObject.SetActive(true);
+        Player.Instance.SetPlayerStateToIdle();
 
         StartCoroutine(CheckConnectedGatesEventCompletion());
     }

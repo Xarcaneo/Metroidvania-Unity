@@ -47,8 +47,10 @@ public class Stats : CoreComponent
 
     public void DecreaseHealth(float amount)
     {
-        currentHealth -= amount;
-        Damaged?.Invoke(amount);
+        var damage = CalculateDamageReceived(amount);
+        Debug.Log(damage);
+        currentHealth -= damage;
+        Damaged?.Invoke(damage);
 
         if (currentHealth <= 0)
         {
@@ -82,6 +84,13 @@ public class Stats : CoreComponent
     public int GetDefense()
     {
         return defense;
+    }
+
+    public float CalculateDamageReceived(float incomingDamage)
+    {
+        float damageReduction = Mathf.Clamp(defense, 0, 100);
+        float damageReceived = incomingDamage * (1 - (damageReduction / 100f));
+        return damageReceived;
     }
 
     public void UpdateStats()

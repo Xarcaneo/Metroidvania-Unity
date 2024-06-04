@@ -29,6 +29,7 @@ public class Checkpoint : Interactable
             Player.Instance.Core.GetCoreComponent<Movement>().Flip();
 
         Player.Instance.gameObject.SetActive(true);
+        Player.Instance.SetPlayerStateToIdle();
 
         Player.Instance.GetComponent<PlayerPositionSaver>().isCheckpoint = true;
         SaveSystem.SaveToSlot(GameManager.Instance.currentSaveSlot);
