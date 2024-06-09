@@ -737,7 +737,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_InventoryID: 1
   m_StartingMonitoredInventory: {fileID: 0}
-  m_MonitoredItemCollections: []
+  m_MonitoredItemCollections:
+  - Interactable
+  - Quest
   m_MonitorContent: {fileID: 6220805849428667826}
   m_ItemViewPrefab: {fileID: 3133790375168418106, guid: db34d34f6d9fce048897447348abfa9f, type: 3}
   m_MaxDisplays: 5
