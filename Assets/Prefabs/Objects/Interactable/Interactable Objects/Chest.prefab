@@ -107,9 +107,9 @@ GameObject:
   - component: {fileID: 1532262273499321206}
   - component: {fileID: 2714871150150072905}
   - component: {fileID: 5505584810606385950}
-  - component: {fileID: 1327799375140879366}
   - component: {fileID: 4990805166412353580}
   - component: {fileID: 3432168369937509225}
+  - component: {fileID: 7214689664203391988}
   m_Layer: 0
   m_Name: Chest
   m_TagString: Untagged
@@ -222,33 +222,11 @@ MonoBehaviour:
   m_ItemCollectionData:
   - m_ObjectType: Opsive.UltimateInventorySystem.Core.InventoryCollections.ItemCollection
     m_ValueHashes: 0d00eb25b769d11d5030ac3ef1f5543f666e77ff063d5314aacf0d993edd1331719c8809
+    m_LongValueHashes: 
     m_ValuePositions: 0000000009000000090000000d0000000d0000000e0000000f0000001300000013000000
     m_Values: 4974656d44726f7073010000000001ffffffff00000000
     m_UnityObjects: []
     m_Version: 3.1
---- !u!114 &1327799375140879366
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4703490649678327256}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ceaf1951eac4f83903eb9b47ec1d3fd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_PickUpPrefab: {fileID: 4814415899790352498, guid: eb4500b5d0dda414ead6737b1ef0605f, type: 3}
-  m_DropTransform: {fileID: 6576923016562015877}
-  m_DropRadius: 0
-  m_Inventory: {fileID: 5505584810606385950}
-  m_ItemCollectionID:
-    m_Name: ItemDrops
-    m_Purpose: 6
-  m_DropCopies: 1
-  m_SplitUniqueItems: 1
-  m_MinAmount: 1
-  m_MaxAmount: 1
 --- !u!114 &4990805166412353580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -263,7 +241,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canInteract: 1
   m_ChestID: 0
-  m_randomItemDropper: {fileID: 1327799375140879366}
+  m_ItemDropper: {fileID: 7214689664203391988}
 --- !u!114 &3432168369937509225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -277,6 +255,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   muteSounds: 0
+--- !u!114 &7214689664203391988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4703490649678327256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 209d7fca0dc427943858344ebf84b996, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PickUpPrefab: {fileID: 4814415899790352498, guid: eb4500b5d0dda414ead6737b1ef0605f, type: 3}
+  m_DropTransform: {fileID: 6576923016562015877}
+  m_DropRadius: 0
+  m_Inventory: {fileID: 5505584810606385950}
+  m_ItemCollectionID:
+    m_Name: ItemDrops
+    m_Purpose: 6
+  m_DropCopies: 1
+  m_SplitUniqueItems: 1
 --- !u!1 &6136305146189104342
 GameObject:
   m_ObjectHideFlags: 0

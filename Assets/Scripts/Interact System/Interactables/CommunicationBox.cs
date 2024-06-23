@@ -6,13 +6,20 @@ using UnityEngine;
 public class CommunicationBox : Interactable
 {
     [SerializeField] string dialogue_ID;
-
+    [SerializeField] string communicationBox_ID;
     [SerializeField] private bool LoyalServantImage = true;
 
     public Animator Anim { get; private set; }
 
-    private void Start()
+    IEnumerator Start()
     {
+        yield return new WaitForEndOfFrame();
+
+        var communicationBoxState = DialogueLua.GetVariable("CommunicationBox." + communicationBox_ID).asBool;
+
+        if (communicationBoxState)
+            canInteract = false;
+
         Anim = GetComponent<Animator>();
     }
 
@@ -41,8 +48,17 @@ public class CommunicationBox : Interactable
     public override void Interact()
     {
         base.Interact();
+
         Anim.Play("TurnOn");
         DialogueManager.StartConversation(dialogue_ID);
+        SetConversationFinished();
+
+    }
+
+    private void SetConversationFinished()
+    {
+        canInteract = false;
+        DialogueLua.SetVariable("CommunicationBox." + communicationBox_ID, true);
     }
 
     protected override void IsInteractionCompleted(bool value)
@@ -60,10 +76,5 @@ public class CommunicationBox : Interactable
         {
             Anim.Play("LoyalServantIdle");
         }
-    }
-
-    public void AnimationFinished()
-    {
-        CallInteractionCompletedEvent();
     }
 }

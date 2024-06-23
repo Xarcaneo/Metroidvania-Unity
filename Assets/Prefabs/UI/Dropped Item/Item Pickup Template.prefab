@@ -64,6 +64,7 @@ GameObject:
   - component: {fileID: 8341042247757135577}
   - component: {fileID: 5375195961680457039}
   - component: {fileID: 9189063681371784612}
+  - component: {fileID: -9124422921146538447}
   m_Layer: 27
   m_Name: Item Pickup Template
   m_TagString: Item
@@ -179,7 +180,7 @@ MonoBehaviour:
     m_ItemAmount:
       m_Amount: 0
       m_Item:
-        m_ID: 3175352329
+        m_ID: 2188786338
         m_Name: 
         m_ItemDefinitionID: 0
         m_ItemDefinition: {fileID: 0}
@@ -236,6 +237,25 @@ MonoBehaviour:
   m_ItemPrefabVisualizerParent: {fileID: 6521269645598157856}
   m_DefaultVisualPrefab: {fileID: 6288280403613232191, guid: aef964903a57bba4bbbc1addb8aee71c, type: 3}
   m_ItemView: {fileID: 772863455706512959}
+--- !u!114 &-9124422921146538447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4814415899790352498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03526e258566dc247a4eb8525aeeb667, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_key: 
+  m_appendSaverTypeToKey: 0
+  m_saveAcrossSceneChanges: 1
+  m_restoreStateOnStart: 0
+  m_mode: 0
+  m_destroyMode: 0
+  m_destroyedVersionPrefab: {fileID: 0}
 --- !u!1 &4828985783154798544
 GameObject:
   m_ObjectHideFlags: 0
@@ -306,18 +326,18 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 2139791495
-  m_SortingLayer: 7
+  m_SortingLayerID: -1976142529
+  m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 65456664, guid: 1103c5ebcf0686e45a425e79bbb91ac1, type: 3}
+  m_Sprite: {fileID: 1685679446, guid: 05336f5255ba27846bf36e61623e9917, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2, y: 2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1001 &8584738812339952324
@@ -527,8 +547,7 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 64
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 4374646022807155964, guid: 72a18686b2d7c24469b3cc0c89b3d2ed, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 72a18686b2d7c24469b3cc0c89b3d2ed, type: 3}
 --- !u!114 &772863455706512959 stripped
 MonoBehaviour:

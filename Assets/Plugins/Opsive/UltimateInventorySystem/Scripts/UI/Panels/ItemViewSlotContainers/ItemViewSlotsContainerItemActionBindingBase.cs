@@ -213,7 +213,12 @@ namespace Opsive.UltimateInventorySystem.UI.Panels.ItemViewSlotContainers
             if (itemActionIndex < 0 || itemActionIndex >= m_ItemActionListSlice.Count) { return; }
 
             var itemAction = m_ItemActionListSlice[itemActionIndex];
-            
+
+            if (itemViewSlot?.ItemView?.Modules == null)
+            {
+                return;
+            }
+
             for (int i = 0; i < itemViewSlot.ItemView.Modules.Count; i++) {
                 if (itemViewSlot.ItemView.Modules[i] is IItemActionBindingItemViewModule module) {
                     module.OnItemActionInvoked(this, itemActionIndex, itemAction);

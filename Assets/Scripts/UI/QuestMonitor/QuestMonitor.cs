@@ -27,10 +27,11 @@ public class QuestMonitor : MonoBehaviour, IMessageHandler
     public void OnMessage(MessageArgs messageArgs)
     {
         string questID = messageArgs.parameter;
+        questName.text = questID;
+
         if (messageArgs.values[0] == null)
         {
             QuestState state = (QuestState)messageArgs.values[1];
-            questName.text = questID;
 
             switch (state)
             {

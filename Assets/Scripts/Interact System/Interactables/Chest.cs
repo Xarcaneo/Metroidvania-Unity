@@ -7,7 +7,7 @@ using UnityEngine;
 public class Chest : Interactable
 {
     [SerializeField] int m_ChestID;
-    [SerializeField] private RandomItemDropper m_randomItemDropper;
+    [SerializeField] private ItemDropper m_ItemDropper;
 
     private Animator chestAnim; // reference to the Animator component
 
@@ -39,6 +39,6 @@ public class Chest : Interactable
         SetOpened();
         DialogueLua.SetVariable("Chest." + m_ChestID, true);
 
-        m_randomItemDropper.Drop();
+        m_ItemDropper.Drop();
     }
 }

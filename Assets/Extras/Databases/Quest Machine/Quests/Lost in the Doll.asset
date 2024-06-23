@@ -1,5 +1,45 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8506915149526201739
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0ed0c4e68ee98946bb5016adda42373, type: 3}
+  m_Name: BodyTextQuestContent
+  m_EditorClassIdentifier: 
+  m_contentID: -1
+  m_bodyText:
+    m_text: '<s><color=#00008B>Return rag doll to the Lost Soul.
+
+      </color></s>'
+    m_stringAsset: {fileID: 0}
+    m_textTable: {fileID: 0}
+    m_textTableFieldID: 0
+--- !u!114 &-7562557766248476408
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0ed0c4e68ee98946bb5016adda42373, type: 3}
+  m_Name: BodyTextQuestContent
+  m_EditorClassIdentifier: 
+  m_contentID: -1
+  m_bodyText:
+    m_text: '<color=#00008B>Return rag doll to the Lost Soul.
+
+      </color>'
+    m_stringAsset: {fileID: 0}
+    m_textTable: {fileID: 0}
+    m_textTableFieldID: 0
 --- !u!114 &-5439130608683494618
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -178,8 +218,8 @@ MonoBehaviour:
     m_childIndexList: 01000000
     m_canvasRect:
       serializedVersion: 2
-      x: 120
-      y: 45
+      x: 30
+      y: 48
       width: 120
       height: 48
   - m_id:
@@ -220,15 +260,64 @@ MonoBehaviour:
       - m_contentList: []
     m_conditionSet:
       m_conditionList:
-      - {fileID: 4227675799696569084}
+      - {fileID: 6103276918184914707}
       m_conditionCountMode: 1
       m_minConditionCount: 0
       m_numTrueConditions: 0
     m_childIndexList: 02000000
     m_canvasRect:
       serializedVersion: 2
-      x: 113
-      y: 140
+      x: 30
+      y: 120
+      width: 120
+      height: 48
+  - m_id:
+      m_text: Condition 3
+      m_stringAsset: {fileID: 0}
+      m_textTable: {fileID: 0}
+      m_textTableFieldID: 0
+    m_internalName:
+      m_text: 
+      m_stringAsset: {fileID: 0}
+      m_textTable: {fileID: 0}
+      m_textTableFieldID: 0
+    m_nodeType: 4
+    m_isOptional: 0
+    m_state: 0
+    m_speaker:
+      m_text: 
+      m_stringAsset: {fileID: 0}
+      m_textTable: {fileID: 0}
+      m_textTableFieldID: 0
+    m_stateInfoList:
+    - m_actionList: []
+      m_categorizedContentList:
+      - m_contentList: []
+      - m_contentList: []
+      - m_contentList: []
+    - m_actionList: []
+      m_categorizedContentList:
+      - m_contentList: []
+      - m_contentList:
+        - {fileID: -7562557766248476408}
+      - m_contentList: []
+    - m_actionList: []
+      m_categorizedContentList:
+      - m_contentList: []
+      - m_contentList:
+        - {fileID: -8506915149526201739}
+      - m_contentList: []
+    m_conditionSet:
+      m_conditionList:
+      - {fileID: 595459520456544348}
+      m_conditionCountMode: 1
+      m_minConditionCount: 0
+      m_numTrueConditions: 0
+    m_childIndexList: 03000000
+    m_canvasRect:
+      serializedVersion: 2
+      x: 30
+      y: 191
       width: 120
       height: 48
   - m_id:
@@ -273,36 +362,14 @@ MonoBehaviour:
     m_childIndexList: 
     m_canvasRect:
       serializedVersion: 2
-      x: 113
-      y: 208
+      x: 30
+      y: 264
       width: 120
       height: 35
   m_textTable: {fileID: 0}
   m_goalEntityTypeName: 
   m_nextContentID: 0
---- !u!114 &1854707804949126836
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0ed0c4e68ee98946bb5016adda42373, type: 3}
-  m_Name: BodyTextQuestContent
-  m_EditorClassIdentifier: 
-  m_contentID: -1
-  m_bodyText:
-    m_text: 'A lost soul asked me to find the doll to lift the curse. I will probably
-      find it near the necromancer''s old writings.
-
-
-      Objectives:'
-    m_stringAsset: {fileID: 0}
-    m_textTable: {fileID: 0}
-    m_textTableFieldID: 0
---- !u!114 &4227675799696569084
+--- !u!114 &595459520456544348
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -328,19 +395,70 @@ MonoBehaviour:
     m_textTable: {fileID: 0}
     m_textTableFieldID: 0
   m_message:
-    m_text: cvvc
+    m_text: Conversation
     m_stringAsset: {fileID: 0}
     m_textTable: {fileID: 0}
     m_textTableFieldID: 0
   m_parameter:
-    m_text: cvcv
+    m_text: Lost Soul
     m_stringAsset: {fileID: 0}
     m_textTable: {fileID: 0}
     m_textTableFieldID: 0
   m_value:
-    m_valueType: 0
+    m_valueType: 2
     m_intValue: 0
-    m_stringValue: 
+    m_stringValue: Doll Returned
+--- !u!114 &1854707804949126836
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0ed0c4e68ee98946bb5016adda42373, type: 3}
+  m_Name: BodyTextQuestContent
+  m_EditorClassIdentifier: 
+  m_contentID: -1
+  m_bodyText:
+    m_text: 'A lost soul asked me to find the doll to lift the curse. I will probably
+      find it near the necromancer''s old writings.
+
+
+      Objectives:'
+    m_stringAsset: {fileID: 0}
+    m_textTable: {fileID: 0}
+    m_textTableFieldID: 0
+--- !u!114 &6103276918184914707
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 454a224532e98c345b0316cce992f9ec, type: 3}
+  m_Name: UISItemAmountQuestCondition
+  m_EditorClassIdentifier: 
+  m_alreadyTrue: 0
+  itemName:
+    m_text: Rag Doll
+    m_stringAsset: {fileID: 0}
+    m_textTable: {fileID: 0}
+    m_textTableFieldID: 0
+  inventoryName:
+    m_text: 
+    m_stringAsset: {fileID: 0}
+    m_textTable: {fileID: 0}
+    m_textTableFieldID: 0
+  comparisonMode: 0
+  amount:
+    m_valueType: 0
+    m_literalValue: 1
+    m_counterIndex: 0
+  counterIndex: -1
 --- !u!114 &7884673065215425044
 MonoBehaviour:
   m_ObjectHideFlags: 1
