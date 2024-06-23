@@ -3033,6 +3033,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3307892671443191821, guid: 5ded6ea6f4dcb274a97936ac31122504, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4131720429182603796, guid: 5ded6ea6f4dcb274a97936ac31122504, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -3048,6 +3052,14 @@ PrefabInstance:
     - target: {fileID: 4557346330742451930, guid: 5ded6ea6f4dcb274a97936ac31122504, type: 3}
       propertyPath: m_Color.r
       value: 0.63681006
+      objectReference: {fileID: 0}
+    - target: {fileID: 4983684195316790551, guid: 5ded6ea6f4dcb274a97936ac31122504, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -948273614, guid: 3ee7ba078ff6e394db9a901179459b8f, type: 3}
+    - target: {fileID: 4983684195316790551, guid: 5ded6ea6f4dcb274a97936ac31122504, type: 3}
+      propertyPath: m_Color.a
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5083599278910857299, guid: 5ded6ea6f4dcb274a97936ac31122504, type: 3}
       propertyPath: m_Sprite
@@ -3070,6 +3082,14 @@ PrefabInstance:
       value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 6642505206408842781, guid: 5ded6ea6f4dcb274a97936ac31122504, type: 3}
+      propertyPath: wallSprite
+      value: 
+      objectReference: {fileID: 1695200939759818818}
+    - target: {fileID: 6642505206408842781, guid: 5ded6ea6f4dcb274a97936ac31122504, type: 3}
+      propertyPath: wallsImage
+      value: 
+      objectReference: {fileID: 962644955279086540}
+    - target: {fileID: 6642505206408842781, guid: 5ded6ea6f4dcb274a97936ac31122504, type: 3}
       propertyPath: isActiveByDefault
       value: 0
       objectReference: {fileID: 0}
@@ -3077,6 +3097,10 @@ PrefabInstance:
       propertyPath: m_WorldMapManager
       value: 
       objectReference: {fileID: 5086869290109244510}
+    - target: {fileID: 6642505206408842781, guid: 5ded6ea6f4dcb274a97936ac31122504, type: 3}
+      propertyPath: roomImageReplacer
+      value: 
+      objectReference: {fileID: -948273614, guid: 3ee7ba078ff6e394db9a901179459b8f, type: 3}
     - target: {fileID: 6677924187437663224, guid: 5ded6ea6f4dcb274a97936ac31122504, type: 3}
       propertyPath: m_Name
       value: Room 14
@@ -3179,6 +3203,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5ded6ea6f4dcb274a97936ac31122504, type: 3}
+--- !u!1 &962644955279086540 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4131720429182603796, guid: 5ded6ea6f4dcb274a97936ac31122504, type: 3}
+  m_PrefabInstance: {fileID: 3750040169434841560}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1695200939759818818 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2561494785199626650, guid: 5ded6ea6f4dcb274a97936ac31122504, type: 3}
+  m_PrefabInstance: {fileID: 3750040169434841560}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 962644955279086540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &4860941908972084574 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8610699157097356422, guid: 5ded6ea6f4dcb274a97936ac31122504, type: 3}

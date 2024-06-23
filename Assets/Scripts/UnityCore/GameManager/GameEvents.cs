@@ -111,6 +111,15 @@ public class GameEvents : MonoBehaviour
         }
     }
 
+    public event Action onHiddenRoomRevealed;
+    public void HiddenRoomRevealed()
+    {
+        if (onHiddenRoomRevealed != null)
+        {
+            onHiddenRoomRevealed();
+        }
+    }
+
     public event Action<string> onAreaChanged;
     public void AreaChanged(string areaName)
     {

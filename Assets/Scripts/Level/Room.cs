@@ -10,6 +10,7 @@ public class Room : MonoBehaviour
     [SerializeField] public int m_roomID = 0;
     [SerializeField] private GameObject m_playerIcon;
     [SerializeField] private bool isActiveByDefault = false;
+    [SerializeField] private GameObject wallsImage;
 
     IEnumerator Start()
     {
@@ -42,4 +43,6 @@ public class Room : MonoBehaviour
     {
         gameObject.SetActive(true);
     }
+
+    public void ReplaceWallsImage() => wallsImage.GetComponent<Image>().enabled = false;
 }

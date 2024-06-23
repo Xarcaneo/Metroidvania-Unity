@@ -14,6 +14,7 @@ public class WorldMapManager : MonoBehaviour
     {
         GameEvents.Instance.onRoomChanged += OnRoomChanged;
         GameEvents.Instance.onGameSaving += OnGameSaving;
+        GameEvents.Instance.onHiddenRoomRevealed += HiddenRoomRevealed;
 
         foreach (Transform child in transform)
         {
@@ -38,7 +39,10 @@ public class WorldMapManager : MonoBehaviour
     {
         GameEvents.Instance.onGameSaving -= OnGameSaving;
         GameEvents.Instance.onRoomChanged -= OnRoomChanged;
+        GameEvents.Instance.onHiddenRoomRevealed -= HiddenRoomRevealed;
     }
+
+    private void HiddenRoomRevealed() => m_activeRoom.ReplaceWallsImage();
 
     private void OnRoomChanged(int levelID)
     {
