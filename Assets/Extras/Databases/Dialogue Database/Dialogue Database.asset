@@ -2544,7 +2544,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: "uisAddItem(\"Big Health Potion\", 1, \"\", \"\");\nVariable[\"Loyal_servant.gave_health_potion\"]
+      userScript: "uisAddItem(\"Big Health Potion\", 1, \"\", \"\");\nVariable[\"Loyal_Servant.gave_health_potion\"]
         = true;\r"
       onExecute:
         m_PersistentCalls:
@@ -2552,7 +2552,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 540
-        y: 370
+        y: 368.86362
         width: 160
         height: 30
     - id: 11
@@ -2712,8 +2712,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 2.405201}
-    canvasZoom: 0.76000017
+    canvasScrollPosition: {x: 65.849174, y: 49.533745}
+    canvasZoom: 0.88000005
   - id: 4
     fields:
     - title: Title

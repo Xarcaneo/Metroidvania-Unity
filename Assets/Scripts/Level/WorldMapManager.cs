@@ -42,7 +42,7 @@ public class WorldMapManager : MonoBehaviour
         GameEvents.Instance.onHiddenRoomRevealed -= HiddenRoomRevealed;
     }
 
-    private void HiddenRoomRevealed() => m_activeRoom.ReplaceWallsImage();
+    private void HiddenRoomRevealed() => m_activeRoom.RevealHidden();
 
     private void OnRoomChanged(int levelID)
     {

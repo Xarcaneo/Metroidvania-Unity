@@ -1,7 +1,5 @@
 using PixelCrushers.DialogueSystem;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,39 +8,47 @@ public class Room : MonoBehaviour
     [SerializeField] public int m_roomID = 0;
     [SerializeField] private GameObject m_playerIcon;
     [SerializeField] private bool isActiveByDefault = false;
-    [SerializeField] private GameObject wallsImage;
+    [SerializeField] private Image wallsImage;
+    [SerializeField] private Sprite hiddenWallsImage;
+
+    private bool hasVisited = false;
+    private bool hiddenRevealed = false;
 
     IEnumerator Start()
     {
         yield return new WaitForEndOfFrame();
-        var roomState = DialogueLua.GetVariable("Room." + m_roomID).asBool;
 
-        if (roomState || isActiveByDefault) gameObject.SetActive(true);
-        else gameObject.SetActive(false);
+        hasVisited = DialogueLua.GetVariable("Room." + m_roomID).asBool;
+        hiddenRevealed = DialogueLua.GetVariable("Room.Hidden." + m_roomID).asBool;
 
-        WorldMapManager worldMapManager = FindObjectOfType<WorldMapManager>();
-        if (worldMapManager != null && !worldMapManager.m_rooms.Contains(this))
-        {
-            Debug.LogError("The current Room " + m_roomID + " component is not in the m_rooms list of the WorldMapManager script.");
-        }
+        gameObject.SetActive(hasVisited || isActiveByDefault);
+        UpdateRoomAppearance();
     }
 
     public void SetRoomActive()
     {
-        if(m_playerIcon) 
+        if (m_playerIcon)
             m_playerIcon.SetActive(true);
-
-        ShowRoom();
+        gameObject.SetActive(true);
     }
+
     public void SetRoomInActive()
     {
         m_playerIcon.SetActive(false);
     }
 
-    private void ShowRoom()
+    public void RevealHidden()
     {
-        gameObject.SetActive(true);
+        hiddenRevealed = true;
+        DialogueLua.SetVariable("Room.Hidden." + m_roomID, true);
+        UpdateRoomAppearance();
     }
 
-    public void ReplaceWallsImage() => wallsImage.GetComponent<Image>().enabled = false;
+    private void UpdateRoomAppearance()
+    {
+        if (hiddenRevealed)
+        {
+            wallsImage.sprite = hiddenWallsImage;
+        }
+    }
 }
