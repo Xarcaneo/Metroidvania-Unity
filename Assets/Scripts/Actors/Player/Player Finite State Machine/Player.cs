@@ -1,3 +1,4 @@
+using Opsive.UltimateInventorySystem.Core.InventoryCollections;
 using Opsive.UltimateInventorySystem.Equipping;
 using PixelCrushers.QuestMachine;
 using UnityEngine;
@@ -45,6 +46,7 @@ public class Player : Entity
     public QuestJournal questJournal;
     private IEquipper m_Equipper;
     public IEquipper Equipper => m_Equipper;
+    public Inventory m_inventory;
     #endregion
 
     #region Instance Variables
@@ -69,7 +71,8 @@ public class Player : Entity
 
         m_Equipper = GetComponent<IEquipper>();
         questJournal = GetComponent<QuestJournal>();
-        
+        m_inventory = GetComponent<Inventory>();
+
         IdleState = new PlayerIdleState(this, StateMachine, playerData, "idle");
         MoveState = new PlayerMoveState(this, StateMachine, playerData, "move");
         JumpState = new PlayerJumpState(this, StateMachine, playerData, "inAir");
