@@ -22,6 +22,8 @@ namespace Opsive.UltimateInventorySystem.UI.Item
         [SerializeField] protected Text m_ItemNameText;
         [Tooltip("The description text.")]
         [SerializeField] protected Text m_DescriptionText;
+        [Tooltip("The item rarity icon.")]
+        [SerializeField] protected RarityIcon m_ItemRarityIcon;
         [Tooltip("The text displayed when no item is not selected.")]
         [SerializeField] protected string m_NoItemSelectedMessage = "No Item selected";
         [Tooltip("The text displayed when the item does not have a description.")]
@@ -41,6 +43,9 @@ namespace Opsive.UltimateInventorySystem.UI.Item
                 out var descriptionValue)) 
             {
                 m_DescriptionText.text = m_DescriptionTextTable.GetFieldTextForLanguage(descriptionValue, Localization.Language);
+
+                ItemInfo.Item.TryGetAttributeValue<ItemRarity>("Rarity",out var rarity);
+                m_ItemRarityIcon.SetValue(rarity);
             } 
             else 
             {
@@ -54,7 +59,7 @@ namespace Opsive.UltimateInventorySystem.UI.Item
         protected override void OnClear()
         {
             m_ItemNameText.text = m_NoItemSelectedMessage;
-
+            m_ItemRarityIcon.Clear();
             m_DescriptionText.text = "";
         }
     }

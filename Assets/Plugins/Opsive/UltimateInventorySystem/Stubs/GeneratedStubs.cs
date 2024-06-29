@@ -120,6 +120,9 @@ namespace Opsive.UltimateInventorySystem.Stubs
 			new Opsive.UltimateInventorySystem.Core.AttributeBinding<Opsive.UltimateInventorySystem.Core.DataStructures.ItemDefinitionAmountsWithCategory>();
 			new Opsive.UltimateInventorySystem.Core.AttributeSystem.Attribute<Opsive.UltimateInventorySystem.Core.DataStructures.ItemDefinitionAmountsWithCategory>();
 			new Opsive.UltimateInventorySystem.Core.GenericAttributeBinding<Opsive.UltimateInventorySystem.Core.DataStructures.ItemDefinitionAmountsWithCategory>();
+			new Opsive.UltimateInventorySystem.Core.AttributeBinding<ItemRarity>();
+			new Opsive.UltimateInventorySystem.Core.AttributeSystem.Attribute<ItemRarity>();
+			new Opsive.UltimateInventorySystem.Core.GenericAttributeBinding<ItemRarity>();
 #pragma warning restore 0618
 		}
 	}
