@@ -49,11 +49,11 @@ namespace Opsive.UltimateInventorySystem.Demo.UI.VisualStructures.AttributeUIs
 
             if (m_PlayerCharacter == null)
             {
-                m_Equipper = FindObjectOfType<Equipper>();
+                m_Equipper =  FindObjectOfType<Equipper>();
             }
             else
             {
-                m_Equipper = m_PlayerCharacter.Equipper as Equipper;
+                m_Equipper = m_PlayerCharacter.GetComponent<Equipper>();
             }
 
             if (m_Equipper == null)
