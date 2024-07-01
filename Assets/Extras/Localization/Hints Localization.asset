@@ -17,7 +17,7 @@ MonoBehaviour:
   - en
   - pl
   m_languageValues: 000000000100000002000000
-  m_fieldKeys: 080000000a0000000b0000000d0000000f000000090000000e000000100000000c000000
+  m_fieldKeys: 080000000a0000000b0000000d0000000f000000090000000e000000100000000c00000011000000
   m_fieldValues:
   - m_fieldName: '#000'
     m_keys: 000000000100000002000000
@@ -75,5 +75,10 @@ MonoBehaviour:
     - 
     - Dash with <color="red>{Action}</color> to conquer obstacles when jumping <color="red>{Jump}</color>.
     - 
+  - m_fieldName: '#010'
+    m_keys: 0000000001000000
+    m_values:
+    - 
+    - 'Red dots above an enemy''s health bar indicate their strength level.       '
   m_nextLanguageID: 3
-  m_nextFieldID: 17
+  m_nextFieldID: 18

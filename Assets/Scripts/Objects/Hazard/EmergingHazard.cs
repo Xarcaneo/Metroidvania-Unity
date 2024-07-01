@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EmergingHazard : Hazard
@@ -11,7 +10,8 @@ public class EmergingHazard : Hazard
     }
 
     [SerializeField] private SpikeState startingState = SpikeState.Hidden;
-    [SerializeField] private float animationSpeed = 1.0f;
+    [SerializeField] private float activeInterval = 2.0f;  // Time in seconds spikes are active
+    [SerializeField] private float hiddenDuration = 0.1f;  // Duration spikes are hidden before becoming active again
 
     private Animator animator;
 
@@ -25,15 +25,17 @@ public class EmergingHazard : Hazard
 
     private void Start()
     {
-        animator.speed = animationSpeed;
+        StartCoroutine(SpikeActivationCoroutine());
+    }
 
-        if (startingState == SpikeState.Active)
+    private IEnumerator SpikeActivationCoroutine()
+    {
+        while (true)
         {
             SetActiveState();
-        }
-        else
-        {
+            yield return new WaitForSeconds(activeInterval); // Spike is active for a set duration
             SetHiddenState();
+            yield return new WaitForSeconds(hiddenDuration); // Spike is hidden for a short duration
         }
     }
 
@@ -45,18 +47,5 @@ public class EmergingHazard : Hazard
     private void SetActiveState()
     {
         animator.Play(ActiveStateName);
-    }
-
-    // Animation event callback for state transition
-    private void OnAnimationComplete()
-    {
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName(HiddenStateName))
-        {
-            SetActiveState();
-        }
-        else if (animator.GetCurrentAnimatorStateInfo(0).IsName(ActiveStateName))
-        {
-            SetHiddenState();
-        }
     }
 }

@@ -55,8 +55,6 @@ namespace Menu
         {
             base.OnDisable();
 
-            m_QuestMonitor.SetActive(false);
-
             GameEvents.Instance.onPlayerDied -= OnPlayerDied;
             GameEvents.Instance.onToggleUI -= OnToggleUI;
             GameEvents.Instance.onNewSession -= onNewSession;
@@ -77,6 +75,8 @@ namespace Menu
             if (SaveSystem.HasSavedGameInSlot(GameManager.Instance.currentSaveSlot))
                 SaveSystem.SaveToSlot(GameManager.Instance.currentSaveSlot);
 
+            m_QuestMonitor.SetActive(false);
+
             DeathMenu.Open();
         }
         public void OnPausePressed()
@@ -95,7 +95,11 @@ namespace Menu
             }
         }
 
-        private void onNewSession() => gameHotbar.gameObject.SetActive(true);
+        private void onNewSession()
+        {
+            gameHotbar.gameObject.SetActive(true);
+            m_QuestMonitor.SetActive(false);
+        }
         private void onPuzzleClose(string puzzleName)
         {
             if (SceneManager.GetSceneByName(puzzleName).isLoaded)

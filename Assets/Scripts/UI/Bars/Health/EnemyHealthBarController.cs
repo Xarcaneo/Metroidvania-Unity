@@ -5,10 +5,9 @@ using UnityEngine;
 public class EnemyHealthBarController : HealthBarController
 {
     [SerializeField] GameObject body;
-    [SerializeField] Vector3 yAdjust = new Vector3(0, 2, 0);
+    [SerializeField] Vector3 yAdjust = new Vector3(-0.65f, 1, 0);
 
     private Animator Anim;
-    private bool isUIShowed = false;
 
     virtual public void Start()
     {
@@ -27,25 +26,14 @@ public class EnemyHealthBarController : HealthBarController
     {
         base.UpdateHealthUI();
         SetUIPosition();
-    }
-
-    public override void TakeDamage(float damage)
-    {
-        base.TakeDamage(damage);
-
-        if (!isUIShowed)
-        {
-            Anim.Play("FadeIn");
-            isUIShowed = true;
-        }
 
         if (health <= 0)
         {
             stats.Damaged -= TakeDamage;
             Anim.Play("FadeOut");
         }
-
     }
+
 
     private void SetUIPosition()
     {

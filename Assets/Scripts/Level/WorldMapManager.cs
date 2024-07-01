@@ -13,7 +13,8 @@ public class WorldMapManager : MonoBehaviour
     public void Initialize()
     {
         GameEvents.Instance.onRoomChanged += OnRoomChanged;
-        GameEvents.Instance.onGameSaving += OnGameSaving;
+        GameEvents.Instance.onGameSaving += SaveRoomStatus;
+        GameEvents.Instance.onPlayerDied += SaveRoomStatus;
         GameEvents.Instance.onHiddenRoomRevealed += HiddenRoomRevealed;
 
         foreach (Transform child in transform)
@@ -26,7 +27,7 @@ public class WorldMapManager : MonoBehaviour
         }
     }
     
-    private void OnGameSaving()
+    private void SaveRoomStatus()
     {
         foreach (var room in m_rooms)
         {
@@ -37,8 +38,9 @@ public class WorldMapManager : MonoBehaviour
 
     public void Deinitialize()
     {
-        GameEvents.Instance.onGameSaving -= OnGameSaving;
+        GameEvents.Instance.onGameSaving -= SaveRoomStatus;
         GameEvents.Instance.onRoomChanged -= OnRoomChanged;
+        GameEvents.Instance.onPlayerDied -= SaveRoomStatus;
         GameEvents.Instance.onHiddenRoomRevealed -= HiddenRoomRevealed;
     }
 
