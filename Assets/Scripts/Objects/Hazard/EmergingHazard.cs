@@ -9,7 +9,6 @@ public class EmergingHazard : Hazard
         Active
     }
 
-    [SerializeField] private SpikeState startingState = SpikeState.Hidden;
     [SerializeField] private float activeInterval = 2.0f;  // Time in seconds spikes are active
     [SerializeField] private float hiddenDuration = 0.1f;  // Duration spikes are hidden before becoming active again
 

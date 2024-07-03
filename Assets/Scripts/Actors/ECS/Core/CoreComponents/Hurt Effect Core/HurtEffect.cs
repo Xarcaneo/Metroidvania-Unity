@@ -26,12 +26,16 @@ public class HurtEffect : CoreComponent
         DamageReceiver.OnDamage += damageEventHandler;
     }
 
-    private void OnDisable()
-    {
-        DamageReceiver.OnDamage -= damageEventHandler;
-    }
+    private void OnDestroy() => DamageReceiver.OnDamage -= damageEventHandler;
+
     public void TurnOnEffect()
     {
+        if (!gameObject.activeInHierarchy)
+        {
+            // If the game object is inactive, do not proceed with the coroutine.
+            return;
+        }
+
         // If the flashRoutine is not null, then it is currently running.
         if (effectRoutine != null)
         {

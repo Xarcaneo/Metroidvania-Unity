@@ -17,6 +17,8 @@ public class PlayerHealthBarController : HealthBarController
             health = stats.GetMaxHealth();
             _isNewSession = false;
         }
+        else
+            stats.SetHealth(health);
 
         stats.Damaged += TakeDamage;
         stats.Healed += RestoreHealth;

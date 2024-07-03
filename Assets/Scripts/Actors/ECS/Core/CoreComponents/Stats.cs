@@ -84,6 +84,8 @@ public class Stats : CoreComponent
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
     }
 
+    public void SetHealth(float amount) => currentHealth = amount;
+
     public void DecreaseMana(float amount)
     {
         currentMana -= amount;
