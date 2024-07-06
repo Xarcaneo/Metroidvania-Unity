@@ -2,7 +2,6 @@
 
 using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
 namespace PixelCrushers
@@ -57,7 +56,6 @@ namespace PixelCrushers
         {
             base.Awake();
             m_guid = Guid.NewGuid().ToString();
-            m_key = "SpawnedObjectManager_" + SceneManager.GetActiveScene().name;
         }
 
         public override void Start()

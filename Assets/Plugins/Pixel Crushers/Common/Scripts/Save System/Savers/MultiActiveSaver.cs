@@ -25,7 +25,7 @@ namespace PixelCrushers
 
         [Tooltip("GameObjects to watch.")]
         [SerializeField]
-        protected GameObject[] m_gameObjectsToWatch;
+        private GameObject[] m_gameObjectsToWatch;
 
         public GameObject[] gameObjectsToWatch
         {

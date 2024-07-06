@@ -1,7 +1,12 @@
 #if USE_CINEMACHINE
-#if UNITY_2017_1_OR_NEWER
 using UnityEngine;
+#if UNITY_6000_0_OR_NEWER
+using Unity.Cinemachine;
+using CinemachineCam = Unity.Cinemachine.CinemachineCamera;
+#else
 using Cinemachine;
+using CinemachineCam = Cinemachine.CinemachineVirtualCamera;
+#endif
 
 namespace PixelCrushers.DialogueSystem.SequencerCommands
 {
@@ -24,7 +29,8 @@ namespace PixelCrushers.DialogueSystem.SequencerCommands
         {
             bool all = false;
             string allExcept = string.Empty;
-            CinemachineVirtualCamera vcam = null;
+            bool checkExcept = false;
+            CinemachineCam vcam = null;
 
             var vcamName = GetParameter(0);
             if (vcamName == "all")
@@ -34,12 +40,13 @@ namespace PixelCrushers.DialogueSystem.SequencerCommands
             else if (vcamName.StartsWith("except:"))
             {
                 all = true;
+                checkExcept = true;
                 allExcept = vcamName.Substring("except:".Length);
             }
             else
             {
                 var subject = GetSubject(0);
-                vcam = (subject != null) ? subject.GetComponent<CinemachineVirtualCamera>() : null;
+                vcam = (subject != null) ? subject.GetComponent<CinemachineCam>() : null;
             }
             var priority = GetParameterAsInt(1, 999);
             var cut = string.Equals(GetParameter(2), "cut", System.StringComparison.OrdinalIgnoreCase);
@@ -54,25 +61,37 @@ namespace PixelCrushers.DialogueSystem.SequencerCommands
 
                 // Handle cut:
                 var shouldIRestoreBlendMode = false;
-                var cinemachineBrain = cut ? FindObjectOfType<CinemachineBrain>() : null;
+                var cinemachineBrain = cut ? GameObjectUtility.FindFirstObjectByType<CinemachineBrain>() : null;
+#if UNITY_6000_0_OR_NEWER
+                var previousBlendStyle = CinemachineBlendDefinition.Styles.EaseInOut;
+#else
                 var previousBlendStyle = CinemachineBlendDefinition.Style.EaseInOut;
+#endif
                 var previousBlendTime = 0f;
                 if (cut && cinemachineBrain != null)
                 {
                     shouldIRestoreBlendMode = !hasRecordedBlendMode;
                     hasRecordedBlendMode = true;
+#if UNITY_6000_0_OR_NEWER
+                    previousBlendStyle = cinemachineBrain.DefaultBlend.Style;
+                    previousBlendTime = cinemachineBrain.DefaultBlend.Time;
+                    cinemachineBrain.DefaultBlend.Style = CinemachineBlendDefinition.Styles.Cut;
+                    cinemachineBrain.DefaultBlend.Time = 0;
+#else
                     previousBlendStyle = cinemachineBrain.m_DefaultBlend.m_Style;
                     previousBlendTime = cinemachineBrain.m_DefaultBlend.m_Time;
                     cinemachineBrain.m_DefaultBlend.m_Style = CinemachineBlendDefinition.Style.Cut;
                     cinemachineBrain.m_DefaultBlend.m_Time = 0;
+#endif
                     cinemachineBrain.enabled = false;
                 }
 
                 if (all)
                 {
-                    var allVcams = FindObjectsOfType<CinemachineVirtualCamera>();
-                    foreach (CinemachineVirtualCamera avcam in allVcams)
+                    var allVcams = GameObjectUtility.FindObjectsByType<CinemachineCam>();
+                    foreach (CinemachineCam avcam in allVcams)
                     {
+                        if (checkExcept && string.Equals(avcam.name, allExcept)) continue;
                         avcam.Priority = priority;
                         if (cut)
                         {
@@ -98,8 +117,13 @@ namespace PixelCrushers.DialogueSystem.SequencerCommands
                     if (shouldIRestoreBlendMode)
                     {
                         yield return null;
+#if UNITY_6000_0_OR_NEWER
+                        cinemachineBrain.DefaultBlend.Style = previousBlendStyle;
+                        cinemachineBrain.DefaultBlend.Time = previousBlendTime;
+#else
                         cinemachineBrain.m_DefaultBlend.m_Style = previousBlendStyle;
                         cinemachineBrain.m_DefaultBlend.m_Time = previousBlendTime;
+#endif
                         hasRecordedBlendMode = false;
                     }
                 }
@@ -110,5 +134,4 @@ namespace PixelCrushers.DialogueSystem.SequencerCommands
     }
 
 }
-#endif
 #endif

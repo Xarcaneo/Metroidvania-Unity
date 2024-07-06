@@ -81,6 +81,7 @@ namespace PixelCrushers.DialogueSystem.Articy
             DrawOtherScriptsField();
             DrawUseTechnicalNamesToggle();
             DrawDirectConversationLinksToEntry1Toggle();
+            DrawConversationsForLooseFlow();
             DrawDefaultActorsToggle();
             DrawConvertMarkupToggle();
             DrawSplitPipesToggle();
@@ -148,10 +149,10 @@ namespace PixelCrushers.DialogueSystem.Articy
         /// </summary>
         private void DrawStageDirectionsPopup()
         {
-            var mode = prefs.StageDirectionsAreSequences ? ConverterPrefs.StageDirModes.Sequences : ConverterPrefs.StageDirModes.NotSequences;
+            var mode = prefs.StageDirectionsMode;
             mode = (ConverterPrefs.StageDirModes)EditorGUILayout.EnumPopup(new GUIContent("Stage Directions are ", "Specify whether articy:draft Stage Directions contain Dialogue System sequences."), mode, GUILayout.Width(300));
             EditorGUI.BeginChangeCheck();
-            prefs.StageDirectionsAreSequences = (mode == ConverterPrefs.StageDirModes.Sequences);
+            prefs.StageDirectionsMode = mode;
             if (EditorGUI.EndChangeCheck()) ConverterPrefsTools.Save(prefs);
         }
 
@@ -227,16 +228,35 @@ namespace PixelCrushers.DialogueSystem.Articy
         private void DrawDocumentsSubmenu()
         {
             EditorGUI.BeginChangeCheck();
-            prefs.DocumentsSubmenu = EditorGUILayout.TextField(new GUIContent("Documents Submenu", "When converting documents to conversations, group them under this submenu. Leave blank for no submenu."), prefs.DocumentsSubmenu);
+            prefs.ImportDocuments = EditorGUILayout.Toggle(new GUIContent("Import Documents",
+                "Also import documents as conversations."), prefs.ImportDocuments);
+            if (prefs.ImportDocuments)
+            {
+                prefs.DocumentsSubmenu = EditorGUILayout.TextField(new GUIContent("Documents Submenu", "When converting documents to conversations, group them under this submenu. Leave blank for no submenu."), prefs.DocumentsSubmenu);
+            }
             prefs.TextTableDocument = EditorGUILayout.TextField(new GUIContent("TextTable Document", "Optional name of document whose text should be written to a TextTable asset."), prefs.TextTableDocument);
             if (EditorGUI.EndChangeCheck()) ConverterPrefsTools.Save(prefs);
         }
 
         private void DrawUseTechnicalNamesToggle()
         {
-            prefs.UseTechnicalNames = EditorGUILayout.Toggle(new GUIContent("Use Technical Names", 
+            prefs.UseTechnicalNames = EditorGUILayout.Toggle(new GUIContent("Use Technical Names",
                 "Name dialogue database elements by their articy technical name instead of display name."),
                 prefs.UseTechnicalNames);
+            if (!prefs.UseTechnicalNames)
+            {
+                prefs.SetDisplayName = EditorGUILayout.Toggle(new GUIContent("Set Display Name",
+                    "Set Display Name field to entity's default display name."),
+                    prefs.SetDisplayName);
+            }
+            if (!prefs.SetDisplayName)
+            {
+                prefs.CustomDisplayName = EditorGUILayout.Toggle(new GUIContent("Custom DisplayName",
+                    "Instead of using entity's name as Display Name, use a custom field named 'DisplayName'."),
+                    prefs.CustomDisplayName);
+            }
+            prefs.IncludeFeatureNameInFields = EditorGUILayout.Toggle(new GUIContent("Include Feature Names",
+                "Add containing feature name to property name when importing properties as fields."), prefs.IncludeFeatureNameInFields);
         }
 
         private void DrawDirectConversationLinksToEntry1Toggle()
@@ -244,6 +264,13 @@ namespace PixelCrushers.DialogueSystem.Articy
             prefs.DirectConversationLinksToEntry1 = EditorGUILayout.Toggle(new GUIContent("Conv. Links to Entry 1",
                 "When a link points to a conversation's START node, redirect it to entry 1 instead."),
                 prefs.DirectConversationLinksToEntry1);
+        }
+
+        private void DrawConversationsForLooseFlow()
+        {
+            prefs.CreateConversationsForLooseFlow = EditorGUILayout.Toggle(new GUIContent("Conv. Loose Flow Frags",
+                "Make conversations for flow fragments that aren't inside dialogues."),
+                prefs.CreateConversationsForLooseFlow);
         }
 
         private void DrawDefaultActorsToggle()
@@ -264,7 +291,16 @@ namespace PixelCrushers.DialogueSystem.Articy
         {
             prefs.SplitTextOnPipes = EditorGUILayout.Toggle(new GUIContent("Split Text On Pipes",
                 "When dialogue text contains pipe characters ( | ), split into separate dialogue entry nodes."),
-                prefs.ConvertMarkupToRichText);
+                prefs.SplitTextOnPipes);
+            if (prefs.SplitTextOnPipes)
+            {
+                prefs.TrimWhitespace = EditorGUILayout.Toggle(new GUIContent("  Trim Whitespace",
+                "Trim whitespace around pipes."),
+                prefs.TrimWhitespace);
+            }
+            prefs.ReorderIDs = EditorGUILayout.Toggle(new GUIContent("Reorder IDs",
+                "Reorder internal dialogue entry IDs depth-first after importing."), 
+                prefs.ReorderIDs);
         }
 
         /// <summary>
@@ -324,7 +360,10 @@ namespace PixelCrushers.DialogueSystem.Articy
         private void DrawReadXMLButton()
         {
             EditorGUI.BeginDisabledGroup(string.IsNullOrEmpty(prefs.ProjectFilename));
-            if (GUILayout.Button(new GUIContent("Read XML", "Load the XML file so you can adjust conversion parameters such as what to include in the dialogue database and which actor is the player. Also click this button after re-exporting from articy to reload the updated XML file."), GUILayout.Width(120))) ReviewArticyProject();
+            if (GUILayout.Button(new GUIContent("Read XML", "Load the XML file so you can adjust conversion parameters such as what to include in the dialogue database and which actor is the player. Also click this button after re-exporting from articy to reload the updated XML file."), GUILayout.Width(120)))
+            {
+                ReviewArticyProject();
+            }
             EditorGUI.EndDisabledGroup();
         }
 
@@ -750,6 +789,7 @@ namespace PixelCrushers.DialogueSystem.Articy
                     {
                         ArticyConverter.ConvertArticyDataToDatabase(articyData, prefs, template, database);
                         ArticyEditorTools.FindPortraitTexturesInAssetDatabase(articyData, prefs.PortraitFolder, database);
+                        if (prefs.ReorderIDs) ReorderIDs(database);
                         EditorUtility.SetDirty(database);
                         ConvertTextTable(assetName);
                         AssetDatabase.SaveAssets();
@@ -770,16 +810,21 @@ namespace PixelCrushers.DialogueSystem.Articy
             EditorUtility.DisplayProgressBar("Importing articy:draft project", info, progress);
         }
 
-        /// <summary>
-        /// Loads the dialogue database if it already exists and overwrite is ticked; otherwise creates a new one.
-        /// </summary>
-        /// <returns>
-        /// The database.
-        /// </returns>
-        /// <param name='filename'>
-        /// Asset filename.
-        /// </param>
-        private DialogueDatabase LoadOrCreateDatabase(string filename)
+        private void ReorderIDs(DialogueDatabase database)
+        {
+            DialogueDatabaseEditorTools.ReorderIDsInConversationsDepthFirst(database);
+        }
+
+    /// <summary>
+    /// Loads the dialogue database if it already exists and overwrite is ticked; otherwise creates a new one.
+    /// </summary>
+    /// <returns>
+    /// The database.
+    /// </returns>
+    /// <param name='filename'>
+    /// Asset filename.
+    /// </param>
+    private DialogueDatabase LoadOrCreateDatabase(string filename)
         {
             var assetPath = prefs.OutputFolder;
             if (!assetPath.EndsWith("/")) assetPath += "/";
@@ -788,7 +833,11 @@ namespace PixelCrushers.DialogueSystem.Articy
             if (prefs.Overwrite)
             {
                 database = AssetDatabase.LoadAssetAtPath(assetPath, typeof(DialogueDatabase)) as DialogueDatabase;
-                if (database != null) database.Clear();
+                if (database != null)
+                {
+                    database.Clear();
+                    database.SyncAll();
+                }
             }
             if (database == null)
             {

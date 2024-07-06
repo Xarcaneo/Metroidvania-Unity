@@ -3,6 +3,7 @@
 using PixelCrushers.DialogueSystem.UnityGUI;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace PixelCrushers.DialogueSystem
 {
@@ -23,7 +24,8 @@ namespace PixelCrushers.DialogueSystem
     /// object will receive an "OnUse" message.
     /// 
     /// You can hook into SelectedUsableObject and DeselectedUsableObject to get notifications
-    /// when the current target has changed.
+    /// when the current target has changed and Enabled and Disabled when the component is 
+    /// enabled or disabled.
     /// </summary>
     [AddComponentMenu("")] // Use wrapper.
     public class ProximitySelector : MonoBehaviour
@@ -85,8 +87,11 @@ namespace PixelCrushers.DialogueSystem
         /// <summary>
         /// The default use message. This can be overridden in the target's Usable component.
         /// </summary>
-        [Tooltip("Default use message. This can be overridden in the target's Usable component.")]
-        public string defaultUseMessage = "(spacebar to interact)";
+        [Tooltip("Default use message; can be overridden in the target's Usable component")]
+        [SerializeField]
+        [FormerlySerializedAs("defaultUseMessage")]
+        private string m_defaultUseMessage = "(spacebar to interact)";
+        public virtual string defaultUseMessage { get => m_defaultUseMessage; set => m_defaultUseMessage = value; }
 
         /// <summary>
         /// The key that sends an OnUse message.
@@ -138,6 +143,10 @@ namespace PixelCrushers.DialogueSystem
         /// </summary>
         public event DeselectedUsableObjectDelegate DeselectedUsableObject = null;
 
+        public event System.Action Enabled = null;
+
+        public event System.Action Disabled = null;
+
         /// <summary>
         /// Gets the current usable.
         /// </summary>
@@ -156,7 +165,7 @@ namespace PixelCrushers.DialogueSystem
         /// <summary>
         /// Keeps track of which usable objects' triggers the selector is currently inside.
         /// </summary>
-        protected List<Usable> usablesInRange = new List<Usable>();
+        public List<Usable> usablesInRange = new List<Usable>();
 
         /// <summary>
         /// The current usable that will receive an OnUse message if the player hits the use button.
@@ -191,6 +200,16 @@ namespace PixelCrushers.DialogueSystem
                 }
             }
 #endif
+        }
+
+        protected virtual void OnEnable()
+        {
+            Enabled?.Invoke();
+        }
+
+        protected virtual void OnDisable()
+        {
+            Disabled?.Invoke();
         }
 
         public virtual void Start()
