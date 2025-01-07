@@ -1,43 +1,88 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Handles entity movement, including velocity control, facing direction, and physics interactions.
+/// </summary>
 public class Movement : CoreComponent
 {
+    #region Components
+
+    /// <summary>
+    /// Reference to the entity's Rigidbody2D component.
+    /// </summary>
+    private Rigidbody2D rb;
+    public Rigidbody2D RB => rb;
+
+    #endregion
+
+    #region Movement Properties
+
+    /// <summary>
+    /// Current facing direction of the entity (1 for right, -1 for left).
+    /// </summary>
+    private int facingDirection = 1;
+    public int FacingDirection => facingDirection;
+
+    /// <summary>
+    /// Whether the entity can change its velocity.
+    /// </summary>
+    public bool CanSetVelocity { get; set; } = true;
+
+    /// <summary>
+    /// Current velocity of the entity.
+    /// </summary>
+    private Vector2 workspace;
+    public Vector2 CurrentVelocity { get; private set; }
+
+    #endregion
+
+    #region Movement Settings
+
+    /// <summary>
+    /// Maximum slope angle the entity can traverse.
+    /// </summary>
+    [SerializeField] private float maxSlopeAngle = 45;
+
+    #endregion
+
+    #region Dependencies
+
     private CollisionSenses CollisionSenses { get => collisionSenses ?? core.GetCoreComponent(ref collisionSenses); }
     private CollisionSenses collisionSenses;
 
-    public Rigidbody2D RB { get; private set; }
-    public int FacingDirection { get; private set; }
-    public bool CanSetVelocity { get; set; }
+    #endregion
 
-    public Vector2 CurrentVelocity { get; private set; }
+    #region Unity Lifecycle
 
-    private Vector2 workspace;
-
+    /// <summary>
+    /// Initializes required components and default values.
+    /// </summary>
     protected override void Awake()
     {
         base.Awake();
-
-        RB = GetComponentInParent<Rigidbody2D>();
-
-        FacingDirection = 1;
-
+        rb = GetComponentInParent<Rigidbody2D>();
+        facingDirection = 1;
         CanSetVelocity = true;
     }
 
+    /// <summary>
+    /// Updates the current velocity from the Rigidbody2D.
+    /// </summary>
     public override void LogicUpdate()
     {
-        CurrentVelocity = RB.velocity;
+        CurrentVelocity = rb.velocity;
     }
 
-    #region Set Functions
-    public void SetVelocityZero()
-    {
-        workspace = Vector2.zero;
-        SetFinalVelocity();
-    }
+    #endregion
 
+    #region Movement Control
+
+    /// <summary>
+    /// Sets velocity using a single velocity value and direction angle.
+    /// </summary>
+    /// <param name="velocity">The velocity magnitude</param>
+    /// <param name="angle">The direction angle as a Vector2</param>
+    /// <param name="direction">The facing direction (1 or -1)</param>
     public void SetVelocity(float velocity, Vector2 angle, int direction)
     {
         angle.Normalize();
@@ -45,6 +90,12 @@ public class Movement : CoreComponent
         SetFinalVelocity();
     }
 
+    /// <summary>
+    /// Sets velocity using separate x and y velocities and direction angle.
+    /// </summary>
+    /// <param name="velocity">The velocity vector</param>
+    /// <param name="angle">The direction angle as a Vector2</param>
+    /// <param name="direction">The facing direction (1 or -1)</param>
     public void SetVelocity(Vector2 velocity, Vector2 angle, int direction)
     {
         angle.Normalize();
@@ -52,53 +103,104 @@ public class Movement : CoreComponent
         SetFinalVelocity();
     }
 
+    /// <summary>
+    /// Sets the x component of the velocity.
+    /// </summary>
+    /// <param name="velocity">The new x velocity</param>
     public void SetVelocityX(float velocity)
     {
         workspace.Set(velocity, CurrentVelocity.y);
         SetFinalVelocity();
     }
 
+    /// <summary>
+    /// Sets the x component of the velocity while on a slope.
+    /// </summary>
+    /// <param name="velocity">The new x velocity</param>
     public void SetVelocityXOnSlope(float velocity)
     {
         workspace.Set(velocity * CollisionSenses.slopeNormalPerp.x, velocity * CollisionSenses.slopeNormalPerp.y);
         SetFinalVelocity();
     }
 
+    /// <summary>
+    /// Sets the y component of the velocity.
+    /// </summary>
+    /// <param name="velocity">The new y velocity</param>
     public void SetVelocityY(float velocity)
     {
         workspace.Set(CurrentVelocity.x, velocity);
         SetFinalVelocity();
     }
 
-    private void SetFinalVelocity()
+    /// <summary>
+    /// Sets the velocity to zero.
+    /// </summary>
+    public void SetVelocityZero()
     {
-        if (CanSetVelocity)
-        {
-            RB.velocity = workspace;
-            CurrentVelocity = workspace;
-        }
+        workspace = Vector2.zero;
+        SetFinalVelocity();
     }
 
+    /// <summary>
+    /// Checks if the entity should flip based on the input direction.
+    /// </summary>
+    /// <param name="xInput">The input direction</param>
     public void CheckIfShouldFlip(int xInput)
     {
-        if (xInput != 0 && xInput != FacingDirection)
+        if (xInput != 0 && xInput != facingDirection)
         {
             Flip();
         }
     }
 
+    /// <summary>
+    /// Flips the entity's facing direction.
+    /// </summary>
     public void Flip()
     {
-        FacingDirection *= -1;
-        RB.transform.localScale = new Vector3(FacingDirection, 1, 1);
+        facingDirection *= -1;
+        rb.transform.localScale = new Vector3(rb.transform.localScale.x * -1, rb.transform.localScale.y, rb.transform.localScale.z);
     }
 
+    /// <summary>
+    /// Sets the entity's facing direction.
+    /// </summary>
+    /// <param name="direction">The new facing direction (1 or -1)</param>
     public void Flip(int direction)
     {
         if (direction != 0)
         {
-            FacingDirection = direction;
-            RB.transform.localScale = new Vector3(direction, 1, 1);
+            facingDirection = direction;
+            rb.transform.localScale = new Vector3(Mathf.Abs(rb.transform.localScale.x) * direction, rb.transform.localScale.y, rb.transform.localScale.z);
+        }
+    }
+
+    /// <summary>
+    /// Checks if the entity can climb a slope at its current position.
+    /// </summary>
+    /// <returns>True if the slope is climbable, false otherwise</returns>
+    public bool CanClimbSlope()
+    {
+        if (!CollisionSenses.Ground)
+            return true;
+
+        return CollisionSenses.slopeDownAngle <= maxSlopeAngle;
+    }
+
+    #endregion
+
+    #region Private Methods
+
+    /// <summary>
+    /// Applies the calculated velocity to the Rigidbody2D if allowed.
+    /// </summary>
+    private void SetFinalVelocity()
+    {
+        if (CanSetVelocity)
+        {
+            rb.velocity = workspace;
+            CurrentVelocity = workspace;
         }
     }
 

@@ -2,82 +2,156 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Handles all collision detection and environmental sensing for an entity.
+/// Provides methods to check for ground, walls, ledges, ladders, and platforms.
+/// </summary>
 public class CollisionSenses : CoreComponent
 {
+    #region Dependencies
+
+    /// <summary>
+    /// Reference to the Movement component for directional checks.
+    /// </summary>
     private Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
     private Movement movement;
 
-    public float slopeDownAngle;
-    public Vector2 slopeNormalPerp;
-
-    #region Check Transforms
-
-    public Transform GroundCheck
-    {
-        get => GenericNotImplementedError<Transform>.TryGet(groundCheck, core.transform.parent.name);
-        private set => groundCheck = value;
-    }
-    public Transform WallCheck
-    {
-        get => GenericNotImplementedError<Transform>.TryGet(wallCheck, core.transform.parent.name);
-        private set => wallCheck = value;
-    }
-    public Transform LedgeCheckHorizontal
-    {
-        get => GenericNotImplementedError<Transform>.TryGet(ledgeCheckHorizontal, core.transform.parent.name);
-        private set => ledgeCheckHorizontal = value;
-    }
-    public Transform LedgeCheckVertical
-    {
-        get => GenericNotImplementedError<Transform>.TryGet(ledgeCheckVertical, core.transform.parent.name);
-        private set => ledgeCheckVertical = value;
-    }
-
-    public Transform LadderCheck
-    {
-        get => GenericNotImplementedError<Transform>.TryGet(ladderCheck, core.transform.parent.name);
-        private set => ladderCheck = value;
-    }
-
-    public Transform PlatformCheck
-    {
-        get => GenericNotImplementedError<Transform>.TryGet(platformCheck, core.transform.parent.name);
-        private set => platformCheck = value;
-    }
-
-    public float GroundCheckDistance { get => groundCheckDistance; set => groundCheckDistance = value; }
-    public float WallCheckDistance { get => wallCheckDistance; set => wallCheckDistance = value; }
-    public LayerMask WhatIsGround { get => whatIsGround; set => whatIsGround = value; }
-    public LayerMask WhatIsWall { get => whatIsWall; set => whatIsWall = value; }
-    public LayerMask WhatIsGripWall { get => whatIsGripWall; set => whatIsGripWall = value; }
-    public LayerMask WhatIsPlatform { get => whatIsPlatform; set => whatIsPlatform = value; }
-
-    [SerializeField] private Transform groundCheck;
-    [SerializeField] private Transform wallCheck;
-    [SerializeField] private Transform ledgeCheckHorizontal;
-    [SerializeField] private Transform ledgeCheckVertical;
-    [SerializeField] private Transform ladderCheck;
-    [SerializeField] private Transform platformCheck;
-
-    [SerializeField] private float groundCheckDistance;
-    [SerializeField] private float groundCheckOffset;
-    [SerializeField] private float wallCheckDistance;
-    [SerializeField] private float ladderCheckRadius;
-    [SerializeField] private float ladderTopDistance;
-    [SerializeField] private float ladderBottomDistance;
-    [SerializeField] private float slopeCheckDistance;
-    [SerializeField] private float platformCheckRadius;
-    [SerializeField] private BoxCollider2D boxCollider2D;
-
-    [SerializeField] private LayerMask whatIsGround;
-    [SerializeField] private LayerMask whatIsWall;
-    [SerializeField] private LayerMask whatIsLadder;
-    [SerializeField] private LayerMask whatIsGripWall;
-    [SerializeField] private LayerMask whatIsPlatform;
-
-    private int raycastDirection;
     #endregion
 
+    #region Slope Properties
+
+    /// <summary>
+    /// Current downward angle of the slope the entity is on.
+    /// </summary>
+    public float slopeDownAngle;
+
+    /// <summary>
+    /// Perpendicular normal vector of the current slope.
+    /// Used for movement calculations on slopes.
+    /// </summary>
+    public Vector2 slopeNormalPerp;
+
+    #endregion
+
+    #region Check Points
+
+    /// <summary>
+    /// Transform marking the point for ground detection.
+    /// </summary>
+    [SerializeField, Tooltip("Point from which ground checks originate")]
+    private Transform groundCheck;
+    public Transform GroundCheck => GenericNotImplementedError<Transform>.TryGet(groundCheck, core.transform.parent.name);
+
+    /// <summary>
+    /// Transform marking the point for wall detection.
+    /// </summary>
+    [SerializeField, Tooltip("Point from which wall checks originate")]
+    private Transform wallCheck;
+    public Transform WallCheck => GenericNotImplementedError<Transform>.TryGet(wallCheck, core.transform.parent.name);
+
+    /// <summary>
+    /// Transform marking the point for horizontal ledge detection.
+    /// </summary>
+    [SerializeField, Tooltip("Point from which horizontal ledge checks originate")]
+    private Transform ledgeCheckHorizontal;
+    public Transform LedgeCheckHorizontal => GenericNotImplementedError<Transform>.TryGet(ledgeCheckHorizontal, core.transform.parent.name);
+
+    /// <summary>
+    /// Transform marking the point for vertical ledge detection.
+    /// </summary>
+    [SerializeField, Tooltip("Point from which vertical ledge checks originate")]
+    private Transform ledgeCheckVertical;
+    public Transform LedgeCheckVertical => GenericNotImplementedError<Transform>.TryGet(ledgeCheckVertical, core.transform.parent.name);
+
+    /// <summary>
+    /// Transform marking the point for ladder detection.
+    /// </summary>
+    [SerializeField, Tooltip("Point from which ladder checks originate")]
+    private Transform ladderCheck;
+    public Transform LadderCheck => GenericNotImplementedError<Transform>.TryGet(ladderCheck, core.transform.parent.name);
+
+    /// <summary>
+    /// Transform marking the point for platform detection.
+    /// </summary>
+    [SerializeField, Tooltip("Point from which platform checks originate")]
+    private Transform platformCheck;
+    public Transform PlatformCheck => GenericNotImplementedError<Transform>.TryGet(platformCheck, core.transform.parent.name);
+
+    #endregion
+
+    #region Check Distances and Offsets
+
+    [Header("Check Distances")]
+    [SerializeField, Tooltip("Distance to check for ground below")] 
+    private float groundCheckDistance;
+    public float GroundCheckDistance { get => groundCheckDistance; set => groundCheckDistance = value; }
+
+    [SerializeField, Tooltip("Horizontal offset for ground check points")] 
+    private float groundCheckOffset;
+
+    [SerializeField, Tooltip("Distance to check for walls")] 
+    private float wallCheckDistance;
+    public float WallCheckDistance { get => wallCheckDistance; set => wallCheckDistance = value; }
+
+    [SerializeField, Tooltip("Radius of the ladder detection circle")] 
+    private float ladderCheckRadius;
+
+    [SerializeField, Tooltip("Distance to check above for ladder top")] 
+    private float ladderTopDistance;
+
+    [SerializeField, Tooltip("Distance to check below for ladder bottom")] 
+    private float ladderBottomDistance;
+
+    [SerializeField, Tooltip("Distance to check for slopes")] 
+    private float slopeCheckDistance;
+
+    [SerializeField, Tooltip("Radius of the platform detection circle")] 
+    private float platformCheckRadius;
+
+    #endregion
+
+    #region Collision Layers
+
+    [Header("Layer Masks")]
+    [SerializeField, Tooltip("Layers considered as ground")] 
+    private LayerMask whatIsGround;
+    public LayerMask WhatIsGround { get => whatIsGround; set => whatIsGround = value; }
+
+    [SerializeField, Tooltip("Layers considered as walls")] 
+    private LayerMask whatIsWall;
+    public LayerMask WhatIsWall { get => whatIsWall; set => whatIsWall = value; }
+
+    [SerializeField, Tooltip("Layers considered as ladders")] 
+    private LayerMask whatIsLadder;
+
+    [SerializeField, Tooltip("Layers considered as grippable walls")] 
+    private LayerMask whatIsGripWall;
+    public LayerMask WhatIsGripWall { get => whatIsGripWall; set => whatIsGripWall = value; }
+
+    [SerializeField, Tooltip("Layers considered as platforms")] 
+    private LayerMask whatIsPlatform;
+    public LayerMask WhatIsPlatform { get => whatIsPlatform; set => whatIsPlatform = value; }
+
+    #endregion
+
+    #region Components
+
+    [SerializeField, Tooltip("Reference to the entity's box collider")] 
+    private BoxCollider2D boxCollider2D;
+
+    #endregion
+
+    #region Private Fields
+
+    private int raycastDirection;
+
+    #endregion
+
+    #region Collision Checks
+
+    /// <summary>
+    /// Checks if the entity is touching the ground using two raycasts.
+    /// </summary>
     public bool Ground
     {
         get
@@ -92,70 +166,76 @@ public class CollisionSenses : CoreComponent
         }
     }
 
-    public bool WallFront
-    {
-        get => Physics2D.Raycast(WallCheck.position, Vector2.right * Movement.FacingDirection, wallCheckDistance, whatIsWall);
-    }
-    public bool WallBack
-    {
-        get => Physics2D.Raycast(WallCheck.position, Vector2.right * -Movement.FacingDirection, wallCheckDistance, whatIsWall);
-    }
-    public bool GripWall
-    {
-        get => Physics2D.Raycast(WallCheck.position, Vector2.right * Movement.FacingDirection, wallCheckDistance, whatIsGripWall);
-    }
-    public bool LedgeVertical
-    {
-        get => Physics2D.Raycast(ledgeCheckVertical.position, Vector2.down, wallCheckDistance, whatIsGround);
-    }
-    public bool LedgeHorizontal
-    {
-        get => Physics2D.Raycast(LedgeCheckHorizontal.position, Vector2.right * Movement.FacingDirection, wallCheckDistance, whatIsGround);
-    }
-    public bool Ladder
-    {
-        get => Physics2D.OverlapCircle(LadderCheck.position, ladderCheckRadius, whatIsLadder);
-    }
-    public bool LadderBottom
-    {
-        get => Physics2D.OverlapCircle(LadderCheck.position - new Vector3(0, ladderBottomDistance, 0), ladderCheckRadius, whatIsLadder);
-    }
+    /// <summary>
+    /// Checks if there is a wall in front of the entity.
+    /// </summary>
+    public bool WallFront => Physics2D.Raycast(WallCheck.position, Vector2.right * Movement.FacingDirection, wallCheckDistance, whatIsWall);
 
-    public bool LadderTop
-    {
-        get => Physics2D.OverlapCircle(LadderCheck.position - new Vector3(0, ladderTopDistance, 0), ladderCheckRadius, whatIsLadder);
-    }
+    /// <summary>
+    /// Checks if there is a wall behind the entity.
+    /// </summary>
+    public bool WallBack => Physics2D.Raycast(WallCheck.position, Vector2.right * -Movement.FacingDirection, wallCheckDistance, whatIsWall);
 
-    public bool Platform
-    {
-        get => Physics2D.OverlapCircle(platformCheck.position, platformCheckRadius, whatIsPlatform);
-    }
+    /// <summary>
+    /// Checks if there is a grippable wall in front of the entity.
+    /// </summary>
+    public bool GripWall => Physics2D.Raycast(WallCheck.position, Vector2.right * Movement.FacingDirection, wallCheckDistance, whatIsGripWall);
 
+    /// <summary>
+    /// Checks if there is a vertical ledge in front of the entity.
+    /// </summary>
+    public bool LedgeVertical => Physics2D.Raycast(ledgeCheckVertical.position, Vector2.down, wallCheckDistance, whatIsGround);
+
+    /// <summary>
+    /// Checks if there is a horizontal ledge in front of the entity.
+    /// </summary>
+    public bool LedgeHorizontal => Physics2D.Raycast(LedgeCheckHorizontal.position, Vector2.right * Movement.FacingDirection, wallCheckDistance, whatIsGround);
+
+    /// <summary>
+    /// Checks if there is a ladder at the check point.
+    /// </summary>
+    public bool Ladder => Physics2D.OverlapCircle(LadderCheck.position, ladderCheckRadius, whatIsLadder);
+
+    /// <summary>
+    /// Checks if there is a ladder below the entity.
+    /// </summary>
+    public bool LadderBottom => Physics2D.OverlapCircle(LadderCheck.position - new Vector3(0, ladderBottomDistance, 0), ladderCheckRadius, whatIsLadder);
+
+    /// <summary>
+    /// Checks if there is a ladder above the entity.
+    /// </summary>
+    public bool LadderTop => Physics2D.OverlapCircle(LadderCheck.position - new Vector3(0, ladderTopDistance, 0), ladderCheckRadius, whatIsLadder);
+
+    /// <summary>
+    /// Checks if there is a platform below the entity.
+    /// </summary>
+    public bool Platform => Physics2D.OverlapCircle(platformCheck.position, platformCheckRadius, whatIsPlatform);
+
+    #endregion
+
+    #region Slope Detection
+
+    /// <summary>
+    /// Performs slope detection and calculates slope angles.
+    /// </summary>
+    /// <returns>True if the entity is on a slope, false otherwise.</returns>
     public bool SlopeCheck()
     {
         var isOnSlope = false;
 
         Vector2 slopeRaycastOrigin = Movement.RB.transform.position - (Vector3)(new Vector2(0.0f, boxCollider2D.size.y / 2));
-
-        // Offset the raycast position based on player's facing direction
         Vector2 offsetDirection = (Movement != null && Movement.FacingDirection == 1) ? Vector2.right : Vector2.left;
         Vector2 offsetRaycastOrigin = slopeRaycastOrigin + offsetDirection * 0.5f;
 
-        // Perform the second raycast to check for slope
         RaycastHit2D slopeHit = Physics2D.Raycast(offsetRaycastOrigin, Vector2.down, slopeCheckDistance, whatIsGround);
-
 
         if (slopeHit)
         {
             Vector2 slopeNormalPerp = Vector2.Perpendicular(slopeHit.normal).normalized;
-            //Debug.DrawRay(slopeHit.point, slopeNormalPerp, Color.yellow);
 
             if (slopeNormalPerp.y > 0.1 || slopeNormalPerp.y < -0.1)
             {
-                if (slopeNormalPerp.y > 0)
-                    raycastDirection = 1;
-                else if (slopeNormalPerp.y < 0)
-                    raycastDirection = -1;
+                raycastDirection = slopeNormalPerp.y > 0 ? 1 : -1;
             }
         }
 
@@ -165,31 +245,22 @@ public class CollisionSenses : CoreComponent
         if (groundHit)
         {
             slopeNormalPerp = Vector2.Perpendicular(groundHit.normal).normalized;
-
             slopeDownAngle = Vector2.Angle(groundHit.normal, Vector2.up);
- 
-            //Debug.DrawRay(groundHit.point, slopeNormalPerp, Color.blue);
-            //Debug.DrawRay(groundHit.point, groundHit.normal, Color.green);
- 
-            if (slopeDownAngle != 0.0)
-            {
-                isOnSlope = true;
-            }
+            isOnSlope = slopeDownAngle != 0.0f;
         }
 
         return isOnSlope;
     }
 
+    /// <summary>
+    /// Gets the position of the ladder the entity is currently on.
+    /// </summary>
+    /// <returns>The ladder's position, or null if not on a ladder.</returns>
     public Vector3? GetLadderPosition()
     {
         Collider2D collider = Physics2D.OverlapCircle(LadderCheck.position, ladderCheckRadius, whatIsLadder);
-        if (collider != null)
-        {
-            return collider.transform.position;
-        }
-        else
-        {
-            return null;
-        }
+        return collider?.transform.position;
     }
+
+    #endregion
 }

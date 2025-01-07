@@ -1,31 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Base class for all hazardous objects in the game that can instantly kill entities.
-/// Handles basic collision detection and instant kill functionality.
+/// Concrete implementation of BaseHazard that can be used directly in the game.
+/// This class provides the basic hazard functionality for instantly killing entities.
+/// Attach this component to any GameObject that should act as a hazard in the game.
 /// </summary>
-public abstract class Hazard : MonoBehaviour
+/// <remarks>
+/// When an entity collides with this hazard:
+/// - If the entity implements IDamageable, it will be instantly killed
+/// - If the entity is a player, their essence spawning will be disabled
+/// Make sure the GameObject has a Collider2D component with "Is Trigger" enabled.
+/// </remarks>
+public class Hazard : BaseHazard
 {
     /// <summary>
-    /// Called when something collides with the hazard.
-    /// Instantly kills any IDamageable entity and prevents essence spawning for players.
+    /// Called when a Collider2D enters this hazard's trigger collider.
+    /// Handles the instant kill functionality by calling the base class implementation.
     /// </summary>
-    /// <param name="collision">The collider that triggered the collision.</param>
-    protected virtual void OnTriggerEnter2D(Collider2D collision)
+    /// <param name="collision">The Collider2D that entered the trigger.</param>
+    protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        // Check if the colliding object can be damaged
-        IDamageable damageable = collision.GetComponent<IDamageable>();
-        if (damageable != null)
-        {
-            damageable.InstantKill();
-        }
-
-        // Special handling for player death (no essence spawning)
-        if (collision.CompareTag("Player"))
-        {
-            Player.Instance.Core.GetCoreComponent<PlayerDeath>().canSpawnEssence = false;
-        }
+        base.OnTriggerEnter2D(collision);
     }
 }
