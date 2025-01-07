@@ -69,15 +69,7 @@ public class Core : MonoBehaviour
     /// <returns>The first component of the specified type, or null if not found</returns>
     public T GetCoreComponent<T>() where T : CoreComponent
     {
-        var comp = CoreComponents.OfType<T>().FirstOrDefault();
-
-        if (comp == null)
-        {
-            Debug.LogWarning($"{typeof(T)} not found on {transform.parent.name}");
-            return null;
-        }
-
-        return comp;
+        return CoreComponents.OfType<T>().FirstOrDefault();
     }
 
     /// <summary>
