@@ -1,67 +1,105 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Detects entities within a specified area, considering line of sight and obstacles.
+/// Provides visual debugging tools for entity detection and obstacle checking.
+/// </summary>
 public class EntityDetector : CoreComponent
 {
-    public float detectionWidth;    // width of the detection area
-    public float detectionHeight;   // height of the detection area
-    public LayerMask entityLayer;   // layer(s) of the entity to detect
-    public LayerMask obstacleLayer; // layer(s) of obstacles (e.g. walls) that can block the entity's view
-    public int entityToRight;
+    #region Detection Settings
+    [Header("Detection Settings")]
+    [SerializeField, Tooltip("Width of the detection area")]
+    public float detectionWidth;
 
+    [SerializeField, Tooltip("Height of the detection area")]
+    public float detectionHeight;
+
+    [SerializeField, Tooltip("Layer mask for entities that can be detected")]
+    public LayerMask entityLayer;
+
+    [SerializeField, Tooltip("Layer mask for obstacles that block detection")]
+    public LayerMask obstacleLayer;
+    #endregion
+
+    #region State
+    /// <summary>
+    /// Direction to the detected entity (1 for right, -1 for left)
+    /// </summary>
+    public int entityToRight { get; private set; }
+    #endregion
+
+    /// <summary>
+    /// Checks if an entity is within detection range and not blocked by obstacles
+    /// </summary>
+    /// <returns>True if entity is detected and in line of sight</returns>
     public bool EntityInRange()
     {
-        // Check for any collider in the detection area that matches the entityLayer
-        Collider2D entityCollider = Physics2D.OverlapBox(transform.position, new Vector2(detectionWidth, detectionHeight), 0, entityLayer);
+        // Check for entities in detection area
+        Collider2D entityCollider = Physics2D.OverlapBox(
+            transform.position,
+            new Vector2(detectionWidth, detectionHeight),
+            0,
+            entityLayer
+        );
 
-        if (entityCollider != null)
+        if (entityCollider == null)
         {
-            // check if there is a wall blocking the entity's view of the detector
-            RaycastHit2D hit = Physics2D.Linecast(transform.position, entityCollider.transform.position, obstacleLayer);
+            return false;
+        }
 
-            if (hit.collider != null)
-            {
-                // there is an obstacle between the entity and detector, do not detect entity
-                return false;
-            }
-            else
-            {
-                // entity is within range and not blocked by an obstacle
-                entityToRight = entityCollider.transform.position.x > transform.position.x ? 1 : -1;
-                return true;
-            }
-        }
-        else
+        // Check for obstacles between detector and entity
+        RaycastHit2D hit = Physics2D.Linecast(
+            transform.position,
+            entityCollider.transform.position,
+            obstacleLayer
+        );
+
+        if (hit.collider != null)
         {
-            // entity is not within range
-            return  false;
+            // View blocked by obstacle
+            return false;
         }
+
+        // Entity detected and in line of sight
+        entityToRight = entityCollider.transform.position.x > transform.position.x ? 1 : -1;
+        return true;
     }
 
     private void OnDrawGizmos()
     {
-        // Draw the detection area
+        // Draw detection area
         Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(transform.position, new Vector2(detectionWidth, detectionHeight));
+        Gizmos.DrawWireCube(
+            transform.position,
+            new Vector2(detectionWidth, detectionHeight)
+        );
 
-        // Check for any collider in the detection area that matches the entityLayer
-        Collider2D entityCollider = Physics2D.OverlapBox(transform.position, new Vector2(detectionWidth, detectionHeight), 0, entityLayer);
+        // Check for entities in detection area
+        Collider2D entityCollider = Physics2D.OverlapBox(
+            transform.position,
+            new Vector2(detectionWidth, detectionHeight),
+            0,
+            entityLayer
+        );
 
-        if (entityCollider != null)
+        if (entityCollider == null) return;
+
+        // Draw line to detected entity
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawLine(transform.position, entityCollider.transform.position);
+
+        // Check and visualize obstacle detection
+        RaycastHit2D hit = Physics2D.Linecast(
+            transform.position,
+            entityCollider.transform.position,
+            obstacleLayer
+        );
+
+        if (hit.collider != null)
         {
-            // Draw a line to the detected entity
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawLine(transform.position, entityCollider.transform.position);
-
-            // Check if there is an obstacle blocking the view
-            RaycastHit2D hit = Physics2D.Linecast(transform.position, entityCollider.transform.position, obstacleLayer);
-            if (hit.collider != null)
-            {
-                // Draw a red line indicating the obstacle
-                Gizmos.color = Color.red;
-                Gizmos.DrawLine(transform.position, hit.point);
-            }
+            // Draw line to obstacle
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(transform.position, hit.point);
         }
     }
 }

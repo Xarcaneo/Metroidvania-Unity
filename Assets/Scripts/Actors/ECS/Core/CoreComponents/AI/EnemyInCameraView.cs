@@ -1,24 +1,46 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Manages enemy behavior based on camera visibility.
+/// Controls sound muting when enemy is out of camera view.
+/// </summary>
 public class EnemyInCameraView : CoreComponent
 {
-    [SerializeField] private Transform enemyTransform;
-    [SerializeField] private PlayAnimationEvents m_PlayAnimationEvents;
+    #region References
+    [Header("Required References")]
+    [SerializeField, Tooltip("Transform of the enemy being tracked")]
+    private Transform enemyTransform;
 
-    // Reference to the camera
+    [SerializeField, Tooltip("Component for controlling animation events")]
+    private PlayAnimationEvents m_PlayAnimationEvents;
+
+    /// <summary>
+    /// Reference to the main camera in the scene
+    /// </summary>
     private Camera mainCamera;
-    
-    void Start()
+    #endregion
+
+    private void Start()
     {
-        // Find the main camera in the scene
         mainCamera = Camera.main;
 
-        // Check if the main camera was found
         if (mainCamera == null)
         {
-            Debug.LogError("No camera tagged 'MainCamera' found in the scene!");
+            Debug.LogError($"[{gameObject.name}] No camera tagged 'MainCamera' found in the scene!");
+            enabled = false;
+            return;
+        }
+
+        if (enemyTransform == null)
+        {
+            Debug.LogError($"[{gameObject.name}] Enemy transform reference is missing!");
+            enabled = false;
+            return;
+        }
+
+        if (m_PlayAnimationEvents == null)
+        {
+            Debug.LogWarning($"[{gameObject.name}] PlayAnimationEvents reference is missing - sound control will be disabled.");
         }
     }
 
@@ -26,19 +48,15 @@ public class EnemyInCameraView : CoreComponent
     {
         base.LogicUpdate();
 
-        if (m_PlayAnimationEvents)
-        {
-            // Check if the enemy's bounding box is within the camera's frustum planes
-            if (GeometryUtility.TestPlanesAABB(GeometryUtility.CalculateFrustumPlanes(mainCamera), enemyTransform.GetComponent<Renderer>().bounds))
-            {
-                // Enemy is in camera view
-                m_PlayAnimationEvents.muteSounds = false;
-            }
-            else
-            {
-                // Enemy is not in camera view
-                m_PlayAnimationEvents.muteSounds = true;
-            }
-        }
+        if (m_PlayAnimationEvents == null) return;
+
+        var renderer = enemyTransform.GetComponent<Renderer>();
+        if (renderer == null) return;
+
+        // Update sound muting based on camera visibility
+        m_PlayAnimationEvents.muteSounds = !GeometryUtility.TestPlanesAABB(
+            GeometryUtility.CalculateFrustumPlanes(mainCamera),
+            renderer.bounds
+        );
     }
 }
