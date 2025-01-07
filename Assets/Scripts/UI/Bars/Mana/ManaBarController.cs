@@ -1,80 +1,51 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class ManaBarController : MonoBehaviour
+/// <summary>
+/// Controls the mana bar UI, handling mana changes and visual updates with smooth transitions.
+/// </summary>
+public class ManaBarController : StatusBarController
 {
-    protected float mana;
-    protected float lerpTimer;
-    protected float maxMana = 100;
-    public float chipSpeed = 2f;
-
-    public Image frontManaBar;
-    public Image backManaBar;
-
-    public Stats stats;
-
-    virtual public void OnDestroy()
+    protected override void Awake()
     {
-        if (stats)
-        {
-            stats.ManaUsed -= UseMana;
-            stats.ManaRestored -= RestoreMana;
-        }
+        restoreColor = Color.blue;
+        depleteColor = Color.white;
+        base.Awake();
     }
 
-    protected void Update()
+    protected override float GetMaxValueFromStats()
     {
-        if (stats)
-        {
-            SetMaxMana(stats.GetMaxMana());
-            mana = Mathf.Clamp(mana, 0, maxMana);
-            UpdateManaUI();
-        }
+        return stats.GetMaxMana();
     }
 
-    virtual public void UpdateManaUI()
+    protected override void SubscribeToEvents()
     {
-        float fillF = frontManaBar.fillAmount;
-        float fillB = backManaBar.fillAmount;
-        float mFraction = mana / maxMana;
+        if (!stats) return;
 
-        if (fillB > mFraction)
-        {
-            frontManaBar.fillAmount = mFraction;
-            backManaBar.color = Color.white;
-            lerpTimer += Time.deltaTime;
-            float percentComplete = lerpTimer / chipSpeed;
-            percentComplete = percentComplete * percentComplete;
-            backManaBar.fillAmount = Mathf.Lerp(fillB, mFraction, percentComplete);
-        }
-
-        if (fillF < mFraction)
-        {
-            backManaBar.color = Color.blue; // Color change to represent mana
-            backManaBar.fillAmount = mFraction;
-            lerpTimer += Time.deltaTime;
-            float percentComplete = lerpTimer / chipSpeed;
-            percentComplete = percentComplete * percentComplete;
-            frontManaBar.fillAmount = Mathf.Lerp(fillF, backManaBar.fillAmount, percentComplete);
-        }
+        stats.ManaUsed += UseMana;
+        stats.ManaRestored += RestoreMana;
     }
 
-    virtual public void UseMana(float amount)
+    protected override void UnsubscribeFromEvents()
     {
-        mana -= amount;
-        lerpTimer = 0f;
+        if (!stats) return;
+
+        stats.ManaUsed -= UseMana;
+        stats.ManaRestored -= RestoreMana;
     }
 
-    public void RestoreMana(float amount)
+    /// <summary>
+    /// Reduces mana by the specified amount.
+    /// </summary>
+    public virtual void UseMana(float amount)
     {
-        mana += amount;
-        lerpTimer = 0f;
+        ReduceValue(amount);
     }
 
-    protected void SetMaxMana(float newMaxMana)
+    /// <summary>
+    /// Restores mana by the specified amount.
+    /// </summary>
+    public virtual void RestoreMana(float amount)
     {
-        maxMana = newMaxMana;
+        RestoreValue(amount);
     }
 }

@@ -1,76 +1,154 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// A hazard that shoots projectiles at regular intervals.
+/// Can shoot horizontally, vertically, or target the player directly.
+/// </summary>
 public class Shooter : MonoBehaviour
 {
-    private GameObject projectile;
-    private Projectile projectileScript;
+    [Header("References")]
+    /// <summary>
+    /// Reference to the shooter's animator component.
+    /// </summary>
+    [SerializeField] private Animator animator;
 
-    [SerializeField] private Animator m_anim;
-
+    /// <summary>
+    /// Transform marking the position where projectiles spawn.
+    /// </summary>
     [SerializeField] private Transform attackPosition;
+
+    /// <summary>
+    /// Prefab of the projectile to shoot.
+    /// </summary>
     [SerializeField] private GameObject projectilePrefab;
 
-    [SerializeField] private float projectileSpeed;
-    [SerializeField] private float projectileTravelDistance;
-    [SerializeField] private float damage;
+    [Header("Projectile Settings")]
+    /// <summary>
+    /// Speed at which projectiles travel.
+    /// </summary>
+    [SerializeField] private float projectileSpeed = 10f;
 
+    /// <summary>
+    /// Distance projectiles travel before gravity affects them.
+    /// </summary>
+    [SerializeField] private float projectileTravelDistance = 5f;
+
+    /// <summary>
+    /// Amount of damage each projectile deals.
+    /// </summary>
+    [SerializeField] private float damage = 1f;
+
+    [Header("Behavior Settings")]
+    /// <summary>
+    /// Whether the shooter fires horizontally.
+    /// </summary>
     [SerializeField] private bool horizontalProjectile;
+
+    /// <summary>
+    /// Whether the shooter fires vertically.
+    /// </summary>
     [SerializeField] private bool verticalProjectile;
+
+    /// <summary>
+    /// Time between shots in seconds.
+    /// </summary>
     [SerializeField] private float shootCooldown = 1f;
 
+    // Private fields
     private float shootTimer = 0f;
+    private IDamageable.DamageData damageData;
+    private GameObject currentProjectile;
+    private Projectile currentProjectileScript;
 
-    private IDamageable.DamageData m_damageData;
-
+    /// <summary>
+    /// Initializes damage data on awake.
+    /// </summary>
     private void Awake()
     {
-        m_damageData.SetData(null, damage);
+        damageData.SetData(null, damage);
+
+        if (animator == null)
+        {
+            animator = GetComponent<Animator>();
+            Debug.LogWarning($"[Shooter] Animator not assigned on {gameObject.name}, attempting to get component.", this);
+        }
     }
 
+    /// <summary>
+    /// Updates the shoot timer and triggers shooting animation.
+    /// </summary>
     private void Update()
     {
-        // Update the shoot timer
         shootTimer -= Time.deltaTime;
 
-        if (shootTimer <= 0)
+        if (shootTimer <= 0f)
         {
-            m_anim.SetBool("shoot", true);
-            // Reset the shoot timer
+            if (animator != null)
+            {
+                animator.SetBool("shoot", true);
+            }
             shootTimer = shootCooldown;
         }
     }
 
+    /// <summary>
+    /// Called by animation to spawn and fire a projectile.
+    /// </summary>
     public void AnimationActionTrigger()
     {
-        projectile = GameObject.Instantiate(projectilePrefab, attackPosition.position, attackPosition.rotation);
-        projectile.transform.localScale = this.transform.localScale;
+        if (projectilePrefab == null || attackPosition == null) return;
 
-        projectileScript = projectile.GetComponent<Projectile>();
+        // Spawn projectile
+        currentProjectile = Instantiate(projectilePrefab, attackPosition.position, attackPosition.rotation);
+        currentProjectile.transform.localScale = transform.localScale;
 
-        Vector2 projectileDirection = Vector2.zero;
+        currentProjectileScript = currentProjectile.GetComponent<Projectile>();
+        if (currentProjectileScript == null) return;
+
+        // Calculate projectile direction
+        Vector2 projectileDirection = CalculateProjectileDirection();
+
+        // Fire projectile
+        currentProjectileScript.FireProjectile(projectileSpeed, projectileTravelDistance, damageData, projectileDirection);
+    }
+
+    /// <summary>
+    /// Calculates the direction for the projectile based on shooter settings.
+    /// </summary>
+    /// <returns>Normalized direction vector for the projectile.</returns>
+    private Vector2 CalculateProjectileDirection()
+    {
+        Vector2 direction = Vector2.zero;
 
         if (horizontalProjectile && verticalProjectile)
         {
-            // Get player's position
-            Transform playerTransform = Player.Instance.transform;
-            Vector2 playerPosition = playerTransform.position;
-
-            // Calculate direction from projectile to player
-            projectileDirection = playerPosition - (Vector2)attackPosition.position;
+            // Target player directly
+            Transform playerTransform = Player.Instance?.transform;
+            if (playerTransform != null)
+            {
+                direction = ((Vector2)playerTransform.position - (Vector2)attackPosition.position).normalized;
+            }
         }
         else
         {
+            // Use preset direction
             if (horizontalProjectile)
-                projectileDirection.x = -(int)this.transform.localScale.x;
+                direction.x = -(int)transform.localScale.x;
             if (verticalProjectile)
-                projectileDirection.y = -(int)this.transform.localScale.y;
+                direction.y = -(int)transform.localScale.y;
         }
 
-        projectileScript.FireProjectile(projectileSpeed,
-            projectileTravelDistance, m_damageData, projectileDirection);
+        return direction;
     }
 
-    public void AnimationFinishTrigger() => m_anim.SetBool("shoot", false);
+    /// <summary>
+    /// Called by animation to reset the shooting state.
+    /// </summary>
+    public void AnimationFinishTrigger()
+    {
+        if (animator != null)
+        {
+            animator.SetBool("shoot", false);
+        }
+    }
 }

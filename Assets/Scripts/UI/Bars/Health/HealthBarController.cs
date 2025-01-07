@@ -1,80 +1,51 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class HealthBarController : MonoBehaviour
+/// <summary>
+/// Controls the health bar UI, handling health changes and visual updates with smooth transitions.
+/// </summary>
+public class HealthBarController : StatusBarController
 {
-    protected float health;
-    protected float lerpTimer;
-    protected float maxHealth = 100;
-    public float chipSpeed = 2f;
-
-    public Image frontHealthBar;
-    public Image backHealthBar;
-
-    public Stats stats;
-
-    virtual public void OnDestroy()
+    protected override void Awake()
     {
-        if (stats)
-        {
-            stats.Damaged -= TakeDamage;
-            stats.Healed -= RestoreHealth;
-        }
+        restoreColor = Color.red;
+        depleteColor = Color.white;
+        base.Awake();
     }
 
-    private void Update()
+    protected override float GetMaxValueFromStats()
     {
-        if (stats)
-        {
-            SetMaxHealth(stats.GetMaxHealth());
-            health = Mathf.Clamp(health, 0, maxHealth);
-            UpdateHealthUI();
-        }
+        return stats.GetMaxHealth();
     }
 
-    virtual public void UpdateHealthUI()
+    protected override void SubscribeToEvents()
     {
-        float fillF = frontHealthBar.fillAmount;
-        float fillB = backHealthBar.fillAmount;
-        float hFraction = health / maxHealth;
+        if (!stats) return;
 
-        if(fillB > hFraction)
-        {
-            frontHealthBar.fillAmount = hFraction;
-            backHealthBar.color = Color.white;
-            lerpTimer += Time.deltaTime;
-            float percentComplete = lerpTimer / chipSpeed;
-            percentComplete = percentComplete * percentComplete;
-            backHealthBar.fillAmount = Mathf.Lerp(fillB, hFraction, percentComplete);
-        }
-
-        if(fillF < hFraction)
-        {
-            backHealthBar.color = Color.red;
-            backHealthBar.fillAmount = hFraction;
-            lerpTimer += Time.deltaTime;
-            float percentComplete = lerpTimer / chipSpeed;
-            percentComplete = percentComplete * percentComplete;
-            frontHealthBar.fillAmount = Mathf.Lerp(fillF, backHealthBar.fillAmount, percentComplete);
-        }
+        stats.Damaged += TakeDamage;
+        stats.Healed += RestoreHealth;
     }
 
-    virtual public void TakeDamage(float damage)
+    protected override void UnsubscribeFromEvents()
     {
-        health -= damage;
-        lerpTimer = 0f;
+        if (!stats) return;
+
+        stats.Damaged -= TakeDamage;
+        stats.Healed -= RestoreHealth;
     }
 
-    public void RestoreHealth(float healAmount)
+    /// <summary>
+    /// Reduces health by the specified amount of damage.
+    /// </summary>
+    public virtual void TakeDamage(float damage)
     {
-        health += healAmount;
-        lerpTimer = 0f;
+        ReduceValue(damage);
     }
 
-    protected void SetMaxHealth(float newMaxHealth)
+    /// <summary>
+    /// Restores health by the specified amount.
+    /// </summary>
+    public virtual void RestoreHealth(float healAmount)
     {
-        maxHealth = newMaxHealth;
+        RestoreValue(healAmount);
     }
 }
