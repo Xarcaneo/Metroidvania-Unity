@@ -1,28 +1,70 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Base class for all entity states in the game.
+/// Provides core functionality for state behavior, animation handling, and event management.
+/// </summary>
 public class State
 {
-    protected Core core; // Reference to the core component of the entity
+    #region Core Components
+    /// <summary>
+    /// Reference to the core component of the entity.
+    /// </summary>
+    protected Core core;
 
-    protected Entity entity; // Reference to the entity that this state belongs to
-    protected StateMachine stateMachine; // Reference to the state machine that this state belongs to
+    /// <summary>
+    /// Reference to the entity that this state belongs to.
+    /// </summary>
+    protected Entity entity;
 
-    protected bool isAnimationFinished; // Flag that indicates whether the animation has finished playing
-    protected bool isExitingState; // Flag that indicates whether the state is currently being exited
+    /// <summary>
+    /// Reference to the state machine that manages this state.
+    /// </summary>
+    protected StateMachine stateMachine;
+    #endregion
 
-    protected float startTime; // The time that the state was entered
+    #region State Variables
+    /// <summary>
+    /// Flag that indicates whether the animation has finished playing.
+    /// </summary>
+    protected bool isAnimationFinished;
 
-    private string animBoolName; // The name of the animation boolean parameter
+    /// <summary>
+    /// Flag that indicates whether the state is currently being exited.
+    /// </summary>
+    protected bool isExitingState;
 
-    private Stats Stats { get => stats ?? core.GetCoreComponent(ref stats); } // Reference to the Stats component of the entity
-    private DamageReceiver DamageReceiver { get => damageReceiver ?? core.GetCoreComponent(ref damageReceiver); } // Reference to the Combat component of the entity
+    /// <summary>
+    /// The time that the state was entered.
+    /// </summary>
+    protected float startTime;
 
-    private Stats stats; // Reference to the Stats component of the entity (cached for efficiency)
-    private DamageReceiver damageReceiver; // Reference to the Combat component of the entity (cached for efficiency)
+    /// <summary>
+    /// The name of the animation boolean parameter.
+    /// </summary>
+    private readonly string animBoolName;
+    #endregion
 
+    #region Core Component References
+    /// <summary>
+    /// Reference to the Stats component of the entity (cached for efficiency).
+    /// </summary>
+    private Stats Stats { get => stats ?? core.GetCoreComponent(ref stats); }
+    private Stats stats;
+
+    /// <summary>
+    /// Reference to the DamageReceiver component of the entity (cached for efficiency).
+    /// </summary>
+    private DamageReceiver DamageReceiver { get => damageReceiver ?? core.GetCoreComponent(ref damageReceiver); }
+    private DamageReceiver damageReceiver;
+    #endregion
+
+    /// <summary>
+    /// Initializes a new instance of the State class.
+    /// </summary>
+    /// <param name="entity">The entity this state belongs to</param>
+    /// <param name="stateMachine">The state machine managing this state</param>
+    /// <param name="animBoolName">The animation boolean parameter name</param>
     public State(Entity entity, StateMachine stateMachine, string animBoolName)
     {
         this.entity = entity;
@@ -31,76 +73,117 @@ public class State
         core = entity.Core;
     }
 
-    ~State() // Destructor that unsubscribes from events when the state is destroyed
+    /// <summary>
+    /// Destructor that unsubscribes from events when the state is destroyed.
+    /// </summary>
+    ~State()
     {
         DamageReceiver.OnDamage -= OnDamage;
         Stats.HealthZero -= OnHealthZero;
     }
 
-    // Subscribe to events when the state is entered
+    #region Event Management
+    /// <summary>
+    /// Subscribe to events when the state is entered.
+    /// </summary>
     private void SubscribeEvents()
     {
         Stats.HealthZero += OnHealthZero;
         DamageReceiver.OnDamage += OnDamage;
     }
 
-    // Unsubscribe from events when the state is exited
+    /// <summary>
+    /// Unsubscribe from events when the state is exited.
+    /// </summary>
     private void UnsubscribeEvents()
     {
         Stats.HealthZero -= OnHealthZero;
         DamageReceiver.OnDamage -= OnDamage;
     }
+    #endregion
 
-    public virtual void Enter() // Called when the state is entered
+    #region State Lifecycle
+    /// <summary>
+    /// Called when the state is entered.
+    /// </summary>
+    public virtual void Enter()
     {
-        DoChecks(); // Perform any necessary checks before entering the state
-        entity.Anim.SetBool(animBoolName, true); // Set the animation boolean parameter to true
-        startTime = Time.time; // Record the current time
-        isAnimationFinished = false; // Reset the animation finished flag
-        isExitingState = false; // Reset the exiting state flag
-
-        // Subscribe to events
+        DoChecks();
+        entity.Anim.SetBool(animBoolName, true);
+        startTime = Time.time;
+        isAnimationFinished = false;
+        isExitingState = false;
         SubscribeEvents();
     }
 
-    public virtual void Exit() // Called when the state is exited
+    /// <summary>
+    /// Called when the state is exited.
+    /// </summary>
+    public virtual void Exit()
     {
-        entity.Anim.SetBool(animBoolName, false); // Set the animation boolean parameter to false
-        isExitingState = true; // Set the exiting state flag to true
-
-        // Unsubscribe from events
+        entity.Anim.SetBool(animBoolName, false);
+        isExitingState = true;
         UnsubscribeEvents();
     }
 
-    public virtual void LogicUpdate() // Called once per frame for logic updates
-    {
+    /// <summary>
+    /// Called once per frame for logic updates.
+    /// </summary>
+    public virtual void LogicUpdate() { }
 
+    /// <summary>
+    /// Called once per frame for physics updates.
+    /// </summary>
+    public virtual void PhysicsUpdate()
+    {
+        DoChecks();
     }
 
-    public virtual void PhysicsUpdate() // Called once per frame for physics updates
-    {
-        DoChecks(); // Perform any necessary checks before updating the physics
-    }
+    /// <summary>
+    /// Perform any necessary checks before entering or updating the state.
+    /// </summary>
+    public virtual void DoChecks() { }
+    #endregion
 
-    public virtual void DoChecks() { } // Perform any necessary checks before entering the state
+    #region Animation Events
+    /// <summary>
+    /// Called when the animation trigger is fired.
+    /// </summary>
+    public virtual void AnimationTrigger() { }
 
-    public virtual void AnimationTrigger() { } // Called when the animation trigger is fired
+    /// <summary>
+    /// Called when the animation finish trigger is fired.
+    /// </summary>
+    public virtual void AnimationFinishTrigger() => isAnimationFinished = true;
 
-    public virtual void AnimationFinishTrigger() => isAnimationFinished = true; // Called when the animation finish trigger is fired
+    /// <summary>
+    /// Called when the animation action trigger is fired.
+    /// </summary>
+    public virtual void AnimationActionTrigger() { }
+    #endregion
 
-    public virtual void AnimationActionTrigger() { } // Called when the animation action trigger is fired
-
-    public virtual void OnDamage(float amount) // Called when the entity takes damage
+    #region Event Handlers
+    /// <summary>
+    /// Called when the entity takes damage.
+    /// </summary>
+    /// <param name="amount">Amount of damage taken</param>
+    public virtual void OnDamage(float amount)
     {
         if (entity.StateMachine.CurrentState != entity.GetDeathState() && 
-                entity.StateMachine.CurrentState != entity.GetHurtState()  
-                    && entity.GetHurtState() != null)
+            entity.StateMachine.CurrentState != entity.GetHurtState() && 
+            entity.GetHurtState() != null)
+        {
             stateMachine.ChangeState(entity.GetHurtState());
+        }
     }
 
-    public virtual void OnHealthZero() // Called when the entity's health reaches zero
+    /// <summary>
+    /// Called when the entity's health reaches zero.
+    /// </summary>
+    public virtual void OnHealthZero()
     {
         if (entity.GetDeathState() != null)
             stateMachine.ChangeState(entity.GetDeathState());
     }
+    #endregion
 }
