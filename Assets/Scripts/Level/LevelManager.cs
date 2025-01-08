@@ -24,13 +24,6 @@ public class LevelManager : MonoBehaviour
             StartCoroutine(DelayedAreaChanged());
     }
 
-    private void OnDisable()
-    {
-        GameObject[] items = GameObject.FindGameObjectsWithTag("Item");
-        foreach (GameObject item in items)
-            GameObject.Destroy(item);
-    }
-
     /// <summary>
     /// Spawns the player in the level, either at a designated spawn point or at the default position.
     /// Handles player orientation based on the entrance used to enter the level.
