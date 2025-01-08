@@ -130,10 +130,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92f3e60bd3901a14aa7515575e05b160, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sfx_patch: event:/SFX/ActorsEvents/ReaverEvents/ReaverHurt
-  flashMaterial: {fileID: 2100000, guid: 00c9adf18f92e2044af599313777149e, type: 2}
-  originalMaterial: {fileID: 2100000, guid: 84568129bd3ea9b4fa5f097dac433c97, type: 2}
-  duration: 0.125
+  m_sfxPath: 
+  m_flashMaterial: {fileID: 2100000, guid: 00c9adf18f92e2044af599313777149e, type: 2}
+  m_originalMaterial: {fileID: 2100000, guid: 84568129bd3ea9b4fa5f097dac433c97, type: 2}
+  m_duration: 0.125
 --- !u!222 &5160338554290486291
 CanvasRenderer:
   m_ObjectHideFlags: 0
