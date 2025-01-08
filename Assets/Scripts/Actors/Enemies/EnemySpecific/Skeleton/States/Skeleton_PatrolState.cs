@@ -23,11 +23,10 @@ public class Skeleton_PatrolState : MoveState
     /// <param name="stateMachine">The state machine managing this state</param>
     /// <param name="animBoolName">The animation boolean parameter name</param>
     /// <param name="stateData">Configuration data for the movement state</param>
-    /// <param name="enemy">Reference to the skeleton enemy instance</param>
-    public Skeleton_PatrolState(Entity entity, StateMachine stateMachine, string animBoolName, D_MoveState stateData, Skeleton enemy) 
+    public Skeleton_PatrolState(Entity entity, StateMachine stateMachine, string animBoolName, D_MoveState stateData) 
         : base(entity, stateMachine, animBoolName, stateData)
     {
-        this.enemy = enemy;
+        this.enemy = entity as Skeleton;
     }
 
     /// <summary>

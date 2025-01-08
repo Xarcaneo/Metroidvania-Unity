@@ -15,11 +15,10 @@ public class Optikira_DeathState : DeathState
     /// <param name="entity">The entity this state belongs to</param>
     /// <param name="stateMachine">State machine managing this state</param>
     /// <param name="animBoolName">Animation boolean parameter name</param>
-    /// <param name="enemy">Reference to the Optikira enemy instance</param>
-    public Optikira_DeathState(Entity entity, StateMachine stateMachine, string animBoolName, Optikira enemy) 
+    public Optikira_DeathState(Entity entity, StateMachine stateMachine, string animBoolName) 
         : base(entity, stateMachine, animBoolName)
     {
-        this.enemy = enemy;
+        this.enemy = entity as Optikira;
     }
 
     /// <summary>

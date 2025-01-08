@@ -20,7 +20,7 @@ public class Skeleton_DeathState : DeathState
     public Skeleton_DeathState(Entity entity, StateMachine stateMachine, string animBoolName) 
         : base(entity, stateMachine, animBoolName)
     {
-        this.enemy = (Skeleton)entity;
+        this.enemy = entity as Skeleton;
     }
 
     /// <summary>

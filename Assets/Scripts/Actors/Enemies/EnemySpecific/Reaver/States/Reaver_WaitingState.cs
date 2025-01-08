@@ -16,11 +16,10 @@ public class Reaver_WaitingState : WaitingState
     /// <param name="entity">The entity this state belongs to</param>
     /// <param name="stateMachine">State machine managing this state</param>
     /// <param name="animBoolName">Animation boolean parameter name</param>
-    /// <param name="enemy">Reference to the Reaver enemy instance</param>
-    public Reaver_WaitingState(Entity entity, StateMachine stateMachine, string animBoolName, Reaver enemy) 
+    public Reaver_WaitingState(Entity entity, StateMachine stateMachine, string animBoolName) 
         : base(entity, stateMachine, animBoolName)
     {
-        this.enemy = enemy;
+        this.enemy = entity as Reaver;
     }
 
     /// <summary>

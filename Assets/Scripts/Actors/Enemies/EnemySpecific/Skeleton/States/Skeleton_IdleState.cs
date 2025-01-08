@@ -19,15 +19,14 @@ public class Skeleton_IdleState : IdleState
     /// <summary>
     /// Initializes a new instance of the Skeleton_IdleState.
     /// </summary>
-    /// <param name="etity">The entity this state belongs to</param>
+    /// <param name="entity">The entity this state belongs to</param>
     /// <param name="stateMachine">The state machine managing this state</param>
     /// <param name="animBoolName">The animation boolean parameter name</param>
     /// <param name="stateData">Configuration data for the idle state</param>
-    /// <param name="enemy">Reference to the skeleton enemy instance</param>
-    public Skeleton_IdleState(Entity etity, StateMachine stateMachine, string animBoolName, D_IdleState stateData, Skeleton enemy) 
-        : base(etity, stateMachine, animBoolName, stateData)
+    public Skeleton_IdleState(Entity entity, StateMachine stateMachine, string animBoolName, D_IdleState stateData) 
+        : base(entity, stateMachine, animBoolName, stateData)
     {
-        this.enemy = enemy;
+        this.enemy = entity as Skeleton;
     }
 
     /// <summary>

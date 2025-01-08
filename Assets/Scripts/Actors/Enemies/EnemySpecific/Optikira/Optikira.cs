@@ -60,8 +60,8 @@ public class Optikira : Enemy
     /// </summary>
     private void InitializeStates()
     {
-        idleState = new Optikira_IdleState(this, StateMachine, "idle", idleStateData, this);
-        deathState = new Optikira_DeathState(this, StateMachine, "death", this);
+        idleState = new Optikira_IdleState(this, StateMachine, "idle", idleStateData);
+        deathState = new Optikira_DeathState(this, StateMachine, "death");
         rangedAttackState = new Optikira_RangedAttackState(this, StateMachine, "attack", rangedAttackData, attackPosition);
         attackCooldownState = new Optikira_AttackCooldownState(this, StateMachine, "attackCooldown", attackCooldownData);
         dashState = new Optikira_DashState(this, StateMachine, "dash", dashData);

@@ -21,11 +21,10 @@ public class Reaver_MeleeAttackState : MeleeAttackState
     /// <param name="stateMachine">State machine managing this state</param>
     /// <param name="animBoolName">Animation boolean parameter name</param>
     /// <param name="stateData">Configuration data for the melee attack</param>
-    /// <param name="enemy">Reference to the Reaver enemy instance</param>
-    public Reaver_MeleeAttackState(Entity entity, StateMachine stateMachine, string animBoolName, D_MeleeAttack stateData, Reaver enemy) 
+    public Reaver_MeleeAttackState(Entity entity, StateMachine stateMachine, string animBoolName, D_MeleeAttack stateData) 
         : base(entity, stateMachine, animBoolName, stateData)
     {
-        this.enemy = enemy;
+        this.enemy = entity as Reaver;
     }
 
     /// <summary>

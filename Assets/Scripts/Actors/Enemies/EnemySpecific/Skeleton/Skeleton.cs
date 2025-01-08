@@ -3,50 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Represents a Skeleton enemy that inherits from the base Enemy class.
+/// Represents the Skeleton enemy type that inherits from the base Enemy class.
 /// This class manages different states of the skeleton's behavior including idle, patrol, chase, and attack states.
 /// </summary>
 public class Skeleton : Enemy
 {
-    #region State Properties
-    /// <summary>
-    /// Gets the idle state of the skeleton.
-    /// </summary>
+    #region States
     public Skeleton_IdleState idleState { get; private set; }
-
-    /// <summary>
-    /// Gets the patrol state of the skeleton.
-    /// </summary>
     public Skeleton_PatrolState patrolState { get; private set; }
-
-    /// <summary>
-    /// Gets the chase state of the skeleton when pursuing the player.
-    /// </summary>
     public Skeleton_ChaseState chaseState { get; private set; }
-
-    /// <summary>
-    /// Gets the waiting state of the skeleton.
-    /// </summary>
     public Skeleton_WaitingState waitingState { get; private set; }
-
-    /// <summary>
-    /// Gets the death state of the skeleton.
-    /// </summary>
     public Skeleton_DeathState deathState { get; private set; }
-
-    /// <summary>
-    /// Gets the melee attack state of the skeleton.
-    /// </summary>
     public Skeleton_MeleeAttackState meleeAttackState { get; private set; }
     #endregion
 
     #region State Data
     [SerializeField, Tooltip("Configuration data for the idle state")]
     private D_IdleState idleStateData;
-
     [SerializeField, Tooltip("Configuration data for movement states")]
     private D_MoveState moveStateData;
-
     [SerializeField, Tooltip("Configuration data for the chase state")]
     private D_ChaseState chaseStateData;
     #endregion
@@ -57,13 +32,7 @@ public class Skeleton : Enemy
     public override void Awake()
     {
         base.Awake();
-
-        idleState = new Skeleton_IdleState(this, StateMachine, "idle", idleStateData, this);
-        patrolState = new Skeleton_PatrolState(this, StateMachine, "move", moveStateData, this);
-        chaseState = new Skeleton_ChaseState(this, StateMachine, "move", chaseStateData);
-        waitingState = new Skeleton_WaitingState(this, StateMachine, "idle");
-        deathState = new Skeleton_DeathState(this, StateMachine, "death");
-        meleeAttackState = new Skeleton_MeleeAttackState(this, StateMachine, "meleeAttack");
+        InitializeStates();
     }
 
     /// <summary>
@@ -82,5 +51,18 @@ public class Skeleton : Enemy
     {
         base.Start();
         StateMachine.Initialize(patrolState);
+    }
+
+    /// <summary>
+    /// Creates instances of all states with their respective configurations.
+    /// </summary>
+    private void InitializeStates()
+    {
+        idleState = new Skeleton_IdleState(this, StateMachine, "idle", idleStateData);
+        patrolState = new Skeleton_PatrolState(this, StateMachine, "move", moveStateData);
+        chaseState = new Skeleton_ChaseState(this, StateMachine, "move", chaseStateData);
+        waitingState = new Skeleton_WaitingState(this, StateMachine, "idle");
+        deathState = new Skeleton_DeathState(this, StateMachine, "death");
+        meleeAttackState = new Skeleton_MeleeAttackState(this, StateMachine, "meleeAttack");
     }
 }

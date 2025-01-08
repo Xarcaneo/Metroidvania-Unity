@@ -58,6 +58,6 @@ public class Oculon : Enemy
     {
         rangedAttackState = new Oculon_RangedAttackState(this, StateMachine, "attack", rangedAttackData, attackPosition);
         moveState = new Oculon_MoveState(this, StateMachine, "move", moveStateData, targetPoints);
-        deathState = new Oculon_DeathState(this, StateMachine, "death", this);
+        deathState = new Oculon_DeathState(this, StateMachine, "death");
     }
 }

@@ -1,35 +1,34 @@
 using UnityEngine;
 
 /// <summary>
-/// Handles the patrol behavior for the Reaver enemy.
-/// The enemy moves back and forth between points, checking for obstacles and player presence.
+/// Represents the patrol state behavior for the Reaver enemy.
+/// In this state, the Reaver moves back and forth within its patrol area.
 /// </summary>
 public class Reaver_PatrolState : MoveState
 {
     private readonly Reaver enemy;
-
-    // Cached components
-    private EntityDetector EntityDetector { get => entityDetector ?? core.GetCoreComponent(ref entityDetector); }
-    private EntityDetector entityDetector;
-
     private bool isPlayerDetected;
 
+    #region Core Components
+    private EntityDetector EntityDetector { get => entityDetector ?? core.GetCoreComponent(ref entityDetector); }
+    private EntityDetector entityDetector;
+    #endregion
+
     /// <summary>
-    /// Initializes a new instance of the Reaver_PatrolState class.
+    /// Initializes a new instance of the Reaver_PatrolState.
     /// </summary>
     /// <param name="entity">The entity this state belongs to</param>
-    /// <param name="stateMachine">State machine managing this state</param>
-    /// <param name="animBoolName">Animation boolean parameter name</param>
+    /// <param name="stateMachine">The state machine managing this state</param>
+    /// <param name="animBoolName">The animation boolean parameter name</param>
     /// <param name="stateData">Configuration data for the patrol state</param>
-    /// <param name="enemy">Reference to the Reaver enemy instance</param>
-    public Reaver_PatrolState(Entity entity, StateMachine stateMachine, string animBoolName, D_MoveState stateData, Reaver enemy) 
+    public Reaver_PatrolState(Entity entity, StateMachine stateMachine, string animBoolName, D_MoveState stateData) 
         : base(entity, stateMachine, animBoolName, stateData)
     {
-        this.enemy = enemy;
+        this.enemy = entity as Reaver;
     }
 
     /// <summary>
-    /// Performs environmental checks and player detection.
+    /// Performs environment and player detection checks.
     /// </summary>
     public override void DoChecks()
     {
@@ -38,25 +37,20 @@ public class Reaver_PatrolState : MoveState
     }
 
     /// <summary>
-    /// Updates the logical state of the patrol behavior.
-    /// Handles movement and state transitions based on conditions.
+    /// Updates the patrol state logic each frame.
+    /// Handles state transitions based on player detection and environment.
     /// </summary>
     public override void LogicUpdate()
     {
         base.LogicUpdate();
 
-        if (!isExitingState)
+        if (isPlayerDetected)
         {
-            Movement?.SetVelocityX(stateData.movementSpeed * Movement.FacingDirection);
-
-            if (isPlayerDetected)
-            {
-                stateMachine.ChangeState(enemy.chaseState);
-            }
-            else if (isDetectingWall || !isDetectingLedge)
-            {
-                stateMachine.ChangeState(enemy.idleState);
-            }
+            stateMachine.ChangeState(enemy.chaseState);
+        }
+        else if (isDetectingWall || !isDetectingLedge)
+        {
+            stateMachine.ChangeState(enemy.idleState);
         }
     }
 }

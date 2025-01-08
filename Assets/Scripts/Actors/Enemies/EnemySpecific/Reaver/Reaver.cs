@@ -60,12 +60,12 @@ public class Reaver : Enemy
     /// </summary>
     private void InitializeStates()
     {
-        idleState = new Reaver_IdleState(this, StateMachine, "idle", idleStateData, this);
-        patrolState = new Reaver_PatrolState(this, StateMachine, "move", moveStateData, this);
-        deathState = new Reaver_DeathState(this, StateMachine, "death", this);
+        idleState = new Reaver_IdleState(this, StateMachine, "idle", idleStateData);
+        patrolState = new Reaver_PatrolState(this, StateMachine, "move", moveStateData);
+        deathState = new Reaver_DeathState(this, StateMachine, "death");
         chaseState = new Reaver_ChaseState(this, StateMachine, "chase", chaseData);
-        waitingState = new Reaver_WaitingState(this, StateMachine, "waiting", this);
-        meleeAttackState = new Reaver_MeleeAttackState(this, StateMachine, "meleeAttack", meleeAttackData, this);
+        waitingState = new Reaver_WaitingState(this, StateMachine, "waiting");
+        meleeAttackState = new Reaver_MeleeAttackState(this, StateMachine, "meleeAttack", meleeAttackData);
         attackCooldownState = new Reaver_AttackCooldownState(this, StateMachine, "attackCooldown", attackCooldownData);
     }
 }

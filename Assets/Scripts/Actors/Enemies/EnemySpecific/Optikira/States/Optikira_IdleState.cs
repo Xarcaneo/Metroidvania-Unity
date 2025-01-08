@@ -20,11 +20,10 @@ public class Optikira_IdleState : IdleState
     /// <param name="stateMachine">State machine managing this state</param>
     /// <param name="animBoolName">Animation boolean parameter name</param>
     /// <param name="stateData">Configuration data for the idle state</param>
-    /// <param name="enemy">Reference to the Optikira enemy instance</param>
-    public Optikira_IdleState(Entity entity, StateMachine stateMachine, string animBoolName, D_IdleState stateData, Optikira enemy) 
+    public Optikira_IdleState(Entity entity, StateMachine stateMachine, string animBoolName, D_IdleState stateData) 
         : base(entity, stateMachine, animBoolName, stateData)
     {
-        this.enemy = enemy;
+        this.enemy = entity as Optikira;
     }
 
     /// <summary>

@@ -15,11 +15,10 @@ public class Oculon_DeathState : DeathState
     /// <param name="entity">The entity this state belongs to</param>
     /// <param name="stateMachine">State machine managing this state</param>
     /// <param name="animBoolName">Animation boolean parameter name</param>
-    /// <param name="enemy">Reference to the Oculon enemy instance</param>
-    public Oculon_DeathState(Entity entity, StateMachine stateMachine, string animBoolName, Oculon enemy) 
+    public Oculon_DeathState(Entity entity, StateMachine stateMachine, string animBoolName) 
         : base(entity, stateMachine, animBoolName)
     {
-        this.enemy = enemy;
+        this.enemy = entity as Oculon;
     }
 
     /// <summary>
