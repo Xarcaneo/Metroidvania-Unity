@@ -1,80 +1,79 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class HealthBarController : MonoBehaviour
+/// <summary>
+/// Base health bar controller that provides health-specific UI visualization.
+/// Implements health events and color schemes for damage and healing.
+/// </summary>
+public class HealthBarController : StatusBarController
 {
-    protected float health;
-    protected float lerpTimer;
-    protected float maxHealth = 100;
-    public float chipSpeed = 2f;
-
-    public Image frontHealthBar;
-    public Image backHealthBar;
-
-    public Stats stats;
-
-    virtual public void OnDestroy()
+    #region Unity Methods
+    /// <summary>
+    /// Sets up health bar colors and initializes base components.
+    /// Red for healing, white for damage.
+    /// </summary>
+    protected override void Awake()
     {
-        if (stats)
-        {
-            stats.Damaged -= TakeDamage;
-            stats.Healed -= RestoreHealth;
-        }
+        restoreColor = Color.red;
+        depleteColor = Color.white;
+        base.Awake();
+    }
+    #endregion
+
+    #region Protected Methods
+    /// <summary>
+    /// Gets maximum health value from the Stats component.
+    /// Used to set the bar's maximum fill amount.
+    /// </summary>
+    /// <returns>Maximum possible health value</returns>
+    protected override float GetMaxValueFromStats()
+    {
+        return stats.GetMaxHealth();
     }
 
-    private void Update()
+    /// <summary>
+    /// Subscribes to health-related events from Stats.
+    /// Listens for both damage and healing events.
+    /// </summary>
+    protected override void SubscribeToEvents()
     {
-        if (stats)
-        {
-            SetMaxHealth(stats.GetMaxHealth());
-            health = Mathf.Clamp(health, 0, maxHealth);
-            UpdateHealthUI();
-        }
+        if (!stats) return;
+
+        stats.Damaged += TakeDamage;
+        stats.Healed += RestoreHealth;
     }
 
-    virtual public void UpdateHealthUI()
+    /// <summary>
+    /// Unsubscribes from health-related events.
+    /// Called on destruction or when explicitly needed.
+    /// </summary>
+    protected override void UnsubscribeFromEvents()
     {
-        float fillF = frontHealthBar.fillAmount;
-        float fillB = backHealthBar.fillAmount;
-        float hFraction = health / maxHealth;
+        if (!stats) return;
 
-        if(fillB > hFraction)
-        {
-            frontHealthBar.fillAmount = hFraction;
-            backHealthBar.color = Color.white;
-            lerpTimer += Time.deltaTime;
-            float percentComplete = lerpTimer / chipSpeed;
-            percentComplete = percentComplete * percentComplete;
-            backHealthBar.fillAmount = Mathf.Lerp(fillB, hFraction, percentComplete);
-        }
+        stats.Damaged -= TakeDamage;
+        stats.Healed -= RestoreHealth;
+    }
+    #endregion
 
-        if(fillF < hFraction)
-        {
-            backHealthBar.color = Color.red;
-            backHealthBar.fillAmount = hFraction;
-            lerpTimer += Time.deltaTime;
-            float percentComplete = lerpTimer / chipSpeed;
-            percentComplete = percentComplete * percentComplete;
-            frontHealthBar.fillAmount = Mathf.Lerp(fillF, backHealthBar.fillAmount, percentComplete);
-        }
+    #region Public Methods
+    /// <summary>
+    /// Handles damage taken by reducing health value.
+    /// Triggers smooth bar transition with damage color.
+    /// </summary>
+    /// <param name="damage">Amount of damage to apply</param>
+    public virtual void TakeDamage(float damage)
+    {
+        ReduceValue(damage);
     }
 
-    virtual public void TakeDamage(float damage)
+    /// <summary>
+    /// Handles healing by restoring health value.
+    /// Triggers smooth bar transition with heal color.
+    /// </summary>
+    /// <param name="healAmount">Amount of health to restore</param>
+    public virtual void RestoreHealth(float healAmount)
     {
-        health -= damage;
-        lerpTimer = 0f;
+        RestoreValue(healAmount);
     }
-
-    public void RestoreHealth(float healAmount)
-    {
-        health += healAmount;
-        lerpTimer = 0f;
-    }
-
-    protected void SetMaxHealth(float newMaxHealth)
-    {
-        maxHealth = newMaxHealth;
-    }
+    #endregion
 }

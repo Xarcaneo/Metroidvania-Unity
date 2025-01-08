@@ -1,80 +1,79 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class ManaBarController : MonoBehaviour
+/// <summary>
+/// Base mana bar controller that provides mana-specific UI visualization.
+/// Implements mana events and color schemes for usage and restoration.
+/// </summary>
+public class ManaBarController : StatusBarController
 {
-    protected float mana;
-    protected float lerpTimer;
-    protected float maxMana = 100;
-    public float chipSpeed = 2f;
-
-    public Image frontManaBar;
-    public Image backManaBar;
-
-    public Stats stats;
-
-    virtual public void OnDestroy()
+    #region Unity Methods
+    /// <summary>
+    /// Sets up mana bar colors and initializes base components.
+    /// Blue for restoration, white for depletion.
+    /// </summary>
+    protected override void Awake()
     {
-        if (stats)
-        {
-            stats.ManaUsed -= UseMana;
-            stats.ManaRestored -= RestoreMana;
-        }
+        restoreColor = Color.blue;
+        depleteColor = Color.white;
+        base.Awake();
+    }
+    #endregion
+
+    #region Protected Methods
+    /// <summary>
+    /// Gets maximum mana value from the Stats component.
+    /// Used to set the bar's maximum fill amount.
+    /// </summary>
+    /// <returns>Maximum possible mana value</returns>
+    protected override float GetMaxValueFromStats()
+    {
+        return stats.GetMaxMana();
     }
 
-    protected void Update()
+    /// <summary>
+    /// Subscribes to mana-related events from Stats.
+    /// Listens for both mana use and restoration events.
+    /// </summary>
+    protected override void SubscribeToEvents()
     {
-        if (stats)
-        {
-            SetMaxMana(stats.GetMaxMana());
-            mana = Mathf.Clamp(mana, 0, maxMana);
-            UpdateManaUI();
-        }
+        if (!stats) return;
+
+        stats.ManaUsed += UseMana;
+        stats.ManaRestored += RestoreMana;
     }
 
-    virtual public void UpdateManaUI()
+    /// <summary>
+    /// Unsubscribes from mana-related events.
+    /// Called on destruction or when explicitly needed.
+    /// </summary>
+    protected override void UnsubscribeFromEvents()
     {
-        float fillF = frontManaBar.fillAmount;
-        float fillB = backManaBar.fillAmount;
-        float mFraction = mana / maxMana;
+        if (!stats) return;
 
-        if (fillB > mFraction)
-        {
-            frontManaBar.fillAmount = mFraction;
-            backManaBar.color = Color.white;
-            lerpTimer += Time.deltaTime;
-            float percentComplete = lerpTimer / chipSpeed;
-            percentComplete = percentComplete * percentComplete;
-            backManaBar.fillAmount = Mathf.Lerp(fillB, mFraction, percentComplete);
-        }
+        stats.ManaUsed -= UseMana;
+        stats.ManaRestored -= RestoreMana;
+    }
+    #endregion
 
-        if (fillF < mFraction)
-        {
-            backManaBar.color = Color.blue; // Color change to represent mana
-            backManaBar.fillAmount = mFraction;
-            lerpTimer += Time.deltaTime;
-            float percentComplete = lerpTimer / chipSpeed;
-            percentComplete = percentComplete * percentComplete;
-            frontManaBar.fillAmount = Mathf.Lerp(fillF, backManaBar.fillAmount, percentComplete);
-        }
+    #region Public Methods
+    /// <summary>
+    /// Handles mana consumption by reducing mana value.
+    /// Triggers smooth bar transition with depletion color.
+    /// </summary>
+    /// <param name="amount">Amount of mana to consume</param>
+    public virtual void UseMana(float amount)
+    {
+        ReduceValue(amount);
     }
 
-    virtual public void UseMana(float amount)
+    /// <summary>
+    /// Handles mana restoration by increasing mana value.
+    /// Triggers smooth bar transition with restore color.
+    /// </summary>
+    /// <param name="amount">Amount of mana to restore</param>
+    public virtual void RestoreMana(float amount)
     {
-        mana -= amount;
-        lerpTimer = 0f;
+        RestoreValue(amount);
     }
-
-    public void RestoreMana(float amount)
-    {
-        mana += amount;
-        lerpTimer = 0f;
-    }
-
-    protected void SetMaxMana(float newMaxMana)
-    {
-        maxMana = newMaxMana;
-    }
+    #endregion
 }

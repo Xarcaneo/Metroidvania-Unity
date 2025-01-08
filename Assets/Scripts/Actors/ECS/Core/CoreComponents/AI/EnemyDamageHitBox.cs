@@ -1,55 +1,90 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Extends DamageHitBox with enemy-specific detection capabilities.
+/// Handles entity detection with obstacle awareness and provides debug visualization.
+/// </summary>
 public class EnemyDamageHitBox : DamageHitBox
 {
-    [SerializeField] bool debug = false;     // switch on or off debug (e.g. show gizmos)
+    #region Detection Settings
+    [Header("Detection Settings")]
+    [SerializeField, Tooltip("Width of the detection area")]
+    public float detectionWidth;
 
-    public float detectionWidth;    // width of the detection area
-    public float detectionHeight;   // height of the detection area
-    public LayerMask entityLayer;   // layer(s) of the entity to detect
-    public LayerMask obstacleLayer; // layer(s) of obstacles (e.g. walls) that can block the entity's view
-    public int entityToRight;
+    [SerializeField, Tooltip("Height of the detection area")]
+    public float detectionHeight;
 
-    private bool entityInRange = false; // whether the entity is within detection range
+    [SerializeField, Tooltip("Layer mask for entities that can be detected")]
+    public LayerMask entityLayer;
 
+    [SerializeField, Tooltip("Layer mask for obstacles that block detection")]
+    public LayerMask obstacleLayer;
+    #endregion
+
+    #region Debug Settings
+    [Header("Debug Settings")]
+    [SerializeField, Tooltip("Enable to show detection area gizmos")]
+    private bool debug = false;
+    #endregion
+
+    #region State
+    /// <summary>
+    /// Direction to the detected entity (1 for right, -1 for left)
+    /// </summary>
+    public int entityToRight { get; private set; }
+
+    /// <summary>
+    /// Whether an entity is currently within detection range
+    /// </summary>
+    private bool entityInRange = false;
+    #endregion
+
+    /// <summary>
+    /// Checks if an entity is within detection range and not blocked by obstacles
+    /// </summary>
+    /// <returns>True if entity is detected and in line of sight</returns>
     public bool EntityInRange()
     {
-        // Check for any collider in the detection area that matches the entityLayer
-        Collider2D entityCollider = Physics2D.OverlapBox(transform.position, new Vector2(detectionWidth, detectionHeight), 0, entityLayer);
+        // Check for entities in detection area
+        Collider2D entityCollider = Physics2D.OverlapBox(
+            transform.position,
+            new Vector2(detectionWidth, detectionHeight),
+            0,
+            entityLayer
+        );
 
-        if (entityCollider != null)
+        if (entityCollider == null)
         {
-            // check if there is a wall blocking the entity's view of the detector
-            RaycastHit2D hit = Physics2D.Linecast(transform.position, entityCollider.transform.position, obstacleLayer);
-
-            if (hit.collider != null)
-            {
-                // there is an obstacle between the entity and detector, do not detect entity
-                return entityInRange = false;
-            }
-            else
-            {
-                // entity is within range and not blocked by an obstacle
-                entityToRight = entityCollider.transform.position.x > transform.position.x ? 1 : -1;
-                return entityInRange = true;
-            }
-        }
-        else
-        {
-            // entity is not within range
             return entityInRange = false;
         }
+
+        // Check for obstacles between detector and entity
+        RaycastHit2D hit = Physics2D.Linecast(
+            transform.position,
+            entityCollider.transform.position,
+            obstacleLayer
+        );
+
+        if (hit.collider != null)
+        {
+            // View blocked by obstacle
+            return entityInRange = false;
+        }
+
+        // Entity detected and in line of sight
+        entityToRight = entityCollider.transform.position.x > transform.position.x ? 1 : -1;
+        return entityInRange = true;
     }
 
     private void OnDrawGizmos()
     {
-        // Draw a wire rectangle at the detection range to visualize the area
-        if (debug)
-        {
-            Gizmos.color = entityInRange ? Color.green : Color.red;
-            Gizmos.DrawWireCube(transform.position, new Vector3(detectionWidth, detectionHeight, 0));
-        }
+        if (!debug) return;
+
+        // Draw detection area
+        Gizmos.color = entityInRange ? Color.green : Color.red;
+        Gizmos.DrawWireCube(
+            transform.position,
+            new Vector3(detectionWidth, detectionHeight, 0)
+        );
     }
 }

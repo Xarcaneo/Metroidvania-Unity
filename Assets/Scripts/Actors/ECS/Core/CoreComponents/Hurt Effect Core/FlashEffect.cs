@@ -1,34 +1,67 @@
-using System.Collections;
-using System.Collections.Generic;
-using System;
 using UnityEngine;
+using System;
+using System.Collections;
 
+/// <summary>
+/// Implements a flashing effect for when an entity is hurt.
+/// Makes the sprite flash using a different material.
+/// </summary>
 public class FlashEffect : HurtEffect
 {
-    [Tooltip("Sound to play when hit.")]
-    [SerializeField] private String sfx_patch;
+    #region Settings
 
-    [Tooltip("Material to switch to during the flash.")]
-    [SerializeField] private Material flashMaterial;
+    /// <summary>
+    /// Sound to play when hit.
+    /// </summary>
+    [SerializeField, Tooltip("Sound to play when hit")]
+    private String sfx_patch;
 
-    [Tooltip("The material that was in use, when the script started.")]
-    [SerializeField] private Material originalMaterial;
+    /// <summary>
+    /// Material to switch to during the flash.
+    /// </summary>
+    [SerializeField, Tooltip("Material to switch to during the flash")]
+    private Material flashMaterial;
 
-    public override IEnumerator EffectRoutine()
+    #endregion
+
+    #region Private Fields
+
+    /// <summary>
+    /// Original material of the sprite.
+    /// </summary>
+    private Material originalMaterial;
+
+    #endregion
+
+    #region Unity Lifecycle
+
+    /// <summary>
+    /// Initializes the flash effect.
+    /// </summary>
+    protected override void Awake()
     {
-        if(sfx_patch != "")
-            FMODUnity.RuntimeManager.PlayOneShot(sfx_patch, this.transform.position);
-
-        // Swap to the flashMaterial.
-        spriteRenderer.material = flashMaterial;
-
-        // Pause the execution of this function for "duration" seconds.
-        yield return new WaitForSeconds(duration);
-
-        // After the pause, swap back to the original material.
-        spriteRenderer.material = originalMaterial;
-
-        // Set the routine to null, signaling that it's finished.
-        effectRoutine = null;
+        base.Awake();
+        originalMaterial = spriteRenderer.material;
     }
+
+    #endregion
+
+    #region Effect Implementation
+
+    /// <summary>
+    /// Coroutine that handles the flash effect animation.
+    /// </summary>
+    protected override IEnumerator EffectRoutine()
+    {
+        if (!string.IsNullOrEmpty(sfx_patch))
+        {
+            FMODUnity.RuntimeManager.PlayOneShot(sfx_patch, transform.position);
+        }
+
+        spriteRenderer.material = flashMaterial;
+        yield return new WaitForSeconds(duration);
+        spriteRenderer.material = originalMaterial;
+    }
+
+    #endregion
 }

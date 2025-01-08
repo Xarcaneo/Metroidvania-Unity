@@ -1,73 +1,171 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 
+/// <summary>
+/// Controls a platform that players can drop through by pressing down + jump.
+/// Manages collision states and player interactions with the platform.
+/// </summary>
 public class Platform : MonoBehaviour
 {
-    [SerializeField] private float timeToRevertCollision = 0.5f;
+    #region Serialized Fields
+    [SerializeField]
+    [Tooltip("Time in seconds before restoring platform collision after drop-through")]
+    [Range(0.1f, 2f)]
+    private float m_timeToRevertCollision = 0.5f;
+    #endregion
 
+    #region Private Fields
+    /// <summary>
+    /// Reference to the player's input handler
+    /// </summary>
     private PlayerInputHandler m_playerInputHandler;
 
-    private PlatformEffector2D effector;
+    /// <summary>
+    /// Reference to the platform effector component
+    /// </summary>
+    private PlatformEffector2D m_effector;
 
-    private bool playerOnPlatform = false;
+    /// <summary>
+    /// Flag indicating if player is currently on the platform
+    /// </summary>
+    private bool m_playerOnPlatform;
 
-    private void Start() => effector = GetComponent<PlatformEffector2D>();
-    
+    // Layer constants
+    private const string PLAYER_LAYER = "Player";
+    #endregion
 
-    private void OnPlayerCrouchJump()
+    #region Unity Lifecycle
+    /// <summary>
+    /// Initializes required components
+    /// </summary>
+    private void Start()
     {
-        if (playerOnPlatform)
-        {
-            effector.colliderMask &= ~(1 << LayerMask.NameToLayer("Player"));
-            Player.Instance.JumpState.canJump = false;
-            StartCoroutine(RevertCollision());
-        }
+        InitializeComponents();
     }
 
+    /// <summary>
+    /// Updates player input handling
+    /// </summary>
     private void Update()
     {
-        if (m_playerInputHandler == null)
-        {
-            m_playerInputHandler = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInputHandler>();
-        }
-        else
-        {
-            var yInput = m_playerInputHandler.NormInputY;
-            var jumpInput = m_playerInputHandler.JumpInput;
-
-            if(jumpInput && yInput == -1)
-                OnPlayerCrouchJump();
-        }
+        HandlePlayerInput();
     }
 
+    /// <summary>
+    /// Handles collision exit events
+    /// </summary>
     private void OnCollisionExit2D(Collision2D collision)
     {
-        int playerLayer = LayerMask.NameToLayer("Player");
-
-        if (collision.gameObject.layer == playerLayer)
+        if (collision.gameObject.layer == LayerMask.NameToLayer(PLAYER_LAYER))
         {
-            playerOnPlatform = false;
+            m_playerOnPlatform = false;
         }
     }
 
+    /// <summary>
+    /// Handles collision enter events
+    /// </summary>
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        int playerLayer = LayerMask.NameToLayer("Player");
-
-        if (collision.gameObject.layer == playerLayer)
+        if (collision.gameObject.layer == LayerMask.NameToLayer(PLAYER_LAYER))
         {
-            playerOnPlatform = true;
+            m_playerOnPlatform = true;
+        }
+    }
+    #endregion
+
+    #region Private Methods
+    /// <summary>
+    /// Initializes and caches required components
+    /// </summary>
+    private void InitializeComponents()
+    {
+        m_effector = GetComponent<PlatformEffector2D>();
+        if (!ValidateComponents())
+        {
+            Debug.LogError($"[{gameObject.name}] Failed to initialize required components!");
         }
     }
 
-    private IEnumerator RevertCollision()
+    /// <summary>
+    /// Validates that all required components are present
+    /// </summary>
+    /// <returns>True if all components are valid, false otherwise</returns>
+    private bool ValidateComponents()
     {
-        yield return new WaitForSeconds(timeToRevertCollision);
+        if (m_effector == null)
+        {
+            Debug.LogError($"[{gameObject.name}] PlatformEffector2D component is missing!");
+            return false;
+        }
 
-        Player.Instance.JumpState.canJump = true;
-        effector.colliderMask |= (1 << LayerMask.NameToLayer("Player"));
+        return true;
     }
+
+    /// <summary>
+    /// Handles player input for platform interactions
+    /// </summary>
+    private void HandlePlayerInput()
+    {
+        // Try to find player input handler if not already cached
+        if (m_playerInputHandler == null)
+        {
+            var player = GameObject.FindGameObjectWithTag("Player");
+            if (player != null)
+            {
+                m_playerInputHandler = player.GetComponent<PlayerInputHandler>();
+            }
+            return;
+        }
+
+        // Check for crouch-jump input
+        float yInput = m_playerInputHandler.NormInputY;
+        bool jumpInput = m_playerInputHandler.JumpInput;
+
+        if (jumpInput && yInput == -1)
+        {
+            OnPlayerCrouchJump();
+        }
+    }
+
+    /// <summary>
+    /// Handles player crouch-jump through platform
+    /// </summary>
+    private void OnPlayerCrouchJump()
+    {
+        if (!m_playerOnPlatform || !ValidateComponents()) return;
+
+        // Disable collision with player
+        m_effector.colliderMask &= ~(1 << LayerMask.NameToLayer(PLAYER_LAYER));
+        
+        // Disable player jump temporarily
+        if (Player.Instance != null)
+        {
+            Player.Instance.JumpState.canJump = false;
+        }
+
+        // Start collision revert timer
+        StartCoroutine(RevertCollisionCoroutine());
+    }
+
+    /// <summary>
+    /// Coroutine to revert platform collision after delay
+    /// </summary>
+    private IEnumerator RevertCollisionCoroutine()
+    {
+        if (!ValidateComponents()) yield break;
+
+        yield return new WaitForSeconds(m_timeToRevertCollision);
+
+        // Re-enable player jump
+        if (Player.Instance != null)
+        {
+            Player.Instance.JumpState.canJump = true;
+        }
+
+        // Re-enable collision with player
+        m_effector.colliderMask |= (1 << LayerMask.NameToLayer(PLAYER_LAYER));
+    }
+    #endregion
 }

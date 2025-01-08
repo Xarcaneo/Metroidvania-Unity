@@ -1,55 +1,113 @@
-using System.Collections;
-using System.Collections.Generic;
-using System;
 using UnityEngine;
+using System.Collections;
+using System;
 
-public class HurtEffect : CoreComponent
-{   
-    protected Action<float> damageEventHandler;
+/// <summary>
+/// Base class for implementing visual effects when an entity is hurt.
+/// Provides core functionality for managing sprite effects.
+/// </summary>
+public abstract class HurtEffect : CoreComponent
+{
+    #region Protected Fields
 
-    [Tooltip("The SpriteRenderer that should flash.")]
+    /// <summary>
+    /// Reference to the entity's SpriteRenderer component.
+    /// </summary>
     protected SpriteRenderer spriteRenderer;
 
-    [Tooltip("Duration of the flash.")]
-    [SerializeField] protected float duration = 0.125f;
+    /// <summary>
+    /// Duration of the hurt effect in seconds.
+    /// </summary>
+    [SerializeField, Tooltip("Duration of the hurt effect in seconds")]
+    protected float duration = 0.2f;
 
-    // The currently running coroutine.
+    /// <summary>
+    /// The currently running effect coroutine.
+    /// </summary>
     protected Coroutine effectRoutine;
+
+    #endregion
+
+    #region Dependencies
 
     private DamageReceiver DamageReceiver { get => damageReceiver ?? core.GetCoreComponent(ref damageReceiver); }
     private DamageReceiver damageReceiver;
 
-    private void Start()
+    #endregion
+
+    #region Unity Lifecycle
+
+    /// <summary>
+    /// Initializes required components and event handlers.
+    /// </summary>
+    protected override void Awake()
     {
-        spriteRenderer = core.transform.parent.GetComponent<SpriteRenderer>();
-        damageEventHandler = (amount) => { TurnOnEffect(); };
-        DamageReceiver.OnDamage += damageEventHandler;
+        base.Awake();
+        spriteRenderer = GetComponentInParent<SpriteRenderer>();
     }
 
-    private void OnDestroy() => DamageReceiver.OnDamage -= damageEventHandler;
+    /// <summary>
+    /// Sets up damage event subscription.
+    /// </summary>
+    protected virtual void Start()
+    {
+        DamageReceiver.OnDamage += OnDamageReceived;
+    }
 
-    public void TurnOnEffect()
+    /// <summary>
+    /// Cleans up event subscriptions.
+    /// </summary>
+    protected virtual void OnDestroy()
+    {
+        if (damageReceiver != null)
+        {
+            DamageReceiver.OnDamage -= OnDamageReceived;
+        }
+    }
+
+    #endregion
+
+    #region Effect Control
+
+    /// <summary>
+    /// Handles damage received event.
+    /// </summary>
+    /// <param name="amount">Amount of damage received</param>
+    protected virtual void OnDamageReceived(float amount)
+    {
+        TurnOnEffect();
+    }
+
+    /// <summary>
+    /// Starts the hurt effect.
+    /// </summary>
+    public virtual void TurnOnEffect()
     {
         if (!gameObject.activeInHierarchy)
-        {
-            // If the game object is inactive, do not proceed with the coroutine.
             return;
-        }
 
-        // If the flashRoutine is not null, then it is currently running.
         if (effectRoutine != null)
         {
-            // In this case, we should stop it first.
-            // Multiple FlashRoutines the same time would cause bugs.
             StopCoroutine(effectRoutine);
         }
 
-        // Start the Coroutine, and store the reference for it.
         effectRoutine = StartCoroutine(EffectRoutine());
     }
 
-    public virtual IEnumerator EffectRoutine()
+    /// <summary>
+    /// Coroutine that handles the effect animation.
+    /// Override this in derived classes to implement specific effects.
+    /// </summary>
+    protected abstract IEnumerator EffectRoutine();
+
+    /// <summary>
+    /// Enables or disables this component.
+    /// </summary>
+    /// <param name="state">True to enable, false to disable</param>
+    public override void EnableDisableComponent(bool state)
     {
-        return null;
+        base.EnableDisableComponent(!state);
     }
+
+    #endregion
 }

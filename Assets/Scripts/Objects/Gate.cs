@@ -1,137 +1,266 @@
 using PixelCrushers.DialogueSystem;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 
+/// <summary>
+/// Controls a gate that can be opened or closed based on trigger states.
+/// Manages animations and state persistence for gate objects.
+/// </summary>
 public class Gate : MonoBehaviour
 {
-    [SerializeField] public int m_gateID;
-    private bool m_GateState;
+    #region Serialized Fields
+    [SerializeField]
+    [Tooltip("Unique identifier for this gate")]
+    public int m_gateID;
+    #endregion
+
+    #region Private Fields
+    /// <summary>
+    /// Current state of the gate from DialogueLua
+    /// </summary>
+    private bool m_gateState;
+
+    /// <summary>
+    /// Flag indicating if the current animation has completed
+    /// </summary>
     public bool isEventCompleted = false;
 
-    private Animator gateAnimator; // reference to the Animator component
+    /// <summary>
+    /// Reference to the gate's animator component
+    /// </summary>
+    private Animator m_animator;
 
-    // Define the possible states of the gate
-    enum GateState { IdleOpen, Closing, IdleClose, Opening };
-    GateState currentState;
+    /// <summary>
+    /// Cached reference to GameEvents instance
+    /// </summary>
+    private GameEvents m_gameEvents;
 
-    // Define constants for the animation boolean parameter names
-    const string idleOpenParam = "IdleOpen";
-    const string closingParam = "Closing";
-    const string idleCloseParam = "IdleClose";
-    const string openingParam = "Opening";
+    /// <summary>
+    /// Possible states for the gate
+    /// </summary>
+    private enum GateState 
+    { 
+        IdleOpen,
+        Closing, 
+        IdleClose, 
+        Opening 
+    }
 
-    IEnumerator Start()
+    /// <summary>
+    /// Current state of the gate
+    /// </summary>
+    private GateState m_currentState;
+
+    // Animation parameter names
+    private const string IDLE_OPEN_PARAM = "IdleOpen";
+    private const string CLOSING_PARAM = "Closing";
+    private const string IDLE_CLOSE_PARAM = "IdleClose";
+    private const string OPENING_PARAM = "Opening";
+    #endregion
+
+    #region Unity Lifecycle
+    /// <summary>
+    /// Initializes the gate's state and components
+    /// </summary>
+    private IEnumerator Start()
     {
         yield return new WaitForEndOfFrame();
-        gateAnimator = GetComponent<Animator>();
-        m_GateState = DialogueLua.GetVariable("Trigger." + m_gateID).asBool;
-
-        if (m_GateState)
-        {
-            currentState = GateState.IdleOpen;
-            gateAnimator.SetBool(idleOpenParam, true);
-        }
-        else
-        {
-            currentState = GateState.IdleClose;
-            gateAnimator.SetBool(idleCloseParam, true);
-        }
+        InitializeComponents();
+        LoadGateState();
     }
 
-    private void OnEnable() => GameEvents.Instance.onTriggerStateChanged += TriggerStateChanged;
-    private void OnDisable() => GameEvents.Instance.onTriggerStateChanged -= TriggerStateChanged;
-
-    private void TriggerStateChanged(int triggerID)
+    /// <summary>
+    /// Subscribes to trigger state change events
+    /// </summary>
+    private void OnEnable()
     {
-        isEventCompleted = false;
-
-        if (triggerID == m_gateID)
+        m_gameEvents = GameEvents.Instance;
+        if (m_gameEvents != null)
         {
-            m_GateState = DialogueLua.GetVariable("Trigger." + m_gateID).asBool;
-
-            if (m_GateState)
-            {
-                OpenGate();
-            }
-            else
-            {
-                CloseGate();
-            }
+            m_gameEvents.onTriggerStateChanged += TriggerStateChanged;
         }
     }
 
-    // Method to open the gate
+    /// <summary>
+    /// Unsubscribes from trigger state change events
+    /// </summary>
+    private void OnDisable()
+    {
+        if (m_gameEvents != null)
+        {
+            m_gameEvents.onTriggerStateChanged -= TriggerStateChanged;
+        }
+    }
+    #endregion
+
+    #region Public Methods
+    /// <summary>
+    /// Opens the gate if it's currently closed
+    /// </summary>
     public void OpenGate()
     {
-        if (currentState == GateState.IdleClose)
+        if (m_currentState == GateState.IdleClose)
         {
             ChangeState(GateState.Opening);
         }
     }
 
-    // Method to close the gate
+    /// <summary>
+    /// Closes the gate if it's currently open
+    /// </summary>
     public void CloseGate()
     {
-        if (currentState == GateState.IdleOpen)
+        if (m_currentState == GateState.IdleOpen)
         {
             ChangeState(GateState.Closing);
         }
     }
+    #endregion
 
-    // Method to change the current state of the gate and apply the animation boolean parameter
-    void ChangeState(GateState newState)
+    #region Private Methods
+    /// <summary>
+    /// Initializes and caches required components
+    /// </summary>
+    private void InitializeComponents()
     {
-        // Reset the animation boolean parameter to false for the previous state
-        switch (currentState)
+        m_animator = GetComponent<Animator>();
+        if (m_animator == null)
+        {
+            Debug.LogError($"[{gameObject.name}] Animator component is missing!");
+        }
+    }
+
+    /// <summary>
+    /// Loads the gate's state from DialogueLua
+    /// </summary>
+    private void LoadGateState()
+    {
+        if (!ValidateComponents()) return;
+
+        try
+        {
+            m_gateState = DialogueLua.GetVariable($"Trigger.{m_gateID}").asBool;
+            m_currentState = m_gateState ? GateState.IdleOpen : GateState.IdleClose;
+            m_animator.SetBool(m_gateState ? IDLE_OPEN_PARAM : IDLE_CLOSE_PARAM, true);
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"[{gameObject.name}] Error loading gate state: {e.Message}");
+        }
+    }
+
+    /// <summary>
+    /// Handles trigger state changes
+    /// </summary>
+    /// <param name="triggerID">ID of the trigger that changed state</param>
+    private void TriggerStateChanged(int triggerID)
+    {
+        if (!ValidateComponents()) return;
+
+        isEventCompleted = false;
+
+        if (triggerID == m_gateID)
+        {
+            try
+            {
+                m_gateState = DialogueLua.GetVariable($"Trigger.{m_gateID}").asBool;
+                if (m_gateState)
+                {
+                    OpenGate();
+                }
+                else
+                {
+                    CloseGate();
+                }
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError($"[{gameObject.name}] Error handling trigger state change: {e.Message}");
+            }
+        }
+    }
+
+    /// <summary>
+    /// Changes the gate's state and updates animations
+    /// </summary>
+    /// <param name="newState">New state to transition to</param>
+    private void ChangeState(GateState newState)
+    {
+        if (!ValidateComponents()) return;
+
+        // Reset current state's animation parameter
+        switch (m_currentState)
         {
             case GateState.IdleOpen:
-                gateAnimator.SetBool(idleOpenParam, false);
+                m_animator.SetBool(IDLE_OPEN_PARAM, false);
                 break;
             case GateState.Closing:
-                gateAnimator.SetBool(closingParam, false);
+                m_animator.SetBool(CLOSING_PARAM, false);
                 break;
             case GateState.IdleClose:
-                gateAnimator.SetBool(idleCloseParam, false);
+                m_animator.SetBool(IDLE_CLOSE_PARAM, false);
                 break;
             case GateState.Opening:
-                gateAnimator.SetBool(openingParam, false);
+                m_animator.SetBool(OPENING_PARAM, false);
                 break;
         }
 
-        currentState = newState;
+        m_currentState = newState;
 
-        // Set the animation boolean parameter based on the new state
-        switch (currentState)
+        // Set new state's animation parameter
+        switch (m_currentState)
         {
             case GateState.IdleOpen:
-                gateAnimator.SetBool(idleOpenParam, true);
+                m_animator.SetBool(IDLE_OPEN_PARAM, true);
                 break;
             case GateState.Closing:
-                gateAnimator.SetBool(closingParam, true);
+                m_animator.SetBool(CLOSING_PARAM, true);
                 break;
             case GateState.IdleClose:
-                gateAnimator.SetBool(idleCloseParam, true);
+                m_animator.SetBool(IDLE_CLOSE_PARAM, true);
                 break;
             case GateState.Opening:
-                gateAnimator.SetBool(openingParam, true);
+                m_animator.SetBool(OPENING_PARAM, true);
                 break;
         }
     }
 
-    void OnAnimationTrigger()
+    /// <summary>
+    /// Called by animation events when a transition completes
+    /// </summary>
+    private void OnAnimationTrigger()
     {
-        // Transition to the new state based on the current state
-        if (currentState == GateState.Closing)
+        if (m_currentState == GateState.Closing)
         {
             ChangeState(GateState.IdleClose);
         }
-        else if (currentState == GateState.Opening)
+        else if (m_currentState == GateState.Opening)
         {
             ChangeState(GateState.IdleOpen);
         }
 
         isEventCompleted = true;
     }
+
+    /// <summary>
+    /// Validates that all required components are present
+    /// </summary>
+    /// <returns>True if all components are valid, false otherwise</returns>
+    private bool ValidateComponents()
+    {
+        if (m_animator == null)
+        {
+            Debug.LogError($"[{gameObject.name}] Animator component is missing!");
+            return false;
+        }
+
+        if (m_gateID <= 0)
+        {
+            Debug.LogError($"[{gameObject.name}] Gate ID should be greater than 0!");
+            return false;
+        }
+
+        return true;
+    }
+    #endregion
 }

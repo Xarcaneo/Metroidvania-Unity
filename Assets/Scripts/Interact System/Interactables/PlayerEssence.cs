@@ -1,11 +1,144 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Handles player essence collectible functionality.
+/// Represents a collectible essence that can be gathered by the player,
+/// potentially providing various effects or progress tracking.
+/// </summary>
 public class PlayerEssence : Interactable
 {
+    #region Serialized Fields
+    [SerializeField]
+    [Tooltip("Particle system for collection effect")]
+    /// <summary>
+    /// Optional particle system component for visual feedback when collected.
+    /// If assigned, will play when essence is collected before destruction.
+    /// </summary>
+    private ParticleSystem m_collectionEffect;
+
+    [SerializeField]
+    [Tooltip("Sound effect to play when collected")]
+    /// <summary>
+    /// Optional AudioSource component for collection sound effect.
+    /// If assigned, will play when essence is collected.
+    /// </summary>
+    private AudioSource m_collectionSound;
+
+    [SerializeField]
+    [Tooltip("Time to wait before destroying after collection")]
+    /// <summary>
+    /// Delay in seconds before destroying the essence object after collection.
+    /// Allows time for effects to play. Default is 0.5 seconds.
+    /// </summary>
+    private float m_destroyDelay = 0.5f;
+    #endregion
+
+    #region Unity Lifecycle
+    /// <summary>
+    /// Validates essence configuration in the Unity Editor.
+    /// Ensures optional components are properly configured.
+    /// </summary>
+    protected override void OnValidate()
+    {
+        base.OnValidate();
+
+        if (m_destroyDelay < 0)
+        {
+            Debug.LogWarning($"[{gameObject.name}] Destroy delay should not be negative!");
+            m_destroyDelay = 0.5f;
+        }
+    }
+
+    /// <summary>
+    /// Initializes the essence by validating components.
+    /// Called when the script instance is being loaded.
+    /// </summary>
+    private void Awake()
+    {
+        ValidateComponents();
+    }
+    #endregion
+
+    #region Public Methods
+    /// <summary>
+    /// Handles interaction with the essence when activated by the player.
+    /// Triggers collection effects and destroys the essence object.
+    /// </summary>
     public override void Interact()
     {
-        Destroy(gameObject);
+        // Play collection effects
+        PlayCollectionEffects();
+
+        // Notify any listeners about collection
+        NotifyCollection();
+
+        // Destroy with delay if effects are playing
+        if (m_collectionEffect != null || m_collectionSound != null)
+        {
+            canInteract = false; // Prevent multiple collections
+            Destroy(gameObject, m_destroyDelay);
+        }
+        else
+        {
+            // Destroy immediately if no effects
+            Destroy(gameObject);
+        }
     }
+    #endregion
+
+    #region Private Methods
+    /// <summary>
+    /// Validates that optional components are properly configured.
+    /// </summary>
+    private void ValidateComponents()
+    {
+        // Check particle system
+        if (m_collectionEffect != null)
+        {
+            var main = m_collectionEffect.main;
+            if (main.duration > m_destroyDelay)
+            {
+                Debug.LogWarning($"[{gameObject.name}] Particle effect duration ({main.duration}s) is longer than destroy delay ({m_destroyDelay}s)!");
+            }
+        }
+
+        // Check audio source
+        if (m_collectionSound != null && m_collectionSound.clip != null)
+        {
+            if (m_collectionSound.clip.length > m_destroyDelay)
+            {
+                Debug.LogWarning($"[{gameObject.name}] Audio clip length ({m_collectionSound.clip.length}s) is longer than destroy delay ({m_destroyDelay}s)!");
+            }
+        }
+    }
+
+    /// <summary>
+    /// Plays visual and audio effects for essence collection.
+    /// </summary>
+    private void PlayCollectionEffects()
+    {
+        // Play particle effect if assigned
+        if (m_collectionEffect != null)
+        {
+            m_collectionEffect.Play();
+        }
+
+        // Play sound effect if assigned
+        if (m_collectionSound != null)
+        {
+            m_collectionSound.Play();
+        }
+    }
+
+    /// <summary>
+    /// Notifies the game system about essence collection.
+    /// Override this in derived classes to implement specific collection behavior.
+    /// </summary>
+    protected virtual void NotifyCollection()
+    {
+        // Base implementation does nothing
+        // Derived classes can override to implement specific collection behavior
+        // such as updating player stats, quest progress, etc.
+    }
+    #endregion
 }

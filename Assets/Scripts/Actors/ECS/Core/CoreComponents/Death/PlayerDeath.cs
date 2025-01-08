@@ -3,21 +3,64 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Handles player-specific death behavior and respawn mechanics.
+/// </summary>
 public class PlayerDeath : Death
 {
-    [Header("Essence prefab")]
+    #region Essence Prefab
+
+    /// <summary>
+    /// The prefab for the player's essence.
+    /// </summary>
     [SerializeField] private PlayerEssence m_playerEssencePref;
+
+    /// <summary>
+    /// The offset from the player's position where the essence will spawn.
+    /// </summary>
     [SerializeField] private float spawnOffset = 1.0f;
 
-    [Header("Raycast Settings")]
+    #endregion
+
+    #region Raycast Settings
+
+    /// <summary>
+    /// The layer mask for solid objects.
+    /// </summary>
     [SerializeField] private LayerMask solidLayer;
+
+    /// <summary>
+    /// The offset from the player's position for the left raycast.
+    /// </summary>
     [SerializeField] private Vector3 downffsetLeft = new Vector3(-2, 0f, 0);
+
+    /// <summary>
+    /// The offset from the player's position for the right raycast.
+    /// </summary>
     [SerializeField] private Vector3 downffsetRight = new Vector3(2, 0f, 0);
+
+    /// <summary>
+    /// The offset from the player's position for the bottom raycast.
+    /// </summary>
     [SerializeField] private Vector3 bottomOffset = new Vector3(0, -1.5f, 0);
+
+    /// <summary>
+    /// The offset from the player's position for the top raycast.
+    /// </summary>
     [SerializeField] private Vector3 topOffset = new Vector3(0, 0.5f, 0);
 
+    #endregion
+
+    #region Death Implementation
+
+    /// <summary>
+    /// Flag to determine if the essence can be spawned.
+    /// </summary>
     public bool canSpawnEssence = true;
 
+    /// <summary>
+    /// Implements player-specific death behavior.
+    /// </summary>
     public override void Die()
     {
         base.Die();
@@ -35,6 +78,13 @@ public class PlayerDeath : Death
         }
     }
 
+    #endregion
+
+    #region Private Methods
+
+    /// <summary>
+    /// Sets up the essence prefab.
+    /// </summary>
     private void SetUpPrefab()
     {
         PlayerEssence m_prefab = Instantiate(m_playerEssencePref, new Vector3(core.Parent.transform.position.x,
@@ -52,6 +102,10 @@ public class PlayerDeath : Death
         m_prefab.canInteract = false;
     }
 
+    /// <summary>
+    /// Moves the player essence to a safe position.
+    /// </summary>
+    /// <param name="playerEssence">The player essence to move.</param>
     private void MovePlayerEssence(PlayerEssence playerEssence)
     {
         // Check if the Soul is close to a wall or edge
@@ -80,6 +134,11 @@ public class PlayerDeath : Death
         }
     }
 
+    /// <summary>
+    /// Saves the game after a frame.
+    /// </summary>
+    /// <param name="active_slot">The active save slot.</param>
+    /// <returns>A coroutine.</returns>
     private IEnumerator SaveAfterFrame(int active_slot)
     {
         // Wait for a frame to ensure that any changes to the prefab's state are applied
@@ -89,4 +148,6 @@ public class PlayerDeath : Death
         if (SaveSystem.HasSavedGameInSlot(active_slot))
             SaveSystem.SaveToSlot(active_slot);
     }
+
+    #endregion
 }

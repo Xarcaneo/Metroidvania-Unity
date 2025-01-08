@@ -1,9 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Represents the Reaver enemy type, a melee-focused enemy that patrols and chases the player.
+/// </summary>
 public class Reaver : Enemy
 {
+    #region States
     public Reaver_IdleState idleState { get; private set; }
     public Reaver_PatrolState patrolState { get; private set; }
     public Reaver_DeathState deathState { get; private set; }
@@ -11,7 +13,9 @@ public class Reaver : Enemy
     public Reaver_WaitingState waitingState { get; private set; }
     public Reaver_MeleeAttackState meleeAttackState { get; private set; }
     public Reaver_AttackCooldownState attackCooldownState { get; private set; }
+    #endregion
 
+    #region State Configuration Data
     [SerializeField]
     private D_IdleState idleStateData;
     [SerializeField]
@@ -22,29 +26,46 @@ public class Reaver : Enemy
     private D_MeleeAttack meleeAttackData;
     [SerializeField]
     private D_AttackCooldownState attackCooldownData;
+    #endregion
 
+    /// <summary>
+    /// Initializes all states during Awake.
+    /// </summary>
     public override void Awake()
     {
         base.Awake();
-
-        idleState = new Reaver_IdleState(this, StateMachine, "idle", idleStateData, this);
-        patrolState = new Reaver_PatrolState(this, StateMachine, "move", moveStateData, this);
-        deathState = new Reaver_DeathState(this, StateMachine, "death", this);
-        chaseState = new Reaver_ChaseState(this, StateMachine, "chase", chaseData);
-        waitingState = new Reaver_WaitingState(this, StateMachine, "waiting", this);
-        meleeAttackState = new Reaver_MeleeAttackState(this, StateMachine, "meleeAttack", meleeAttackData, this);
-        attackCooldownState = new Reaver_AttackCooldownState(this, StateMachine, "attackCooldown", attackCooldownData);
+        InitializeStates();
     }
 
+    /// <summary>
+    /// Initializes and starts the enemy with patrol state.
+    /// </summary>
+    public override void Start()
+    {
+        base.Start();
+        StateMachine.Initialize(patrolState);
+    }
+
+    /// <summary>
+    /// Returns the death state for this enemy.
+    /// </summary>
+    /// <returns>The death state instance.</returns>
     public override State GetDeathState()
     {
         return deathState;
     }
 
-    public override void Start()
+    /// <summary>
+    /// Initializes all state instances with their respective configuration data.
+    /// </summary>
+    private void InitializeStates()
     {
-        base.Start();
-
-        StateMachine.Initialize(patrolState);
+        idleState = new Reaver_IdleState(this, StateMachine, "idle", idleStateData);
+        patrolState = new Reaver_PatrolState(this, StateMachine, "move", moveStateData);
+        deathState = new Reaver_DeathState(this, StateMachine, "death");
+        chaseState = new Reaver_ChaseState(this, StateMachine, "chase", chaseData);
+        waitingState = new Reaver_WaitingState(this, StateMachine, "waiting");
+        meleeAttackState = new Reaver_MeleeAttackState(this, StateMachine, "meleeAttack", meleeAttackData);
+        attackCooldownState = new Reaver_AttackCooldownState(this, StateMachine, "attackCooldown", attackCooldownData);
     }
 }
