@@ -35,7 +35,7 @@ namespace Menu
         /// </summary>
         public override void OnOpenMenu()
         {
-            if (m_titleScreen != null && m_titleScreen.transitionFinished)
+            if (m_titleScreen != null && m_titleScreen.TransitionFinished)
             {
                 m_buttons.SetActive(true);
 

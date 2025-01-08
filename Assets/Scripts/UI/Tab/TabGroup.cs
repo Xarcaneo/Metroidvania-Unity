@@ -4,24 +4,35 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 /// <summary>
-/// Manages a group of tabs and their associated content.
+/// Manages a group of tabs and their associated content, handling tab switching and visual states.
 /// </summary>
 public class TabGroup : MonoBehaviour
 {
+    [Header("Tab Settings")]
+    [Tooltip("List of tab content objects that will be shown/hidden")]
     [SerializeField] private List<Tab> objectsToSwap;
-    private List<UITabButton> tabButtons;
 
+    [Header("Visual Settings")]
+    [Tooltip("Sprite used for inactive tab buttons")]
     [SerializeField] private Sprite tabIdle;
+    [Tooltip("Sprite used for the active tab button")]
     [SerializeField] private Sprite tabActive;
 
+    private List<UITabButton> tabButtons;
     private UITabButton selectedTab;
     private int index;
 
+    /// <summary>
+    /// Initializes and validates required components.
+    /// </summary>
     private void Awake()
     {
         ValidateComponents();
     }
 
+    /// <summary>
+    /// Subscribes to input events for tab navigation.
+    /// </summary>
     private void OnEnable()
     {
         if (InputManager.Instance != null)
@@ -35,6 +46,9 @@ public class TabGroup : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Unsubscribes from input events.
+    /// </summary>
     private void OnDisable()
     {
         if (InputManager.Instance != null)
@@ -44,6 +58,9 @@ public class TabGroup : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Validates that all required components and references are properly set up.
+    /// </summary>
     private void ValidateComponents()
     {
         if (objectsToSwap == null || objectsToSwap.Count == 0)
@@ -64,6 +81,9 @@ public class TabGroup : MonoBehaviour
         tabButtons = new List<UITabButton>();
     }
 
+    /// <summary>
+    /// Resets the tab group to show the middle tab.
+    /// </summary>
     public void ResetPages()
     {
         if (tabButtons == null || tabButtons.Count == 0)
@@ -76,18 +96,28 @@ public class TabGroup : MonoBehaviour
         OnTabSelected(tabButtons[startIndex]);
     }
 
+    /// <summary>
+    /// Switches to the next tab if available.
+    /// </summary>
     private void NextTab()
     {
         if (tabButtons == null || index + 1 >= tabButtons.Count) return;
         OnTabSelected(tabButtons[index + 1]);
     }
 
+    /// <summary>
+    /// Switches to the previous tab if available.
+    /// </summary>
     private void PreviousTab()
     {
         if (tabButtons == null || index - 1 < 0) return;
         OnTabSelected(tabButtons[index - 1]);
     }
 
+    /// <summary>
+    /// Registers a new tab button with this group.
+    /// </summary>
+    /// <param name="button">The tab button to register</param>
     public void Subscribe(UITabButton button)
     {
         if (button == null)
@@ -111,6 +141,10 @@ public class TabGroup : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Called when a tab is exited.
+    /// </summary>
+    /// <param name="button">The tab button that was exited</param>
     public void OnTabExit(UITabButton button)
     {
         if (button != null)
@@ -119,6 +153,10 @@ public class TabGroup : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Called when a tab is selected.
+    /// </summary>
+    /// <param name="button">The tab button that was selected</param>
     public void OnTabSelected(UITabButton button)
     {
         if (button == null) return;
@@ -152,6 +190,9 @@ public class TabGroup : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Resets all tabs to their inactive state.
+    /// </summary>
     public void ResetTabs()
     {
         if (tabButtons == null) return;

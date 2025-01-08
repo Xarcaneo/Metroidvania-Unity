@@ -1,12 +1,21 @@
 using Opsive.UltimateInventorySystem.UI.Panels;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Manages the inventory tab in the UI, handling the display and updates of the player's inventory.
+/// </summary>
 public class InventoryTab : Tab
 {
-    [SerializeField] DisplayPanel displayPanel;
+    [Tooltip("Reference to the Ultimate Inventory System display panel")]
+    [SerializeField] private DisplayPanel displayPanel;
 
+    /// <summary>
+    /// Opens the inventory display when the tab is enabled.
+    /// </summary>
     private void OnEnable() => displayPanel.SmartOpen();
+
+    /// <summary>
+    /// Closes the inventory display when the tab is disabled.
+    /// </summary>
     private void OnDisable() => displayPanel.SmartClose();
 }
