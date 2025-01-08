@@ -1,31 +1,106 @@
 using UnityEngine;
 
+/// <summary>
+/// State that handles the player's ladder climbing behavior.
+/// This state manages climbing up and down ladders with smooth transitions.
+/// </summary>
+/// <remarks>
+/// This state is responsible for:
+/// - Managing ladder climbing movement
+/// - Handling ladder animation speed
+/// - Controlling gravity during climbing
+/// - Managing transitions at ladder ends
+/// - Aligning player with ladder center
+/// 
+/// The state can transition to:
+/// - JumpState: When jumping off ladder with horizontal input
+/// - FinishClimb: When reaching ladder end or pressing down at bottom
+/// - InAirState: When losing contact with ladder
+/// </remarks>
 public class PlayerLadderClimbState : PlayerState
 {
+    #region Input Variables
+    /// <summary>
+    /// Vertical input value (-1 for down, 0 for neutral, 1 for up)
+    /// </summary>
     private int yInput;
+
+    /// <summary>
+    /// Horizontal input value (-1 for left, 0 for neutral, 1 for right)
+    /// </summary>
     private int xInput;
+
+    /// <summary>
+    /// Flag indicating if jump input is active
+    /// </summary>
     private bool JumpInput;
+    #endregion
 
+    #region Check Variables
+    /// <summary>
+    /// Flag indicating if player is touching ground
+    /// </summary>
     private bool isGrounded;
+
+    /// <summary>
+    /// Flag indicating if player is touching ladder
+    /// </summary>
     private bool isTouchingLadder;
+    #endregion
 
+    #region Components
+    /// <summary>
+    /// Reference to the player's animator component
+    /// </summary>
     private Animator m_anim;
+
+    /// <summary>
+    /// Reference to the player's rigidbody component
+    /// </summary>
     private Rigidbody2D m_rigidbody;
+    #endregion
 
+    #region State Variables
+    /// <summary>
+    /// Stores the original gravity scale to restore after climbing
+    /// </summary>
     private float prevGravityScale;
+    #endregion
 
+    #region Core Components
+    /// <summary>
+    /// Reference to the Movement component, lazily loaded
+    /// </summary>
     private Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
     private Movement movement;
 
+    /// <summary>
+    /// Reference to the CollisionSenses component, lazily loaded
+    /// </summary>
     private CollisionSenses CollisionSenses { get => collisionSenses ?? core.GetCoreComponent(ref collisionSenses); }
     private CollisionSenses collisionSenses;
+    #endregion
 
-    public PlayerLadderClimbState(Player player, StateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
+    /// <summary>
+    /// Initializes a new instance of the PlayerLadderClimbState
+    /// </summary>
+    /// <param name="player">Reference to the Player component</param>
+    /// <param name="stateMachine">Reference to the state machine managing player states</param>
+    /// <param name="playerData">Reference to the player's data container</param>
+    /// <param name="animBoolName">Name of the animation boolean parameter for this state</param>
+    public PlayerLadderClimbState(Player player, StateMachine stateMachine, PlayerData playerData, string animBoolName) 
+        : base(player, stateMachine, playerData, animBoolName)
     {
         m_anim = player.GetComponent<Animator>();
         m_rigidbody = player.GetComponent<Rigidbody2D>();
     }
 
+    /// <summary>
+    /// Performs state-specific checks
+    /// </summary>
+    /// <remarks>
+    /// Updates ground contact and ladder contact status
+    /// </remarks>
     public override void DoChecks()
     {
         base.DoChecks();
@@ -37,6 +112,16 @@ public class PlayerLadderClimbState : PlayerState
         }
     }
 
+    /// <summary>
+    /// Called when entering the ladder climb state
+    /// </summary>
+    /// <remarks>
+    /// Sets up climbing by:
+    /// 1. Resetting available jumps
+    /// 2. Pausing climb animation
+    /// 3. Disabling gravity
+    /// 4. Aligning player with ladder center
+    /// </remarks>
     public override void Enter()
     {
         base.Enter();
@@ -50,6 +135,14 @@ public class PlayerLadderClimbState : PlayerState
         AlignPlayerWithLadderCenter();
     }
 
+    /// <summary>
+    /// Called when exiting the ladder climb state
+    /// </summary>
+    /// <remarks>
+    /// Restores normal movement by:
+    /// 1. Resuming normal animation speed
+    /// 2. Restoring original gravity scale
+    /// </remarks>
     public override void Exit()
     {
         base.Exit();
@@ -58,6 +151,17 @@ public class PlayerLadderClimbState : PlayerState
         m_rigidbody.gravityScale = prevGravityScale;
     }
 
+    /// <summary>
+    /// Updates the state's logic
+    /// </summary>
+    /// <remarks>
+    /// Called every frame to:
+    /// 1. Stop any horizontal movement
+    /// 2. Process player inputs
+    /// 3. Handle state transitions
+    /// 4. Update climbing movement and animation
+    /// 5. Check for ladder end points
+    /// </remarks>
     public override void LogicUpdate()
     {
         base.LogicUpdate();
@@ -69,6 +173,7 @@ public class PlayerLadderClimbState : PlayerState
         xInput = player.InputHandler.NormInputX;
         JumpInput = player.InputHandler.JumpInput;
 
+        // Handle state transitions
         if (JumpInput && player.JumpState.CanJump() && xInput != 0)
         {
             Movement?.SetVelocityX(0f);
@@ -84,12 +189,14 @@ public class PlayerLadderClimbState : PlayerState
         }
         else if (yInput != 0)
         {
+            // Update climbing animation and movement
             m_anim.speed = 1;
-            Movement?.SetVelocityY(playerData.climbingVelocity * yInput);;
+            Movement?.SetVelocityY(playerData.climbingVelocity * yInput);
         }
         else
             m_anim.speed = 0;
 
+        // Check if player has reached ladder top
         if (yInput == 1 && playerData.climbFinishThresholdUp >= DetermineDistanceFromGround(true))
         {
             player.transform.position = DetermineGroundPosition();
@@ -97,6 +204,13 @@ public class PlayerLadderClimbState : PlayerState
         }
     }
 
+    /// <summary>
+    /// Determines the position where the player should be placed when reaching ladder top
+    /// </summary>
+    /// <returns>Vector2 position above the ladder</returns>
+    /// <remarks>
+    /// Casts a ray upward to find the ground position and adds an offset
+    /// </remarks>
     private Vector2 DetermineGroundPosition()
     {
         // Cast a ray upwards to find the ground above the ladder
@@ -106,6 +220,11 @@ public class PlayerLadderClimbState : PlayerState
         return new Vector2(player.transform.position.x, hit.point.y + playerData.groundOffset);
     }
 
+    /// <summary>
+    /// Determines the distance to the nearest ground above or below the player
+    /// </summary>
+    /// <param name="checkAbove">If true, checks above player; if false, checks below</param>
+    /// <returns>Distance to the nearest ground in the specified direction</returns>
     private float DetermineDistanceFromGround(bool checkAbove)
     {
         // Determine the direction based on whether we're checking above or below the player
@@ -129,6 +248,12 @@ public class PlayerLadderClimbState : PlayerState
         }
     }
 
+    /// <summary>
+    /// Aligns the player horizontally with the center of the ladder
+    /// </summary>
+    /// <remarks>
+    /// Uses the ladder position from CollisionSenses to ensure proper alignment
+    /// </remarks>
     private void AlignPlayerWithLadderCenter()
     {
         if (CollisionSenses)
