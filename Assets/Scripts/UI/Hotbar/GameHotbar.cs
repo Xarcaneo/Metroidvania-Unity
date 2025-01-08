@@ -76,7 +76,6 @@ public class GameHotbar : MonoBehaviour
     {
         if (m_playerInputHandler == null)
         {
-            Debug.LogWarning("[GameHotbar] PlayerInputHandler is null, attempting to reinitialize...");
             InitializePlayerInput();
             return;
         }

@@ -7,9 +7,11 @@ using TMPro;
 /// Monitors and displays quest state changes with animated notifications.
 /// Handles quest updates, new quests, and quest completions with different animations.
 /// </summary>
+[RequireComponent(typeof(Animator))]
 public class QuestMonitor : MonoBehaviour, IMessageHandler
 {
     #region Serialized Fields
+    [Header("UI References")]
     /// <summary>
     /// Text component for displaying the quest name.
     /// </summary>
@@ -19,6 +21,11 @@ public class QuestMonitor : MonoBehaviour, IMessageHandler
     /// Animator component for quest notification animations.
     /// </summary>
     [SerializeField] private Animator questImageAnimator;
+
+    [Header("Animation Names")]
+    [SerializeField] private string newQuestAnimation = "NewQuest";
+    [SerializeField] private string updateQuestAnimation = "UpdateQuest";
+    [SerializeField] private string completedQuestAnimation = "CompletedQuest";
     #endregion
 
     #region Private Fields
@@ -32,7 +39,15 @@ public class QuestMonitor : MonoBehaviour, IMessageHandler
         Completed
     }
 
+    /// <summary>
+    /// Current animation mode for quest notifications.
+    /// </summary>
     private QuestAnimationMode questAnimationMode;
+
+    /// <summary>
+    /// Flag to track if the component is properly initialized.
+    /// </summary>
+    private bool isInitialized;
     #endregion
 
     #region Unity Lifecycle
@@ -49,6 +64,7 @@ public class QuestMonitor : MonoBehaviour, IMessageHandler
     /// </summary>
     private void OnEnable()
     {
+        if (!isInitialized) return;
         MessageSystem.AddListener(this, QuestMachineMessages.QuestStateChangedMessage, string.Empty);
     }
 
@@ -57,6 +73,7 @@ public class QuestMonitor : MonoBehaviour, IMessageHandler
     /// </summary>
     private void OnDisable()
     {
+        if (!isInitialized) return;
         MessageSystem.RemoveListener(this);
     }
     #endregion
@@ -76,10 +93,16 @@ public class QuestMonitor : MonoBehaviour, IMessageHandler
 
         if (questImageAnimator == null)
         {
-            Debug.LogError($"[QuestMonitor] Missing questImageAnimator component on {gameObject.name}");
-            enabled = false;
-            return;
+            questImageAnimator = GetComponent<Animator>();
+            if (questImageAnimator == null)
+            {
+                Debug.LogError($"[QuestMonitor] Missing questImageAnimator component on {gameObject.name}");
+                enabled = false;
+                return;
+            }
         }
+
+        isInitialized = true;
     }
     #endregion
 
@@ -90,9 +113,9 @@ public class QuestMonitor : MonoBehaviour, IMessageHandler
     /// <param name="messageArgs">Message arguments containing quest state information</param>
     public void OnMessage(MessageArgs messageArgs)
     {
-        if (messageArgs.values == null || messageArgs.values.Length < 2)
+        if (!isInitialized || messageArgs.values == null || messageArgs.values.Length < 2)
         {
-            Debug.LogWarning("[QuestMonitor] Received invalid message args");
+            Debug.LogWarning("[QuestMonitor] Received invalid message args or component not initialized");
             return;
         }
 
@@ -131,6 +154,12 @@ public class QuestMonitor : MonoBehaviour, IMessageHandler
             case QuestState.Successful:
                 questAnimationMode = QuestAnimationMode.Completed;
                 break;
+            case QuestState.Disabled:
+            case QuestState.WaitingToStart:
+            case QuestState.Failed:
+            case QuestState.Abandoned:
+                // These states don't need animations
+                return;
         }
     }
 
@@ -141,6 +170,12 @@ public class QuestMonitor : MonoBehaviour, IMessageHandler
     /// <param name="state">New node state</param>
     private void HandleQuestNodeStateChange(StringField nodeId, QuestNodeState state)
     {
+        if (string.IsNullOrEmpty(nodeId?.value))
+        {
+            Debug.LogWarning("[QuestMonitor] Received null or empty node ID");
+            return;
+        }
+
         if (nodeId.value.Contains("Condition") && state == QuestNodeState.True)
         {
             questAnimationMode = QuestAnimationMode.Update;
@@ -154,17 +189,26 @@ public class QuestMonitor : MonoBehaviour, IMessageHandler
     /// </summary>
     private void PlayAnimation()
     {
-        switch (questAnimationMode)
+        if (!isInitialized || questImageAnimator == null) return;
+
+        try
         {
-            case QuestAnimationMode.New:
-                questImageAnimator.Play("NewQuest");
-                break;
-            case QuestAnimationMode.Update:
-                questImageAnimator.Play("UpdateQuest");
-                break;
-            case QuestAnimationMode.Completed:
-                questImageAnimator.Play("CompletedQuest");
-                break;
+            switch (questAnimationMode)
+            {
+                case QuestAnimationMode.New:
+                    questImageAnimator.Play(newQuestAnimation);
+                    break;
+                case QuestAnimationMode.Update:
+                    questImageAnimator.Play(updateQuestAnimation);
+                    break;
+                case QuestAnimationMode.Completed:
+                    questImageAnimator.Play(completedQuestAnimation);
+                    break;
+            }
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"[QuestMonitor] Failed to play animation: {e.Message}");
         }
     }
     #endregion

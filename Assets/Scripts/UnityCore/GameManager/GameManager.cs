@@ -10,6 +10,10 @@ using UnityEngine.InputSystem;
 [DefaultExecutionOrder(-100)] // Ensure GameManager initializes before other managers
 public class GameManager : MonoBehaviour
 {
+    #region Constants
+    private const bool DEBUG_KEYBINDINGS = false;
+    #endregion
+
     #region Serialized Fields
     [Header("Input Settings")]
     [Tooltip("Reference to the Input Action Asset containing all input bindings")]
@@ -110,8 +114,8 @@ public class GameManager : MonoBehaviour
                     // Store binding in dialogue system for UI display
                     DialogueLua.SetVariable($"Keybinding.{action.name}", keyName);
 
-                    #if UNITY_EDITOR
-                    Debug.Log($"Updated binding for {action.name}: {keyName}");
+                    #if UNITY_EDITOR && DEBUG_KEYBINDINGS
+                    Debug.Log($"[GameManager] Updated binding for {action.name}: {keyName}");
                     #endif
                 }
             }
