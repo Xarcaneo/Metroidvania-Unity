@@ -1,31 +1,74 @@
-using PixelCrushers;
 using PixelCrushers.DialogueSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Handles trigger functionality for gate control and state management
+/// Handles trigger functionality for controlling connected gates and managing trigger states.
+/// This class manages the interaction between player input and gate mechanisms, handling animations
+/// and state transitions for both the trigger and its connected gates.
 /// </summary>
 public class Trigger : Interactable
 {
     #region Serialized Fields
     [SerializeField] 
     [Tooltip("Unique ID for this trigger, used to identify connected gates")]
+    /// <summary>
+    /// Unique identifier for this trigger. Used to connect with corresponding gates.
+    /// Must be greater than 0 to ensure proper gate connections.
+    /// </summary>
     private int m_triggerID;
     #endregion
 
     #region Private Fields
+    /// <summary>
+    /// Current state of the trigger (on/off). Used to track and persist trigger state.
+    /// </summary>
     private bool m_triggerState;
+
+    /// <summary>
+    /// List of gates connected to this trigger via triggerID.
+    /// These gates will be affected when the trigger state changes.
+    /// </summary>
     private List<Gate> m_connectedGates;
+
+    /// <summary>
+    /// Reference to the animator component for trigger animations.
+    /// Controls visual feedback for trigger state changes.
+    /// </summary>
     private Animator m_animator;
+
+    /// <summary>
+    /// Reference to player's movement component for handling player orientation.
+    /// Used to ensure player faces the correct direction during interactions.
+    /// </summary>
     private Movement m_playerMovement;
 
-    // Define the possible states of the trigger
-    private enum TriggerState { IdleOn, TurningOff, IdleOff, TurningOn }
+    /// <summary>
+    /// Possible states for the trigger's animation and functionality.
+    /// Controls the flow of trigger state transitions.
+    /// </summary>
+    private enum TriggerState { 
+        /// <summary>Trigger is active and idle</summary>
+        IdleOn, 
+        /// <summary>Trigger is transitioning to off state</summary>
+        TurningOff, 
+        /// <summary>Trigger is inactive and idle</summary>
+        IdleOff, 
+        /// <summary>Trigger is transitioning to on state</summary>
+        TurningOn 
+    }
+    
+    /// <summary>
+    /// Current state of the trigger's animation and functionality.
+    /// </summary>
     private TriggerState m_currentState;
 
     // Animation parameter names
+    /// <summary>
+    /// Constants for animator parameter names to ensure consistency
+    /// and prevent typos in animation calls.
+    /// </summary>
     private const string IDLE_ON_PARAM = "IdleOn";
     private const string TURNING_OFF_PARAM = "TurningOff";
     private const string IDLE_OFF_PARAM = "IdleOff";
@@ -33,11 +76,20 @@ public class Trigger : Interactable
     #endregion
 
     #region Unity Lifecycle
+    /// <summary>
+    /// Initializes the trigger by caching required components.
+    /// Called when the script instance is being loaded.
+    /// </summary>
     private void Awake()
     {
         InitializeComponents();
     }
 
+    /// <summary>
+    /// Initializes trigger state and connected gates after all objects are initialized.
+    /// Waits for end of frame to ensure proper initialization order.
+    /// </summary>
+    /// <returns>IEnumerator for coroutine execution</returns>
     private IEnumerator Start()
     {
         yield return new WaitForEndOfFrame();
@@ -47,24 +99,34 @@ public class Trigger : Interactable
         InitializePlayerComponents();
     }
 
+    /// <summary>
+    /// Subscribes to player spawn events when the object becomes enabled.
+    /// Ensures component references stay valid after player respawns.
+    /// </summary>
     private void OnEnable()
     {
-        // Subscribe to player spawn event if needed
         if (GameEvents.Instance != null)
         {
             GameEvents.Instance.onPlayerSpawned += CachePlayerComponents;
         }
     }
 
+    /// <summary>
+    /// Unsubscribes from player spawn events when the object becomes disabled.
+    /// Prevents memory leaks and invalid event calls.
+    /// </summary>
     private void OnDisable()
     {
-        // Unsubscribe from player spawn event
         if (GameEvents.Instance != null)
         {
             GameEvents.Instance.onPlayerSpawned -= CachePlayerComponents;
         }
     }
 
+    /// <summary>
+    /// Validates trigger configuration in the Unity Editor.
+    /// Ensures critical parameters are properly set.
+    /// </summary>
     protected override void OnValidate()
     {
         base.OnValidate();
@@ -77,6 +139,10 @@ public class Trigger : Interactable
     #endregion
 
     #region Public Methods
+    /// <summary>
+    /// Handles the interaction with this trigger when activated by the player.
+    /// Manages player positioning, trigger state changes, and animation transitions.
+    /// </summary>
     public override void Interact()
     {
         if (!ValidateComponents()) return;
@@ -97,6 +163,10 @@ public class Trigger : Interactable
     #endregion
 
     #region Private Methods
+    /// <summary>
+    /// Initializes and caches required components.
+    /// Called during Awake to ensure early component access.
+    /// </summary>
     private void InitializeComponents()
     {
         m_animator = GetComponent<Animator>();
@@ -106,6 +176,10 @@ public class Trigger : Interactable
         }
     }
 
+    /// <summary>
+    /// Initializes player-related components if player instance exists.
+    /// Called during Start after player instantiation.
+    /// </summary>
     private void InitializePlayerComponents()
     {
         if (Player.Instance != null)
@@ -114,6 +188,10 @@ public class Trigger : Interactable
         }
     }
 
+    /// <summary>
+    /// Caches player movement component for efficient access.
+    /// Called when player spawns or during initialization.
+    /// </summary>
     private void CachePlayerComponents()
     {
         if (Player.Instance?.Core != null)
@@ -126,6 +204,9 @@ public class Trigger : Interactable
         }
     }
 
+    /// <summary>
+    /// Initializes trigger state based on DialogueLua variable.
+    /// </summary>
     private void InitializeState()
     {
         m_triggerState = DialogueLua.GetVariable("Trigger." + m_triggerID).asBool;
@@ -142,6 +223,9 @@ public class Trigger : Interactable
         }
     }
 
+    /// <summary>
+    /// Initializes connected gates based on triggerID.
+    /// </summary>
     private void InitializeConnectedGates()
     {
         // Get references to connected gates using triggerID
@@ -154,6 +238,10 @@ public class Trigger : Interactable
         }
     }
 
+    /// <summary>
+    /// Validates that all required components are present and properly initialized.
+    /// </summary>
+    /// <returns>True if all components are valid, false otherwise</returns>
     private bool ValidateComponents()
     {
         if (m_animator == null)
@@ -181,6 +269,10 @@ public class Trigger : Interactable
         return true;
     }
 
+    /// <summary>
+    /// Aligns the player's position with the trigger.
+    /// Ensures consistent interaction positioning.
+    /// </summary>
     private void AlignPlayerWithTrigger()
     {
         if (Player.Instance != null)
@@ -190,6 +282,11 @@ public class Trigger : Interactable
         }
     }
 
+    /// <summary>
+    /// Changes the trigger's state and updates animations accordingly.
+    /// Manages state transitions and notifies connected systems.
+    /// </summary>
+    /// <param name="newState">The target state to transition to</param>
     private void ChangeState(TriggerState newState)
     {
         if (!ValidateComponents()) return;
@@ -237,6 +334,10 @@ public class Trigger : Interactable
     #endregion
 
     #region Animation Events
+    /// <summary>
+    /// Called by animation event when trigger state change animation completes.
+    /// Handles player orientation, state updates, and gate notifications.
+    /// </summary>
     private void OnAnimationTrigger()
     {
         if (!ValidateComponents()) return;
@@ -265,6 +366,11 @@ public class Trigger : Interactable
     #endregion
 
     #region Coroutines
+    /// <summary>
+    /// Monitors connected gates for event completion.
+    /// Continues checking until all gates have completed their events.
+    /// </summary>
+    /// <returns>IEnumerator for coroutine execution</returns>
     private IEnumerator CheckConnectedGatesEventCompletion()
     {
         if (m_connectedGates == null || m_connectedGates.Count == 0)

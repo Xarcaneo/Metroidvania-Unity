@@ -3,51 +3,107 @@ using System.Collections;
 using UnityEngine;
 
 /// <summary>
-/// Handles communication box functionality for dialogue interactions
+/// Handles communication box functionality for dialogue interactions in the game.
+/// Manages dialogue state, visual feedback, and interaction state persistence.
+/// Integrates with the PixelCrushers Dialogue System for conversation management.
 /// </summary>
 public class CommunicationBox : Interactable
 {
     #region Serialized Fields
     [SerializeField] 
     [Tooltip("ID of the dialogue to play")]
+    /// <summary>
+    /// ID of the dialogue conversation to play when interacting.
+    /// Must match a conversation ID in the Dialogue System database.
+    /// Can be "0" for default conversation.
+    /// </summary>
     private string dialogue_ID;
 
     [SerializeField]
     [Tooltip("Unique ID for this communication box")]
+    /// <summary>
+    /// Unique identifier for this communication box.
+    /// Used to track and persist interaction state between game sessions.
+    /// Can be "0" for default state.
+    /// </summary>
     private string communicationBox_ID;
 
     [SerializeField]
     [Tooltip("Whether to show the loyal servant image")]
+    /// <summary>
+    /// Determines if the loyal servant image animation should be played
+    /// after the turn on animation completes. Controls visual appearance
+    /// of the communication box.
+    /// </summary>
     private bool LoyalServantImage = true;
     #endregion
 
     #region Private Fields
+    /// <summary>
+    /// Reference to the animator component for visual feedback.
+    /// Controls turn on/off and loyal servant animations.
+    /// </summary>
     private Animator m_animator;
+
+    /// <summary>
+    /// Reference to the dialogue system controller for managing conversations.
+    /// Required for starting and managing dialogue interactions.
+    /// </summary>
     private DialogueSystemController m_dialogueSystem;
+
+    // Animation state names
+    /// <summary>
+    /// Constants for animation state names to ensure consistency
+    /// and prevent typos in animation calls.
+    /// </summary>
+    private const string TURN_ON_ANIM = "TurnOn";
+    private const string TURN_OFF_ANIM = "TurnOff";
+    private const string LOYAL_SERVANT_IDLE_ANIM = "LoyalServantIdle";
     #endregion
 
     #region Unity Lifecycle
+    /// <summary>
+    /// Initializes the communication box by caching required components.
+    /// Called when the script instance is being loaded.
+    /// </summary>
     private void Awake()
     {
         InitializeComponents();
     }
 
+    /// <summary>
+    /// Initializes communication box state after all objects are initialized.
+    /// Waits for end of frame to ensure proper initialization order.
+    /// </summary>
+    /// <returns>IEnumerator for coroutine execution</returns>
     private IEnumerator Start()
     {
         yield return new WaitForEndOfFrame();
         InitializeState();
     }
 
+    /// <summary>
+    /// Subscribes to dialogue events when the object becomes enabled.
+    /// Ensures proper event handling for dialogue completion.
+    /// </summary>
     private void OnEnable()
     {
         SubscribeToEvents();
     }
 
+    /// <summary>
+    /// Unsubscribes from dialogue events when the object becomes disabled.
+    /// Prevents memory leaks and invalid event calls.
+    /// </summary>
     private void OnDisable()
     {
         UnsubscribeFromEvents();
     }
 
+    /// <summary>
+    /// Validates communication box configuration in the Unity Editor.
+    /// Ensures critical parameters are properly set.
+    /// </summary>
     protected override void OnValidate()
     {
         base.OnValidate();
@@ -65,19 +121,27 @@ public class CommunicationBox : Interactable
     #endregion
 
     #region Public Methods
+    /// <summary>
+    /// Handles interaction with the communication box when activated by the player.
+    /// Starts the dialogue conversation and manages visual state transitions.
+    /// </summary>
     public override void Interact()
     {
         if (!ValidateComponents()) return;
 
         base.Interact();
 
-        m_animator.Play("TurnOn");
+        m_animator.Play(TURN_ON_ANIM);
         DialogueManager.StartConversation(dialogue_ID);
         SetConversationFinished();
     }
     #endregion
 
     #region Private Methods
+    /// <summary>
+    /// Initializes and caches required components.
+    /// Called during Awake to ensure early component access.
+    /// </summary>
     private void InitializeComponents()
     {
         // Get animator
@@ -95,6 +159,10 @@ public class CommunicationBox : Interactable
         }
     }
 
+    /// <summary>
+    /// Initializes communication box state from saved data.
+    /// Disables interaction if previously completed.
+    /// </summary>
     private void InitializeState()
     {
         if (!ValidateComponents()) return;
@@ -113,6 +181,10 @@ public class CommunicationBox : Interactable
         }
     }
 
+    /// <summary>
+    /// Subscribes to dialogue system events.
+    /// Sets up event handling for dialogue completion.
+    /// </summary>
     private void SubscribeToEvents()
     {
         try
@@ -132,6 +204,10 @@ public class CommunicationBox : Interactable
         }
     }
 
+    /// <summary>
+    /// Unsubscribes from dialogue system events.
+    /// Cleans up event handlers to prevent memory leaks.
+    /// </summary>
     private void UnsubscribeFromEvents()
     {
         try
@@ -147,6 +223,10 @@ public class CommunicationBox : Interactable
         }
     }
 
+    /// <summary>
+    /// Validates that all required components are present and properly initialized.
+    /// </summary>
+    /// <returns>True if all components are valid, false otherwise</returns>
     private bool ValidateComponents()
     {
         if (m_animator == null)
@@ -176,6 +256,10 @@ public class CommunicationBox : Interactable
         return true;
     }
 
+    /// <summary>
+    /// Marks the conversation as finished and persists the state.
+    /// Updates dialogue system variables and disables further interaction.
+    /// </summary>
     private void SetConversationFinished()
     {
         try
@@ -188,16 +272,19 @@ public class CommunicationBox : Interactable
             Debug.LogError($"[{gameObject.name}] Error setting conversation finished: {e.Message}");
         }
     }
-    #endregion
 
-    #region Protected Methods
+    /// <summary>
+    /// Handles the completion of dialogue interaction.
+    /// Called by the dialogue system when conversation ends.
+    /// </summary>
+    /// <param name="value">True if dialogue should continue, false if it should end</param>
     protected override void IsInteractionCompleted(bool value)
     {
         if (!ValidateComponents()) return;
 
         if (!value && isInteracting)
         {
-            m_animator.Play("TurnOff");
+            m_animator.Play(TURN_OFF_ANIM);
             isInteracting = false;
         }
     }
@@ -205,7 +292,8 @@ public class CommunicationBox : Interactable
 
     #region Animation Events
     /// <summary>
-    /// Called by animation event when turn on animation completes
+    /// Called by animation event when turn on animation completes.
+    /// Handles transition to loyal servant idle animation if enabled.
     /// </summary>
     public void OnTurnOnAnimationComplete()
     {
@@ -213,7 +301,7 @@ public class CommunicationBox : Interactable
 
         if (LoyalServantImage)
         {
-            m_animator.Play("LoyalServantIdle");
+            m_animator.Play(LOYAL_SERVANT_IDLE_ANIM);
         }
     }
     #endregion
