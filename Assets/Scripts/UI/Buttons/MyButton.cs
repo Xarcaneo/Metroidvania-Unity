@@ -2,40 +2,88 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+/// <summary>
+/// Base button class that provides sound feedback and customizable actions.
+/// Handles button selection and press events with FMOD sound integration.
+/// </summary>
 public class MyButton : MonoBehaviour, ISelectHandler
 {
+    #region Serialized Fields
+    /// <summary>
+    /// If true, button will not play sounds. Resets after one use.
+    /// </summary>
     [SerializeField] bool muteSound = false;
 
+    /// <summary>
+    /// FMOD event path for button selection sound.
+    /// Defaults to "event:/SFX/UIEvents/ButtonFocused".
+    /// </summary>
     [SerializeField] private string onSelectSoundPath;
-    [SerializeField] private string onPressedSoundPath;
 
+    /// <summary>
+    /// FMOD event path for button press sound.
+    /// Defaults to "event:/SFX/UIEvents/ButtonPressed".
+    /// </summary>
+    [SerializeField] private string onPressedSoundPath;
+    #endregion
+
+    #region Unity Event Functions
+    /// <summary>
+    /// Initializes default sound paths if not set.
+    /// </summary>
     private void Awake()
     {
         if (onSelectSoundPath == null) onSelectSoundPath = "event:/SFX/UIEvents/ButtonFocused";
-        if (onPressedSoundPath == null)  onPressedSoundPath = "event:/SFX/UIEvents/ButtonPressed";
+        if (onPressedSoundPath == null) onPressedSoundPath = "event:/SFX/UIEvents/ButtonPressed";
     }
+    #endregion
 
+    #region UI Event Handlers
+    /// <summary>
+    /// Called when button is selected/focused.
+    /// Plays selection sound and triggers custom select action.
+    /// </summary>
+    /// <param name="eventData">Event data from the UI system</param>
     public void OnSelect(BaseEventData eventData)
     {
         PlaySound(onSelectSoundPath);
         OnSelectAction();
     }
 
+    /// <summary>
+    /// Called when button is pressed.
+    /// Plays press sound and triggers custom press action.
+    /// </summary>
     protected virtual void OnPressed()
     {
         PlaySound(onPressedSoundPath);
         OnPressedAction();
     }
+    #endregion
 
+    #region Protected Virtual Methods
+    /// <summary>
+    /// Override this to implement custom press behavior.
+    /// Called after press sound is played.
+    /// </summary>
     protected virtual void OnPressedAction()
     {
-
     }
+
+    /// <summary>
+    /// Override this to implement custom select behavior.
+    /// Called after select sound is played.
+    /// </summary>
     protected virtual void OnSelectAction()
     {
- 
     }
+    #endregion
 
+    #region Sound Handling
+    /// <summary>
+    /// Plays an FMOD sound event at button's position.
+    /// </summary>
+    /// <param name="path">FMOD event path to play</param>
     public void PlaySound(string path)
     {
         if (muteSound == false)
@@ -43,4 +91,5 @@ public class MyButton : MonoBehaviour, ISelectHandler
 
         if (muteSound) muteSound = false;
     }
+    #endregion
 }
