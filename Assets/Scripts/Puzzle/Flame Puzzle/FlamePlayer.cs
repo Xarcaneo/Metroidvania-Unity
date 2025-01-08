@@ -1,18 +1,36 @@
 using UnityEngine;
+using TMPro;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class FlamePlayer : MonoBehaviour
 {
-    [SerializeField] private float speed;
-    [SerializeField] private bool drawRaycast = true; // Toggle this in the Inspector to draw raycast for debugging
-    [SerializeField] private float rayLength = 0.55f; // Adjustable raycast length
+    [Header("Movement Settings")]
+    [SerializeField] private float speed = 5f;
+    [SerializeField] private float rayLength = 0.55f;
+    
+    [Header("Debug Settings")]
+    [SerializeField] private bool drawRaycast = true;
+    
+    [Header("UI References")]
+    [SerializeField] private GameObject interactionPromptPrefab;
+    [SerializeField] private Vector2 promptOffset = new Vector2(0, 0.5f);
 
     private Rigidbody2D rb;
     private Vector2 movement;
     private bool canMove = true;
+    private GameObject currentPrompt;
+    private TextMeshPro promptText;
+    private IInteractable currentInteractable;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        if (interactionPromptPrefab != null)
+        {
+            currentPrompt = Instantiate(interactionPromptPrefab, transform.position, Quaternion.identity);
+            promptText = currentPrompt.GetComponent<TextMeshPro>();
+            currentPrompt.SetActive(false);
+        }
     }
 
     private void Update()
@@ -24,19 +42,19 @@ public class FlamePlayer : MonoBehaviour
             if (movement != Vector2.zero)
                 canMove = false;
         }
+
+        UpdatePromptPosition();
     }
 
     private void FixedUpdate()
     {
-        // Apply movement if there's input
         if (movement != Vector2.zero)
         {
             rb.velocity = movement * speed;
-            CastMovementRay(); // Constantly cast a ray in the direction of movement
+            CastMovementRay();
         }
         else
         {
-            // Optional: Stop the Rigidbody if there's no input
             rb.velocity = Vector2.zero;
         }
     }
@@ -46,36 +64,29 @@ public class FlamePlayer : MonoBehaviour
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
-        // Determine which direction has the greater input magnitude
         if (Mathf.Abs(horizontalInput) > Mathf.Abs(verticalInput))
         {
-            // Horizontal movement
             movement = new Vector2(horizontalInput, 0).normalized;
         }
         else if (Mathf.Abs(verticalInput) > Mathf.Abs(horizontalInput))
         {
-            // Vertical movement
             movement = new Vector2(0, verticalInput).normalized;
         }
         else
         {
-            // This case handles when both inputs are equal; choose to not move or prioritize one direction
-            movement = Vector2.zero; // Example: Not moving if inputs are equal
+            movement = Vector2.zero;
         }
 
-        // Perform a raycast in the intended direction; if something is hit, stop movement
         if (CastMovementRay())
         {
             movement = Vector2.zero;
         }
     }
 
-
-    // Casts and draws a ray in the direction the player is moving
     private bool CastMovementRay()
     {
-        int playerLayer = 1 << 13; // Layer 8 for the player
-        int layerMask = ~playerLayer; // Invert to get a mask that ignores the player layer
+        int playerLayer = 1 << 13;
+        int layerMask = ~playerLayer;
 
         if (drawRaycast)
         {
@@ -88,17 +99,57 @@ public class FlamePlayer : MonoBehaviour
             movement = Vector2.zero;
             canMove = true;
 
-            // Check if the hit object implements IInteractable
             IInteractable interactable = hit.collider.gameObject.GetComponent<IInteractable>();
-            if (interactable != null)
+            if (interactable != null && interactable.CanInteract)
             {
-                // If it does, call the Interact method
+                ShowInteractionPrompt(interactable);
+                currentInteractable = interactable;
                 interactable.Interact();
+            }
+            else
+            {
+                HideInteractionPrompt();
+                currentInteractable = null;
             }
 
             return true;
         }
+        else
+        {
+            HideInteractionPrompt();
+            currentInteractable = null;
+        }
 
         return false;
+    }
+
+    private void ShowInteractionPrompt(IInteractable interactable)
+    {
+        if (currentPrompt != null && promptText != null)
+        {
+            promptText.text = interactable.InteractionPrompt;
+            currentPrompt.SetActive(true);
+        }
+    }
+
+    private void HideInteractionPrompt()
+    {
+        if (currentPrompt != null)
+        {
+            currentPrompt.SetActive(false);
+        }
+    }
+
+    private void UpdatePromptPosition()
+    {
+        if (currentPrompt != null && currentPrompt.activeSelf)
+        {
+            currentPrompt.transform.position = transform.position + (Vector3)promptOffset;
+        }
+    }
+
+    private void OnDisable()
+    {
+        HideInteractionPrompt();
     }
 }
