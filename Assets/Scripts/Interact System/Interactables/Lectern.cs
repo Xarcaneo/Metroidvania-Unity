@@ -49,7 +49,7 @@ public class Lectern : Interactable
     {
         base.OnValidate();
 
-        if (m_dialogueID == null)
+        if (string.IsNullOrEmpty(m_dialogueID))
         {
             Debug.LogWarning($"[{gameObject.name}] Dialogue ID is not set!");
         }
