@@ -1,5 +1,6 @@
 using UnityEngine;
 using PixelCrushers.DialogueSystem;
+using System.Collections.Generic;
 
 /// <summary>
 /// Base class for interactable objects that maintain state and have animations.
@@ -17,6 +18,14 @@ public abstract class InteractableState : Interactable
     protected string m_stateID;
 
     [SerializeField]
+    [Tooltip("List of gate IDs that this interactable can control")]
+    /// <summary>
+    /// List of gate IDs that this interactable can control.
+    /// Used to manage multiple gate connections.
+    /// </summary>
+    protected List<string> m_connectedGateIDs = new List<string>();
+
+    [SerializeField]
     [Tooltip("Reference to the animator component")]
     /// <summary>
     /// Reference to the animator component for animations.
@@ -31,6 +40,12 @@ public abstract class InteractableState : Interactable
     /// Cached for efficient access.
     /// </summary>
     protected GameEvents m_gameEvents;
+
+    /// <summary>
+    /// List of gates connected to this interactable.
+    /// These gates will be affected when the state changes.
+    /// </summary>
+    protected List<Gate> m_connectedGates;
     #endregion
 
     #region Unity Lifecycle
@@ -42,9 +57,18 @@ public abstract class InteractableState : Interactable
     {
         base.OnValidate();
 
+        // Ensure component is fully initialized before validation
+        if (!gameObject.activeInHierarchy) return;
+
         if (m_animator == null)
         {
             m_animator = GetComponent<Animator>();
+        }
+
+        // Only show warning for Trigger components when list is actually empty
+        if (this is Trigger && m_connectedGateIDs != null && m_connectedGateIDs.Count == 0)
+        {
+            Debug.LogWarning($"[{gameObject.name}] No gate IDs assigned!");
         }
     }
 
@@ -75,6 +99,31 @@ public abstract class InteractableState : Interactable
         {
             Debug.LogWarning($"[{gameObject.name}] GameEvents instance is null!");
         }
+
+        InitializeConnectedGates();
+    }
+
+    /// <summary>
+    /// Initializes connected gates based on gate IDs.
+    /// Called during initialization to cache gate references.
+    /// </summary>
+    protected virtual void InitializeConnectedGates()
+    {
+        // Find all gates in the scene
+        Gate[] allGates = FindObjectsOfType<Gate>();
+        
+        // Filter gates based on connected IDs
+        foreach (Gate gate in allGates)
+        {
+            if (gate != null && m_connectedGateIDs.Contains(gate.m_gateID))
+            {
+                if (m_connectedGates == null)
+                {
+                    m_connectedGates = new List<Gate>();
+                }
+                m_connectedGates.Add(gate);
+            }
+        }
     }
 
     /// <summary>
@@ -95,6 +144,12 @@ public abstract class InteractableState : Interactable
             return false;
         }
 
+        // Only validate gate IDs for Trigger components
+        if (this is Trigger && m_connectedGateIDs.Count == 0)
+        {
+            Debug.LogWarning($"[{gameObject.name}] No gate IDs assigned!");
+        }
+
         return true;
     }
 
@@ -105,7 +160,10 @@ public abstract class InteractableState : Interactable
     {
         if (m_gameEvents != null)
         {
-            m_gameEvents.TriggerStateChanged(m_stateID);
+            foreach (var gateID in m_connectedGateIDs)
+            {
+                m_gameEvents.TriggerStateChanged(gateID);
+            }
         }
     }
 

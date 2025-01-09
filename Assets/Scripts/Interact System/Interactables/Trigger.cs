@@ -17,12 +17,6 @@ public class Trigger : InteractableState
     private bool m_triggerState;
 
     /// <summary>
-    /// List of gates connected to this trigger via triggerID.
-    /// These gates will be affected when the trigger state changes.
-    /// </summary>
-    private List<Gate> m_connectedGates;
-
-    /// <summary>
     /// Reference to player's movement component for handling player orientation.
     /// Used to ensure player faces the correct direction during interactions.
     /// </summary>
@@ -94,7 +88,6 @@ public class Trigger : InteractableState
         yield return new WaitForEndOfFrame();
         
         InitializeState();
-        InitializeConnectedGates();
         InitializePlayerComponents();
     }
     #endregion
@@ -168,21 +161,6 @@ public class Trigger : InteractableState
         {
             m_currentState = TriggerState.IdleOff;
             m_animator.SetBool(IDLE_OFF_PARAM, true);
-        }
-    }
-
-    /// <summary>
-    /// Initializes connected gates based on triggerID.
-    /// </summary>
-    private void InitializeConnectedGates()
-    {
-        // Get references to connected gates using triggerID
-        m_connectedGates = new List<Gate>(FindObjectsOfType<Gate>());
-        m_connectedGates.RemoveAll(gate => gate.m_gateID != m_stateID);
-
-        if (m_connectedGates.Count == 0)
-        {
-            Debug.LogWarning($"[{gameObject.name}] No gates found with Trigger ID: {m_stateID}");
         }
     }
 

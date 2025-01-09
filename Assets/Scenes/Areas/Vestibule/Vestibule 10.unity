@@ -54935,7 +54935,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 622619104236007423, guid: 13e8ec8515311df4d8477a6c6383e25f, type: 3}
       propertyPath: m_gateID
-      value: 6
+      value: Vestibule10_02
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13e8ec8515311df4d8477a6c6383e25f, type: 3}
@@ -55268,7 +55268,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 622619104236007423, guid: 13e8ec8515311df4d8477a6c6383e25f, type: 3}
       propertyPath: m_gateID
-      value: 5
+      value: Vestibule10_01
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13e8ec8515311df4d8477a6c6383e25f, type: 3}
@@ -55290,7 +55290,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 343317267089884458, guid: 9945fe1796b2dd6419894f0d0fa3c120, type: 3}
       propertyPath: m_stateID
-      value: 5
+      value: Vestibule10_01
       objectReference: {fileID: 0}
     - target: {fileID: 343317267089884458, guid: 9945fe1796b2dd6419894f0d0fa3c120, type: 3}
       propertyPath: triggerID
@@ -55313,7 +55313,15 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 343317267089884458, guid: 9945fe1796b2dd6419894f0d0fa3c120, type: 3}
+      propertyPath: m_connectedGateIDs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 343317267089884458, guid: 9945fe1796b2dd6419894f0d0fa3c120, type: 3}
       propertyPath: connectedGateIDs.Array.data[0]
+      value: Vestibule10_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 343317267089884458, guid: 9945fe1796b2dd6419894f0d0fa3c120, type: 3}
+      propertyPath: m_connectedGateIDs.Array.data[0]
       value: Vestibule10_01
       objectReference: {fileID: 0}
     - target: {fileID: 5924340701713213752, guid: 9945fe1796b2dd6419894f0d0fa3c120, type: 3}
@@ -56798,7 +56806,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2915233666846887821, guid: a3624a8c2d8eb804d85ab689acf79b78, type: 3}
       propertyPath: m_stateID
-      value: 6
+      value: Vestibule10_01
       objectReference: {fileID: 0}
     - target: {fileID: 2915233666846887821, guid: a3624a8c2d8eb804d85ab689acf79b78, type: 3}
       propertyPath: m_itemName
@@ -56810,6 +56818,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2915233666846887821, guid: a3624a8c2d8eb804d85ab689acf79b78, type: 3}
       propertyPath: m_gateIDs.Array.data[0]
+      value: Vestibule10_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 2915233666846887821, guid: a3624a8c2d8eb804d85ab689acf79b78, type: 3}
+      propertyPath: m_connectedGateIDs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2915233666846887821, guid: a3624a8c2d8eb804d85ab689acf79b78, type: 3}
+      propertyPath: m_connectedGateIDs.Array.data[0]
       value: Vestibule10_02
       objectReference: {fileID: 0}
     - target: {fileID: 2915233666846887821, guid: a3624a8c2d8eb804d85ab689acf79b78, type: 3}

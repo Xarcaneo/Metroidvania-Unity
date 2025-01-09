@@ -99,7 +99,7 @@ public class Gate : MonoBehaviour
     /// </summary>
     public void OpenGate()
     {
-        if (m_currentState == GateState.IdleClose)
+        if (m_currentState == GateState.IdleClose || m_currentState == GateState.Closing)
         {
             ChangeState(GateState.Opening);
         }
@@ -110,7 +110,7 @@ public class Gate : MonoBehaviour
     /// </summary>
     public void CloseGate()
     {
-        if (m_currentState == GateState.IdleOpen)
+        if (m_currentState == GateState.IdleOpen || m_currentState == GateState.Opening)
         {
             ChangeState(GateState.Closing);
         }
@@ -157,25 +157,31 @@ public class Gate : MonoBehaviour
     {
         if (!ValidateComponents()) return;
 
-        isEventCompleted = false;
-
         if (triggerID == m_gateID)
         {
             try
             {
-                m_gateState = DialogueLua.GetVariable($"Trigger.{m_gateID}").asBool;
-                if (m_gateState)
+                bool newState = DialogueLua.GetVariable($"Trigger.{m_gateID}").asBool;
+                
+                // Only reset event completion if state actually changes
+                if (newState != m_gateState)
                 {
-                    OpenGate();
-                }
-                else
-                {
-                    CloseGate();
+                    isEventCompleted = false;
+                    m_gateState = newState;
+                    
+                    if (m_gateState)
+                    {
+                        OpenGate();
+                    }
+                    else
+                    {
+                        CloseGate();
+                    }
                 }
             }
             catch (System.Exception e)
             {
-                Debug.LogError($"[{gameObject.name}] Error handling trigger state change: {e.Message}");
+                Debug.LogError($"[{gameObject.name}] Error getting gate state: {e.Message}");
             }
         }
     }
@@ -205,10 +211,8 @@ public class Gate : MonoBehaviour
                 break;
         }
 
-        m_currentState = newState;
-
         // Set new state's animation parameter
-        switch (m_currentState)
+        switch (newState)
         {
             case GateState.IdleOpen:
                 m_animator.SetBool(IDLE_OPEN_PARAM, true);
@@ -223,6 +227,8 @@ public class Gate : MonoBehaviour
                 m_animator.SetBool(OPENING_PARAM, true);
                 break;
         }
+
+        m_currentState = newState;
     }
 
     /// <summary>

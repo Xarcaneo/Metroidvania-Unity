@@ -98,7 +98,7 @@ public class Lock : InteractableState
     {
         try
         {
-            var lockState = DialogueLua.GetVariable($"Trigger.{m_stateID}").asBool;
+            var lockState = DialogueLua.GetVariable($"Lock.{m_stateID}").asBool;
             if (lockState)
             {
                 canInteract = false;
@@ -147,19 +147,73 @@ public class Lock : InteractableState
     }
 
     /// <summary>
-    /// Updates lock state and notifies the game system of the change.
-    /// Called when the correct key is used on the lock.
+    /// Unlocks the lock and notifies connected gates
     /// </summary>
     private void UnlockAndNotify()
     {
-        try
+        // First set our states
+        canInteract = false; // Disable further interaction
+        DialogueLua.SetVariable($"Lock.{m_stateID}", true);
+        DialogueLua.SetVariable($"Trigger.{m_stateID}", true);
+        
+        // Then notify each connected gate
+        foreach (Gate gate in m_connectedGates)
         {
-            DialogueLua.SetVariable($"Trigger.{m_stateID}", true);
-            NotifyStateChange();
+            if (gate != null)
+            {
+                string gateId = gate.m_gateID;
+                
+                // First set the gate state
+                DialogueLua.SetVariable($"Trigger.{gateId}", true);
+                
+                // Then notify the gate to trigger state change
+                m_gameEvents.TriggerStateChanged(gateId);
+            }
         }
-        catch (System.Exception e)
+
+        // Start monitoring gate events
+        StartCoroutine(CheckConnectedGatesEventCompletion());
+    }
+
+    /// <summary>
+    /// Monitors connected gates for event completion.
+    /// Continues checking until all gates have completed their events.
+    /// </summary>
+    /// <returns>IEnumerator for coroutine execution</returns>
+    private IEnumerator CheckConnectedGatesEventCompletion()
+    {
+        if (m_connectedGates == null || m_connectedGates.Count == 0)
         {
-            Debug.LogError($"[{gameObject.name}] Error unlocking: {e.Message}");
+            CallInteractionCompletedEvent();
+            yield break;
+        }
+
+        while (true)
+        {
+            bool allGatesCompleted = true;
+
+            foreach (Gate gate in m_connectedGates)
+            {
+                if (gate == null)
+                {
+                    Debug.LogError($"[{gameObject.name}] Connected gate is null!");
+                    continue;
+                }
+
+                if (!gate.isEventCompleted)
+                {
+                    allGatesCompleted = false;
+                    break;
+                }
+            }
+
+            if (allGatesCompleted)
+            {
+                CallInteractionCompletedEvent();
+                yield break;
+            }
+
+            yield return null;
         }
     }
     #endregion
