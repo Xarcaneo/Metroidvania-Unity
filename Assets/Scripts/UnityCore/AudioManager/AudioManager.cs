@@ -289,7 +289,7 @@ public class AudioManager : MonoBehaviour
 
             if (logDebugInfo)
             {
-                Debug.Log($"Playing music: {musicEventReference.Path}");
+                Debug.Log($"Playing music: {musicEventReference.ToString()}");
             }
         }
         catch (Exception e)
@@ -335,7 +335,7 @@ public class AudioManager : MonoBehaviour
 
             if (logDebugInfo)
             {
-                Debug.Log($"Playing one-shot sound at {worldPos}: {sound.Path}");
+                Debug.Log($"Playing one-shot sound at {worldPos}: {sound.ToString()}");
             }
         }
         catch (Exception e)
@@ -358,7 +358,7 @@ public class AudioManager : MonoBehaviour
 
             if (logDebugInfo)
             {
-                Debug.Log($"Created event instance: {eventReference.Path}");
+                Debug.Log($"Created event instance: {eventReference.ToString()}");
             }
 
             return eventInstance;
@@ -391,7 +391,7 @@ public class AudioManager : MonoBehaviour
 
             if (logDebugInfo)
             {
-                Debug.Log($"Initialized event emitter on {emitterGameObject.name}: {eventReference.Path}");
+                Debug.Log($"Initialized event emitter on {emitterGameObject.name}: {eventReference.ToString()}");
             }
 
             return emitter;
