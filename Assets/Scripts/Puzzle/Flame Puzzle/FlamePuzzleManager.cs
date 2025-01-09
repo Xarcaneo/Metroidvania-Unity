@@ -20,7 +20,7 @@ public class FlamePuzzleManager : MonoBehaviour
     [Tooltip("Array of puzzle prefabs that can be instantiated")]
     [SerializeField] private GameObject[] puzzlePrefabs;
 
-    private int m_triggerID;
+    private string m_triggerID;
 
     /// <summary>
     /// Event triggered when any flame puzzle is completed.
@@ -57,7 +57,7 @@ public class FlamePuzzleManager : MonoBehaviour
     /// <param name="puzzleID">Index of the puzzle prefab to instantiate</param>
     /// <param name="sceneName">Name of the scene to instantiate the puzzle in</param>
     /// <returns>The instantiated puzzle GameObject, or null if instantiation fails</returns>
-    public GameObject InstantiateObject(int triggerID, int puzzleID, string sceneName)
+    public GameObject InstantiateObject(string triggerID, int puzzleID, string sceneName)
     {
         if (!ValidatePuzzleParameters(puzzleID, sceneName, out Scene targetScene))
         {

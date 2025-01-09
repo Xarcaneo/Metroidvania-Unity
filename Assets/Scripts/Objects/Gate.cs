@@ -11,7 +11,7 @@ public class Gate : MonoBehaviour
     #region Serialized Fields
     [SerializeField]
     [Tooltip("Unique identifier for this gate")]
-    public int m_gateID;
+    public string m_gateID;
     #endregion
 
     #region Private Fields
@@ -153,7 +153,7 @@ public class Gate : MonoBehaviour
     /// Handles trigger state changes
     /// </summary>
     /// <param name="triggerID">ID of the trigger that changed state</param>
-    private void TriggerStateChanged(int triggerID)
+    private void TriggerStateChanged(string triggerID)
     {
         if (!ValidateComponents()) return;
 
@@ -251,12 +251,6 @@ public class Gate : MonoBehaviour
         if (m_animator == null)
         {
             Debug.LogError($"[{gameObject.name}] Animator component is missing!");
-            return false;
-        }
-
-        if (m_gateID <= 0)
-        {
-            Debug.LogError($"[{gameObject.name}] Gate ID should be greater than 0!");
             return false;
         }
 

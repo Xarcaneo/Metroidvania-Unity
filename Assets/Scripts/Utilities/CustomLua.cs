@@ -20,7 +20,7 @@ public class CustomLua : MonoBehaviour
     {
         // Cache MethodInfo objects to reduce runtime overhead.
         cameraNewTargetMethod = SymbolExtensions.GetMethodInfo(() => CameraNewTarget(string.Empty));
-        triggerStateChangedMethod = SymbolExtensions.GetMethodInfo(() => TriggerStateChanged(0));
+        triggerStateChangedMethod = SymbolExtensions.GetMethodInfo(() => TriggerStateChanged(string.Empty));
         playAnimationMethod = SymbolExtensions.GetMethodInfo(() => PlayAnimation(string.Empty, string.Empty));
 
         Lua.RegisterFunction(nameof(CameraNewTarget), this, cameraNewTargetMethod);
@@ -58,12 +58,12 @@ public class CustomLua : MonoBehaviour
     /// Updates the trigger state in Lua and raises a corresponding game event.
     /// </summary>
     /// <param name="triggerID">The ID of the trigger to update.</param>
-    private void TriggerStateChanged(double triggerID)
+    private void TriggerStateChanged(string triggerID)
     {
         DialogueLua.SetVariable($"Trigger.{triggerID}", true);
         if (GameEvents.Instance != null)
         {
-            GameEvents.Instance.TriggerStateChanged((int)triggerID);
+            GameEvents.Instance.TriggerStateChanged(triggerID);
         }
         else
         {

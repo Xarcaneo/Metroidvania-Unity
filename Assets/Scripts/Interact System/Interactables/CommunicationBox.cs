@@ -59,6 +59,7 @@ public class CommunicationBox : Interactable
     private const string TURN_ON_ANIM = "TurnOn";
     private const string TURN_OFF_ANIM = "TurnOff";
     private const string LOYAL_SERVANT_IDLE_ANIM = "LoyalServantIdle";
+
     #endregion
 
     #region Unity Lifecycle
@@ -108,14 +109,16 @@ public class CommunicationBox : Interactable
     {
         base.OnValidate();
         
-        if (string.IsNullOrWhiteSpace(dialogue_ID) && dialogue_ID != "0")
-        {
-            Debug.LogWarning($"[{gameObject.name}] Dialogue ID is not set!");
-        }
+        if (!ComponentValidationUtility.ShouldValidate(this)) return;
 
-        if (string.IsNullOrWhiteSpace(communicationBox_ID) && communicationBox_ID != "0")
+        if (string.IsNullOrWhiteSpace(communicationBox_ID))
         {
             Debug.LogWarning($"[{gameObject.name}] Communication Box ID is not set!");
+        }
+
+        if (string.IsNullOrWhiteSpace(dialogue_ID))
+        {
+            Debug.LogWarning($"[{gameObject.name}] Dialogue ID is not set!");
         }
     }
     #endregion
@@ -229,31 +232,10 @@ public class CommunicationBox : Interactable
     /// <returns>True if all components are valid, false otherwise</returns>
     private bool ValidateComponents()
     {
-        if (m_animator == null)
-        {
-            Debug.LogError($"[{gameObject.name}] Animator component is missing!");
-            return false;
-        }
-
-        if (m_dialogueSystem == null)
-        {
-            Debug.LogError($"[{gameObject.name}] DialogueSystemController not found!");
-            return false;
-        }
-
-        if (string.IsNullOrWhiteSpace(dialogue_ID) && dialogue_ID != "0")
-        {
-            Debug.LogError($"[{gameObject.name}] Dialogue ID is not set!");
-            return false;
-        }
-
-        if (string.IsNullOrWhiteSpace(communicationBox_ID) && communicationBox_ID != "0")
-        {
-            Debug.LogError($"[{gameObject.name}] Communication Box ID is not set!");
-            return false;
-        }
-
-        return true;
+        return ComponentValidationUtility.ValidateRequiredComponent(m_animator, gameObject, "Animator")
+            && ComponentValidationUtility.ValidateRequiredSceneComponent(m_dialogueSystem, gameObject, "DialogueSystemController")
+            && ComponentValidationUtility.ValidateRequiredString(dialogue_ID, gameObject, "Dialogue ID")
+            && ComponentValidationUtility.ValidateRequiredString(communicationBox_ID, gameObject, "Communication Box ID");
     }
 
     /// <summary>

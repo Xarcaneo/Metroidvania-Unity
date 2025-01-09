@@ -11,12 +11,12 @@ public class Chest : Interactable
 {
     #region Serialized Fields
     [SerializeField]
-    [Tooltip("Unique ID for this chest")]
+    [Tooltip("Unique ID for this chest (format: AREA_CHEST_PURPOSE)")]
     /// <summary>
     /// Unique identifier for this chest.
     /// Used to track and persist chest state between game sessions.
     /// </summary>
-    private int m_chestID;
+    private string m_chestID;
 
     [SerializeField]
     [Tooltip("Name of the item to give when opened")]
@@ -82,12 +82,11 @@ public class Chest : Interactable
     {
         base.OnValidate();
 
-        // Only show warnings in play mode since prefabs can have empty values
-        if (!Application.isPlaying) return;
+        if (!ComponentValidationUtility.ShouldValidate(this)) return;
 
-        if (m_chestID < 0)
+        if (string.IsNullOrWhiteSpace(m_chestID))
         {
-            Debug.LogWarning($"[{gameObject.name}] Chest ID should not be negative!");
+            Debug.LogWarning($"[{gameObject.name}] Chest ID is not set!");
         }
 
         if (m_itemName == null)
@@ -200,37 +199,10 @@ public class Chest : Interactable
     /// <returns>True if all components are valid, false otherwise</returns>
     private bool ValidateComponents()
     {
-        if (m_chestID < 0)
-        {
-            Debug.LogError($"[{gameObject.name}] Chest ID should not be negative!");
-            return false;
-        }
-
-        if (m_itemName == null)
-        {
-            Debug.LogError($"[{gameObject.name}] Item name is not set!");
-            return false;
-        }
-
-        if (m_itemQuantity < 1)
-        {
-            Debug.LogError($"[{gameObject.name}] Item quantity should be at least 1!");
-            return false;
-        }
-
-        if (Player.Instance == null)
-        {
-            Debug.LogError($"[{gameObject.name}] Player instance is null!");
-            return false;
-        }
-
-        if (Player.Instance.m_inventory == null)
-        {
-            Debug.LogError($"[{gameObject.name}] Player inventory is null!");
-            return false;
-        }
-
-        return true;
+        return ComponentValidationUtility.ValidateRequiredComponent(m_animator, gameObject, "Animator")
+            && ComponentValidationUtility.ValidateRequiredString(m_chestID, gameObject, "Chest ID")
+            && ComponentValidationUtility.ValidateRequiredSceneComponent(Player.Instance, gameObject, "Player")
+            && Player.Instance.m_inventory != null;
     }
 
     /// <summary>

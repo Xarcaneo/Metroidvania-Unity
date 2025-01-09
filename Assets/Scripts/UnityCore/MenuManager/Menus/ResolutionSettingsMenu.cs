@@ -42,16 +42,23 @@ namespace Menu
         public override void OnOpenMenu()
         {
             base.OnOpenMenu();
-        }
 
-        /// <summary>
-        /// Sets the header text to display the current screen resolution.
-        /// </summary>
-        private void SetHeader()
-        {
-            if (headerText)
+            // Find the button that matches current resolution
+            int currentWidth = Screen.width;
+            int currentHeight = Screen.height;
+
+            // Find all resolution buttons
+            ResolutionButton[] buttons = buttonsParent.GetComponentsInChildren<ResolutionButton>();
+
+            // Find and focus the button that matches current resolution
+            foreach (ResolutionButton button in buttons)
             {
-                headerText.text = $"Resolution: {Screen.currentResolution.width} x {Screen.currentResolution.height}";
+                Resolution buttonRes = resolutions[button.buttonIndex];
+                if (buttonRes.width == currentWidth && buttonRes.height == currentHeight)
+                {
+                    buttonToFocus = button.gameObject;
+                    break;
+                }
             }
         }
 
@@ -74,16 +81,6 @@ namespace Menu
 
                 tempButton.Pressed += OnResolutionButtonPressed;
             }
-        }
-
-        /// <summary>
-        /// Called when the resolution settings menu is enabled.
-        /// Sets the header to display the current resolution.
-        /// </summary>
-        protected override void OnEnable()
-        {
-            base.OnEnable();
-            SetHeader();
         }
  
         /// <summary>

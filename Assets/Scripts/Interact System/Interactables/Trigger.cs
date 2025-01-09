@@ -17,7 +17,7 @@ public class Trigger : Interactable
     /// Unique identifier for this trigger. Used to connect with corresponding gates.
     /// Must be greater than 0 to ensure proper gate connections.
     /// </summary>
-    private int m_triggerID;
+    private string m_triggerID;
     #endregion
 
     #region Private Fields
@@ -120,20 +120,6 @@ public class Trigger : Interactable
         if (GameEvents.Instance != null)
         {
             GameEvents.Instance.onPlayerSpawned -= CachePlayerComponents;
-        }
-    }
-
-    /// <summary>
-    /// Validates trigger configuration in the Unity Editor.
-    /// Ensures critical parameters are properly set.
-    /// </summary>
-    protected override void OnValidate()
-    {
-        base.OnValidate();
-        
-        if (m_triggerID <= 0)
-        {
-            Debug.LogWarning($"[{gameObject.name}] Trigger ID should be greater than 0!");
         }
     }
     #endregion

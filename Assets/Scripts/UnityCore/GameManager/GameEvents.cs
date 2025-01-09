@@ -100,9 +100,9 @@ public class GameEvents : MonoBehaviour
     #endregion
 
     #region Gameplay Events
-    /// <summary>Event triggered when a trigger state changes.</summary>
-    public event Action<int> onTriggerStateChanged;
-    public void TriggerStateChanged(int triggerID) => onTriggerStateChanged?.Invoke(triggerID);
+    /// <summary>Event triggered when a trigger's state changes.</summary>
+    public event Action<string> onTriggerStateChanged;
+    public void TriggerStateChanged(string triggerID) => onTriggerStateChanged?.Invoke(triggerID);
 
     /// <summary>Event triggered when a puzzle is opened.</summary>
     public event Action<string> onPuzzleOpen;

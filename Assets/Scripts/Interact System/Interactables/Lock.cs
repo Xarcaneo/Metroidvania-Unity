@@ -17,7 +17,7 @@ public class Lock : Interactable
     /// Unique identifier for this lock.
     /// Used to track and persist lock state between game sessions.
     /// </summary>
-    private int m_lockID;
+    private string m_lockID;
 
     [SerializeField]
     [Tooltip("Name of the key item required to unlock")]
@@ -59,12 +59,6 @@ public class Lock : Interactable
     protected override void OnValidate()
     {
         base.OnValidate();
-
-        // Lock ID of 0 is valid in this case, only warn if negative
-        if (m_lockID < 0)
-        {
-            Debug.LogWarning($"[{gameObject.name}] Lock ID should not be negative!");
-        }
 
         // Only warn if item name is null, empty string is valid
         if (m_itemName == null)
@@ -173,12 +167,6 @@ public class Lock : Interactable
     /// <returns>True if all components are valid, false otherwise</returns>
     private bool ValidateComponents()
     {
-        if (m_lockID < 0)
-        {
-            Debug.LogError($"[{gameObject.name}] Lock ID should not be negative!");
-            return false;
-        }
-
         if (m_itemName == null)
         {
             Debug.LogError($"[{gameObject.name}] Item name is not set!");
