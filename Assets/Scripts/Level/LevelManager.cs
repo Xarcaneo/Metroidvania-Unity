@@ -30,7 +30,7 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     private void SpawnPlayer()
     {
-        GameObject spawnPointObj = GameObject.FindGameObjectWithTag("SpawnPoint");
+        GameObject spawnPointObj = GameObject.FindGameObjectWithTag("DefaultSpawnPoint");
         if (spawnPointObj != null)
         {
             // Spawn player at the designated spawn point

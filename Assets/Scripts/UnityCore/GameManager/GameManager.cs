@@ -26,12 +26,6 @@ public class GameManager : MonoBehaviour
     /// Used for managing multiple save files.
     /// </summary>
     public int currentSaveSlot;
-
-    /// <summary>
-    /// Flag indicating if the player character should be flipped.
-    /// Used for controlling character orientation.
-    /// </summary>
-    public bool shouldFlipPlayer = false;
     #endregion
 
     #region Singleton Pattern

@@ -182,22 +182,7 @@ public class Player : Entity
     private void InitializeStartupState()
     {
         StateMachine.Initialize(SpawnedState);
-        CheckIfShouldFlip();
         GameEvents.Instance.PlayerSpawned();
-    }
-    #endregion
-
-    #region Helper Methods
-    /// <summary>
-    /// Checks if the player should be flipped based on game manager state
-    /// </summary>
-    private void CheckIfShouldFlip()
-    {
-        if (GameManager.Instance.shouldFlipPlayer)
-        {
-            Core.GetCoreComponent<Movement>().Flip();
-        }
-        GameManager.Instance.shouldFlipPlayer = false;
     }
     #endregion
 }
