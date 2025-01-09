@@ -33,6 +33,14 @@ public class HintBox : MonoBehaviour
     [SerializeField] private LocalizeUI localization;
     #endregion
 
+    #region Private Fields
+    /// <summary>
+    /// Stores the initial hint text before any modifications.
+    /// Used to preserve the original text with placeholders.
+    /// </summary>
+    private string initialHintText;
+    #endregion
+
     #region Public Methods
     /// <summary>
     /// Updates the hint text with current language and keybindings.
@@ -46,7 +54,7 @@ public class HintBox : MonoBehaviour
     {
         localization.enabled = true;
         string language = Localization.language;
-        string modifiedText = hintText.text;
+        string modifiedText = initialHintText;
 
         // Find all placeholders in the text (e.g., {Attack}) and replace them with keybindings
         int startPlaceholderIndex = modifiedText.IndexOf('{');
@@ -98,4 +106,34 @@ public class HintBox : MonoBehaviour
         }
     }
     #endregion
+
+    /// <summary>
+    /// Initializes the hint box and subscribes to pause events.
+    /// </summary>
+    void Start()
+    {
+        GameEvents.Instance.onPauseTrigger += HandlePauseTrigger;
+        initialHintText = hintText.text;
+        SetHintText();
+    }
+
+    /// <summary>
+    /// Handles pause/unpause events and updates hint text accordingly.
+    /// </summary>
+    /// <param name="isPaused">True if game is paused, false otherwise.</param>
+    private void HandlePauseTrigger(bool isPaused)
+    {
+        if (!isPaused)
+        {
+            SetHintText();
+        }
+    }
+
+    /// <summary>
+    /// Cleans up event subscriptions when the object is destroyed.
+    /// </summary>
+    void OnDestroy()
+    {
+        GameEvents.Instance.onPauseTrigger -= HandlePauseTrigger;
+    }
 }
