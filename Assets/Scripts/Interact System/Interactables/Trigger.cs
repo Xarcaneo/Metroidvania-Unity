@@ -8,35 +8,13 @@ using UnityEngine;
 /// This class manages the interaction between player input and gate mechanisms, handling animations
 /// and state transitions for both the trigger and its connected gates.
 /// </summary>
-public class Trigger : Interactable
+public class Trigger : InteractableState
 {
-    #region Serialized Fields
-    [SerializeField] 
-    [Tooltip("Unique ID for this trigger, used to identify connected gates")]
-    /// <summary>
-    /// Unique identifier for this trigger. Used to connect with corresponding gates.
-    /// Must be greater than 0 to ensure proper gate connections.
-    /// </summary>
-    private int m_triggerID;
-    #endregion
-
     #region Private Fields
     /// <summary>
     /// Current state of the trigger (on/off). Used to track and persist trigger state.
     /// </summary>
     private bool m_triggerState;
-
-    /// <summary>
-    /// List of gates connected to this trigger via triggerID.
-    /// These gates will be affected when the trigger state changes.
-    /// </summary>
-    private List<Gate> m_connectedGates;
-
-    /// <summary>
-    /// Reference to the animator component for trigger animations.
-    /// Controls visual feedback for trigger state changes.
-    /// </summary>
-    private Animator m_animator;
 
     /// <summary>
     /// Reference to player's movement component for handling player orientation.
@@ -77,29 +55,6 @@ public class Trigger : Interactable
 
     #region Unity Lifecycle
     /// <summary>
-    /// Initializes the trigger by caching required components.
-    /// Called when the script instance is being loaded.
-    /// </summary>
-    private void Awake()
-    {
-        InitializeComponents();
-    }
-
-    /// <summary>
-    /// Initializes trigger state and connected gates after all objects are initialized.
-    /// Waits for end of frame to ensure proper initialization order.
-    /// </summary>
-    /// <returns>IEnumerator for coroutine execution</returns>
-    private IEnumerator Start()
-    {
-        yield return new WaitForEndOfFrame();
-        
-        InitializeState();
-        InitializeConnectedGates();
-        InitializePlayerComponents();
-    }
-
-    /// <summary>
     /// Subscribes to player spawn events when the object becomes enabled.
     /// Ensures component references stay valid after player respawns.
     /// </summary>
@@ -124,17 +79,21 @@ public class Trigger : Interactable
     }
 
     /// <summary>
-    /// Validates trigger configuration in the Unity Editor.
-    /// Ensures critical parameters are properly set.
+    /// Initializes the trigger after all objects are initialized.
     /// </summary>
-    protected override void OnValidate()
+    protected override void Start()
     {
-        base.OnValidate();
-        
-        if (m_triggerID <= 0)
-        {
-            Debug.LogWarning($"[{gameObject.name}] Trigger ID should be greater than 0!");
-        }
+        base.Start(); // Call base class initialization
+        StartCoroutine(InitializeAfterFrame());
+    }
+
+    /// <summary>
+    /// Performs initialization after waiting one frame to ensure proper initialization order.
+    /// </summary>
+    private IEnumerator InitializeAfterFrame()
+    {
+        yield return new WaitForEndOfFrame();
+        InitializePlayerComponents();
     }
     #endregion
 
@@ -145,8 +104,6 @@ public class Trigger : Interactable
     /// </summary>
     public override void Interact()
     {
-        if (!ValidateComponents()) return;
-
         AlignPlayerWithTrigger();
         Player.Instance.gameObject.SetActive(false);
 
@@ -162,20 +119,37 @@ public class Trigger : Interactable
     }
     #endregion
 
-    #region Private Methods
+    #region Protected Methods
     /// <summary>
-    /// Initializes and caches required components.
-    /// Called during Awake to ensure early component access.
+    /// Handles state initialization for the trigger.
     /// </summary>
-    private void InitializeComponents()
+    /// <param name="state">Current trigger state</param>
+    protected override void OnStateInitialized(bool state)
     {
-        m_animator = GetComponent<Animator>();
-        if (m_animator == null)
-        {
-            Debug.LogError($"[{gameObject.name}] Animator component is missing!");
-        }
+        m_triggerState = state;
+        base.OnStateInitialized(state);
     }
 
+    /// <summary>
+    /// Updates trigger animations based on state.
+    /// </summary>
+    /// <param name="state">Current trigger state</param>
+    protected override void UpdateVisuals(bool state)
+    {
+        if (state)
+        {
+            m_currentState = TriggerState.IdleOn;
+            m_animator.SetBool(IDLE_ON_PARAM, true);
+        }
+        else
+        {
+            m_currentState = TriggerState.IdleOff;
+            m_animator.SetBool(IDLE_OFF_PARAM, true);
+        }
+    }
+    #endregion
+
+    #region Private Methods
     /// <summary>
     /// Initializes player-related components if player instance exists.
     /// Called during Start after player instantiation.
@@ -205,71 +179,6 @@ public class Trigger : Interactable
     }
 
     /// <summary>
-    /// Initializes trigger state based on DialogueLua variable.
-    /// </summary>
-    private void InitializeState()
-    {
-        m_triggerState = DialogueLua.GetVariable("Trigger." + m_triggerID).asBool;
-
-        if (m_triggerState)
-        {
-            m_currentState = TriggerState.IdleOn;
-            m_animator.SetBool(IDLE_ON_PARAM, true);
-        }
-        else
-        {
-            m_currentState = TriggerState.IdleOff;
-            m_animator.SetBool(IDLE_OFF_PARAM, true);
-        }
-    }
-
-    /// <summary>
-    /// Initializes connected gates based on triggerID.
-    /// </summary>
-    private void InitializeConnectedGates()
-    {
-        // Get references to connected gates using triggerID
-        m_connectedGates = new List<Gate>(FindObjectsOfType<Gate>());
-        m_connectedGates.RemoveAll(gate => gate.m_gateID != m_triggerID);
-
-        if (m_connectedGates.Count == 0)
-        {
-            Debug.LogWarning($"[{gameObject.name}] No gates found with Trigger ID: {m_triggerID}");
-        }
-    }
-
-    /// <summary>
-    /// Validates that all required components are present and properly initialized.
-    /// </summary>
-    /// <returns>True if all components are valid, false otherwise</returns>
-    private bool ValidateComponents()
-    {
-        if (m_animator == null)
-        {
-            Debug.LogError($"[{gameObject.name}] Animator component is missing!");
-            return false;
-        }
-
-        if (Player.Instance == null)
-        {
-            Debug.LogError($"[{gameObject.name}] Player instance is null!");
-            return false;
-        }
-
-        if (m_playerMovement == null)
-        {
-            CachePlayerComponents();
-            if (m_playerMovement == null)
-            {
-                Debug.LogError($"[{gameObject.name}] Player Movement component is missing!");
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    /// <summary>
     /// Aligns the player's position with the trigger.
     /// Ensures consistent interaction positioning.
     /// </summary>
@@ -289,8 +198,6 @@ public class Trigger : Interactable
     /// <param name="newState">The target state to transition to</param>
     private void ChangeState(TriggerState newState)
     {
-        if (!ValidateComponents()) return;
-
         // Reset previous state
         switch (m_currentState)
         {
@@ -315,16 +222,14 @@ public class Trigger : Interactable
         {
             case TriggerState.IdleOn:
                 m_animator.SetBool(IDLE_ON_PARAM, true);
-                DialogueLua.SetVariable("Trigger." + m_triggerID, true);
-                GameEvents.Instance?.TriggerStateChanged(m_triggerID);
+                UpdateState(true);
                 break;
             case TriggerState.TurningOff:
                 m_animator.SetBool(TURNING_OFF_PARAM, true);
                 break;
             case TriggerState.IdleOff:
                 m_animator.SetBool(IDLE_OFF_PARAM, true);
-                DialogueLua.SetVariable("Trigger." + m_triggerID, false);
-                GameEvents.Instance?.TriggerStateChanged(m_triggerID);
+                UpdateState(false);
                 break;
             case TriggerState.TurningOn:
                 m_animator.SetBool(TURNING_ON_PARAM, true);
@@ -340,8 +245,6 @@ public class Trigger : Interactable
     /// </summary>
     private void OnAnimationTrigger()
     {
-        if (!ValidateComponents()) return;
-
         // Update state
         if (m_currentState == TriggerState.TurningOff)
         {

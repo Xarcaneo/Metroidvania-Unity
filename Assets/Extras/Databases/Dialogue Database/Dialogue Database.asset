@@ -264,62 +264,6 @@ MonoBehaviour:
       typeString: CustomFieldType_Boolean
   locations: []
   variables:
-  - id: 1
-    fields:
-    - title: Name
-      value: Trigger.1
-      type: 0
-      typeString: CustomFieldType_Text
-    - title: Initial Value
-      value: False
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Description
-      value: 
-      type: 0
-      typeString: CustomFieldType_Text
-  - id: 2
-    fields:
-    - title: Name
-      value: Trigger.2
-      type: 0
-      typeString: CustomFieldType_Text
-    - title: Initial Value
-      value: False
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Description
-      value: 
-      type: 0
-      typeString: CustomFieldType_Text
-  - id: 3
-    fields:
-    - title: Name
-      value: Trigger.3
-      type: 0
-      typeString: CustomFieldType_Text
-    - title: Initial Value
-      value: False
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Description
-      value: 
-      type: 0
-      typeString: CustomFieldType_Text
-  - id: 4
-    fields:
-    - title: Name
-      value: Trigger.4
-      type: 0
-      typeString: CustomFieldType_Text
-    - title: Initial Value
-      value: False
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Description
-      value: 
-      type: 0
-      typeString: CustomFieldType_Text
   - id: 5
     fields:
     - title: Name
@@ -408,20 +352,6 @@ MonoBehaviour:
     fields:
     - title: Name
       value: Loyal_Servant.ancient_crypt_explored
-      type: 0
-      typeString: CustomFieldType_Text
-    - title: Initial Value
-      value: False
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Description
-      value: 
-      type: 0
-      typeString: CustomFieldType_Text
-  - id: 12
-    fields:
-    - title: Name
-      value: Trigger.5
       type: 0
       typeString: CustomFieldType_Text
     - title: Initial Value
@@ -628,14 +558,14 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: TriggerStateChanged(2);
+      userScript: TriggerStateChanged("VESTIBULE02_02");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 300
-        y: 70
+        x: 305.1546
+        y: 72.061844
         width: 160
         height: 30
     - id: 18
@@ -1413,8 +1343,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 6.815257}
-    canvasZoom: 1
+    canvasScrollPosition: {x: 0, y: 2.5410352}
+    canvasZoom: 0.97
   - id: 2
     fields:
     - title: Title
@@ -5536,8 +5466,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 31.876488}
-    canvasZoom: 0.5500004
+    canvasScrollPosition: {x: 52.414654, y: 76.16049}
+    canvasZoom: 0.64000034
   - id: 7
     fields:
     - title: Title

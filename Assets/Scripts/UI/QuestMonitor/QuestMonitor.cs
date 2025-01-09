@@ -56,7 +56,13 @@ public class QuestMonitor : MonoBehaviour, IMessageHandler
     /// </summary>
     private void Awake()
     {
-        ValidateComponents();
+        if (questImageAnimator == null)
+        {
+            questImageAnimator = GetComponent<Animator>();
+        }
+        
+        isInitialized = true;
+        MessageSystem.AddListener(this, QuestMachineMessages.QuestStateChangedMessage, string.Empty);
     }
 
     /// <summary>
@@ -82,27 +88,9 @@ public class QuestMonitor : MonoBehaviour, IMessageHandler
     /// <summary>
     /// Validates that all required components are properly assigned.
     /// </summary>
-    private void ValidateComponents()
+    private bool ValidateComponents()
     {
-        if (questName == null)
-        {
-            Debug.LogError($"[QuestMonitor] Missing questName Text component on {gameObject.name}");
-            enabled = false;
-            return;
-        }
-
-        if (questImageAnimator == null)
-        {
-            questImageAnimator = GetComponent<Animator>();
-            if (questImageAnimator == null)
-            {
-                Debug.LogError($"[QuestMonitor] Missing questImageAnimator component on {gameObject.name}");
-                enabled = false;
-                return;
-            }
-        }
-
-        isInitialized = true;
+        return true;
     }
     #endregion
 
@@ -113,9 +101,9 @@ public class QuestMonitor : MonoBehaviour, IMessageHandler
     /// <param name="messageArgs">Message arguments containing quest state information</param>
     public void OnMessage(MessageArgs messageArgs)
     {
-        if (!isInitialized || messageArgs.values == null || messageArgs.values.Length < 2)
+        if (messageArgs.values == null || messageArgs.values.Length < 2)
         {
-            Debug.LogWarning("[QuestMonitor] Received invalid message args or component not initialized");
+            Debug.LogWarning("[QuestMonitor] Received invalid message args");
             return;
         }
 
@@ -189,7 +177,7 @@ public class QuestMonitor : MonoBehaviour, IMessageHandler
     /// </summary>
     private void PlayAnimation()
     {
-        if (!isInitialized || questImageAnimator == null) return;
+        if (questImageAnimator == null) return;
 
         try
         {

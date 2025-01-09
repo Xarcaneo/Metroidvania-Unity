@@ -12,12 +12,12 @@ public class FlamePuzzleTrigger : Interactable
 {
     #region Serialized Fields
     [SerializeField]
-    [Tooltip("Unique ID for this flame trigger")]
+    [Tooltip("Unique ID for this flame trigger (format: AREA_TRIGGER_PURPOSE)")]
     /// <summary>
     /// Unique identifier for this flame trigger.
     /// Used to track and persist trigger state between game sessions.
     /// </summary>
-    private int m_triggerID = 1;
+    private string m_triggerID;
 
     [SerializeField]
     [Tooltip("ID for the puzzle instance")]

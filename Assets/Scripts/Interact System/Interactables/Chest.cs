@@ -11,12 +11,12 @@ public class Chest : Interactable
 {
     #region Serialized Fields
     [SerializeField]
-    [Tooltip("Unique ID for this chest")]
+    [Tooltip("Unique ID for this chest (format: AREA_CHEST_PURPOSE)")]
     /// <summary>
     /// Unique identifier for this chest.
     /// Used to track and persist chest state between game sessions.
     /// </summary>
-    private int m_chestID;
+    private string m_chestID;
 
     [SerializeField]
     [Tooltip("Name of the item to give when opened")]
@@ -73,40 +73,6 @@ public class Chest : Interactable
     #endregion
 
     #region Unity Lifecycle
-    /// <summary>
-    /// Validates chest configuration in the Unity Editor.
-    /// Ensures critical parameters are properly set.
-    /// Only shows warnings in play mode.
-    /// </summary>
-    protected override void OnValidate()
-    {
-        base.OnValidate();
-
-        // Only show warnings in play mode since prefabs can have empty values
-        if (!Application.isPlaying) return;
-
-        if (m_chestID < 0)
-        {
-            Debug.LogWarning($"[{gameObject.name}] Chest ID should not be negative!");
-        }
-
-        if (m_itemName == null)
-        {
-            Debug.LogWarning($"[{gameObject.name}] Item name is not set!");
-        }
-
-        if (m_itemQuantity < 1)
-        {
-            Debug.LogWarning($"[{gameObject.name}] Item quantity should be at least 1!");
-            m_itemQuantity = 1;
-        }
-
-        if (m_animator == null)
-        {
-            m_animator = GetComponent<Animator>();
-        }
-    }
-
     /// <summary>
     /// Initializes the chest by caching required components.
     /// Called when the script instance is being loaded.
@@ -200,36 +166,6 @@ public class Chest : Interactable
     /// <returns>True if all components are valid, false otherwise</returns>
     private bool ValidateComponents()
     {
-        if (m_chestID < 0)
-        {
-            Debug.LogError($"[{gameObject.name}] Chest ID should not be negative!");
-            return false;
-        }
-
-        if (m_itemName == null)
-        {
-            Debug.LogError($"[{gameObject.name}] Item name is not set!");
-            return false;
-        }
-
-        if (m_itemQuantity < 1)
-        {
-            Debug.LogError($"[{gameObject.name}] Item quantity should be at least 1!");
-            return false;
-        }
-
-        if (Player.Instance == null)
-        {
-            Debug.LogError($"[{gameObject.name}] Player instance is null!");
-            return false;
-        }
-
-        if (Player.Instance.m_inventory == null)
-        {
-            Debug.LogError($"[{gameObject.name}] Player inventory is null!");
-            return false;
-        }
-
         return true;
     }
 

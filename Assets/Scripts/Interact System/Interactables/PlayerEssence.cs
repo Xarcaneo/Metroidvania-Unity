@@ -35,23 +35,7 @@ public class PlayerEssence : Interactable
 
     #region Unity Lifecycle
     /// <summary>
-    /// Validates essence configuration in the Unity Editor.
-    /// Ensures optional components are properly configured.
-    /// </summary>
-    protected override void OnValidate()
-    {
-        base.OnValidate();
-
-        if (m_destroyDelay < 0)
-        {
-            Debug.LogWarning($"[{gameObject.name}] Destroy delay should not be negative!");
-            m_destroyDelay = 0.5f;
-        }
-    }
-
-    /// <summary>
-    /// Initializes the essence by validating components.
-    /// Called when the script instance is being loaded.
+    /// Initializes required components
     /// </summary>
     private void Awake()
     {

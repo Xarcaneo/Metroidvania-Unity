@@ -57,20 +57,6 @@ public class Portal : Interactable
     }
 
     /// <summary>
-    /// Validates portal configuration in the Unity Editor.
-    /// Ensures critical components are properly assigned.
-    /// </summary>
-    protected override void OnValidate()
-    {
-        base.OnValidate();
-
-        if (m_scenePortal == null)
-        {
-            Debug.LogError($"[{gameObject.name}] ScenePortal component is not assigned!");
-        }
-    }
-
-    /// <summary>
     /// Cleanup when portal is destroyed. Ensures input is re-enabled.
     /// </summary>
     protected override void OnDestroy()

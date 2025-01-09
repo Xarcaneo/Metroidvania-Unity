@@ -11,10 +11,15 @@ public class Gate : MonoBehaviour
     #region Serialized Fields
     [SerializeField]
     [Tooltip("Unique identifier for this gate")]
-    public int m_gateID;
+    public string m_gateID;
     #endregion
 
     #region Private Fields
+    /// <summary>
+    /// Prefix for state variables in Lua, must match InteractableState.StatePrefix
+    /// </summary>
+    private const string StatePrefix = "State.";
+
     /// <summary>
     /// Current state of the gate from DialogueLua
     /// </summary>
@@ -99,7 +104,7 @@ public class Gate : MonoBehaviour
     /// </summary>
     public void OpenGate()
     {
-        if (m_currentState == GateState.IdleClose)
+        if (m_currentState == GateState.IdleClose || m_currentState == GateState.Closing)
         {
             ChangeState(GateState.Opening);
         }
@@ -110,7 +115,7 @@ public class Gate : MonoBehaviour
     /// </summary>
     public void CloseGate()
     {
-        if (m_currentState == GateState.IdleOpen)
+        if (m_currentState == GateState.IdleOpen || m_currentState == GateState.Opening)
         {
             ChangeState(GateState.Closing);
         }
@@ -139,7 +144,7 @@ public class Gate : MonoBehaviour
 
         try
         {
-            m_gateState = DialogueLua.GetVariable($"Trigger.{m_gateID}").asBool;
+            m_gateState = DialogueLua.GetVariable($"{StatePrefix}{m_gateID}").asBool;
             m_currentState = m_gateState ? GateState.IdleOpen : GateState.IdleClose;
             m_animator.SetBool(m_gateState ? IDLE_OPEN_PARAM : IDLE_CLOSE_PARAM, true);
         }
@@ -153,29 +158,35 @@ public class Gate : MonoBehaviour
     /// Handles trigger state changes
     /// </summary>
     /// <param name="triggerID">ID of the trigger that changed state</param>
-    private void TriggerStateChanged(int triggerID)
+    private void TriggerStateChanged(string triggerID)
     {
         if (!ValidateComponents()) return;
-
-        isEventCompleted = false;
 
         if (triggerID == m_gateID)
         {
             try
             {
-                m_gateState = DialogueLua.GetVariable($"Trigger.{m_gateID}").asBool;
-                if (m_gateState)
+                bool newState = DialogueLua.GetVariable($"{StatePrefix}{m_gateID}").asBool;
+                
+                // Only reset event completion if state actually changes
+                if (newState != m_gateState)
                 {
-                    OpenGate();
-                }
-                else
-                {
-                    CloseGate();
+                    isEventCompleted = false;
+                    m_gateState = newState;
+                    
+                    if (m_gateState)
+                    {
+                        OpenGate();
+                    }
+                    else
+                    {
+                        CloseGate();
+                    }
                 }
             }
             catch (System.Exception e)
             {
-                Debug.LogError($"[{gameObject.name}] Error handling trigger state change: {e.Message}");
+                Debug.LogError($"[{gameObject.name}] Error getting gate state: {e.Message}");
             }
         }
     }
@@ -205,10 +216,8 @@ public class Gate : MonoBehaviour
                 break;
         }
 
-        m_currentState = newState;
-
         // Set new state's animation parameter
-        switch (m_currentState)
+        switch (newState)
         {
             case GateState.IdleOpen:
                 m_animator.SetBool(IDLE_OPEN_PARAM, true);
@@ -223,6 +232,8 @@ public class Gate : MonoBehaviour
                 m_animator.SetBool(OPENING_PARAM, true);
                 break;
         }
+
+        m_currentState = newState;
     }
 
     /// <summary>
@@ -251,12 +262,6 @@ public class Gate : MonoBehaviour
         if (m_animator == null)
         {
             Debug.LogError($"[{gameObject.name}] Animator component is missing!");
-            return false;
-        }
-
-        if (m_gateID <= 0)
-        {
-            Debug.LogError($"[{gameObject.name}] Gate ID should be greater than 0!");
             return false;
         }
 

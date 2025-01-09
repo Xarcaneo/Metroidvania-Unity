@@ -66,12 +66,6 @@ public class Shooter : MonoBehaviour
     private void Awake()
     {
         damageData.SetData(null, damage);
-
-        if (animator == null)
-        {
-            animator = GetComponent<Animator>();
-            Debug.LogWarning($"[Shooter] Animator not assigned on {gameObject.name}, attempting to get component.", this);
-        }
     }
 
     /// <summary>

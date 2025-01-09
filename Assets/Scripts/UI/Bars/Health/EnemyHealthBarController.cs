@@ -186,6 +186,14 @@ public class EnemyHealthBarController : HealthBarController
         }
 
         transform.position = body.transform.position - yAdjust;
+        
+        // Counter the parent's scale to maintain consistent orientation
+        Vector3 parentScale = body.transform.localScale;
+        transform.localScale = new Vector3(
+            Mathf.Abs(parentScale.x) > 0.01f ? 0.1f / parentScale.x : 0.1f,
+            0.1f,
+            1f
+        );
     }
 
     /// <summary>

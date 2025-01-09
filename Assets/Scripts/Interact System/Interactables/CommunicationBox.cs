@@ -59,6 +59,7 @@ public class CommunicationBox : Interactable
     private const string TURN_ON_ANIM = "TurnOn";
     private const string TURN_OFF_ANIM = "TurnOff";
     private const string LOYAL_SERVANT_IDLE_ANIM = "LoyalServantIdle";
+
     #endregion
 
     #region Unity Lifecycle
@@ -100,24 +101,6 @@ public class CommunicationBox : Interactable
         UnsubscribeFromEvents();
     }
 
-    /// <summary>
-    /// Validates communication box configuration in the Unity Editor.
-    /// Ensures critical parameters are properly set.
-    /// </summary>
-    protected override void OnValidate()
-    {
-        base.OnValidate();
-        
-        if (string.IsNullOrWhiteSpace(dialogue_ID) && dialogue_ID != "0")
-        {
-            Debug.LogWarning($"[{gameObject.name}] Dialogue ID is not set!");
-        }
-
-        if (string.IsNullOrWhiteSpace(communicationBox_ID) && communicationBox_ID != "0")
-        {
-            Debug.LogWarning($"[{gameObject.name}] Communication Box ID is not set!");
-        }
-    }
     #endregion
 
     #region Public Methods
@@ -127,8 +110,6 @@ public class CommunicationBox : Interactable
     /// </summary>
     public override void Interact()
     {
-        if (!ValidateComponents()) return;
-
         base.Interact();
 
         m_animator.Play(TURN_ON_ANIM);
@@ -165,8 +146,6 @@ public class CommunicationBox : Interactable
     /// </summary>
     private void InitializeState()
     {
-        if (!ValidateComponents()) return;
-
         try
         {
             var communicationBoxState = DialogueLua.GetVariable("CommunicationBox." + communicationBox_ID).asBool;
@@ -229,30 +208,6 @@ public class CommunicationBox : Interactable
     /// <returns>True if all components are valid, false otherwise</returns>
     private bool ValidateComponents()
     {
-        if (m_animator == null)
-        {
-            Debug.LogError($"[{gameObject.name}] Animator component is missing!");
-            return false;
-        }
-
-        if (m_dialogueSystem == null)
-        {
-            Debug.LogError($"[{gameObject.name}] DialogueSystemController not found!");
-            return false;
-        }
-
-        if (string.IsNullOrWhiteSpace(dialogue_ID) && dialogue_ID != "0")
-        {
-            Debug.LogError($"[{gameObject.name}] Dialogue ID is not set!");
-            return false;
-        }
-
-        if (string.IsNullOrWhiteSpace(communicationBox_ID) && communicationBox_ID != "0")
-        {
-            Debug.LogError($"[{gameObject.name}] Communication Box ID is not set!");
-            return false;
-        }
-
         return true;
     }
 
@@ -280,8 +235,6 @@ public class CommunicationBox : Interactable
     /// <param name="value">True if dialogue should continue, false if it should end</param>
     protected override void IsInteractionCompleted(bool value)
     {
-        if (!ValidateComponents()) return;
-
         if (!value && isInteracting)
         {
             m_animator.Play(TURN_OFF_ANIM);
@@ -297,8 +250,6 @@ public class CommunicationBox : Interactable
     /// </summary>
     public void OnTurnOnAnimationComplete()
     {
-        if (!ValidateComponents()) return;
-
         if (LoyalServantImage)
         {
             m_animator.Play(LOYAL_SERVANT_IDLE_ANIM);

@@ -28,20 +28,6 @@ public class NPC : Interactable
 
     #region Unity Lifecycle
     /// <summary>
-    /// Validates NPC configuration in the Unity Editor.
-    /// Ensures critical parameters are properly set.
-    /// </summary>
-    protected override void OnValidate()
-    {
-        base.OnValidate();
-
-        if (m_dialogueID == null)
-        {
-            Debug.LogWarning($"[{gameObject.name}] Dialogue ID is not set!");
-        }
-    }
-
-    /// <summary>
     /// Initializes the NPC by caching required components.
     /// Called when the script instance is being loaded.
     /// </summary>

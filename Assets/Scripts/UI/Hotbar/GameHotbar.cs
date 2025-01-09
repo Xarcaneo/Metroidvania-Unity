@@ -44,6 +44,7 @@ public class GameHotbar : MonoBehaviour
     /// </summary>
     private void Awake()
     {
+        itemSlotIndex = 0; // Initialize itemSlotIndex to the first slot
         Transform[] childTransforms = GetComponentsInChildren<Transform>();
 
         foreach (Transform childTransform in childTransforms)

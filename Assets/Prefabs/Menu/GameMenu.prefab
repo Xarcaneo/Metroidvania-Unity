@@ -131,6 +131,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   questName: {fileID: 3351428311585336331}
   questImageAnimator: {fileID: 6077487850557614293}
+  newQuestAnimation: NewQuest
+  updateQuestAnimation: UpdateQuest
+  completedQuestAnimation: CompletedQuest
 --- !u!222 &6447735160936787460
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -282,6 +285,9 @@ MonoBehaviour:
   locationName: {fileID: 5451879792911725975}
   locationNameBackground: {fileID: 7429035738816662587}
   myTextTable: {fileID: 11400000, guid: e5c62e68665cffc4ab9cad24b15b08d4, type: 2}
+  fadeInTime: 1
+  timeBeforeFadeOut: 2
+  fadeOutTime: 1
 --- !u!1 &6068444750759665060
 GameObject:
   m_ObjectHideFlags: 0
@@ -1053,11 +1059,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1957269603950629585, guid: df3c1fb67eabf724e910d80d4bf98fc3, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: -0.13999939
       objectReference: {fileID: 0}
     - target: {fileID: 1957269603950629585, guid: df3c1fb67eabf724e910d80d4bf98fc3, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -1.4199982
       objectReference: {fileID: 0}
     - target: {fileID: 1957269603950629585, guid: df3c1fb67eabf724e910d80d4bf98fc3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1344,7 +1350,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_itemHotbar: {fileID: 3192056064457989002}
-  itemSlotIndex: 1
+  itemSlotIndex: 0
 --- !u!224 &4436896731702829804 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3179230752594667320, guid: df3c1fb67eabf724e910d80d4bf98fc3, type: 3}
