@@ -242,8 +242,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canInteract: 1
-  m_ChestID: 0
-  m_ItemDropper: {fileID: 7214689664203391988}
+  m_chestID: 
+  m_itemDefinition: {fileID: 0}
+  m_itemQuantity: 1
+  m_openEffect: {fileID: 0}
+  m_openSound: {fileID: 0}
+  m_itemDropper: {fileID: 7214689664203391988}
 --- !u!114 &3432168369937509225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -479,5 +483,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pictograms:
   - {fileID: 793017249400484920}
-  - {fileID: 0}
   defaultPictogram: 0
