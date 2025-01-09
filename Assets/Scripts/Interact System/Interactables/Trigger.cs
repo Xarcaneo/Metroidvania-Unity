@@ -79,15 +79,20 @@ public class Trigger : InteractableState
     }
 
     /// <summary>
-    /// Initializes trigger state and connected gates after all objects are initialized.
-    /// Waits for end of frame to ensure proper initialization order.
+    /// Initializes the trigger after all objects are initialized.
     /// </summary>
-    /// <returns>IEnumerator for coroutine execution</returns>
-    private IEnumerator Start()
+    protected override void Start()
+    {
+        base.Start(); // Call base class initialization
+        StartCoroutine(InitializeAfterFrame());
+    }
+
+    /// <summary>
+    /// Performs initialization after waiting one frame to ensure proper initialization order.
+    /// </summary>
+    private IEnumerator InitializeAfterFrame()
     {
         yield return new WaitForEndOfFrame();
-        
-        InitializeState();
         InitializePlayerComponents();
     }
     #endregion
@@ -110,6 +115,36 @@ public class Trigger : InteractableState
         else if (m_currentState == TriggerState.IdleOff)
         {
             ChangeState(TriggerState.TurningOn);
+        }
+    }
+    #endregion
+
+    #region Protected Methods
+    /// <summary>
+    /// Handles state initialization for the trigger.
+    /// </summary>
+    /// <param name="state">Current trigger state</param>
+    protected override void OnStateInitialized(bool state)
+    {
+        m_triggerState = state;
+        base.OnStateInitialized(state);
+    }
+
+    /// <summary>
+    /// Updates trigger animations based on state.
+    /// </summary>
+    /// <param name="state">Current trigger state</param>
+    protected override void UpdateVisuals(bool state)
+    {
+        if (state)
+        {
+            m_currentState = TriggerState.IdleOn;
+            m_animator.SetBool(IDLE_ON_PARAM, true);
+        }
+        else
+        {
+            m_currentState = TriggerState.IdleOff;
+            m_animator.SetBool(IDLE_OFF_PARAM, true);
         }
     }
     #endregion
@@ -141,30 +176,6 @@ public class Trigger : InteractableState
                 Debug.LogWarning($"[{gameObject.name}] Player Movement component not found!");
             }
         }
-    }
-
-    /// <summary>
-    /// Initializes trigger state based on DialogueLua variable.
-    /// </summary>
-    private void InitializeState()
-    {
-        m_triggerState = InitializeStateFromLua();
-
-        if (m_triggerState)
-        {
-            m_currentState = TriggerState.IdleOn;
-            m_animator.SetBool(IDLE_ON_PARAM, true);
-        }
-        else
-        {
-            m_currentState = TriggerState.IdleOff;
-            m_animator.SetBool(IDLE_OFF_PARAM, true);
-        }
-    }
-
-    protected override void OnValidate()
-    {
-        base.OnValidate();
     }
 
     /// <summary>
@@ -211,16 +222,14 @@ public class Trigger : InteractableState
         {
             case TriggerState.IdleOn:
                 m_animator.SetBool(IDLE_ON_PARAM, true);
-                DialogueLua.SetVariable($"{StatePrefix}{m_stateID}", true);
-                NotifyStateChange();
+                UpdateState(true);
                 break;
             case TriggerState.TurningOff:
                 m_animator.SetBool(TURNING_OFF_PARAM, true);
                 break;
             case TriggerState.IdleOff:
                 m_animator.SetBool(IDLE_OFF_PARAM, true);
-                DialogueLua.SetVariable($"{StatePrefix}{m_stateID}", false);
-                NotifyStateChange();
+                UpdateState(false);
                 break;
             case TriggerState.TurningOn:
                 m_animator.SetBool(TURNING_ON_PARAM, true);

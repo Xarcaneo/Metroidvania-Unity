@@ -70,6 +70,15 @@ public abstract class InteractableState : Interactable
     {
         InitializeComponents();
     }
+
+    /// <summary>
+    /// Called at the beginning of the game.
+    /// Initializes state and visual elements.
+    /// </summary>
+    protected virtual void Start()
+    {
+        InitializeState();
+    }
     #endregion
 
     #region Protected Methods
@@ -84,6 +93,34 @@ public abstract class InteractableState : Interactable
         canInteract = true; // Default to allowing interaction unless overridden
         return savedState;
     }
+
+    /// <summary>
+    /// Template method for initializing state. Called during Start.
+    /// Handles the common initialization flow for all interactable states.
+    /// </summary>
+    protected void InitializeState()
+    {
+        bool savedState = InitializeStateFromLua();
+        OnStateInitialized(savedState);
+        UpdateVisuals(savedState);
+    }
+
+    /// <summary>
+    /// Called after state is initialized from Lua.
+    /// Override this to customize behavior when state is initialized.
+    /// </summary>
+    /// <param name="state">The initialized state value</param>
+    protected virtual void OnStateInitialized(bool state)
+    {
+        canInteract = true; // Default behavior
+    }
+
+    /// <summary>
+    /// Updates visual elements (like animations) based on state.
+    /// Override this to customize how the object appears in different states.
+    /// </summary>
+    /// <param name="state">Current state value</param>
+    protected virtual void UpdateVisuals(bool state) { }
 
     /// <summary>
     /// Initializes and caches required components.
@@ -128,8 +165,6 @@ public abstract class InteractableState : Interactable
         }
     }
 
-
-
     /// <summary>
     /// Notifies the game system of a state change.
     /// </summary>
@@ -151,6 +186,40 @@ public abstract class InteractableState : Interactable
     protected virtual void OnAnimationFinished()
     {
         CallInteractionCompletedEvent();
+    }
+
+    /// <summary>
+    /// Updates the state of this interactable and notifies connected gates.
+    /// </summary>
+    /// <param name="newState">The new state value</param>
+    protected virtual void UpdateState(bool newState)
+    {
+        DialogueLua.SetVariable($"{StatePrefix}{m_stateID}", newState);
+        NotifyGates(newState);
+        OnStateChanged(newState);
+    }
+
+    /// <summary>
+    /// Called when the state of this interactable changes.
+    /// Override to add custom behavior when state changes.
+    /// </summary>
+    /// <param name="newState">The new state value</param>
+    protected virtual void OnStateChanged(bool newState) { }
+
+    /// <summary>
+    /// Notifies connected gates of a state change.
+    /// </summary>
+    /// <param name="newState">The new state to set for connected gates</param>
+    protected void NotifyGates(bool newState)
+    {
+        foreach (Gate gate in m_connectedGates)
+        {
+            if (gate != null)
+            {
+                DialogueLua.SetVariable($"{StatePrefix}{gate.m_gateID}", newState);
+                m_gameEvents.TriggerStateChanged(gate.m_gateID);
+            }
+        }
     }
     #endregion
 }

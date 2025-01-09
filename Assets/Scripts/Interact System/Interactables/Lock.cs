@@ -26,22 +26,12 @@ public class Lock : InteractableState
     /// Constants for animation state names to ensure consistency
     /// and prevent typos in animation calls.
     /// </summary>
-    private const string NO_KEY_ANIM = "NoKeyAnimation";
+    private const string NO_KEY_ANIM = "NoKey";
+    private const string UNLOCKED_IDLE_ANIM = "Idle";
     #endregion
 
     #region Unity Lifecycle
-
-
-    /// <summary>
-    /// Initializes lock state after all objects are initialized.
-    /// Waits for end of frame to ensure proper initialization order.
-    /// </summary>
-    /// <returns>IEnumerator for coroutine execution</returns>
-    private IEnumerator Start()
-    {
-        yield return new WaitForEndOfFrame();
-        InitializeLockState();
-    }
+    // Start is now handled by base class
     #endregion
 
     #region Public Methods
@@ -72,43 +62,36 @@ public class Lock : InteractableState
     }
     #endregion
 
-    #region Private Methods
+    #region Protected Methods
     /// <summary>
-    /// Initializes lock state from saved data.
-    /// Disables interaction if lock was previously unlocked.
+    /// Handles state initialization for the lock.
     /// </summary>
-    private void InitializeLockState()
+    /// <param name="state">True if lock is unlocked, false otherwise</param>
+    protected override void OnStateInitialized(bool state)
     {
-        bool isUnlocked = InitializeStateFromLua();
-        if (isUnlocked)
-        {
-            canInteract = false;
-            m_animator.Play("UnlockedIdle");
-        }
+        canInteract = !state; // Can't interact if already unlocked
     }
+    #endregion
 
+    #region Private Methods
     /// <summary>
     /// Unlocks the lock and notifies connected gates
     /// </summary>
     private void UnlockAndNotify()
     {
-        // First set our states
         canInteract = false; // Disable further interaction
-        DialogueLua.SetVariable($"{StatePrefix}{m_stateID}", true);
-        
-        // Then notify each connected gate
-        foreach (Gate gate in m_connectedGates)
+        UpdateState(true);
+    }
+
+    /// <summary>
+    /// Called when the lock's state changes
+    /// </summary>
+    /// <param name="newState">The new state value</param>
+    protected override void OnStateChanged(bool newState)
+    {
+        if (newState)
         {
-            if (gate != null)
-            {
-                string gateId = gate.m_gateID;
-                
-                // First set the gate state
-                DialogueLua.SetVariable($"{StatePrefix}{gateId}", true);
-                
-                // Then notify the gate to trigger state change
-                m_gameEvents.TriggerStateChanged(gateId);
-            }
+            m_animator.Play(UNLOCKED_IDLE_ANIM);
         }
     }
     #endregion
