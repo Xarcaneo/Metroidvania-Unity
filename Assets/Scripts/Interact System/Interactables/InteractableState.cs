@@ -36,6 +36,11 @@ public abstract class InteractableState : Interactable
 
     #region Protected Fields
     /// <summary>
+    /// Prefix for all state variables in Lua
+    /// </summary>
+    protected const string StatePrefix = "State.";
+
+    /// <summary>
     /// Reference to game events system for state changes.
     /// Cached for efficient access.
     /// </summary>

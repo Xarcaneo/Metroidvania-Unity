@@ -98,7 +98,7 @@ public class Lock : InteractableState
     {
         try
         {
-            var lockState = DialogueLua.GetVariable($"Lock.{m_stateID}").asBool;
+            var lockState = DialogueLua.GetVariable($"{StatePrefix}{m_stateID}").asBool;
             if (lockState)
             {
                 canInteract = false;
@@ -153,8 +153,7 @@ public class Lock : InteractableState
     {
         // First set our states
         canInteract = false; // Disable further interaction
-        DialogueLua.SetVariable($"Lock.{m_stateID}", true);
-        DialogueLua.SetVariable($"Trigger.{m_stateID}", true);
+        DialogueLua.SetVariable($"{StatePrefix}{m_stateID}", true);
         
         // Then notify each connected gate
         foreach (Gate gate in m_connectedGates)
@@ -164,7 +163,7 @@ public class Lock : InteractableState
                 string gateId = gate.m_gateID;
                 
                 // First set the gate state
-                DialogueLua.SetVariable($"Trigger.{gateId}", true);
+                DialogueLua.SetVariable($"{StatePrefix}{gateId}", true);
                 
                 // Then notify the gate to trigger state change
                 m_gameEvents.TriggerStateChanged(gateId);

@@ -16,6 +16,11 @@ public class Gate : MonoBehaviour
 
     #region Private Fields
     /// <summary>
+    /// Prefix for state variables in Lua, must match InteractableState.StatePrefix
+    /// </summary>
+    private const string StatePrefix = "State.";
+
+    /// <summary>
     /// Current state of the gate from DialogueLua
     /// </summary>
     private bool m_gateState;
@@ -139,7 +144,7 @@ public class Gate : MonoBehaviour
 
         try
         {
-            m_gateState = DialogueLua.GetVariable($"Trigger.{m_gateID}").asBool;
+            m_gateState = DialogueLua.GetVariable($"{StatePrefix}{m_gateID}").asBool;
             m_currentState = m_gateState ? GateState.IdleOpen : GateState.IdleClose;
             m_animator.SetBool(m_gateState ? IDLE_OPEN_PARAM : IDLE_CLOSE_PARAM, true);
         }
@@ -161,7 +166,7 @@ public class Gate : MonoBehaviour
         {
             try
             {
-                bool newState = DialogueLua.GetVariable($"Trigger.{m_gateID}").asBool;
+                bool newState = DialogueLua.GetVariable($"{StatePrefix}{m_gateID}").asBool;
                 
                 // Only reset event completion if state actually changes
                 if (newState != m_gateState)

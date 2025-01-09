@@ -150,7 +150,7 @@ public class Trigger : InteractableState
     /// </summary>
     private void InitializeState()
     {
-        m_triggerState = DialogueLua.GetVariable("Trigger." + m_stateID).asBool;
+        m_triggerState = DialogueLua.GetVariable($"{StatePrefix}{m_stateID}").asBool;
 
         if (m_triggerState)
         {
@@ -231,7 +231,7 @@ public class Trigger : InteractableState
         {
             case TriggerState.IdleOn:
                 m_animator.SetBool(IDLE_ON_PARAM, true);
-                DialogueLua.SetVariable("Trigger." + m_stateID, true);
+                DialogueLua.SetVariable($"{StatePrefix}{m_stateID}", true);
                 NotifyStateChange();
                 break;
             case TriggerState.TurningOff:
@@ -239,7 +239,7 @@ public class Trigger : InteractableState
                 break;
             case TriggerState.IdleOff:
                 m_animator.SetBool(IDLE_OFF_PARAM, true);
-                DialogueLua.SetVariable("Trigger." + m_stateID, false);
+                DialogueLua.SetVariable($"{StatePrefix}{m_stateID}", false);
                 NotifyStateChange();
                 break;
             case TriggerState.TurningOn:
