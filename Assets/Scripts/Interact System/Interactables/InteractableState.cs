@@ -55,14 +55,6 @@ public abstract class InteractableState : Interactable
 
     #region Unity Lifecycle
     /// <summary>
-    /// Validates configuration in the Unity Editor.
-    /// Ensures critical parameters are properly set.
-    /// </summary>
-    protected override void OnValidate()
-    {
-    }
-
-    /// <summary>
     /// Initializes components by caching required references.
     /// Called when the script instance is being loaded.
     /// </summary>

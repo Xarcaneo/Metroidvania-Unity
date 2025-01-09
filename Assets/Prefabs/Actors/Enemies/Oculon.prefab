@@ -63,7 +63,6 @@ MonoBehaviour:
   ladderBottomDistance: 0
   slopeCheckDistance: 0
   platformCheckRadius: 0
-  boxCollider2D: {fileID: 0}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 768
@@ -79,6 +78,7 @@ MonoBehaviour:
   whatIsPlatform:
     serializedVersion: 2
     m_Bits: 0
+  boxCollider2D: {fileID: 0}
 --- !u!1 &705878691846171140
 GameObject:
   m_ObjectHideFlags: 0
@@ -117,6 +117,7 @@ Transform:
   m_Children:
   - {fileID: 5484474315309459989}
   - {fileID: 1402864874953301588}
+  - {fileID: 2195130839940340516}
   m_Father: {fileID: 8875882753138264455}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -339,6 +340,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   muteSounds: 0
+  useWorldPosition: 1
+  soundOffset: {x: 0, y: 0, z: 0}
+  logDebugInfo: 0
 --- !u!114 &441218368295727855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -405,7 +409,6 @@ MonoBehaviour:
   duration: 0.125
   sfx_patch: event:/SFX/ActorsEvents/ReaverEvents/ReaverHurt
   flashMaterial: {fileID: 2100000, guid: 00c9adf18f92e2044af599313777149e, type: 2}
-  originalMaterial: {fileID: 2100000, guid: 84568129bd3ea9b4fa5f097dac433c97, type: 2}
 --- !u!1 &981111017941938356
 GameObject:
   m_ObjectHideFlags: 0
@@ -458,7 +461,6 @@ MonoBehaviour:
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 256
-  entityToRight: 0
 --- !u!1 &2751006669078459884
 GameObject:
   m_ObjectHideFlags: 0
@@ -815,6 +817,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5b5cf2c3ebd85d4fb448b4170fa3474, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxSlopeAngle: 45
 --- !u!1 &7338824364448410886
 GameObject:
   m_ObjectHideFlags: 0
@@ -857,7 +860,7 @@ GameObject:
   - component: {fileID: 8875882753138264455}
   m_Layer: 0
   m_Name: Oculon
-  m_TagString: Untagged
+  m_TagString: SpawnableEnemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -876,7 +879,6 @@ Transform:
   m_Children:
   - {fileID: 9057722276031358107}
   - {fileID: 3924972657719955146}
-  - {fileID: 2195130839940340516}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1070,7 +1072,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 8875882753138264455}
+    m_TransformParent: {fileID: 9057722276031358107}
     m_Modifications:
     - target: {fileID: 990691016385146381, guid: cc0edbd9f7370f546a244e8f13a48bf1, type: 3}
       propertyPath: body

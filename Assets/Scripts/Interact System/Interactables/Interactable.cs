@@ -52,15 +52,6 @@ public class Interactable : MonoBehaviour
 
     #region Unity Messages
     /// <summary>
-    /// Called when the script instance is being loaded.
-    /// Validates the initial setup of the interactable.
-    /// </summary>
-    protected virtual void OnValidate()
-    {
-        // Base validation can be extended in derived classes
-    }
-
-    /// <summary>
     /// Called when the object is destroyed.
     /// Cleans up any subscribed events.
     /// </summary>

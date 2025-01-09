@@ -60,7 +60,7 @@ public class CustomLua : MonoBehaviour
     /// <param name="triggerID">The ID of the trigger to update.</param>
     private void TriggerStateChanged(string triggerID)
     {
-        DialogueLua.SetVariable($"Trigger.{triggerID}", true);
+        DialogueLua.SetVariable($"State.{triggerID}", true);
         if (GameEvents.Instance != null)
         {
             GameEvents.Instance.TriggerStateChanged(triggerID);

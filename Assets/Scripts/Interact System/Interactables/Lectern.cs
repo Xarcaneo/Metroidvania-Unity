@@ -42,26 +42,13 @@ public class Lectern : Interactable
 
     #region Unity Lifecycle
     /// <summary>
-    /// Validates lectern configuration in the Unity Editor.
-    /// Ensures critical parameters are properly set.
-    /// </summary>
-    protected override void OnValidate()
-    {
-        base.OnValidate();
-
-        if (string.IsNullOrEmpty(m_dialogueID))
-        {
-            Debug.LogWarning($"[{gameObject.name}] Dialogue ID is not set!");
-        }
-    }
-
-    /// <summary>
     /// Initializes the lectern by caching required components.
     /// Called when the script instance is being loaded.
     /// </summary>
     private void Awake()
     {
-        InitializeComponents();
+        m_animator = GetComponent<Animator>();
+        m_gameEvents = GameEvents.Instance;
     }
 
     /// <summary>
@@ -90,8 +77,6 @@ public class Lectern : Interactable
     /// </summary>
     public override void Interact()
     {
-        if (!ValidateComponents()) return;
-
         base.Interact();
         m_animator.Play(OPEN_ANIM);
         DialogueManager.StartConversation(m_dialogueID);
@@ -115,27 +100,6 @@ public class Lectern : Interactable
     #endregion
 
     #region Private Methods
-    /// <summary>
-    /// Initializes and caches required components.
-    /// Called during Awake to ensure early component access.
-    /// </summary>
-    private void InitializeComponents()
-    {
-        // Get animator
-        m_animator = GetComponent<Animator>();
-        if (m_animator == null)
-        {
-            Debug.LogError($"[{gameObject.name}] Animator component is missing!");
-        }
-
-        // Get game events
-        m_gameEvents = GameEvents.Instance;
-        if (m_gameEvents == null)
-        {
-            Debug.LogWarning($"[{gameObject.name}] GameEvents instance is null!");
-        }
-    }
-
     /// <summary>
     /// Subscribes to dialogue system events.
     /// Sets up event handling for dialogue completion.
@@ -174,26 +138,6 @@ public class Lectern : Interactable
         }
     }
 
-    /// <summary>
-    /// Validates that all required components are present and properly initialized.
-    /// </summary>
-    /// <returns>True if all components are valid, false otherwise</returns>
-    private bool ValidateComponents()
-    {
-        if (string.IsNullOrWhiteSpace(m_dialogueID))
-        {
-            Debug.LogError($"[{gameObject.name}] Dialogue ID is not set!");
-            return false;
-        }
-
-        if (m_animator == null)
-        {
-            Debug.LogError($"[{gameObject.name}] Animator component is missing!");
-            return false;
-        }
-
-        return true;
-    }
     #endregion
 
     #region Animation Events

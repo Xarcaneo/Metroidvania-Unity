@@ -101,14 +101,6 @@ public class CommunicationBox : Interactable
         UnsubscribeFromEvents();
     }
 
-    /// <summary>
-    /// Validates communication box configuration in the Unity Editor.
-    /// Ensures critical parameters are properly set.
-    /// </summary>
-    protected override void OnValidate()
-    {
-        base.OnValidate();
-    }
     #endregion
 
     #region Public Methods

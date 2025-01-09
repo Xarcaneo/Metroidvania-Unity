@@ -37,6 +37,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1795069385183972928}
+  - {fileID: 4829757148852394761}
   m_Father: {fileID: 3089187644029303311}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -278,6 +279,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   muteSounds: 0
+  useWorldPosition: 1
+  soundOffset: {x: 0, y: 0, z: 0}
+  logDebugInfo: 0
 --- !u!1 &1795069383799447301
 GameObject:
   m_ObjectHideFlags: 0
@@ -380,7 +384,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a9e02eb8cceca44892ff50a82d30742, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debug: 0
   detectionWidth: 3.9
   detectionHeight: 2
   entityLayer:
@@ -389,7 +392,7 @@ MonoBehaviour:
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 256
-  entityToRight: 0
+  debug: 0
 --- !u!1 &1795069384084588082
 GameObject:
   m_ObjectHideFlags: 0
@@ -617,7 +620,6 @@ MonoBehaviour:
   ladderBottomDistance: 0
   slopeCheckDistance: 0
   platformCheckRadius: 0
-  boxCollider2D: {fileID: 0}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 768
@@ -633,6 +635,7 @@ MonoBehaviour:
   whatIsPlatform:
     serializedVersion: 2
     m_Bits: 0
+  boxCollider2D: {fileID: 0}
 --- !u!1 &1795069385611182496
 GameObject:
   m_ObjectHideFlags: 0
@@ -677,6 +680,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5b5cf2c3ebd85d4fb448b4170fa3474, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxSlopeAngle: 45
 --- !u!1 &1795069385746687638
 GameObject:
   m_ObjectHideFlags: 0
@@ -724,7 +728,6 @@ MonoBehaviour:
   duration: 0.125
   sfx_patch: event:/SFX/ActorsEvents/ReaverEvents/ReaverHurt
   flashMaterial: {fileID: 2100000, guid: 00c9adf18f92e2044af599313777149e, type: 2}
-  originalMaterial: {fileID: 2100000, guid: 84568129bd3ea9b4fa5f097dac433c97, type: 2}
 --- !u!1 &3447983638100308747
 GameObject:
   m_ObjectHideFlags: 0
@@ -823,7 +826,6 @@ MonoBehaviour:
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 256
-  entityToRight: 0
 --- !u!1 &4832585614086915940
 GameObject:
   m_ObjectHideFlags: 0
@@ -908,7 +910,7 @@ GameObject:
   - component: {fileID: 3089187644029303311}
   m_Layer: 14
   m_Name: Reaver
-  m_TagString: Untagged
+  m_TagString: SpawnableEnemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -926,7 +928,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1795069383703867986}
-  - {fileID: 4829757148852394761}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1056,7 +1057,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 3089187644029303311}
+    m_TransformParent: {fileID: 1795069383703867986}
     m_Modifications:
     - target: {fileID: 990691016385146381, guid: cc0edbd9f7370f546a244e8f13a48bf1, type: 3}
       propertyPath: body

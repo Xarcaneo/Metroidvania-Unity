@@ -74,16 +74,6 @@ public class Chest : Interactable
 
     #region Unity Lifecycle
     /// <summary>
-    /// Validates chest configuration in the Unity Editor.
-    /// Ensures critical parameters are properly set.
-    /// Only shows warnings in play mode.
-    /// </summary>
-    protected override void OnValidate()
-    {
-        base.OnValidate();
-    }
-
-    /// <summary>
     /// Initializes the chest by caching required components.
     /// Called when the script instance is being loaded.
     /// </summary>
