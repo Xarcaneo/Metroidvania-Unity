@@ -1,7 +1,8 @@
+using UnityEngine;
+using TMPro;
+using System.Collections;
 using PixelCrushers;
 using PixelCrushers.DialogueSystem;
-using TMPro;
-using UnityEngine;
 
 /// <summary>
 /// Manages a UI hint box that displays contextual help text to the player.
@@ -113,8 +114,20 @@ public class HintBox : MonoBehaviour
     void Start()
     {
         GameEvents.Instance.onPauseTrigger += HandlePauseTrigger;
+        StartCoroutine(WaitForText());
+    }
+
+    private IEnumerator WaitForText()
+    {
+        // Wait until either the TMP text or localization text is available
+        while (string.IsNullOrEmpty(hintText.text))
+        {
+            yield return null;
+        }
+        
         initialHintText = hintText.text;
         SetHintText();
+        HideHintBox(); // Hide the hint box after setting initial text
     }
 
     /// <summary>
