@@ -8,17 +8,9 @@ using UnityEngine;
 /// Manages lock state persistence, key validation, and visual feedback.
 /// Integrates with the Ultimate Inventory System for item checking.
 /// </summary>
-public class Lock : Interactable
+public class Lock : InteractableState
 {
     #region Serialized Fields
-    [SerializeField]
-    [Tooltip("Unique ID for this lock")]
-    /// <summary>
-    /// Unique identifier for this lock.
-    /// Used to track and persist lock state between game sessions.
-    /// </summary>
-    private string m_lockID;
-
     [SerializeField]
     [Tooltip("Name of the key item required to unlock")]
     /// <summary>
@@ -26,23 +18,9 @@ public class Lock : Interactable
     /// Must match an item name in the Ultimate Inventory System.
     /// </summary>
     private string m_itemName;
-
-    [SerializeField]
-    [Tooltip("Reference to the animator component")]
-    /// <summary>
-    /// Reference to the animator component for lock animations.
-    /// Controls feedback animations like "no key" state.
-    /// </summary>
-    private Animator m_animator;
     #endregion
 
     #region Private Fields
-    /// <summary>
-    /// Reference to game events system for trigger state changes.
-    /// Cached for efficient access.
-    /// </summary>
-    private GameEvents m_gameEvents;
-
     // Animation state names
     /// <summary>
     /// Constants for animation state names to ensure consistency
@@ -70,15 +48,6 @@ public class Lock : Interactable
         {
             m_animator = GetComponent<Animator>();
         }
-    }
-
-    /// <summary>
-    /// Initializes the lock by caching required components.
-    /// Called when the script instance is being loaded.
-    /// </summary>
-    private void Awake()
-    {
-        InitializeComponents();
     }
 
     /// <summary>
@@ -122,26 +91,6 @@ public class Lock : Interactable
 
     #region Private Methods
     /// <summary>
-    /// Initializes and caches required components.
-    /// Called during Awake to ensure early component access.
-    /// </summary>
-    private void InitializeComponents()
-    {
-        // Get animator if not already assigned
-        if (m_animator == null)
-        {
-            m_animator = GetComponent<Animator>();
-        }
-
-        // Get game events
-        m_gameEvents = GameEvents.Instance;
-        if (m_gameEvents == null)
-        {
-            Debug.LogWarning($"[{gameObject.name}] GameEvents instance is null!");
-        }
-    }
-
-    /// <summary>
     /// Initializes lock state from saved data.
     /// Disables interaction if lock was previously unlocked.
     /// </summary>
@@ -149,7 +98,7 @@ public class Lock : Interactable
     {
         try
         {
-            var lockState = DialogueLua.GetVariable($"Trigger.{m_lockID}").asBool;
+            var lockState = DialogueLua.GetVariable($"Trigger.{m_stateID}").asBool;
             if (lockState)
             {
                 canInteract = false;
@@ -165,8 +114,10 @@ public class Lock : Interactable
     /// Validates that all required components are present and properly initialized.
     /// </summary>
     /// <returns>True if all components are valid, false otherwise</returns>
-    private bool ValidateComponents()
+    protected override bool ValidateComponents()
     {
+        if (!base.ValidateComponents()) return false;
+        
         if (m_itemName == null)
         {
             Debug.LogError($"[{gameObject.name}] Item name is not set!");
@@ -203,27 +154,13 @@ public class Lock : Interactable
     {
         try
         {
-            DialogueLua.SetVariable($"Trigger.{m_lockID}", true);
-            if (m_gameEvents != null)
-            {
-                m_gameEvents.TriggerStateChanged(m_lockID);
-            }
+            DialogueLua.SetVariable($"Trigger.{m_stateID}", true);
+            NotifyStateChange();
         }
         catch (System.Exception e)
         {
             Debug.LogError($"[{gameObject.name}] Error unlocking: {e.Message}");
         }
-    }
-    #endregion
-
-    #region Animation Events
-    /// <summary>
-    /// Called by animation event when lock animation finishes.
-    /// Notifies the interaction system that the interaction is complete.
-    /// </summary>
-    private void OnAnimationFinished()
-    {
-        CallInteractionCompletedEvent();
     }
     #endregion
 }
