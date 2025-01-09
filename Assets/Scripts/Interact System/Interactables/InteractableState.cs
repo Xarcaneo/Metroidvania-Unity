@@ -60,21 +60,6 @@ public abstract class InteractableState : Interactable
     /// </summary>
     protected override void OnValidate()
     {
-        base.OnValidate();
-
-        // Ensure component is fully initialized before validation
-        if (!gameObject.activeInHierarchy) return;
-
-        if (m_animator == null)
-        {
-            m_animator = GetComponent<Animator>();
-        }
-
-        // Only show warning for Trigger components when list is actually empty
-        if (this is Trigger && m_connectedGateIDs != null && m_connectedGateIDs.Count == 0)
-        {
-            Debug.LogWarning($"[{gameObject.name}] No gate IDs assigned!");
-        }
     }
 
     /// <summary>
@@ -143,32 +128,7 @@ public abstract class InteractableState : Interactable
         }
     }
 
-    /// <summary>
-    /// Validates that all required components are present and properly initialized.
-    /// </summary>
-    /// <returns>True if all components are valid, false otherwise</returns>
-    protected virtual bool ValidateComponents()
-    {
-        if (m_animator == null)
-        {
-            Debug.LogError($"[{gameObject.name}] Animator component is missing!");
-            return false;
-        }
 
-        if (Player.Instance == null)
-        {
-            Debug.LogError($"[{gameObject.name}] Player instance is null!");
-            return false;
-        }
-
-        // Only validate gate IDs for Trigger components
-        if (this is Trigger && m_connectedGateIDs.Count == 0)
-        {
-            Debug.LogWarning($"[{gameObject.name}] No gate IDs assigned!");
-        }
-
-        return true;
-    }
 
     /// <summary>
     /// Notifies the game system of a state change.

@@ -81,29 +81,6 @@ public class Chest : Interactable
     protected override void OnValidate()
     {
         base.OnValidate();
-
-        if (!ComponentValidationUtility.ShouldValidate(this)) return;
-
-        if (string.IsNullOrWhiteSpace(m_chestID))
-        {
-            Debug.LogWarning($"[{gameObject.name}] Chest ID is not set!");
-        }
-
-        if (m_itemName == null)
-        {
-            Debug.LogWarning($"[{gameObject.name}] Item name is not set!");
-        }
-
-        if (m_itemQuantity < 1)
-        {
-            Debug.LogWarning($"[{gameObject.name}] Item quantity should be at least 1!");
-            m_itemQuantity = 1;
-        }
-
-        if (m_animator == null)
-        {
-            m_animator = GetComponent<Animator>();
-        }
     }
 
     /// <summary>
@@ -199,10 +176,7 @@ public class Chest : Interactable
     /// <returns>True if all components are valid, false otherwise</returns>
     private bool ValidateComponents()
     {
-        return ComponentValidationUtility.ValidateRequiredComponent(m_animator, gameObject, "Animator")
-            && ComponentValidationUtility.ValidateRequiredString(m_chestID, gameObject, "Chest ID")
-            && ComponentValidationUtility.ValidateRequiredSceneComponent(Player.Instance, gameObject, "Player")
-            && Player.Instance.m_inventory != null;
+        return true;
     }
 
     /// <summary>

@@ -82,27 +82,9 @@ public class QuestMonitor : MonoBehaviour, IMessageHandler
     /// <summary>
     /// Validates that all required components are properly assigned.
     /// </summary>
-    private void ValidateComponents()
+    private bool ValidateComponents()
     {
-        if (questName == null)
-        {
-            Debug.LogError($"[QuestMonitor] Missing questName Text component on {gameObject.name}");
-            enabled = false;
-            return;
-        }
-
-        if (questImageAnimator == null)
-        {
-            questImageAnimator = GetComponent<Animator>();
-            if (questImageAnimator == null)
-            {
-                Debug.LogError($"[QuestMonitor] Missing questImageAnimator component on {gameObject.name}");
-                enabled = false;
-                return;
-            }
-        }
-
-        isInitialized = true;
+        return true;
     }
     #endregion
 

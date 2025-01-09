@@ -108,18 +108,6 @@ public class CommunicationBox : Interactable
     protected override void OnValidate()
     {
         base.OnValidate();
-        
-        if (!ComponentValidationUtility.ShouldValidate(this)) return;
-
-        if (string.IsNullOrWhiteSpace(communicationBox_ID))
-        {
-            Debug.LogWarning($"[{gameObject.name}] Communication Box ID is not set!");
-        }
-
-        if (string.IsNullOrWhiteSpace(dialogue_ID))
-        {
-            Debug.LogWarning($"[{gameObject.name}] Dialogue ID is not set!");
-        }
     }
     #endregion
 
@@ -130,8 +118,6 @@ public class CommunicationBox : Interactable
     /// </summary>
     public override void Interact()
     {
-        if (!ValidateComponents()) return;
-
         base.Interact();
 
         m_animator.Play(TURN_ON_ANIM);
@@ -168,8 +154,6 @@ public class CommunicationBox : Interactable
     /// </summary>
     private void InitializeState()
     {
-        if (!ValidateComponents()) return;
-
         try
         {
             var communicationBoxState = DialogueLua.GetVariable("CommunicationBox." + communicationBox_ID).asBool;
@@ -232,10 +216,7 @@ public class CommunicationBox : Interactable
     /// <returns>True if all components are valid, false otherwise</returns>
     private bool ValidateComponents()
     {
-        return ComponentValidationUtility.ValidateRequiredComponent(m_animator, gameObject, "Animator")
-            && ComponentValidationUtility.ValidateRequiredSceneComponent(m_dialogueSystem, gameObject, "DialogueSystemController")
-            && ComponentValidationUtility.ValidateRequiredString(dialogue_ID, gameObject, "Dialogue ID")
-            && ComponentValidationUtility.ValidateRequiredString(communicationBox_ID, gameObject, "Communication Box ID");
+        return true;
     }
 
     /// <summary>
@@ -262,8 +243,6 @@ public class CommunicationBox : Interactable
     /// <param name="value">True if dialogue should continue, false if it should end</param>
     protected override void IsInteractionCompleted(bool value)
     {
-        if (!ValidateComponents()) return;
-
         if (!value && isInteracting)
         {
             m_animator.Play(TURN_OFF_ANIM);
@@ -279,8 +258,6 @@ public class CommunicationBox : Interactable
     /// </summary>
     public void OnTurnOnAnimationComplete()
     {
-        if (!ValidateComponents()) return;
-
         if (LoyalServantImage)
         {
             m_animator.Play(LOYAL_SERVANT_IDLE_ANIM);

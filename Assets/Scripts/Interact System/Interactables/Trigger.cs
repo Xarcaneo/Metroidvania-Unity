@@ -99,8 +99,6 @@ public class Trigger : InteractableState
     /// </summary>
     public override void Interact()
     {
-        if (!ValidateComponents()) return;
-
         AlignPlayerWithTrigger();
         Player.Instance.gameObject.SetActive(false);
 
@@ -150,8 +148,6 @@ public class Trigger : InteractableState
     /// </summary>
     private void InitializeState()
     {
-        if (!ValidateComponents()) return;
-
         m_triggerState = InitializeStateFromLua();
 
         if (m_triggerState)
@@ -166,25 +162,9 @@ public class Trigger : InteractableState
         }
     }
 
-    /// <summary>
-    /// Validates that all required components are present and properly initialized.
-    /// </summary>
-    /// <returns>True if all components are valid, false otherwise</returns>
-    protected override bool ValidateComponents()
+    protected override void OnValidate()
     {
-        if (!base.ValidateComponents()) return false;
-
-        if (m_playerMovement == null)
-        {
-            CachePlayerComponents();
-            if (m_playerMovement == null)
-            {
-                Debug.LogError($"[{gameObject.name}] Player Movement component is missing!");
-                return false;
-            }
-        }
-
-        return true;
+        base.OnValidate();
     }
 
     /// <summary>
@@ -207,8 +187,6 @@ public class Trigger : InteractableState
     /// <param name="newState">The target state to transition to</param>
     private void ChangeState(TriggerState newState)
     {
-        if (!ValidateComponents()) return;
-
         // Reset previous state
         switch (m_currentState)
         {
@@ -258,8 +236,6 @@ public class Trigger : InteractableState
     /// </summary>
     private void OnAnimationTrigger()
     {
-        if (!ValidateComponents()) return;
-
         // Update state
         if (m_currentState == TriggerState.TurningOff)
         {
