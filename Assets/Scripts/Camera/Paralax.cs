@@ -73,8 +73,20 @@ public class Paralax : MonoBehaviour
 
         // Handle sprite repetition
         if (temp > startpos + length) 
+        {
             startpos += length;
+        }
         else if (temp < startpos - length) 
+        {
             startpos -= length;
+        }
+
+        // Clamp position to ensure it's within camera bounds
+        float cameraWidth = Camera.main.orthographicSize * Camera.main.aspect; // Calculate camera width
+        float minX = Camera.main.transform.position.x - cameraWidth;
+        float maxX = Camera.main.transform.position.x + cameraWidth;
+
+        // Clamp the position
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x, minX, maxX), transform.position.y, transform.position.z);
     }
 }
