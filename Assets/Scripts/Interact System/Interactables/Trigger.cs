@@ -150,7 +150,9 @@ public class Trigger : InteractableState
     /// </summary>
     private void InitializeState()
     {
-        m_triggerState = DialogueLua.GetVariable($"{StatePrefix}{m_stateID}").asBool;
+        if (!ValidateComponents()) return;
+
+        m_triggerState = InitializeStateFromLua();
 
         if (m_triggerState)
         {

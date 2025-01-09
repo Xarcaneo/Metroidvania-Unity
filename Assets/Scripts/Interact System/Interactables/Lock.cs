@@ -12,12 +12,12 @@ public class Lock : InteractableState
 {
     #region Serialized Fields
     [SerializeField]
-    [Tooltip("Name of the key item required to unlock")]
+    [Tooltip("Item definition required to unlock")]
     /// <summary>
-    /// Name of the key item required to unlock this lock.
-    /// Must match an item name in the Ultimate Inventory System.
+    /// Item definition required to unlock this lock.
+    /// Must match an item definition in the Ultimate Inventory System.
     /// </summary>
-    private string m_itemName;
+    private ItemDefinition m_itemDefinition;
     #endregion
 
     #region Private Fields
@@ -37,12 +37,6 @@ public class Lock : InteractableState
     protected override void OnValidate()
     {
         base.OnValidate();
-
-        // Only warn if item name is null, empty string is valid
-        if (m_itemName == null)
-        {
-            Debug.LogWarning($"[{gameObject.name}] Item name is not set!");
-        }
 
         if (m_animator == null)
         {
@@ -71,15 +65,18 @@ public class Lock : InteractableState
     {
         if (!ValidateComponents()) return;
 
-        var item = InventorySystemManager.CreateItem(m_itemName);
+        var item = InventorySystemManager.CreateItem(m_itemDefinition);
         if (item == null)
         {
-            Debug.LogError($"[{gameObject.name}] Failed to create item: {m_itemName}");
+            Debug.LogError($"[{gameObject.name}] Failed to create item: {m_itemDefinition}");
             return;
         }
 
         if (Player.Instance.m_inventory.HasItem(item, false))
         {
+            // Remove the key item from inventory
+            Player.Instance.m_inventory.RemoveItem(item, 1);
+
             UnlockAndNotify();
         }
         else
@@ -96,17 +93,13 @@ public class Lock : InteractableState
     /// </summary>
     private void InitializeLockState()
     {
-        try
+        if (!ValidateComponents()) return;
+
+        bool isUnlocked = InitializeStateFromLua();
+        if (isUnlocked)
         {
-            var lockState = DialogueLua.GetVariable($"{StatePrefix}{m_stateID}").asBool;
-            if (lockState)
-            {
-                canInteract = false;
-            }
-        }
-        catch (System.Exception e)
-        {
-            Debug.LogError($"[{gameObject.name}] Error getting lock state: {e.Message}");
+            canInteract = false;
+            m_animator.Play("UnlockedIdle");
         }
     }
 
@@ -117,12 +110,6 @@ public class Lock : InteractableState
     protected override bool ValidateComponents()
     {
         if (!base.ValidateComponents()) return false;
-        
-        if (m_itemName == null)
-        {
-            Debug.LogError($"[{gameObject.name}] Item name is not set!");
-            return false;
-        }
 
         // Only check animator if we need to play an animation
         if (m_animator == null && !string.IsNullOrEmpty(NO_KEY_ANIM))
@@ -168,51 +155,6 @@ public class Lock : InteractableState
                 // Then notify the gate to trigger state change
                 m_gameEvents.TriggerStateChanged(gateId);
             }
-        }
-
-        // Start monitoring gate events
-        StartCoroutine(CheckConnectedGatesEventCompletion());
-    }
-
-    /// <summary>
-    /// Monitors connected gates for event completion.
-    /// Continues checking until all gates have completed their events.
-    /// </summary>
-    /// <returns>IEnumerator for coroutine execution</returns>
-    private IEnumerator CheckConnectedGatesEventCompletion()
-    {
-        if (m_connectedGates == null || m_connectedGates.Count == 0)
-        {
-            CallInteractionCompletedEvent();
-            yield break;
-        }
-
-        while (true)
-        {
-            bool allGatesCompleted = true;
-
-            foreach (Gate gate in m_connectedGates)
-            {
-                if (gate == null)
-                {
-                    Debug.LogError($"[{gameObject.name}] Connected gate is null!");
-                    continue;
-                }
-
-                if (!gate.isEventCompleted)
-                {
-                    allGatesCompleted = false;
-                    break;
-                }
-            }
-
-            if (allGatesCompleted)
-            {
-                CallInteractionCompletedEvent();
-                yield break;
-            }
-
-            yield return null;
         }
     }
     #endregion

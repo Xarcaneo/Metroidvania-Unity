@@ -89,6 +89,18 @@ public abstract class InteractableState : Interactable
 
     #region Protected Methods
     /// <summary>
+    /// Initializes state from Lua variables.
+    /// Child classes can override this to add custom initialization logic.
+    /// </summary>
+    /// <returns>The current state value from Lua</returns>
+    protected virtual bool InitializeStateFromLua()
+    {
+        bool savedState = DialogueLua.GetVariable($"{StatePrefix}{m_stateID}").asBool;
+        canInteract = true; // Default to allowing interaction unless overridden
+        return savedState;
+    }
+
+    /// <summary>
     /// Initializes and caches required components.
     /// Called during Awake to ensure early component access.
     /// </summary>
