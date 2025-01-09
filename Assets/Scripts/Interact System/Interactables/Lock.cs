@@ -48,12 +48,17 @@ public class Lock : InteractableState
             return;
         }
 
-        if (Player.Instance.m_inventory.HasItem(item, false))
+        var inventory = Player.Instance.m_inventory;
+        if (inventory.HasItem(item, false))
         {
-            // Remove the key item from inventory
-            Player.Instance.m_inventory.RemoveItem(item, 1);
-
-            UnlockAndNotify();
+            // Get the actual item from inventory before removing
+            var itemInfo = inventory.GetItemInfo(m_itemDefinition);
+            if (itemInfo.HasValue)
+            {
+                // Remove the key item from inventory using the actual item instance
+                inventory.RemoveItem(itemInfo.Value.Item, 1);
+                UnlockAndNotify();
+            }
         }
         else
         {
