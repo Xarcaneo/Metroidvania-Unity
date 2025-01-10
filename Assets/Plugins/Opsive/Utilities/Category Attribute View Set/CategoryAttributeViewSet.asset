@@ -20,20 +20,14 @@ MonoBehaviour:
     - m_Name: HealAmount
       m_Object: {fileID: 153241219443721945, guid: 445e2534b04203345bbf61c6a0cdb6ee, type: 3}
   - m_Category:
-      m_Name: Defense Bonus
-      m_ItemCategory: {fileID: 11400000, guid: 4e7289d7e312e814b891d9414be3c68d, type: 2}
-    m_AttributeViews:
-    - m_Name: Defense
-      m_Object: {fileID: 153241219443721945, guid: 0d4b0a7646ce72a46ae0c2c0cdb432bb, type: 3}
-  - m_Category:
-      m_Name: Health Bonus
-      m_ItemCategory: {fileID: 11400000, guid: dcba8662cb967e94486369268a5be2ef, type: 2}
-    m_AttributeViews:
-    - m_Name: Health
-      m_Object: {fileID: 153241219443721945, guid: bf8d6653f058e5a49970c43de8f2f2b9, type: 3}
-  - m_Category:
-      m_Name: Attack Bonus
-      m_ItemCategory: {fileID: 11400000, guid: 099473e690c303f4b9cceb4ed605db39, type: 2}
+      m_Name: Equippable
+      m_ItemCategory: {fileID: 11400000, guid: 0ba9feea4849b7a449c13a988f0bc7a2, type: 2}
     m_AttributeViews:
     - m_Name: Attack
       m_Object: {fileID: 153241219443721945, guid: 32f189808489db547bbccee15bf617b7, type: 3}
+    - m_Name: Defense
+      m_Object: {fileID: 153241219443721945, guid: 0d4b0a7646ce72a46ae0c2c0cdb432bb, type: 3}
+    - m_Name: Health
+      m_Object: {fileID: 153241219443721945, guid: bf8d6653f058e5a49970c43de8f2f2b9, type: 3}
+    - m_Name: Mana
+      m_Object: {fileID: 153241219443721945, guid: 1f16a9c96ab34274fa433e8520f2f137, type: 3}
