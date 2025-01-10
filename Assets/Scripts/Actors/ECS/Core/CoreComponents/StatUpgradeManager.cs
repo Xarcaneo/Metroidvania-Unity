@@ -43,6 +43,7 @@ public class StatUpgradeManager : CoreComponent
         // Ensure level is within valid range
         m_CurrentUpgradeLevel = Mathf.Clamp(m_CurrentUpgradeLevel, 0, m_UpgradeLevels.Count - 1);
 
+#if UNITY_EDITOR
         // Update UI in editor
         if (!Application.isPlaying)
         {
@@ -65,6 +66,7 @@ public class StatUpgradeManager : CoreComponent
                 };
             }
         }
+#endif
     }
 
     /// <summary>

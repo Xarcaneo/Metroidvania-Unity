@@ -19,6 +19,7 @@ public class UpgradeLevelIndicator : MonoBehaviour
         UpdateIndicators();
     }
 
+#if UNITY_EDITOR
     /// <summary>
     /// Updates the dots in the Unity Editor when values change
     /// </summary>
@@ -30,6 +31,7 @@ public class UpgradeLevelIndicator : MonoBehaviour
             UpdateIndicators();
         }
     }
+#endif
 
     /// <summary>
     /// Updates the upgrade level indicator dots based on the current upgrade level
