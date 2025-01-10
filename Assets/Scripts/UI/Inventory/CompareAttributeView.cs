@@ -30,8 +30,25 @@ namespace Opsive.UltimateInventorySystem.Demo.UI.VisualStructures.AttributeUIs
         [Tooltip("Text component displaying the potential new value")]
         [SerializeField] protected Text m_NewValueText;
 
-        [Tooltip("Arrow image that changes color based on value comparison")]
-        [SerializeField] protected Image m_ArrowImage;
+        [Tooltip("Background GameObject for the comparison value")]
+        [SerializeField] protected GameObject m_ComparisonBackground;
+
+        [Tooltip("Color for when the comparison value shows an improvement")]
+        [SerializeField] protected Color m_BetterColor = Color.green;
+
+        [Tooltip("Color for when the comparison value shows a decrease")]
+        [SerializeField] protected Color m_WorseColor = Color.red;
+
+        [Tooltip("Color for when the comparison value shows no change")]
+        [SerializeField] protected Color m_SameColor = Color.white;
+
+        [Tooltip("Color for inactive or unknown state")]
+        [SerializeField] protected Color m_InactiveColor = Color.grey;
+
+        /// <summary>
+        /// Constant for unknown value display
+        /// </summary>
+        protected const string UNKNOWN_VALUE = "?";
         #endregion
 
         #region Protected Fields
@@ -44,15 +61,6 @@ namespace Opsive.UltimateInventorySystem.Demo.UI.VisualStructures.AttributeUIs
         /// Reference to the equipment system.
         /// </summary>
         protected Equipper m_Equipper;
-
-        /// <summary>
-        /// Cached colors for arrow states.
-        /// </summary>
-        protected static readonly Color BETTER_COLOR = Color.green;
-        protected static readonly Color WORSE_COLOR = Color.red;
-        protected static readonly Color SAME_COLOR = Color.white;
-        protected static readonly Color INACTIVE_COLOR = Color.grey;
-        protected const string UNKNOWN_VALUE = "?";
         #endregion
 
         #region Unity Methods
@@ -95,15 +103,12 @@ namespace Opsive.UltimateInventorySystem.Demo.UI.VisualStructures.AttributeUIs
                 m_CurrentValueText.text = UNKNOWN_VALUE;
             }
             
-            if (m_ArrowImage != null)
-            {
-                m_ArrowImage.color = INACTIVE_COLOR;
-            }
-            
             if (!Object.ReferenceEquals(m_NewValueText, null))
             {
                 m_NewValueText.text = UNKNOWN_VALUE;
+                m_NewValueText.color = m_InactiveColor;
             }
+            m_ComparisonBackground.SetActive(false);
         }
         #endregion
 
@@ -128,9 +133,9 @@ namespace Opsive.UltimateInventorySystem.Demo.UI.VisualStructures.AttributeUIs
                 Debug.LogError($"[CompareAttributeView] New value text component missing on {gameObject.name}", this);
             }
 
-            if (m_ArrowImage == null)
+            if (m_ComparisonBackground == null)
             {
-                Debug.LogError($"[CompareAttributeView] Arrow image component missing on {gameObject.name}", this);
+                Debug.LogError($"[CompareAttributeView] Comparison background GameObject missing on {gameObject.name}", this);
             }
         }
 
@@ -189,28 +194,50 @@ namespace Opsive.UltimateInventorySystem.Demo.UI.VisualStructures.AttributeUIs
         /// <param name="item">The item to compare.</param>
         protected virtual void UpdateComparisonDisplay(Item item)
         {
-            var currentValue = m_Equipper.GetEquipmentStatInt(m_StatName);
-            var previewValue = m_Equipper.IsEquipped(item)
-                ? m_Equipper.GetEquipmentStatPreviewRemove(m_StatName, item)
-                : m_Equipper.GetEquipmentStatPreviewAdd(m_StatName, item);
+            // Get the item's actual stat value
+            var itemStatValue = 0;
+            if (item.TryGetAttribute(m_StatName, out var attribute))
+            {
+                if (attribute.GetValueAsObject() is int value)
+                {
+                    itemStatValue = value;
+                }
+            }
 
-            m_CurrentValueText.text = currentValue.ToString();
-            m_NewValueText.text = previewValue.ToString();
+            // Display item's actual stat value
+            m_CurrentValueText.text = itemStatValue.ToString();
+
+            // If item is equipped, hide the comparison background
+            if (m_Equipper.IsEquipped(item))
+            {
+                m_ComparisonBackground.SetActive(false);
+                return;
+            }
+
+            // Make sure the comparison background is visible for unequipped items
+            m_ComparisonBackground.SetActive(true);
+
+            // Calculate how this item will change stats if equipped
+            var currentEquippedValue = m_Equipper.GetEquipmentStatInt(m_StatName);
+            var previewValue = m_Equipper.GetEquipmentStatPreviewAdd(m_StatName, item);
+            int difference = previewValue - currentEquippedValue;
+
+            // Display the difference with + or - sign and appropriate color
+            m_NewValueText.text = difference > 0 ? $"+{difference}" : difference.ToString();
             
-            m_ArrowImage.color = GetComparisonColor(currentValue, previewValue);
-        }
-
-        /// <summary>
-        /// Gets the appropriate color based on value comparison.
-        /// </summary>
-        /// <param name="currentValue">The current value.</param>
-        /// <param name="newValue">The potential new value.</param>
-        /// <returns>Color indicating better, worse, or same.</returns>
-        protected virtual Color GetComparisonColor(int currentValue, int newValue)
-        {
-            if (newValue > currentValue) return BETTER_COLOR;
-            if (newValue < currentValue) return WORSE_COLOR;
-            return SAME_COLOR;
+            // Set color based on the difference
+            if (difference > 0)
+            {
+                m_NewValueText.color = m_BetterColor;
+            }
+            else if (difference < 0)
+            {
+                m_NewValueText.color = m_WorseColor;
+            }
+            else
+            {
+                m_NewValueText.color = m_SameColor;
+            }
         }
         #endregion
     }
