@@ -37,6 +37,7 @@ public class Stats : CoreComponent
     #region Private Fields
 
     private Equipper m_Equipper;
+    private StatUpgradeManager m_StatUpgradeManager;
     private bool saveDataApplied = false;
 
     #endregion
@@ -85,7 +86,8 @@ public class Stats : CoreComponent
         base.Awake();
 
         m_Equipper = transform.root.GetComponent<Equipper>();
-   
+        m_StatUpgradeManager = GetComponent<StatUpgradeManager>();
+
         if (m_Equipper != null)
         {
             EventHandler.RegisterEvent(m_Equipper, EventNames.c_Equipper_OnChange, UpdateStats);
@@ -122,10 +124,12 @@ public class Stats : CoreComponent
     /// </summary>
     protected virtual void InitializeStats()
     {
-        maxHealth = m_BaseMaxHealth;
-        maxMana = m_BaseMaxMana;
-        attack = m_BaseAttack;
-        defense = m_BaseDefense;
+        // Apply base stats with upgrade multiplier
+        float upgradeMultiplier = m_StatUpgradeManager != null ? m_StatUpgradeManager.CurrentBonusMultiplier : 1f;
+        maxHealth = m_BaseMaxHealth * upgradeMultiplier;
+        maxMana = m_BaseMaxMana * upgradeMultiplier;
+        attack = Mathf.RoundToInt(m_BaseAttack * upgradeMultiplier);
+        defense = Mathf.RoundToInt(m_BaseDefense * upgradeMultiplier);
         
         currentHealth = maxHealth;
         currentMana = maxMana;
@@ -233,12 +237,22 @@ public class Stats : CoreComponent
     /// <summary>
     /// Updates stats based on equipment modifiers.
     /// </summary>
-    protected virtual void UpdateStats()
+    public virtual void UpdateStats()
     {
-        maxHealth = m_BaseMaxHealth + m_Equipper.GetEquipmentStatInt("Health");
-        maxMana = m_BaseMaxMana + m_Equipper.GetEquipmentStatInt("Mana");
-        attack = m_BaseAttack + m_Equipper.GetEquipmentStatInt("Attack");
-        defense = m_BaseDefense + m_Equipper.GetEquipmentStatInt("Defense");
+        if (!m_Equipper) return;
+
+        // Apply base stats with upgrade multiplier
+        float upgradeMultiplier = m_StatUpgradeManager != null ? m_StatUpgradeManager.CurrentBonusMultiplier : 1f;
+        maxHealth = m_BaseMaxHealth * upgradeMultiplier;
+        maxMana = m_BaseMaxMana * upgradeMultiplier;
+        attack = Mathf.RoundToInt(m_BaseAttack * upgradeMultiplier);
+        defense = Mathf.RoundToInt(m_BaseDefense * upgradeMultiplier);
+
+        // Add equipment bonuses
+        maxHealth += m_Equipper.GetEquipmentStatInt("Health");
+        maxMana += m_Equipper.GetEquipmentStatInt("Mana");
+        attack += m_Equipper.GetEquipmentStatInt("Attack");
+        defense += m_Equipper.GetEquipmentStatInt("Defense");
  
         StatsUpdated?.Invoke();
 
