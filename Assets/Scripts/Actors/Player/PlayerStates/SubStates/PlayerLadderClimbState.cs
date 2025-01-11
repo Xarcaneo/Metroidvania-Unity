@@ -65,6 +65,14 @@ public class PlayerLadderClimbState : PlayerState
     /// Stores the original gravity scale to restore after climbing
     /// </summary>
     private float prevGravityScale;
+
+    private float yInputFloat;
+    private float xInputFloat;
+    private bool JumpInputFloat;
+    private static float lastLadderFinishTime;
+
+    public bool CanEnterLadder() => Time.time - lastLadderFinishTime >= playerData.ladderClimbCooldown;
+    public void StartCooldown() => lastLadderFinishTime = Time.time;
     #endregion
 
     #region Core Components
@@ -132,7 +140,9 @@ public class PlayerLadderClimbState : PlayerState
         prevGravityScale = m_rigidbody.gravityScale;
         m_rigidbody.gravityScale = 0;
 
+        Vector3 beforeAlignPos = player.transform.position;
         AlignPlayerWithLadderCenter();
+        Vector3 afterAlignPos = player.transform.position;
     }
 
     /// <summary>
@@ -175,7 +185,6 @@ public class PlayerLadderClimbState : PlayerState
         // Handle state transitions
         if (JumpInput && player.JumpState.CanJump() && xInput != 0)
         {
-            Movement?.SetVelocityX(0f);
             stateMachine.ChangeState(player.JumpState);
         }
         else if (isGrounded && yInput == -1)
@@ -197,12 +206,12 @@ public class PlayerLadderClimbState : PlayerState
                 if (yInput == 1)
                 {
                     float distanceToTop = DetermineDistanceFromGround(true);
+                    
                     if (distanceToTop <= playerData.climbFinishThresholdUp)
                     {
-                        // Transition to finish climb state
                         player.transform.position = new Vector2(
                             player.transform.position.x,
-                            player.transform.position.y + distanceToTop - 0.1f); // Small offset to ensure we're at the right height
+                            player.transform.position.y + distanceToTop - 0.1f);
                         stateMachine.ChangeState(player.LadderFinishClimbState);
                         return;
                     }
@@ -279,13 +288,42 @@ public class PlayerLadderClimbState : PlayerState
     {
         if (CollisionSenses)
         {
-            Vector3? ladderPosition = CollisionSenses.GetLadderPosition();
+            // Try to get ladder position using multiple check points
+            Vector3? ladderPosition = GetLadderPositionWithWideScan();
+            
             if (ladderPosition.HasValue)
             {
-                // Correctly use the .Value property to access the Vector3 inside the nullable Vector3?
                 Vector3 newPosition = new Vector3(ladderPosition.Value.x, player.transform.position.y, player.transform.position.z);
                 player.transform.position = newPosition;
             }
+            else
+            {
+                Debug.LogWarning("[LadderClimbState] Failed to get ladder position!");
+            }
         }
+    }
+
+    private Vector3? GetLadderPositionWithWideScan()
+    {
+        // First try the normal ladder check
+        Vector3? normalCheck = CollisionSenses.GetLadderPosition();
+        if (normalCheck.HasValue) return normalCheck;
+
+        // If normal check fails, do a wider scan
+        float scanWidth = 0.5f;  // How far to scan left and right
+        float scanStep = 0.25f;  // Distance between scan points
+        Vector3 basePosition = player.transform.position;
+
+        for (float offset = -scanWidth; offset <= scanWidth; offset += scanStep)
+        {
+            Vector2 checkPoint = new Vector2(basePosition.x + offset, basePosition.y - 0.5f);
+            Collider2D collider = Physics2D.OverlapCircle(checkPoint, 0.1f, LayerMask.GetMask("Ladder"));
+            if (collider != null)
+            {
+                return collider.transform.position;
+            }
+        }
+
+        return null;
     }
 }

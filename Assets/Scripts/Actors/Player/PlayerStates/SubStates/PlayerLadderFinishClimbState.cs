@@ -64,6 +64,9 @@ public class PlayerLadderFinishClimbState : PlayerAbilityState
     {
         base.Enter();
 
+        // Start cooldown when finishing climb
+        player.LadderClimbState.StartCooldown();
+
         // Calculate ladder top position
         ladderTopPos = CalculateLadderTopPosition();
 

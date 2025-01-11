@@ -109,6 +109,8 @@ public class PlayerData : ScriptableObject
     [Header("Ladder Climb State")]
     [Tooltip("Vertical climbing speed on ladders")]
     public float climbingVelocity = 5f;
+    [Tooltip("Time before allowing another ladder climb")]
+    public float ladderClimbCooldown = 0.2f;
     [Tooltip("Time before allowing another ladder jump")]
     public float ladderJumpCooldown = 1.0f;
     [Tooltip("Distance from top to finish climbing")]
