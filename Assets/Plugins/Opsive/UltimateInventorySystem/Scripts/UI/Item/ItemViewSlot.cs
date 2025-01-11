@@ -1,4 +1,4 @@
-﻿/// ---------------------------------------------
+/// ---------------------------------------------
 /// Ultimate Inventory System
 /// Copyright (c) Opsive. All Rights Reserved.
 /// https://www.opsive.com
@@ -238,6 +238,15 @@ namespace Opsive.UltimateInventorySystem.UI.Item
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Checks if this slot is currently selected.
+        /// </summary>
+        /// <returns>True if the slot is selected, false otherwise.</returns>
+        public bool IsSelected()
+        {
+            return m_Selected;
         }
     }
 }

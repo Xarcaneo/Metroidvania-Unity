@@ -2,6 +2,9 @@ using Opsive.UltimateInventorySystem.UI.Item;
 using Opsive.UltimateInventorySystem.UI.Panels.Hotbar;
 using System.Collections.Generic;
 using UnityEngine;
+using PixelCrushers.DialogueSystem;
+using UnityEngine.SceneManagement;
+using System.Collections;
 
 /// <summary>
 /// Manages the game's hotbar system for quick item access.
@@ -9,6 +12,9 @@ using UnityEngine;
 /// </summary>
 public class GameHotbar : MonoBehaviour
 {
+    private const string StatePrefix = "Hotbar.";
+    private const string ActiveSlotVariable = "ActiveSlot";
+
     #region Serialized Fields
     /// <summary>
     /// Reference to the Ultimate Inventory System's item hotbar.
@@ -18,7 +24,7 @@ public class GameHotbar : MonoBehaviour
     /// <summary>
     /// Currently selected item slot index.
     /// </summary>
-    [SerializeField] private int itemSlotIndex = 0;
+    [SerializeField] private int itemSlotIndex = 1;
     #endregion
 
     #region Private Fields
@@ -36,15 +42,60 @@ public class GameHotbar : MonoBehaviour
     /// Reference to the player's input handler.
     /// </summary>
     private PlayerInputHandler m_playerInputHandler;
+
+    /// <summary>
+    /// Flag to track if slots are initialized
+    /// </summary>
+    private bool slotsInitialized = false;
     #endregion
 
-    #region Unity Event Functions
     /// <summary>
-    /// Initializes the hotbar by finding and mapping all item view slots.
+    /// Called when the GameObject becomes enabled and active.
+    /// Initializes slots if needed, subscribes to events, and loads the hotbar state.
     /// </summary>
-    private void Awake()
+    private void OnEnable()
     {
-        itemSlotIndex = 0; // Initialize itemSlotIndex to the first slot
+        if (!slotsInitialized)
+        {
+            InitializeSlots();
+        }
+        
+        if (GameEvents.Instance != null)
+        {
+            GameEvents.Instance.onNewSession += OnNewSession;
+        }
+
+        // Always try to load state when enabled
+        StartCoroutine(LoadHotbarStateAfterFrame());
+    }
+
+    /// <summary>
+    /// Called when the GameObject becomes disabled or inactive.
+    /// Unsubscribes from events to prevent memory leaks.
+    /// </summary>
+    private void OnDisable()
+    {
+        if (GameEvents.Instance != null)
+        {
+            GameEvents.Instance.onNewSession -= OnNewSession;
+        }
+    }
+
+    /// <summary>
+    /// Handles the start of a new game session.
+    /// Reloads the hotbar state to ensure consistency.
+    /// </summary>
+    private void OnNewSession()
+    {
+        StartCoroutine(LoadHotbarStateAfterFrame());
+    }
+
+    /// <summary>
+    /// Initializes the item view slots by finding and mapping all child ItemViewSlot components.
+    /// Sets up the dictionary mapping slot indices to their UI components.
+    /// </summary>
+    private void InitializeSlots()
+    {
         Transform[] childTransforms = GetComponentsInChildren<Transform>();
 
         foreach (Transform childTransform in childTransforms)
@@ -59,19 +110,65 @@ public class GameHotbar : MonoBehaviour
         }
 
         maxIndex -= 1;
+        slotsInitialized = true;
     }
 
     /// <summary>
-    /// Initializes player input handler and focuses initial slot.
+    /// Coroutine that waits for the appropriate time to load the hotbar state.
+    /// Ensures all necessary components and systems are initialized before loading.
     /// </summary>
-    private void Start()
+    /// <returns>IEnumerator for coroutine execution</returns>
+    private IEnumerator LoadHotbarStateAfterFrame()
     {
-        InitializePlayerInput();
+        // Wait for end of frame to ensure all components are initialized
+        yield return new WaitForEndOfFrame();
+
+        // Wait for GameEvents if needed
+        while (GameEvents.Instance == null)
+        {
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        LoadHotbarState();
+    }
+
+    /// <summary>
+    /// Loads the hotbar state from DialogueLua variables.
+    /// Handles cases where the variable might not exist or contain invalid values.
+    /// </summary>
+    private void LoadHotbarState()
+    {
+        string variableName = $"{StatePrefix}{ActiveSlotVariable}";
+        
+        if (DialogueLua.DoesVariableExist(variableName))
+        {
+            var luaVar = DialogueLua.GetVariable(variableName).asInt;
+            if (luaVar >= 0 && luaVar <= maxIndex)
+            {
+                itemSlotIndex = luaVar;
+            }
+        }
+        else
+        {
+            // Initialize the variable if it doesn't exist
+            DialogueLua.SetVariable(variableName, itemSlotIndex);
+        }
+        
         FocusSlot(itemSlotIndex);
     }
 
     /// <summary>
-    /// Handles hotbar navigation and input processing.
+    /// Called when the script instance is being loaded.
+    /// Initializes player input system.
+    /// </summary>
+    private void Start()
+    {
+        InitializePlayerInput();
+    }
+
+    /// <summary>
+    /// Called every frame.
+    /// Handles input initialization and item switching logic.
     /// </summary>
     private void Update()
     {
@@ -83,49 +180,39 @@ public class GameHotbar : MonoBehaviour
 
         HandleItemSwitching();
     }
-    #endregion
 
-    #region Public Methods
     /// <summary>
-    /// Uses the item in the currently selected slot.
+    /// Uses the item in the currently selected hotbar slot.
     /// </summary>
     public void UseItem() => m_itemHotbar.UseItem(itemSlotIndex);
 
     /// <summary>
-    /// Checks if the currently selected slot is empty.
+    /// Checks if the currently selected hotbar slot is empty.
     /// </summary>
-    /// <returns>True if slot is empty, false if it contains an item</returns>
+    /// <returns>True if the selected slot contains no items, false otherwise.</returns>
     public bool IsSlotEmpty()
     {
         var item = m_itemHotbar.GetItemAt(itemSlotIndex);
         return item.Amount <= 0;
     }
-    #endregion
 
-    #region Private Methods
     /// <summary>
-    /// Initializes the player input handler reference.
+    /// Initializes the player input handler by finding the player GameObject and getting its input component.
     /// </summary>
     private void InitializePlayerInput()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player == null)
         {
-            Debug.LogError("[GameHotbar] Player not found in scene! Make sure player object exists with 'Player' tag.");
             return;
         }
 
         m_playerInputHandler = player.GetComponent<PlayerInputHandler>();
-        if (m_playerInputHandler == null)
-        {
-            Debug.LogError("[GameHotbar] PlayerInputHandler component not found on player object!");
-            return;
-        }
     }
 
     /// <summary>
-    /// Handles item slot switching based on player input.
-    /// Supports cycling through slots in both directions.
+    /// Handles the logic for switching between hotbar slots based on player input.
+    /// Processes both left and right switching inputs.
     /// </summary>
     private void HandleItemSwitching()
     {
@@ -138,7 +225,7 @@ public class GameHotbar : MonoBehaviour
             else itemSlotIndex++;
 
             m_playerInputHandler.UseItemSwitchRightInput();
-            FocusSlot(itemSlotIndex);
+            UpdateHotbarState();
         }
 
         if (itemSwitchLeftInput)
@@ -147,14 +234,24 @@ public class GameHotbar : MonoBehaviour
             else itemSlotIndex--;
 
             m_playerInputHandler.UseItemSwitchLeftInput();
-            FocusSlot(itemSlotIndex);
+            UpdateHotbarState();
         }
     }
 
     /// <summary>
-    /// Updates UI to show which slot is currently selected.
+    /// Updates the hotbar state in DialogueLua and focuses the selected slot.
+    /// Called after switching slots to persist the current selection.
     /// </summary>
-    /// <param name="index">Index of the slot to focus</param>
+    private void UpdateHotbarState()
+    {
+        DialogueLua.SetVariable($"{StatePrefix}{ActiveSlotVariable}", itemSlotIndex);
+        FocusSlot(itemSlotIndex);
+    }
+
+    /// <summary>
+    /// Focuses the specified hotbar slot by selecting its UI component.
+    /// </summary>
+    /// <param name="index">The index of the slot to focus</param>
     private void FocusSlot(int index)
     {
         if (itemViewSlotDictionary.ContainsKey(index))
@@ -163,5 +260,4 @@ public class GameHotbar : MonoBehaviour
             itemViewSlot.Select();
         }
     }
-    #endregion
 }
