@@ -25,11 +25,11 @@ MonoBehaviour:
   WallSlideColliderWidthLeft: 1.7
   WallSlideColliderWidthRight: 1.5
   WallSlideColliderWidthBase: 0.92
-  coyoteTime: 0.1
-  variableJumpHeightMultiplier: 0.5
   wallSlideVelocity: 3
   startOffset: {x: 0.5, y: 0.5}
   stopOffset: {x: 1.3, y: 1.7}
+  coyoteTime: 0.1
+  variableJumpHeightMultiplier: 0.5
   dashVelocity: {x: 30, y: 0}
   dashAngle: {x: 1, y: 0}
   dashCooldown: 1.5
@@ -44,9 +44,9 @@ MonoBehaviour:
   breakComboTime: 1
   climbingVelocity: 5
   ladderJumpCooldown: 1
-  climbFinishThresholdUp: 0.5
-  ladderTopRaycastLength: 2
+  climbFinishThresholdUp: 1
+  ladderTopRaycastLength: 3
   groundOffset: 1.5
   startPosUp: 1
-  startPosDown: 2
+  startPosDown: 2.5
   velocityToHit: -30

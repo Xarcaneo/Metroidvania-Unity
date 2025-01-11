@@ -32,6 +32,7 @@ public class Player : Entity
     public PlayerCounterAttackState CounterAttackState { get; private set; }
     public PlayerRollState RollState { get; private set; }
     public PlayerLadderClimbState LadderClimbState { get; private set; }
+    public PlayerLadderFinishClimbState LadderFinishClimbState { get; private set; }
     public PlayerPrepareClimb PrepareClimb { get; private set; }
     public PlayerFinishClimb FinishClimb { get; private set; }
     public PlayerRecoverState RecoverState { get; private set; }
@@ -169,6 +170,7 @@ public class Player : Entity
         CounterAttackState = new PlayerCounterAttackState(this, StateMachine, playerData, "counterAttack");
         RollState = new PlayerRollState(this, StateMachine, playerData, "roll");
         LadderClimbState = new PlayerLadderClimbState(this, StateMachine, playerData, "ladderClimb");
+        LadderFinishClimbState = new PlayerLadderFinishClimbState(this, StateMachine, playerData, "ladderFinishClimb");
         PrepareClimb = new PlayerPrepareClimb(this, StateMachine, playerData, "prepareClimb");
         FinishClimb = new PlayerFinishClimb(this, StateMachine, playerData, "finishClimb");
         RecoverState = new PlayerRecoverState(this, StateMachine, playerData, "recover");
