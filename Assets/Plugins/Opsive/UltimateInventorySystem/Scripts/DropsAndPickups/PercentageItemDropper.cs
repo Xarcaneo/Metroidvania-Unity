@@ -21,7 +21,7 @@ namespace Opsive.UltimateInventorySystem.DropsAndPickups
     public class PercentageItemDropper : MonoBehaviour
     {
         [Tooltip("The list of possible items to drop with their chances")]
-        [SerializeField] protected ItemDropChance[] m_PossibleDrops;
+        [SerializeField] protected ItemDropChance[] m_PossibleDrops = new ItemDropChance[0];
 
         [Tooltip("The pick up prefab, it must have a pick up component")]
         [SerializeField] protected GameObject m_PickUpPrefab;
@@ -46,6 +46,24 @@ namespace Opsive.UltimateInventorySystem.DropsAndPickups
 
             public ItemDefinition ItemDefinition => m_ItemDefinition;
             public float DropChance => m_DropChance;
+
+            /// <summary>
+            /// Constructor for creating a new drop chance entry.
+            /// </summary>
+            public ItemDropChance()
+            {
+                m_ItemDefinition = null;
+                m_DropChance = 0f;
+            }
+
+            /// <summary>
+            /// Constructor with initial values.
+            /// </summary>
+            public ItemDropChance(ItemDefinition itemDefinition, float dropChance)
+            {
+                m_ItemDefinition = itemDefinition;
+                m_DropChance = Mathf.Clamp(dropChance, 0f, 100f);
+            }
         }
 
         /// <summary>
