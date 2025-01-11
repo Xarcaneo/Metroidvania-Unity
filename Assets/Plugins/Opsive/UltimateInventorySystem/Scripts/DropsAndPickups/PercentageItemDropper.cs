@@ -6,83 +6,151 @@
 
 namespace Opsive.UltimateInventorySystem.DropsAndPickups
 {
-    using Opsive.Shared.Utility;
+    using Opsive.UltimateInventorySystem.Core;
     using Opsive.UltimateInventorySystem.Core.DataStructures;
+    using Opsive.UltimateInventorySystem.Core.InventoryCollections;
+    using System;
     using UnityEngine;
-    using System.Collections.Generic;
-    using System.Linq;
+#if UNITY_EDITOR
+    using UnityEditor;
+#endif
 
     /// <summary>
-    /// Percentage based Item dropper. Uses the item amounts in inventory as percentage chances.
+    /// Simple item dropper with customizable drop rates.
     /// </summary>
-    public class PercentageItemDropper : ItemDropper
+    public class PercentageItemDropper : MonoBehaviour
     {
+        [Tooltip("The list of possible items to drop with their chances")]
+        [SerializeField] protected ItemDropChance[] m_PossibleDrops;
+
+        [Tooltip("The pick up prefab, it must have a pick up component")]
+        [SerializeField] protected GameObject m_PickUpPrefab;
+
+        [Tooltip("The drop spawn point")]
+        [SerializeField] protected Transform m_DropTransform;
+
+        [Tooltip("The radius in which the drop can randomly spawn")]
+        [SerializeField] protected float m_DropRadius = 1f;
+
         [Tooltip("Enable to show detailed debug logs about item drop chances and results")]
         [SerializeField] private bool m_ShowDebugLogs = false;
 
-        protected List<ItemInfo> m_SelectedItems;
-
-        /// <summary>
-        /// Initialize the component.
-        /// </summary>
-        protected override void Awake()
+        [Serializable]
+        public class ItemDropChance
         {
-            base.Awake();
-            m_SelectedItems = new List<ItemInfo>();
+            [Tooltip("The item definition that can be dropped")]
+            [SerializeField] protected ItemDefinition m_ItemDefinition;
+
+            [Tooltip("The chance (0-100) that this item will drop")]
+            [SerializeField][Range(0, 100)] protected float m_DropChance;
+
+            public ItemDefinition ItemDefinition => m_ItemDefinition;
+            public float DropChance => m_DropChance;
         }
 
         /// <summary>
-        /// Get the items to drop based on percentage chances.
+        /// Get the array of possible drops for inspection.
         /// </summary>
-        /// <returns>Returns a list of items to drop.</returns>
-        protected override ListSlice<ItemInfo> GetItemsToDropInternal()
+        public ItemDropChance[] GetPossibleDrops()
         {
-            if (m_Inventory == null) { return new ListSlice<ItemInfo>(); }
+            return m_PossibleDrops;
+        }
 
-            var itemCollection = m_Inventory.GetItemCollection(m_ItemCollectionID);
-            if (itemCollection == null) { return new ListSlice<ItemInfo>(); }
-
-            m_SelectedItems.Clear();
-            var allItems = itemCollection.GetAllItemStacks();
-
-            // Check each item against its percentage chance
-            for (int i = 0; i < allItems.Count; i++) {
-                var itemInfo = allItems[i];
-                if (itemInfo.Item == null || itemInfo.Amount <= 0) { continue; }
-
-                // Use amount as percentage (0-100)
-                float dropChance = Mathf.Clamp(itemInfo.Amount, 0, 100);
-                
-                // Random roll for this item
-                float randomRoll = Random.Range(0f, 100f);
-                if (m_ShowDebugLogs) {
-                    Debug.Log($"[{gameObject.name} ({transform.root.name})] Rolling for {itemInfo.Item.name} (Drop chance: {dropChance}%)");
+        /// <summary>
+        /// Calculate the total drop chance of all items.
+        /// </summary>
+        public float GetTotalDropChance()
+        {
+            if (m_PossibleDrops == null) return 0f;
+            
+            float total = 0f;
+            foreach (var drop in m_PossibleDrops)
+            {
+                if (drop.ItemDefinition != null)
+                {
+                    total += drop.DropChance;
                 }
-                
-                if (randomRoll < dropChance) {
-                    // If successful, add one of this item to drop
-                    m_SelectedItems.Add(new ItemInfo(1, itemInfo.Item));
-                    if (m_ShowDebugLogs) {
-                        Debug.Log($"[{gameObject.name}] ✓ <color=green>SUCCESS</color> - {itemInfo.Item.name} will drop! (Rolled {randomRoll:F1} < {dropChance}%)");
+            }
+            return total;
+        }
+
+        /// <summary>
+        /// Drop items based on their configured chances.
+        /// Only one item can be dropped at a time.
+        /// </summary>
+        public void Drop()
+        {
+            if (m_PossibleDrops == null || m_PossibleDrops.Length == 0)
+            {
+                if (m_ShowDebugLogs)
+                {
+                    Debug.Log($"[{gameObject.name}] No items configured to drop");
+                }
+                return;
+            }
+
+            float roll = UnityEngine.Random.Range(0f, 100f);
+            float currentTotal = 0f;
+
+            if (m_ShowDebugLogs)
+            {
+                Debug.Log($"[{gameObject.name}] Rolling for drop (Roll: {roll:F1}%)");
+            }
+
+            // Check each item in order until we find one that matches our roll
+            foreach (var dropChance in m_PossibleDrops)
+            {
+                if (dropChance.ItemDefinition == null) continue;
+
+                currentTotal += dropChance.DropChance;
+                if (roll <= currentTotal)
+                {
+#if UNITY_EDITOR
+                    // In editor, just show what would have dropped
+                    if (!Application.isPlaying)
+                    {
+                        Debug.Log($"[{gameObject.name}] Would drop: {dropChance.ItemDefinition.name} (Testing in editor)");
+                        return;
                     }
-                } else {
-                    if (m_ShowDebugLogs) {
-                        Debug.Log($"[{gameObject.name}] ✗ <color=red>FAILED</color> - {itemInfo.Item.name} will not drop (Rolled {randomRoll:F1} > {dropChance}%)");
+#endif
+
+                    // Create the item
+                    var item = InventorySystemManager.CreateItem(dropChance.ItemDefinition);
+                    if (item == null) continue;
+
+                    // Create the pickup at the drop position
+                    var dropPosition = m_DropTransform != null ? m_DropTransform.position : transform.position;
+                    var pickup = Instantiate(m_PickUpPrefab, dropPosition + GetDropOffset(), Quaternion.identity);
+                    var itemObject = pickup.GetComponent<ItemObject>();
+                    if (itemObject != null)
+                    {
+                        var itemCollection = new ItemCollection();
+                        itemCollection.Initialize(null, true);
+                        var itemInfo = new ItemInfo(new ItemAmount(item, 1), itemCollection, null);
+                        itemObject.SetItem(itemInfo);
+                        
+                        if (m_ShowDebugLogs)
+                        {
+                            Debug.Log($"[{gameObject.name}] ✓ <color=green>SUCCESS</color> - Dropped {item.name}!");
+                        }
                     }
+                    return; // Exit after dropping one item
                 }
             }
 
-            // Log summary of what will drop
-            if (m_ShowDebugLogs) {
-                if (m_SelectedItems.Count > 0) {
-                    string dropList = string.Join(", ", m_SelectedItems.Select(item => item.Item.name));
-                    Debug.Log($"[{gameObject.name}] 📦 <color=yellow>Items dropping: {dropList}</color>");
-                } else {
-                    Debug.Log($"[{gameObject.name}] 🚫 <color=red>No items will drop this time</color>");
-                }
+            if (m_ShowDebugLogs)
+            {
+                Debug.Log($"[{gameObject.name}] No item dropped (Roll too high)");
             }
+        }
 
-            return m_SelectedItems.ToListSlice();
+        /// <summary>
+        /// Get a random offset for the drop position.
+        /// </summary>
+        protected virtual Vector3 GetDropOffset()
+        {
+            var circle = UnityEngine.Random.insideUnitCircle * m_DropRadius;
+            return new Vector3(circle.x, 0, circle.y);
         }
     }
 }

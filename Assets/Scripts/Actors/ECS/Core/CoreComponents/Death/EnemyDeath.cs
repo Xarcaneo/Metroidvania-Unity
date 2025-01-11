@@ -14,7 +14,7 @@ public class EnemyDeath : Death
     /// The random item dropper to use when the enemy dies.
     /// </summary>
     [SerializeField, Tooltip("Random item dropper")]
-    private ItemDropper m_randomItemDropper;
+    private PercentageItemDropper m_randomItemDropper;
 
     /// <summary>
     /// The amount of souls to award when this enemy dies.
