@@ -56,10 +56,10 @@ public class PlayerData : ScriptableObject
     [Tooltip("Downward velocity when wall sliding")]
     public float wallSlideVelocity = 3f;
 
-    [Header("Ledge Climb State")]
-    [Tooltip("Starting position offset for ledge climb")]
+    [Header("Ledge/Ladder Climb State")]
+    [Tooltip("Starting position offset for ledge/ladder climb")]
     public Vector2 startOffset;
-    [Tooltip("Position offset where ledge climb ends")]
+    [Tooltip("Position offset where ledge/ladder climb ends")]
     public Vector2 stopOffset;
     #endregion
 
@@ -109,6 +109,8 @@ public class PlayerData : ScriptableObject
     [Header("Ladder Climb State")]
     [Tooltip("Vertical climbing speed on ladders")]
     public float climbingVelocity = 5f;
+    [Tooltip("Time before allowing another ladder climb")]
+    public float ladderClimbCooldown = 0.2f;
     [Tooltip("Time before allowing another ladder jump")]
     public float ladderJumpCooldown = 1.0f;
     [Tooltip("Distance from top to finish climbing")]

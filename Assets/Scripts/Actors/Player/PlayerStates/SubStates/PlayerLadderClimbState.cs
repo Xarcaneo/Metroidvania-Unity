@@ -65,6 +65,14 @@ public class PlayerLadderClimbState : PlayerState
     /// Stores the original gravity scale to restore after climbing
     /// </summary>
     private float prevGravityScale;
+
+    private float yInputFloat;
+    private float xInputFloat;
+    private bool JumpInputFloat;
+    private static float lastLadderFinishTime;
+
+    public bool CanEnterLadder() => Time.time - lastLadderFinishTime >= playerData.ladderClimbCooldown;
+    public void StartCooldown() => lastLadderFinishTime = Time.time;
     #endregion
 
     #region Core Components
@@ -132,7 +140,9 @@ public class PlayerLadderClimbState : PlayerState
         prevGravityScale = m_rigidbody.gravityScale;
         m_rigidbody.gravityScale = 0;
 
+        Vector3 beforeAlignPos = player.transform.position;
         AlignPlayerWithLadderCenter();
+        Vector3 afterAlignPos = player.transform.position;
     }
 
     /// <summary>
@@ -167,7 +177,6 @@ public class PlayerLadderClimbState : PlayerState
         base.LogicUpdate();
 
         Movement?.SetVelocityX(0f);
-        Movement?.SetVelocityY(0f);
 
         yInput = player.InputHandler.NormInputY;
         xInput = player.InputHandler.NormInputX;
@@ -176,7 +185,6 @@ public class PlayerLadderClimbState : PlayerState
         // Handle state transitions
         if (JumpInput && player.JumpState.CanJump() && xInput != 0)
         {
-            Movement?.SetVelocityX(0f);
             stateMachine.ChangeState(player.JumpState);
         }
         else if (isGrounded && yInput == -1)
@@ -187,20 +195,35 @@ public class PlayerLadderClimbState : PlayerState
         {
             stateMachine.ChangeState(player.InAirState);
         }
-        else if (yInput != 0)
-        {
-            // Update climbing animation and movement
-            m_anim.speed = 1;
-            Movement?.SetVelocityY(playerData.climbingVelocity * yInput);
-        }
         else
-            m_anim.speed = 0;
-
-        // Check if player has reached ladder top
-        if (yInput == 1 && playerData.climbFinishThresholdUp >= DetermineDistanceFromGround(true))
         {
-            player.transform.position = DetermineGroundPosition();
-            stateMachine.ChangeState(player.FinishClimb);
+            // Update climbing animation and movement based on input
+            if (yInput != 0)
+            {
+                m_anim.speed = 1;
+                
+                // Check for top platform when moving up
+                if (yInput == 1)
+                {
+                    float distanceToTop = DetermineDistanceFromGround(true);
+                    
+                    if (distanceToTop <= playerData.climbFinishThresholdUp)
+                    {
+                        player.transform.position = new Vector2(
+                            player.transform.position.x,
+                            player.transform.position.y + distanceToTop - 0.1f);
+                        stateMachine.ChangeState(player.LadderFinishClimbState);
+                        return;
+                    }
+                }
+                
+                Movement?.SetVelocityY(playerData.climbingVelocity * yInput);
+            }
+            else
+            {
+                m_anim.speed = 0;
+                Movement?.SetVelocityY(0f);
+            }
         }
     }
 
@@ -215,7 +238,7 @@ public class PlayerLadderClimbState : PlayerState
     {
         // Cast a ray upwards to find the ground above the ladder
         RaycastHit2D hit = Physics2D.Raycast(CollisionSenses.GroundCheck.position, Vector2.up, playerData.ladderTopRaycastLength, CollisionSenses.WhatIsGround);
-
+        
         // Set the player's position to be just above where the raycast hit the ground
         return new Vector2(player.transform.position.x, hit.point.y + playerData.groundOffset);
     }
@@ -227,25 +250,32 @@ public class PlayerLadderClimbState : PlayerState
     /// <returns>Distance to the nearest ground in the specified direction</returns>
     private float DetermineDistanceFromGround(bool checkAbove)
     {
-        // Determine the direction based on whether we're checking above or below the player
         Vector2 raycastDirection = checkAbove ? Vector2.up : Vector2.down;
-        // Start the raycast from the player's position
-        Vector2 raycastStartPoint = new Vector2(player.transform.position.x, player.transform.position.y);
-
-        // Cast a ray in the determined direction to find the ground
-        RaycastHit2D hit = Physics2D.Raycast(raycastStartPoint, raycastDirection, Mathf.Infinity, CollisionSenses.WhatIsGround);
-
-        // If we hit something, calculate the distance, otherwise return a default large distance
-        if (hit.collider != null)
+        
+        // Use multiple raycasts for better detection
+        Vector2 raycastStartPoint = player.transform.position;
+        float raySpacing = 0.2f; // Space between rays
+        int numRays = 3; // Number of rays to cast
+        
+        float minDistance = float.MaxValue;
+        
+        for (int i = 0; i < numRays; i++)
         {
-            // Return the distance from the player to the ground
-            return Mathf.Abs(hit.point.y - raycastStartPoint.y);
+            // Offset the ray start points left and right of the player
+            float xOffset = (i - (numRays - 1) / 2f) * raySpacing;
+            Vector2 startPoint = raycastStartPoint + new Vector2(xOffset, 0);
+            
+            RaycastHit2D hit = Physics2D.Raycast(startPoint, raycastDirection, 
+                playerData.ladderTopRaycastLength, CollisionSenses.WhatIsGround);
+            
+            if (hit.collider != null)
+            {
+                float distance = Mathf.Abs(hit.point.y - raycastStartPoint.y);
+                minDistance = Mathf.Min(minDistance, distance);
+            }
         }
-        else
-        {
-            // Return a large value if there's no ground detected in the chosen direction
-            return float.MaxValue;
-        }
+        
+        return minDistance;
     }
 
     /// <summary>
@@ -258,13 +288,42 @@ public class PlayerLadderClimbState : PlayerState
     {
         if (CollisionSenses)
         {
-            Vector3? ladderPosition = CollisionSenses.GetLadderPosition();
+            // Try to get ladder position using multiple check points
+            Vector3? ladderPosition = GetLadderPositionWithWideScan();
+            
             if (ladderPosition.HasValue)
             {
-                // Correctly use the .Value property to access the Vector3 inside the nullable Vector3?
                 Vector3 newPosition = new Vector3(ladderPosition.Value.x, player.transform.position.y, player.transform.position.z);
                 player.transform.position = newPosition;
             }
+            else
+            {
+                Debug.LogWarning("[LadderClimbState] Failed to get ladder position!");
+            }
         }
+    }
+
+    private Vector3? GetLadderPositionWithWideScan()
+    {
+        // First try the normal ladder check
+        Vector3? normalCheck = CollisionSenses.GetLadderPosition();
+        if (normalCheck.HasValue) return normalCheck;
+
+        // If normal check fails, do a wider scan
+        float scanWidth = 0.5f;  // How far to scan left and right
+        float scanStep = 0.25f;  // Distance between scan points
+        Vector3 basePosition = player.transform.position;
+
+        for (float offset = -scanWidth; offset <= scanWidth; offset += scanStep)
+        {
+            Vector2 checkPoint = new Vector2(basePosition.x + offset, basePosition.y - 0.5f);
+            Collider2D collider = Physics2D.OverlapCircle(checkPoint, 0.1f, LayerMask.GetMask("Ladder"));
+            if (collider != null)
+            {
+                return collider.transform.position;
+            }
+        }
+
+        return null;
     }
 }
