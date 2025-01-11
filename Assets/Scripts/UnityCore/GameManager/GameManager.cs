@@ -55,6 +55,10 @@ public class GameManager : MonoBehaviour
         _instance = this;
         DontDestroyOnLoad(gameObject);
 
+        // Lock and hide cursor
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+
         // Subscribe to input device changes
         InputSystem.onDeviceChange += OnDeviceChange;
         UpdateBindingToDialogue(); // Initialize bindings
@@ -151,6 +155,26 @@ public class GameManager : MonoBehaviour
 
         Debug.LogWarning($"No binding found for action: {actionName}");
         return string.Empty;
+    }
+
+    /// <summary>
+    /// Forces the cursor to be hidden and locked.
+    /// Call this if you need to ensure the cursor is disabled.
+    /// </summary>
+    public void DisableCursor()
+    {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    /// <summary>
+    /// Shows and unlocks the cursor.
+    /// Only use this for menus or UI that absolutely requires mouse input.
+    /// </summary>
+    public void EnableCursor()
+    {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
     #endregion
 }
