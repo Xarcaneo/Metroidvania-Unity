@@ -209,6 +209,11 @@ public class Stats : CoreComponent
     public float GetMaxMana() => maxMana;
 
     /// <summary>
+    /// Gets the current mana value.
+    /// </summary>
+    public float GetCurrentMana() => currentMana;
+
+    /// <summary>
     /// Gets the attack value.
     /// </summary>
     public int GetAttack() => attack;

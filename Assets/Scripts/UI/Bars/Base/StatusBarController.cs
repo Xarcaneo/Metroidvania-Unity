@@ -92,6 +92,7 @@ public abstract class StatusBarController : MonoBehaviour
         if (!stats) return;
 
         UpdateMaxValue(GetMaxValueFromStats());
+        currentValue = GetCurrentValueFromStats(); // Get current value from Stats
         currentValue = Mathf.Clamp(currentValue, 0, maxValue);
         UpdateUI();
     }
@@ -180,6 +181,13 @@ public abstract class StatusBarController : MonoBehaviour
     /// </summary>
     /// <returns>The maximum value for this status bar</returns>
     protected abstract float GetMaxValueFromStats();
+
+    /// <summary>
+    /// Get the current value from the Stats component.
+    /// Must be implemented by derived classes to provide the correct current value.
+    /// </summary>
+    /// <returns>The current value for this status bar</returns>
+    protected abstract float GetCurrentValueFromStats();
 
     /// <summary>
     /// Subscribe to relevant stats events.

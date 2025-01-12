@@ -31,6 +31,16 @@ public class ManaBarController : StatusBarController
     }
 
     /// <summary>
+    /// Gets current mana value from the Stats component.
+    /// Used to set the bar's current fill amount.
+    /// </summary>
+    /// <returns>Current mana value</returns>
+    protected override float GetCurrentValueFromStats()
+    {
+        return stats.GetCurrentMana();
+    }
+
+    /// <summary>
     /// Subscribes to mana-related events from Stats.
     /// Listens for both mana use and restoration events.
     /// </summary>

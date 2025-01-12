@@ -31,6 +31,16 @@ public class HealthBarController : StatusBarController
     }
 
     /// <summary>
+    /// Gets current health value from the Stats component.
+    /// Used to set the bar's current fill amount.
+    /// </summary>
+    /// <returns>Current health value</returns>
+    protected override float GetCurrentValueFromStats()
+    {
+        return stats.GetCurrentHealth();
+    }
+
+    /// <summary>
     /// Subscribes to health-related events from Stats.
     /// Listens for both damage and healing events.
     /// </summary>
