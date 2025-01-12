@@ -89,7 +89,7 @@ public class Room : MonoBehaviour
     private void LoadRoomState()
     {
         hasVisited = DialogueLua.GetVariable($"Room.{m_roomID}").asBool;
-        hiddenRevealed = DialogueLua.GetVariable($"Room.Hidden.{m_roomID}").asBool;
+        hiddenRevealed = DialogueLua.GetVariable($"RoomRevealed.{m_roomID}").asBool;
     }
 
     #endregion
@@ -133,7 +133,7 @@ public class Room : MonoBehaviour
     public void RevealHidden()
     {
         hiddenRevealed = true;
-        DialogueLua.SetVariable($"Room.Hidden.{m_roomID}", true);
+        DialogueLua.SetVariable($"RoomRevealed.{m_roomID}", true);
         UpdateRoomAppearance();
     }
 
