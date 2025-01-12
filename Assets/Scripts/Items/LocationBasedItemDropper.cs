@@ -59,11 +59,9 @@ public class LocationBasedItemDropper : PercentageItemDropper
                 {
                     // Update the base class drop table
                     m_PossibleDrops = dropTable.PossibleDrops;
-                    Debug.Log($"Using drop table {i} for location {currentLocation}");
                     return;
                 }
             }
         }
-        Debug.Log($"No matching drop table found for location {currentLocation}");
     }
 }
