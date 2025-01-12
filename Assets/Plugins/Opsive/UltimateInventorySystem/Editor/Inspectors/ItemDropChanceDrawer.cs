@@ -7,10 +7,10 @@
 namespace Opsive.UltimateInventorySystem.Editor.Inspectors
 {
     using Opsive.UltimateInventorySystem.Core;
+    using Opsive.UltimateInventorySystem.Core.DataStructures;
     using Opsive.UltimateInventorySystem.DropsAndPickups;
     using UnityEngine;
     using UnityEditor;
-    using System.Reflection;
 
     /// <summary>
     /// Custom property drawer for ItemDropChance to make it look like the item list.
@@ -21,10 +21,6 @@ namespace Opsive.UltimateInventorySystem.Editor.Inspectors
         private const float SPACING = 2f;
         private const float ICON_SIZE = 20f;
         private const float CHANCE_WIDTH = 60f;
-
-        // Cache the icon field info
-        private static FieldInfo m_EditorIconField = typeof(ItemDefinition).GetField("m_EditorIcon", 
-            BindingFlags.Instance | BindingFlags.NonPublic);
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
@@ -48,12 +44,28 @@ namespace Opsive.UltimateInventorySystem.Editor.Inspectors
             // Draw item icon or default icon
             var iconRect = new Rect(position.x, position.y, ICON_SIZE, ICON_SIZE);
             var itemDef = itemDefinitionProp.objectReferenceValue as ItemDefinition;
-            if (itemDef != null && m_EditorIconField != null)
+            if (itemDef != null)
             {
-                var icon = m_EditorIconField.GetValue(itemDef) as Sprite;
-                if (icon != null)
+                var defaultItem = itemDef.DefaultItem;
+                if (defaultItem != null)
                 {
-                    GUI.DrawTexture(iconRect, icon.texture);
+                    // Try to get the icon from the item's attributes
+                    if (defaultItem.TryGetAttributeValue<Sprite>("Icon", out var icon) && icon != null)
+                    {
+                        GUI.DrawTexture(iconRect, icon.texture);
+                    }
+                    else
+                    {
+                        // Try to get the icon from the definition attributes
+                        if (itemDef.TryGetAttributeValue<Sprite>("Icon", out icon) && icon != null)
+                        {
+                            GUI.DrawTexture(iconRect, icon.texture);
+                        }
+                        else
+                        {
+                            EditorGUI.DrawRect(iconRect, Color.gray);
+                        }
+                    }
                 }
                 else
                 {
