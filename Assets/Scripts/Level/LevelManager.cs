@@ -14,6 +14,8 @@ public class LevelManager : MonoBehaviour
     [Header("Level Settings")]
     [SerializeField] private LocationName m_areaName;
 
+    public LocationName AreaName => m_areaName;
+
     private void OnEnable()
     {
         SpawnPlayer();

@@ -185,7 +185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6ef2bbfdd129fa459fe372ac117c2e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_randomItemDropper: {fileID: 7031494926376948302}
+  m_randomItemDropper: {fileID: 7262380298529808696}
   souls: 10
 --- !u!1 &1609259505485471820
 GameObject:
@@ -359,7 +359,7 @@ GameObject:
   - component: {fileID: 6192963519746975736}
   - component: {fileID: 6192963519746975734}
   - component: {fileID: 2138186503}
-  - component: {fileID: 7031494926376948302}
+  - component: {fileID: 7262380298529808696}
   m_Layer: 14
   m_Name: Body
   m_TagString: SpawnableEnemy
@@ -536,7 +536,7 @@ MonoBehaviour:
   useWorldPosition: 1
   soundOffset: {x: 0, y: 0, z: 0}
   logDebugInfo: 0
---- !u!114 &7031494926376948302
+--- !u!114 &7262380298529808696
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -545,18 +545,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 3230380436414832175}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a5d01405df35624a9c2cc291e90c80d, type: 3}
+  m_Script: {fileID: 11500000, guid: 68aadddbced048848b6f63d8f3cc8a57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_PossibleDrops:
   - m_ItemDefinition: {fileID: 11400000, guid: a0f71f47e6107cb4ea5c5242ebb8050f, type: 2}
-    m_DropChance: 10
+    m_DropChance: 20
   - m_ItemDefinition: {fileID: 11400000, guid: faa0fa44354f01147a2741f050745dc7, type: 2}
-    m_DropChance: 5
+    m_DropChance: 10
   m_PickUpPrefab: {fileID: 4814415899790352498, guid: eb4500b5d0dda414ead6737b1ef0605f, type: 3}
   m_DropTransform: {fileID: 2994304539528804430}
   m_DropRadius: 0
   m_ShowDebugLogs: 0
+  m_LocationDropTables:
+  - m_Locations: 0100000002000000
+    m_PossibleDrops:
+    - m_ItemDefinition: {fileID: 11400000, guid: a0f71f47e6107cb4ea5c5242ebb8050f, type: 2}
+      m_DropChance: 20
+    - m_ItemDefinition: {fileID: 11400000, guid: faa0fa44354f01147a2741f050745dc7, type: 2}
+      m_DropChance: 10
+  m_DebugTableIndex: 0
 --- !u!1 &4970596625883562115
 GameObject:
   m_ObjectHideFlags: 0
