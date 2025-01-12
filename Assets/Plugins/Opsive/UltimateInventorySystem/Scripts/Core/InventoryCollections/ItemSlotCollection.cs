@@ -1,4 +1,4 @@
-﻿/// ---------------------------------------------
+/// ---------------------------------------------
 /// Ultimate Inventory System
 /// Copyright (c) Opsive. All Rights Reserved.
 /// https://www.opsive.com
@@ -270,8 +270,9 @@ namespace Opsive.UltimateInventorySystem.Core.InventoryCollections
                 return null;
             }
 
+            var originalAmount = itemInfo.Amount;  // Store the original amount being added
+            var amount = originalAmount;
             var currentStack = m_ItemsBySlot[slotIndex];
-            var amount = itemInfo.Amount;
             if (currentStack != null) {
                 if (itemInfo.Item.StackableEquivalentTo(currentStack.Item)) {
                     // The items are the same, lets merge them.
@@ -297,7 +298,8 @@ namespace Opsive.UltimateInventorySystem.Core.InventoryCollections
 
             m_ItemsBySlot[slotIndex] = itemInfoAdded.ItemStack;
 
-            NotifyAdd(itemToAdd, itemInfoAdded.ItemStack);
+            // Notify with just the amount being added, not the combined amount
+            NotifyAdd((originalAmount, itemInfo.Item, itemInfo.ItemCollection), itemInfoAdded.ItemStack);
 
             return itemInfoAdded;
         }
