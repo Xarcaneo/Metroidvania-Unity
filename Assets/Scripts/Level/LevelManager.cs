@@ -12,7 +12,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private Vector3 m_defaultSpawnPosition = new Vector3(-10, -10, 0);
 
     [Header("Level Settings")]
-    [SerializeField] private string m_areaName;
+    [SerializeField] private LocationName m_areaName;
 
     private void OnEnable()
     {
@@ -20,7 +20,7 @@ public class LevelManager : MonoBehaviour
 
         Menu.GameMenu.Instance.locationNameIndicator.Cancelcoroutine();
 
-        if (m_areaName != "")
+        if (m_areaName != LocationName.None)
             StartCoroutine(DelayedAreaChanged());
     }
 
@@ -94,6 +94,6 @@ public class LevelManager : MonoBehaviour
     private IEnumerator DelayedAreaChanged()
     {
         yield return new WaitForSeconds(0.5f);
-        GameEvents.Instance.AreaChanged(m_areaName);
+        GameEvents.Instance.AreaChanged(m_areaName.ToDisplayName());
     }
 }
