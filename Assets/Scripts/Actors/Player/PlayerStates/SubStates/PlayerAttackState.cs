@@ -18,6 +18,7 @@ using UnityEngine;
 public class PlayerAttackState : PlayerAbilityState
 {
     #region State Variables
+
     /// <summary>
     /// Flag indicating if the block input has been detected
     /// </summary>
@@ -26,9 +27,11 @@ public class PlayerAttackState : PlayerAbilityState
     /// during the attack animation.
     /// </remarks>
     private bool blockInput;
+
     #endregion
 
     #region Core Components
+
     /// <summary>
     /// Reference to the DamageHitBox component, lazily loaded
     /// </summary>
@@ -47,6 +50,7 @@ public class PlayerAttackState : PlayerAbilityState
     /// </remarks>
     protected Stats Stats { get => stats ?? core.GetCoreComponent(ref stats); }
     private Stats stats;
+
     #endregion
 
     /// <summary>
@@ -67,7 +71,7 @@ public class PlayerAttackState : PlayerAbilityState
     /// <param name="stateMachine">Reference to the state machine managing player states</param>
     /// <param name="playerData">Reference to the player's data container</param>
     /// <param name="animBoolName">Name of the animation boolean parameter for this state</param>
-    public PlayerAttackState(Player player, StateMachine stateMachine, PlayerData playerData, string animBoolName) 
+    public PlayerAttackState(Player player, StateMachine stateMachine, PlayerData playerData, string animBoolName)
         : base(player, stateMachine, playerData, animBoolName)
     {
     }
@@ -126,15 +130,7 @@ public class PlayerAttackState : PlayerAbilityState
         base.LogicUpdate();
 
         // Ensure player remains stationary during attack
-        if (!isOnSlope)
-        {
-            Movement?.SetVelocityX(0f);
-        }
-        else
-        {
-            Movement?.SetVelocityXOnSlope(0f);
-            Movement?.SetVelocityY(0f);
-        }
+        Movement?.SetVelocityX(0f);
 
         // Check for block input
         blockInput = player.InputHandler.BlockInput;
@@ -159,7 +155,7 @@ public class PlayerAttackState : PlayerAbilityState
         else if (!isExitingState && isAnimationFinished)
         {
             stateMachine.ChangeState(player.IdleState);
-            isAbilityDone = true;       
+            isAbilityDone = true;
         }
     }
 

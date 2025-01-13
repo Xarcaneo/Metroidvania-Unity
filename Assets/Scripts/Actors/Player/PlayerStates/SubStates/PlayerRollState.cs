@@ -19,6 +19,7 @@ using UnityEngine;
 public class PlayerRollState : PlayerAbilityState
 {
     #region State Variables
+
     /// <summary>
     /// Time when the last roll was performed
     /// </summary>
@@ -29,18 +30,9 @@ public class PlayerRollState : PlayerAbilityState
     /// </summary>
     private bool startRoll = false;
 
-    /// <summary>
-    /// Whether the player is currently on a slope
-    /// </summary>
-    private bool isOnSlope;
     #endregion
 
     #region Core Components
-    /// <summary>
-    /// Reference to the CollisionSenses component, lazily loaded
-    /// </summary>
-    private CollisionSenses CollisionSenses { get => collisionSenses ?? core.GetCoreComponent(ref collisionSenses); }
-    private CollisionSenses collisionSenses;
 
     /// <summary>
     /// Reference to the DamageReceiver component, lazily loaded
@@ -53,6 +45,7 @@ public class PlayerRollState : PlayerAbilityState
     /// </summary>
     protected KnockbackReceiver KnockbackReceiver { get => knockbackReceiver ?? core.GetCoreComponent(ref knockbackReceiver); }
     private KnockbackReceiver knockbackReceiver;
+
     #endregion
 
     /// <summary>
@@ -62,7 +55,7 @@ public class PlayerRollState : PlayerAbilityState
     /// <param name="stateMachine">Reference to the state machine managing player states</param>
     /// <param name="playerData">Reference to the player's data container</param>
     /// <param name="animBoolName">Name of the animation boolean parameter for this state</param>
-    public PlayerRollState(Player player, StateMachine stateMachine, PlayerData playerData, string animBoolName) 
+    public PlayerRollState(Player player, StateMachine stateMachine, PlayerData playerData, string animBoolName)
         : base(player, stateMachine, playerData, animBoolName)
     {
     }
@@ -82,8 +75,7 @@ public class PlayerRollState : PlayerAbilityState
 
         // Adjust collider for rolling
         player.SetColliderHeight(playerData.crouchColliderHeight);
-
-        player.RigidBody2D.sharedMaterial =  playerData.noFriction;
+        player.RigidBody2D.sharedMaterial = playerData.noFriction;
 
         // Enable invulnerability
         DamageReceiver.isDamagable = false;
@@ -109,24 +101,10 @@ public class PlayerRollState : PlayerAbilityState
         // Restore normal collider
         player.SetColliderHeight(playerData.standColliderHeight);
 
-        // Ensure clean velocity on slope when exiting
-        if (isOnSlope)
-        {
-            Movement?.SetVelocityXOnSlope(0f);
-            Movement?.SetVelocityY(0f);
-            player.RigidBody2D.sharedMaterial = playerData.fullFriction;
-        }
-
         // Disable invulnerability
         DamageReceiver.isDamagable = true;
         KnockbackReceiver.isKnockable = true;
         startRoll = false;
-    }
-
-    public override void DoChecks()
-    {
-        base.DoChecks();
-        isOnSlope = CollisionSenses?.SlopeCheck() ?? false;
     }
 
     /// <summary>
@@ -144,54 +122,18 @@ public class PlayerRollState : PlayerAbilityState
 
         float rollTimeElapsed = Time.time - startTime;
 
-        // Handle slope physics
-        if (isOnSlope)
-        {
-            player.RigidBody2D.sharedMaterial = playerData.fullFriction;
-            Movement?.SetVelocityY(0f);
-        }
-        else
-        {
-            player.RigidBody2D.sharedMaterial = playerData.noFriction;
-        }
-
         // Check if roll duration is complete
         if (rollTimeElapsed >= playerData.rollDuration)
         {
-            // Ensure smooth transition when ending roll on slope
-            if (isOnSlope)
-            {
-                Movement?.SetVelocityXOnSlope(0f);
-                Movement?.SetVelocityY(0f);
-            }
             stateMachine.ChangeState(player.IdleState);
             return;
         }
 
         // Apply roll movement
         if (startRoll)
-        {
-            float rollVelocity = playerData.rollSpeed * Movement.FacingDirection;
-            if (isOnSlope)
-            {
-                Movement?.SetVelocityXOnSlope(rollVelocity);
-            }
-            else
-            {
-                Movement?.SetVelocityX(rollVelocity);
-            }
-        }
+            Movement?.SetVelocityX(playerData.rollSpeed * Movement.FacingDirection);
         else
-        {
-            if (isOnSlope)
-            {
-                Movement?.SetVelocityXOnSlope(0f);
-            }
-            else
-            {
-                Movement?.SetVelocityX(0f);
-            }
-        }
+            Movement?.SetVelocityX(0f);
     }
 
     /// <summary>

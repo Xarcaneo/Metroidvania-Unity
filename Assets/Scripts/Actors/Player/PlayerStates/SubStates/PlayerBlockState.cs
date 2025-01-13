@@ -16,6 +16,7 @@ using UnityEngine;
 public class PlayerBlockState : PlayerState
 {
     #region Core Components
+
     /// <summary>
     /// Reference to the Movement component, lazily loaded
     /// </summary>
@@ -26,9 +27,6 @@ public class PlayerBlockState : PlayerState
     private Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
     private Movement movement;
 
-    private bool isOnSlope;
-    private CollisionSenses CollisionSenses { get => collisionSenses ?? core.GetCoreComponent(ref collisionSenses); }
-    private CollisionSenses collisionSenses;
     #endregion
 
     /// <summary>
@@ -38,7 +36,7 @@ public class PlayerBlockState : PlayerState
     /// <param name="stateMachine">Reference to the state machine managing player states</param>
     /// <param name="playerData">Reference to the player's data container</param>
     /// <param name="animBoolName">Name of the animation boolean parameter for this state</param>
-    public PlayerBlockState(Player player, StateMachine stateMachine, PlayerData playerData, string animBoolName) 
+    public PlayerBlockState(Player player, StateMachine stateMachine, PlayerData playerData, string animBoolName)
         : base(player, stateMachine, playerData, animBoolName)
     {
     }
@@ -54,9 +52,6 @@ public class PlayerBlockState : PlayerState
     public override void Enter()
     {
         base.Enter();
-        
-        // Use full friction on slopes to prevent sliding
-        player.RigidBody2D.sharedMaterial = playerData.fullFriction;
     }
 
     /// <summary>
@@ -70,12 +65,6 @@ public class PlayerBlockState : PlayerState
     public override void Exit()
     {
         base.Exit();
-    }
-
-    public override void DoChecks()
-    {
-        base.DoChecks();
-        isOnSlope = CollisionSenses?.SlopeCheck() ?? false;
     }
 
     /// <summary>
@@ -96,15 +85,7 @@ public class PlayerBlockState : PlayerState
         base.LogicUpdate();
 
         // Ensure player remains stationary during block
-        if (!isOnSlope)
-        {
-            Movement?.SetVelocityX(0f);
-        }
-        else
-        {
-            Movement?.SetVelocityXOnSlope(0f);
-            Movement?.SetVelocityY(0f);
-        }
+        Movement?.SetVelocityX(0f);
 
         if (!isExitingState && isAnimationFinished)
         {

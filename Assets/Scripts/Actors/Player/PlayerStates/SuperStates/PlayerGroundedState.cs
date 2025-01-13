@@ -23,6 +23,7 @@ using UnityEngine;
 public class PlayerGroundedState : PlayerState
 {
     #region Input Variables
+
     /// <summary>
     /// Normalized horizontal input (-1, 0, 1)
     /// </summary>
@@ -83,9 +84,11 @@ public class PlayerGroundedState : PlayerState
     /// pressed and roll conditions are met.
     /// </remarks>
     private bool actionInput;
+
     #endregion
 
     #region State Variables
+
     /// <summary>
     /// Flag indicating if player is touching the ground
     /// </summary>
@@ -121,9 +124,11 @@ public class PlayerGroundedState : PlayerState
     /// movement into walls and handle wall interactions.
     /// </remarks>
     protected bool isTouchingWall;
+
     #endregion
 
     #region Core Components
+
     /// <summary>
     /// Reference to the Movement component, lazily loaded
     /// </summary>
@@ -143,9 +148,11 @@ public class PlayerGroundedState : PlayerState
     /// </remarks>
     protected CollisionSenses CollisionSenses { get => collisionSenses ?? core.GetCoreComponent(ref collisionSenses); }
     private CollisionSenses collisionSenses;
+
     #endregion
 
     #region Constructor
+
     /// <summary>
     /// Initializes a new instance of the PlayerGroundedState
     /// </summary>
@@ -153,13 +160,15 @@ public class PlayerGroundedState : PlayerState
     /// <param name="stateMachine">Reference to the state machine managing player states</param>
     /// <param name="playerData">Reference to the player's data container</param>
     /// <param name="animBoolName">Name of the animation boolean parameter for this state</param>
-    public PlayerGroundedState(Player player, StateMachine stateMachine, PlayerData playerData, string animBoolName) 
+    public PlayerGroundedState(Player player, StateMachine stateMachine, PlayerData playerData, string animBoolName)
         : base(player, stateMachine, playerData, animBoolName)
     {
     }
+
     #endregion
 
     #region State Methods
+
     /// <summary>
     /// Performs state checks for collision detection
     /// </summary>
@@ -189,20 +198,11 @@ public class PlayerGroundedState : PlayerState
     /// <remarks>
     /// Resets the number of available jumps when entering ground state.
     /// This allows the player to perform aerial moves after leaving the ground.
-    /// Ensures clean entry when on slope by resetting velocity and setting full friction.
     /// </remarks>
     public override void Enter()
     {
         base.Enter();
         player.JumpState.ResetAmountOfJumpsLeft();
-
-        // Ensure clean entry when on slope
-        if (CollisionSenses?.SlopeCheck() ?? false)
-        {
-            Movement?.SetVelocityXOnSlope(0f);
-            Movement?.SetVelocityY(0f);
-            player.RigidBody2D.sharedMaterial = playerData.fullFriction;
-        }
     }
 
     /// <summary>
@@ -294,9 +294,11 @@ public class PlayerGroundedState : PlayerState
     {
         base.PhysicsUpdate();
     }
+
     #endregion
 
     #region Helper Methods
+
     /// <summary>
     /// Handles physics behavior when on slopes
     /// </summary>
@@ -327,7 +329,6 @@ public class PlayerGroundedState : PlayerState
         }
         else
         {
-
             SetFriction(false);
         }
     }
@@ -357,5 +358,6 @@ public class PlayerGroundedState : PlayerState
             stateMachine.ChangeState(player.JumpState);
         }
     }
+
     #endregion
 }
