@@ -126,7 +126,15 @@ public class PlayerAttackState : PlayerAbilityState
         base.LogicUpdate();
 
         // Ensure player remains stationary during attack
-        Movement?.SetVelocityX(0f);
+        if (!isOnSlope)
+        {
+            Movement?.SetVelocityX(0f);
+        }
+        else
+        {
+            Movement?.SetVelocityXOnSlope(0f);
+            Movement?.SetVelocityY(0f);
+        }
 
         // Check for block input
         blockInput = player.InputHandler.BlockInput;

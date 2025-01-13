@@ -189,11 +189,20 @@ public class PlayerGroundedState : PlayerState
     /// <remarks>
     /// Resets the number of available jumps when entering ground state.
     /// This allows the player to perform aerial moves after leaving the ground.
+    /// Ensures clean entry when on slope by resetting velocity and setting full friction.
     /// </remarks>
     public override void Enter()
     {
         base.Enter();
         player.JumpState.ResetAmountOfJumpsLeft();
+
+        // Ensure clean entry when on slope
+        if (CollisionSenses?.SlopeCheck() ?? false)
+        {
+            Movement?.SetVelocityXOnSlope(0f);
+            Movement?.SetVelocityY(0f);
+            player.RigidBody2D.sharedMaterial = playerData.fullFriction;
+        }
     }
 
     /// <summary>
@@ -318,6 +327,7 @@ public class PlayerGroundedState : PlayerState
         }
         else
         {
+
             SetFriction(false);
         }
     }

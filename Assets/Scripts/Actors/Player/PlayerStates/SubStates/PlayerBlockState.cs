@@ -25,6 +25,10 @@ public class PlayerBlockState : PlayerState
     /// </remarks>
     private Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
     private Movement movement;
+
+    private bool isOnSlope;
+    private CollisionSenses CollisionSenses { get => collisionSenses ?? core.GetCoreComponent(ref collisionSenses); }
+    private CollisionSenses collisionSenses;
     #endregion
 
     /// <summary>
@@ -50,6 +54,9 @@ public class PlayerBlockState : PlayerState
     public override void Enter()
     {
         base.Enter();
+        
+        // Use full friction on slopes to prevent sliding
+        player.RigidBody2D.sharedMaterial = playerData.fullFriction;
     }
 
     /// <summary>
@@ -63,6 +70,12 @@ public class PlayerBlockState : PlayerState
     public override void Exit()
     {
         base.Exit();
+    }
+
+    public override void DoChecks()
+    {
+        base.DoChecks();
+        isOnSlope = CollisionSenses?.SlopeCheck() ?? false;
     }
 
     /// <summary>
@@ -83,7 +96,15 @@ public class PlayerBlockState : PlayerState
         base.LogicUpdate();
 
         // Ensure player remains stationary during block
-        Movement?.SetVelocityX(0f);
+        if (!isOnSlope)
+        {
+            Movement?.SetVelocityX(0f);
+        }
+        else
+        {
+            Movement?.SetVelocityXOnSlope(0f);
+            Movement?.SetVelocityY(0f);
+        }
 
         if (!isExitingState && isAnimationFinished)
         {

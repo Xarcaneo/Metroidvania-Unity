@@ -119,7 +119,12 @@ public class Movement : CoreComponent
     /// <param name="velocity">The new x velocity</param>
     public void SetVelocityXOnSlope(float velocity)
     {
-        workspace.Set(velocity * CollisionSenses.slopeNormalPerp.x, velocity * CollisionSenses.slopeNormalPerp.y);
+        // Calculate slope movement with a slight downward bias to prevent "launching"
+        float slopeDownwardBias = 0.1f;
+        workspace.Set(
+            velocity * CollisionSenses.slopeNormalPerp.x,
+            (velocity * CollisionSenses.slopeNormalPerp.y) - slopeDownwardBias
+        );
         SetFinalVelocity();
     }
 
