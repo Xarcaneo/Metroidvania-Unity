@@ -32,23 +32,30 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     private void SpawnPlayer()
     {
-        GameObject spawnPointObj = GameObject.FindGameObjectWithTag("SpawnPoint")
-                                   ?? GameObject.FindGameObjectWithTag("DefaultSpawnPoint");
-
+        // 1) Look for "SpawnPoint"
+        GameObject spawnPointObj = GameObject.FindGameObjectWithTag("FallbackSpawnPoint");
         if (spawnPointObj != null)
         {
-            // Spawn player at the designated spawn point
-            var position = spawnPointObj.transform.position;
-            var player = Instantiate(m_playerPref, position, Quaternion.identity);
+            // Spawn at m_defaultSpawnPosition
+            var player = Instantiate(m_playerPref, m_defaultSpawnPosition, Quaternion.identity);
 
-            // Set initial facing direction based on spawn point
+            // Set facing direction based on spawn point
             SetPlayerFacingDirection(player.gameObject, spawnPointObj);
+            return;
         }
-        else
+
+        // 2) If no "SpawnPoint," look for "DefaultSpawnPoint"
+        spawnPointObj = GameObject.FindGameObjectWithTag("PrimarySpawnPoint");
+        if (spawnPointObj != null)
         {
-            // No spawn point found, use default position
-            Instantiate(m_playerPref, m_defaultSpawnPosition, Quaternion.identity);
+            // Spawn at the DefaultSpawnPoint's position
+            var position = spawnPointObj.transform.position;
+            Instantiate(m_playerPref, position, Quaternion.identity);
+            return;
         }
+
+        // 3) If neither point is found, use m_defaultSpawnPosition
+        Instantiate(m_playerPref, m_defaultSpawnPosition, Quaternion.identity);
     }
 
     /// <summary>
@@ -60,7 +67,7 @@ public class LevelManager : MonoBehaviour
     {
         if (player == null) return;
 
-        var spawnPoint = spawnPointObj.GetComponent<SpawnPoint>();
+        var spawnPoint = spawnPointObj.GetComponent<FallbackSpawnPoint>();
         if (spawnPoint == null) return;
 
         var playerComponent = player.GetComponent<Player>();

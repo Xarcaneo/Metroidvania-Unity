@@ -22,10 +22,10 @@ public class HorizontalEntrance : Entrance
         // Create spawn point at the entrance position
         GameObject spawnPoint = Instantiate(spawnPointPrefab, transform.position, Quaternion.identity);
         DontDestroyOnLoad(spawnPoint);
-        spawnPoint.tag = "SpawnPoint";
+        spawnPoint.tag = "FallbackSpawnPoint";
 
         // Set spawn point direction based on entrance scale
-        SpawnPoint spawnPointComponent = spawnPoint.GetComponent<SpawnPoint>();
+        FallbackSpawnPoint spawnPointComponent = spawnPoint.GetComponent<FallbackSpawnPoint>();
         if (spawnPointComponent != null)
         {
             // If entering from left (scale.x < 0), face left in new scene

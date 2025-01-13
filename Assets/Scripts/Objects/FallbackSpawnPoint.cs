@@ -4,7 +4,7 @@ using UnityEngine;
 /// Manages spawn point properties and initial player state.
 /// Used to define locations where the player can spawn and their initial facing direction.
 /// </summary>
-public class SpawnPoint : MonoBehaviour
+public class FallbackSpawnPoint : MonoBehaviour
 {
     #region Public Fields
     /// <summary>
