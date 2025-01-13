@@ -155,7 +155,10 @@ public class CollisionSenses : CoreComponent
     {
         base.Awake();
 
-        colliderSize = boxCollider2D.size;
+        if (boxCollider2D != null)
+        {
+            colliderSize = boxCollider2D.size;
+        }
     }
     #endregion
 

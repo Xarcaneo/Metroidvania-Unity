@@ -244,8 +244,11 @@ public class PlayerInAirState : PlayerState
         {
             stateMachine.ChangeState(player.LedgeClimbState);
         }
-        else if (jumpInput && player.JumpState.CanJump() && Movement?.CurrentVelocity.y == 0.00f)
+        else if (jumpInput && player.JumpState.CanJump() && 
+            (Movement?.CurrentVelocity.y <= 0.01f || 
+            (CollisionSenses.Ground && CollisionSenses.slopeDownAngle <= Movement.maxSlopeAngle)))
         {
+            isJumping = true;
             stateMachine.ChangeState(player.JumpState);
         }
         else if (isTouchingWall && xInput == Movement?.FacingDirection && Movement?.CurrentVelocity.y <= 0)

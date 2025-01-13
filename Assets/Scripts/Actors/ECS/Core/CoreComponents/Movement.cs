@@ -41,7 +41,7 @@ public class Movement : CoreComponent
     /// <summary>
     /// Maximum slope angle the entity can traverse.
     /// </summary>
-    [SerializeField] private float maxSlopeAngle = 45;
+    [SerializeField] public float maxSlopeAngle = 45;
 
     #endregion
 
@@ -109,7 +109,19 @@ public class Movement : CoreComponent
     /// <param name="velocity">The new x velocity</param>
     public void SetVelocityX(float velocity)
     {
-        workspace.Set(velocity, CurrentVelocity.y);
+        if (CollisionSenses && CollisionSenses.Ground && CollisionSenses.slopeDownAngle <= maxSlopeAngle)
+        {
+            // When on a slope, use slope-adjusted movement
+            float slopeModifier = 1f - (CollisionSenses.slopeDownAngle / 90f);
+            workspace.Set(
+                velocity * slopeModifier,
+                CurrentVelocity.y
+            );
+        }
+        else
+        {
+            workspace.Set(velocity, CurrentVelocity.y);
+        }
         SetFinalVelocity();
     }
 
