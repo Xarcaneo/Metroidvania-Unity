@@ -138,7 +138,7 @@ public class CollisionSenses : CoreComponent
 
     [SerializeField, Tooltip("Reference to the entity's box collider")] 
     private BoxCollider2D boxCollider2D;
-
+    private Vector2 colliderSize;
     #endregion
 
     #region Private Fields
@@ -147,8 +147,19 @@ public class CollisionSenses : CoreComponent
 
     #endregion
 
-    #region Collision Checks
+    #region Unity Lifecycle
+    /// <summary>
+    /// Initializes the component by getting the Core reference.
+    /// </summary>
+    protected override void Awake()
+    {
+        base.Awake();
 
+        colliderSize = boxCollider2D.size;
+    }
+    #endregion
+
+    #region Collision Checks
     /// <summary>
     /// Checks if the entity is touching the ground using two raycasts.
     /// </summary>
@@ -223,7 +234,7 @@ public class CollisionSenses : CoreComponent
     {
         var isOnSlope = false;
 
-        Vector2 slopeRaycastOrigin = Movement.RB.transform.position - (Vector3)(new Vector2(0.0f, boxCollider2D.size.y / 2));
+        Vector2 slopeRaycastOrigin = Movement.RB.transform.position - (Vector3)(new Vector2(0.0f, colliderSize.y / 2));
         Vector2 offsetDirection = (Movement != null && Movement.FacingDirection == 1) ? Vector2.right : Vector2.left;
         Vector2 offsetRaycastOrigin = slopeRaycastOrigin + offsetDirection * 0.5f;
 
@@ -239,7 +250,7 @@ public class CollisionSenses : CoreComponent
             }
         }
 
-        Vector2 raycastOrigin = Movement.RB.transform.position - (Vector3)(new Vector2(raycastDirection * 0.5f, boxCollider2D.size.y / 2));
+        Vector2 raycastOrigin = Movement.RB.transform.position - (Vector3)(new Vector2(raycastDirection * 0.5f, colliderSize.y / 2));
         RaycastHit2D groundHit = Physics2D.Raycast(raycastOrigin, Vector2.down, slopeCheckDistance, whatIsGround);
 
         if (groundHit)

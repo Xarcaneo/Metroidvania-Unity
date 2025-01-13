@@ -310,15 +310,12 @@ public class PlayerGroundedState : PlayerState
     /// </remarks>
     private void HandleSlopePhysics()
     {
-        if (player.CrouchIdleState.isCrouching)
-        {
-            SetFriction(true);
-        }
-        else if (isOnSlope)
+
+        if (isOnSlope)
         {
             Movement?.SetVelocityY(0.0f);
 
-            if (xInput == 0.0f)
+            if (xInput == 0.0f || player.CrouchIdleState.isCrouching)
             {
                 SetFriction(true);
             }
