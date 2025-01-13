@@ -32,7 +32,9 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     private void SpawnPlayer()
     {
-        GameObject spawnPointObj = GameObject.FindGameObjectWithTag("DefaultSpawnPoint");
+        GameObject spawnPointObj = GameObject.FindGameObjectWithTag("SpawnPoint")
+                                   ?? GameObject.FindGameObjectWithTag("DefaultSpawnPoint");
+
         if (spawnPointObj != null)
         {
             // Spawn player at the designated spawn point
@@ -41,9 +43,6 @@ public class LevelManager : MonoBehaviour
 
             // Set initial facing direction based on spawn point
             SetPlayerFacingDirection(player.gameObject, spawnPointObj);
-
-            // Clean up the spawn point
-            CleanupSpawnPoint(spawnPointObj);
         }
         else
         {
@@ -74,19 +73,8 @@ public class LevelManager : MonoBehaviour
             int direction = spawnPoint.shouldFaceLeft ? -1 : 1;
             movement.Flip(direction);
         }
-    }
 
-    /// <summary>
-    /// Cleans up the spawn point object after player spawning.
-    /// Ensures proper cleanup when using DontDestroyOnLoad.
-    /// </summary>
-    /// <param name="spawnPointObj">The spawn point object to clean up</param>
-    private void CleanupSpawnPoint(GameObject spawnPointObj)
-    {
-        if (spawnPointObj == null) return;
-
-        // Move back to current scene before destroying to prevent memory leaks
-        SceneManager.MoveGameObjectToScene(spawnPointObj, SceneManager.GetActiveScene());
+        // Clean up the spawn point immediately after using it
         Destroy(spawnPointObj);
     }
 

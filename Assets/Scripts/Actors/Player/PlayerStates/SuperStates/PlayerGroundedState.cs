@@ -206,7 +206,7 @@ public class PlayerGroundedState : PlayerState
     public override void Exit()
     {
         base.Exit();
-        player.RigidBody2D.sharedMaterial = playerData.noFriction;
+        HandleSlopePhysics();
     }
 
     /// <summary>
@@ -266,7 +266,11 @@ public class PlayerGroundedState : PlayerState
         }
         else if (jumpInput && player.JumpState.CanJump() && !player.CrouchIdleState.isCrouching)
         {
-            HandleJumpTransition();
+            float velocityThreshold = 0.01f;
+            if (Mathf.Abs(Movement.CurrentVelocity.y) < velocityThreshold)
+            {
+                stateMachine.ChangeState(player.JumpState);
+            }
         }
     }
 
@@ -295,19 +299,36 @@ public class PlayerGroundedState : PlayerState
     /// </remarks>
     private void HandleSlopePhysics()
     {
-        if (isOnSlope)
+        if (player.CrouchIdleState.isCrouching)
         {
-            if (xInput == 0.0f || player.CrouchIdleState.isCrouching)
-                player.RigidBody2D.sharedMaterial = playerData.fullFriction;
-            else
-                player.RigidBody2D.sharedMaterial = playerData.noFriction;
-
+            SetFriction(true);
+        }
+        else if (isOnSlope)
+        {
             Movement?.SetVelocityY(0.0f);
+
+            if (xInput == 0.0f)
+            {
+                SetFriction(true);
+            }
+            else
+            {
+                SetFriction(false);
+            }
         }
         else
         {
-            player.RigidBody2D.sharedMaterial = playerData.noFriction;
+            SetFriction(false);
         }
+    }
+
+    /// <summary>
+    /// Sets the appropriate friction material for the player
+    /// </summary>
+    /// <param name="useFullFriction">If true, uses full friction. If false, uses no friction.</param>
+    protected void SetFriction(bool useFullFriction)
+    {
+        player.RigidBody2D.sharedMaterial = useFullFriction ? playerData.fullFriction : playerData.noFriction;
     }
 
     /// <summary>

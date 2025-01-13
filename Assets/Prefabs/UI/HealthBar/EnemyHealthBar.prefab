@@ -155,14 +155,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bc8a1d5005e818489a3d4b32dfd6194, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entityRoot: {fileID: 0}
+  upgradeManager: {fileID: 0}
   levelDots:
   - {fileID: 2007585702855853923}
   - {fileID: 7925987565013148159}
   - {fileID: 1136668042812518555}
   upgradedDotColor: {r: 0.9450981, g: 0, b: 0, a: 1}
   defaultDotColor: {r: 0, g: 0, b: 0, a: 1}
-  positionOffset: {x: -0.65, y: 1.2, z: 0}
 --- !u!1 &1927215459900437699
 GameObject:
   m_ObjectHideFlags: 0
@@ -198,7 +197,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 12, y: -3}
+  m_AnchoredPosition: {x: 12, y: -3.2}
   m_SizeDelta: {x: 29, y: 2}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &9098493885152768724
@@ -709,7 +708,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &7480488458971067881
 MonoBehaviour:
   m_ObjectHideFlags: 0
