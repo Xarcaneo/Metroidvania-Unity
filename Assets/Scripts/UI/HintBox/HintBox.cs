@@ -3,6 +3,7 @@ using TMPro;
 using System.Collections;
 using PixelCrushers;
 using PixelCrushers.DialogueSystem;
+using System;
 
 /// <summary>
 /// Manages a UI hint box that displays contextual help text to the player.
@@ -53,26 +54,50 @@ public class HintBox : MonoBehaviour
     /// </remarks>
     public void SetHintText()
     {
-        localization.enabled = true;
-        string language = Localization.language;
-        string modifiedText = initialHintText;
-
-        // Find all placeholders in the text (e.g., {Attack}) and replace them with keybindings
-        int startPlaceholderIndex = modifiedText.IndexOf('{');
-        while (startPlaceholderIndex >= 0)
+        if (string.IsNullOrEmpty(initialHintText))
         {
-            int endPlaceholderIndex = modifiedText.IndexOf('}', startPlaceholderIndex + 1);
-            if (endPlaceholderIndex > startPlaceholderIndex)
-            {
-                string placeholder = modifiedText.Substring(startPlaceholderIndex + 1, endPlaceholderIndex - startPlaceholderIndex - 1);
-                string keybinding = GameManager.Instance.GetKeybindingForAction(placeholder);
-                modifiedText = modifiedText.Replace($"{{{placeholder}}}", keybinding);
-            }
-
-            startPlaceholderIndex = modifiedText.IndexOf('{', endPlaceholderIndex + 1);
+            Debug.LogWarning("[HintBox] Trying to set text but initialHintText is empty on " + gameObject.name);
+            return;
         }
 
-        hintText.SetText(modifiedText);
+        if (hintText == null)
+        {
+            Debug.LogError("[HintBox] Trying to set text but hintText component is null on " + gameObject.name);
+            return;
+        }
+
+        if (localization != null)
+        {
+            localization.enabled = true;
+        }
+
+        string modifiedText = initialHintText;
+
+        try
+        {
+            // Find all placeholders in the text (e.g., {Attack}) and replace them with keybindings
+            int startPlaceholderIndex = modifiedText.IndexOf('{');
+            while (startPlaceholderIndex >= 0)
+            {
+                int endPlaceholderIndex = modifiedText.IndexOf('}', startPlaceholderIndex + 1);
+                if (endPlaceholderIndex > startPlaceholderIndex)
+                {
+                    string placeholder = modifiedText.Substring(startPlaceholderIndex + 1, endPlaceholderIndex - startPlaceholderIndex - 1);
+                    string keybinding = GameManager.Instance != null ? 
+                        GameManager.Instance.GetKeybindingForAction(placeholder) : 
+                        placeholder;
+                    modifiedText = modifiedText.Replace("{" + placeholder + "}", keybinding);
+                }
+
+                startPlaceholderIndex = modifiedText.IndexOf('{', endPlaceholderIndex + 1);
+            }
+
+            hintText.SetText(modifiedText);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("[HintBox] Error setting text: " + e.Message);
+        }
     }
 
     /// <summary>
@@ -108,26 +133,74 @@ public class HintBox : MonoBehaviour
     }
     #endregion
 
+    #region Unity Lifecycle
     /// <summary>
-    /// Initializes the hint box and subscribes to pause events.
+    /// Initializes the hint box and subscribes to events.
     /// </summary>
-    void Start()
+    private void Start()
     {
-        GameEvents.Instance.onPauseTrigger += HandlePauseTrigger;
+        // Validate components
+        if (hintText == null)
+        {
+            Debug.LogError("[HintBox] HintText component is missing");
+            return;
+        }
+
+        // Hide initially until text is ready
+        HideHintBox();
+
+        // Subscribe to events if available
+        if (GameEvents.Instance != null)
+        {
+            GameEvents.Instance.onPauseTrigger += HandlePauseTrigger;
+            GameEvents.Instance.onLanguageChanged += OnLanguageChanged;
+        }
+
+        // Start text initialization
+        if (localization != null)
+        {
+            localization.enabled = true;
+        }
+        
         StartCoroutine(WaitForText());
     }
 
+    /// <summary>
+    /// Cleans up event subscriptions when the object is destroyed.
+    /// </summary>
+    private void OnDestroy()
+    {
+        if (GameEvents.Instance != null)
+        {
+            GameEvents.Instance.onPauseTrigger -= HandlePauseTrigger;
+            GameEvents.Instance.onLanguageChanged -= OnLanguageChanged;
+        }
+    }
+    #endregion
+
+    #region Private Methods
+    /// <summary>
+    /// Handles the language change event by updating the initial text.
+    /// </summary>
+    private void OnLanguageChanged() => initialHintText = hintText.text;
+
+    /// <summary>
+    /// Waits for the text component to be initialized with content.
+    /// </summary>
     private IEnumerator WaitForText()
     {
-        // Wait until either the TMP text or localization text is available
-        while (string.IsNullOrEmpty(hintText.text))
+        // Wait until either the TMP text is available and not empty
+        while (hintText == null || string.IsNullOrEmpty(hintText.text))
         {
             yield return null;
         }
         
-        initialHintText = hintText.text;
-        SetHintText();
-        HideHintBox(); // Hide the hint box after setting initial text
+        // Store initial text only if we have valid text
+        if (!string.IsNullOrEmpty(hintText.text))
+        {
+            initialHintText = hintText.text;
+            SetHintText();
+        }
     }
 
     /// <summary>
@@ -141,12 +214,5 @@ public class HintBox : MonoBehaviour
             SetHintText();
         }
     }
-
-    /// <summary>
-    /// Cleans up event subscriptions when the object is destroyed.
-    /// </summary>
-    void OnDestroy()
-    {
-        GameEvents.Instance.onPauseTrigger -= HandlePauseTrigger;
-    }
+    #endregion
 }

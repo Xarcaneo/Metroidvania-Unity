@@ -14,17 +14,6 @@ public class HintTrigger : MonoBehaviour
 
     #region Unity Lifecycle
     /// <summary>
-    /// Initializes the hint box on start
-    /// </summary>
-    private void Start()
-    {
-        if (!ValidateComponents()) return;
-        
-        m_hintBox.SetHintText();
-        m_hintBox.HideHintBox();
-    }
-
-    /// <summary>
     /// Shows the hint box when an object enters the trigger
     /// </summary>
     /// <param name="collision">The collider that entered the trigger</param>

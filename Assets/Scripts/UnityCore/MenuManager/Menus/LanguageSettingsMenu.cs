@@ -25,6 +25,8 @@ namespace Menu
             if (DialogueManager.instance != null)
             {
                 DialogueManager.SetLanguage(language);
+                Localization.language = language;
+                GameEvents.Instance.OnLanguageChanged();
             }
             else
             {

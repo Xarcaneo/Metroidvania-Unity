@@ -115,5 +115,11 @@ public class GameEvents : MonoBehaviour
     /// <summary>Event triggered when souls are collected.</summary>
     public event Action<int> onSoulsReceived;
     public void SoulsReceived(int soulsAmount) => onSoulsReceived?.Invoke(soulsAmount);
+
+    /// <summary>Event triggered when the game language changes</summary>
+    public event Action onLanguageChanged;
+
+    /// <summary>Notifies subscribers that the game language has changed</summary>
+    public void OnLanguageChanged() => onLanguageChanged?.Invoke();
     #endregion
 }
