@@ -14,9 +14,8 @@ GameObject:
   - component: {fileID: 1795069383703867988}
   - component: {fileID: 1795069383703867987}
   - component: {fileID: 1795069383703867998}
-  - component: {fileID: 1078489767368504234}
-  - component: {fileID: 587140200453833426}
   - component: {fileID: 5842632576459355922}
+  - component: {fileID: 1127221520811550036}
   m_Layer: 14
   m_Name: Body
   m_TagString: SpawnableEnemy
@@ -179,93 +178,6 @@ MonoBehaviour:
   chaseData: {fileID: 11400000, guid: a78ad5a56d2d8de4a845d8324fe6b7ab, type: 2}
   meleeAttackData: {fileID: 11400000, guid: a99763cf0f9e14146b953171626d7d9e, type: 2}
   attackCooldownData: {fileID: 11400000, guid: 33564d71851bfd046b4a505fc8e3e74d, type: 2}
---- !u!114 &1078489767368504234
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1795069383703867985}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7540d24761b4f024d8d8a6014f93d9f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ItemCollectionRestrictionObjects: []
-  m_ItemCollectionData:
-  - m_ObjectType: Opsive.UltimateInventorySystem.Core.InventoryCollections.ItemCollection
-    m_ValueHashes: 
-    m_LongValueHashes: 0d00eb254f8d1b29b769d11dc3e477ff5030ac3e5febf136f1f5543f3d512d18666e77ffb2d00a8c063d5314a435cf41aacf0d9965f975d03edd133125d4485e719c8809cfab0a4bffab97cf7a3470d434df945e2edc1868aa135182f676c90c6791e7bf01f176fdaf7e503207f176fdc9f13d9193da0d6add6f4cf489f9a9877a52e37d7f6acb20619c5106fa41607a
-    m_ValuePositions: 0000000009000000090000000d0000000d0000000e0000000f000000130000001300000017000000170000001b0000001b0000001f00000023000000270000002b0000002b000000
-    m_Values: 4974656d44726f7073060000000001ffffffff0100000001000000227c8e55486f726e40304edd0000000000000000
-    m_UnityObjects:
-    - {fileID: 11400000, guid: a02165c450d40534bae8ba1ba4a9a049, type: 2}
-    m_Version: 3.2
---- !u!114 &587140200453833426
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1795069383703867985}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ceaf1951eac4f83903eb9b47ec1d3fd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_PickUpPrefab: {fileID: 4814415899790352498, guid: eb4500b5d0dda414ead6737b1ef0605f, type: 3}
-  m_DropTransform: {fileID: 1795069383703867986}
-  m_DropRadius: 0
-  m_Inventory: {fileID: 1078489767368504234}
-  m_ItemCollectionID:
-    m_Name: ItemDrops
-    m_Purpose: 6
-  m_DropCopies: 1
-  m_SplitUniqueItems: 1
-  m_MinAmount: 0
-  m_MaxAmount: 1
-  m_AmountProbabilityDistribution:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0.65
-      value: 0
-      inSlope: -0.6597745
-      outSlope: -0.6597745
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.66
-      value: 1
-      inSlope: -0.39230096
-      outSlope: -0.39230096
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: -0.5513191
-      outSlope: -0.5513191
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!114 &5842632576459355922
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -282,6 +194,28 @@ MonoBehaviour:
   useWorldPosition: 1
   soundOffset: {x: 0, y: 0, z: 0}
   logDebugInfo: 0
+--- !u!114 &1127221520811550036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1795069383703867985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68aadddbced048848b6f63d8f3cc8a57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PickUpPrefab: {fileID: 4814415899790352498, guid: eb4500b5d0dda414ead6737b1ef0605f, type: 3}
+  m_DropTransform: {fileID: 1795069383703867986}
+  m_DropRadius: 0
+  m_LocationDropTables:
+  - m_Locations: 0100000002000000
+    m_PossibleDrops:
+    - m_ItemDefinition: {fileID: 11400000, guid: a02165c450d40534bae8ba1ba4a9a049, type: 2}
+      m_DropChance: 0
+  m_DebugTableIndex: 0
+  m_ShowDebugLogs: 0
 --- !u!1 &1795069383799447301
 GameObject:
   m_ObjectHideFlags: 0
@@ -724,7 +658,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6ef2bbfdd129fa459fe372ac117c2e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_randomItemDropper: {fileID: 587140200453833426}
+  m_randomItemDropper: {fileID: 1127221520811550036}
   souls: 20
 --- !u!1 &3953392795131209144
 GameObject:
