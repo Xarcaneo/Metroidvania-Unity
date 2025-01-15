@@ -116,6 +116,9 @@ public class SoulsManager : CoreComponent
     private void LoadSouls()
     {
         CurrentSouls = DialogueLua.GetVariable(SOULS_VARIABLE).asInt;
+
+        // Trigger the event after loading the initial souls
+        onSoulsValueChanged?.Invoke(CurrentSouls);
     }
 
     /// <summary>

@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Text;
 using TMPro;
 using UnityEngine;
 
 /// <summary>
-/// Manages the souls counter UI and handles soul collection animations.
-/// Optimized for performance with string caching and smart animation scaling.
+/// Manages the souls counter UI and handles soul collection animations using LeanTween.
+/// Simplified for easier maintenance by removing string caching and coroutine-based updates.
 /// </summary>
 public class SoulsCounter : MonoBehaviour
 {
@@ -16,9 +14,9 @@ public class SoulsCounter : MonoBehaviour
     [SerializeField] private TextMeshProUGUI counter;
 
     /// <summary>
-    /// Base speed for counter animation updates in seconds.
+    /// Base duration for counter animation updates in seconds.
     /// </summary>
-    [SerializeField] private float baseCounterSpeed = 0.05f;
+    [SerializeField] private float baseCounterDuration = 0.5f;
 
     /// <summary>
     /// Threshold at which the counter switches to faster increment mode.
@@ -28,59 +26,32 @@ public class SoulsCounter : MonoBehaviour
 
     #region Private Fields
     /// <summary>
-    /// Current number of souls displayed in the counter.
-    /// </summary>
-    private int currentDisplayedSouls;
-
-    /// <summary>
-    /// Number of souls waiting to be added to the counter.
-    /// </summary>
-    private int pendingSouls;
-
-    /// <summary>
-    /// Flag indicating if the counter is currently updating.
-    /// </summary>
-    private bool isUpdating;
-
-    /// <summary>
-    /// Reference to the active update coroutine.
-    /// </summary>
-    private Coroutine updateCoroutine;
-
-    /// <summary>
-    /// StringBuilder instance for optimized string operations.
-    /// </summary>
-    private StringBuilder stringBuilder;
-
-    /// <summary>
-    /// Size of the number string cache for optimization.
-    /// </summary>
-    private const int CACHE_SIZE = 1000;
-
-    /// <summary>
-    /// Cache of pre-generated number strings for frequent updates.
-    /// </summary>
-    private string[] numberCache;
-
-    /// <summary>
     /// Reference to the SoulsManager component.
     /// </summary>
     private SoulsManager soulsManager;
 
     /// <summary>
+    /// Reference to the active LeanTween animation.
+    /// </summary>
+    private LTDescr currentTween;
+
+    /// <summary>
     /// Tracks if the counter is currently initialized.
     /// </summary>
     private bool isInitialized;
+
+    /// <summary>
+    /// Flag to determine if the initial soul count has been set.
+    /// </summary>
+    private bool isInitialSet = false;
     #endregion
 
     #region Unity Lifecycle
     /// <summary>
-    /// Initializes the component and sets up caching systems.
+    /// Initializes the component and sets up necessary references.
     /// </summary>
     private void Awake()
     {
-        stringBuilder = new StringBuilder(16);
-        InitializeNumberCache();
         Initialize();
     }
 
@@ -99,8 +70,14 @@ public class SoulsCounter : MonoBehaviour
             GameEvents.Instance.onPlayerSpawned -= OnPlayerSpawned;
         }
 
+        // Kill any active tween to prevent memory leaks
+        LeanTween.cancel(gameObject);
 
-        StopAllCoroutines();
+        // Unsubscribe from SoulsManager event to prevent potential null references
+        if (soulsManager != null)
+        {
+            soulsManager.onSoulsValueChanged -= OnSoulsValueChanged;
+        }
     }
     #endregion
 
@@ -124,23 +101,11 @@ public class SoulsCounter : MonoBehaviour
 
         isInitialized = true;
     }
-
-    /// <summary>
-    /// Initializes the cache of commonly used number strings.
-    /// </summary>
-    private void InitializeNumberCache()
-    {
-        numberCache = new string[CACHE_SIZE];
-        for (int i = 0; i < CACHE_SIZE; i++)
-        {
-            numberCache[i] = i.ToString();
-        }
-    }
     #endregion
 
     #region Event Handlers
     /// <summary>
-    /// Handles player spawn event by setting up souls manager reference.
+    /// Handles player spawn event by setting up SoulsManager reference.
     /// </summary>
     private void OnPlayerSpawned()
     {
@@ -157,134 +122,98 @@ public class SoulsCounter : MonoBehaviour
             return;
         }
 
-        // Start coroutine to wait for souls value
-        StartCoroutine(WaitForSoulsValue());
-    }
-
-    /// <summary>
-    /// Waits for SoulsManager to load the value before displaying it
-    /// </summary>
-    private IEnumerator WaitForSoulsValue()
-    {
-        yield return new WaitForEndOfFrame();
-        
-        // Get initial value
-        currentDisplayedSouls = soulsManager.CurrentSouls;
-        UpdateCounterText(currentDisplayedSouls);
+        // Initialize the counter with the current souls value without animation
+        UpdateCounterText(soulsManager.CurrentSouls);
+        isInitialSet = true; // Set the flag to indicate initial value has been set
 
         // Subscribe to future changes
         soulsManager.onSoulsValueChanged += OnSoulsValueChanged;
     }
 
     /// <summary>
-    /// Handles souls value changes from SoulsManager
+    /// Handles souls value changes from SoulsManager.
     /// </summary>
+    /// <param name="newValue">The new souls count.</param>
     private void OnSoulsValueChanged(int newValue)
     {
-        int difference = newValue - currentDisplayedSouls;
-        if (difference == 0) return;
-
-        pendingSouls += difference;
-        
-        if (!isUpdating)
+        if (isInitialSet)
         {
-            StopUpdateCoroutineIfRunning();
-            updateCoroutine = StartCoroutine(UpdateCounter());
+            // Initial soul count has already been set; no animation needed
+            UpdateCounterText(newValue);
+            isInitialSet = false; // Reset the flag for future updates
+            return;
         }
-    }
 
-    /// <summary>
-    /// Handles receiving new souls during gameplay
-    /// </summary>
-    private void OnSoulsReceived(int amount)
-    {
-        if (amount <= 0) return;
-
-        pendingSouls += amount;
-        
-        if (!isUpdating)
-        {
-            StopUpdateCoroutineIfRunning();
-            updateCoroutine = StartCoroutine(UpdateCounter());
-        }
+        int currentDisplayedSouls = GetCurrentDisplayedSouls();
+        AnimateCounter(currentDisplayedSouls, newValue);
     }
     #endregion
 
     #region UI Updates
     /// <summary>
-    /// Updates the display to show current souls count.
+    /// Animates the counter from the current value to the new value using LeanTween.
     /// </summary>
-    private void UpdateDisplay()
+    /// <param name="from">Starting value.</param>
+    /// <param name="to">Ending value.</param>
+    private void AnimateCounter(int from, int to)
     {
-        if (soulsManager != null)
+        // Cancel any existing tween
+        if (currentTween != null)
         {
-            currentDisplayedSouls = soulsManager.CurrentSouls;
-            UpdateCounterText(currentDisplayedSouls);
+            LeanTween.cancel(currentTween.id);
         }
-    }
 
-    /// <summary>
-    /// Coroutine that smoothly updates the counter display.
-    /// </summary>
-    private IEnumerator UpdateCounter()
-    {
-        isUpdating = true;
+        // Calculate duration based on the difference
+        int difference = Mathf.Abs(to - from);
+        float duration = baseCounterDuration;
 
-        while (pendingSouls != 0)
+        if (difference > largeNumberThreshold)
         {
-            int step = pendingSouls > 0 ? 1 : -1;
-            if (Mathf.Abs(pendingSouls) > largeNumberThreshold)
+            duration *= 0.5f; // Faster animation for large changes
+        }
+
+        // Use LeanTween's value tweening
+        currentTween = LeanTween.value(gameObject, from, to, duration)
+            .setOnUpdate((float val) =>
             {
-                step *= 10;
-            }
-
-            currentDisplayedSouls += step;
-            pendingSouls -= step;
-
-            UpdateCounterText(currentDisplayedSouls);
-
-            yield return new WaitForSeconds(GetUpdateDelay(Mathf.Abs(pendingSouls)));
-        }
-
-        isUpdating = false;
+                UpdateCounterText(Mathf.RoundToInt(val));
+            })
+            .setEase(LeanTweenType.easeOutCubic)
+            .setOnComplete(OnAnimationComplete);
     }
 
     /// <summary>
-    /// Gets the delay between counter updates based on remaining souls.
+    /// Callback for when the animation completes.
+    /// Adds a subtle scale animation for visual feedback.
     /// </summary>
-    private float GetUpdateDelay(int remaining)
+    private void OnAnimationComplete()
     {
-        return remaining > largeNumberThreshold ? baseCounterSpeed / 2f : baseCounterSpeed;
+        // Add a subtle scale animation on completion for feedback
+        LeanTween.scale(counter.gameObject, Vector3.one * 1.1f, 0.1f)
+            .setLoopPingPong(1)
+            .setEase(LeanTweenType.easeInOutSine);
     }
 
     /// <summary>
-    /// Stops the current update coroutine if one is running.
+    /// Updates the counter text directly without using StringBuilder or caching.
     /// </summary>
-    private void StopUpdateCoroutineIfRunning()
-    {
-        if (updateCoroutine != null)
-        {
-            StopCoroutine(updateCoroutine);
-            updateCoroutine = null;
-        }
-    }
-
-    /// <summary>
-    /// Updates the counter text with optimized string handling.
-    /// </summary>
-    /// <param name="value">The value to display in the counter</param>
+    /// <param name="value">The value to display in the counter.</param>
     private void UpdateCounterText(int value)
     {
-        if (value < CACHE_SIZE)
+        counter.text = value.ToString();
+    }
+
+    /// <summary>
+    /// Retrieves the current displayed souls from the counter text.
+    /// </summary>
+    /// <returns>The current souls count as an integer.</returns>
+    private int GetCurrentDisplayedSouls()
+    {
+        if (int.TryParse(counter.text, out int displayedSouls))
         {
-            counter.text = numberCache[value];
+            return displayedSouls;
         }
-        else
-        {
-            stringBuilder.Clear();
-            stringBuilder.Append(value);
-            counter.text = stringBuilder.ToString();
-        }
+        return 0;
     }
     #endregion
 }
