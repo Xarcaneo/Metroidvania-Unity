@@ -518,6 +518,7 @@ Transform:
   - {fileID: 8913284252135590910}
   - {fileID: 2160142870104197261}
   - {fileID: 7783551256041399299}
+  - {fileID: 8238870090031560362}
   m_Father: {fileID: 5445145942140402603}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1462,7 +1463,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_playerEssencePref: {fileID: 648413426062567378, guid: bae61c482ae4d8847818489c6d79b635, type: 3}
-  spawnOffset: 0
   solidLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -1517,3 +1517,47 @@ MonoBehaviour:
   MinAngle: -90
   MaxAngle: 90
   isBlocking: 0
+--- !u!1 &8852432883127320330
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8238870090031560362}
+  - component: {fileID: 6417588809008643102}
+  m_Layer: 0
+  m_Name: SoulsManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8238870090031560362
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8852432883127320330}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5445145941722871108}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6417588809008643102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8852432883127320330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 110f411df971d4840bffc1a8ca7d0bd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -9,14 +9,6 @@ public class PlayerEssence : Interactable
 {
     #region Serialized Fields
     [SerializeField]
-    [Tooltip("Particle system for collection effect")]
-    /// <summary>
-    /// Optional particle system component for visual feedback when collected.
-    /// If assigned, will play when essence is collected before destruction.
-    /// </summary>
-    private ParticleSystem m_collectionEffect;
-
-    [SerializeField]
     [Tooltip("Sound effect to play when collected")]
     /// <summary>
     /// Optional AudioSource component for collection sound effect.
@@ -57,7 +49,7 @@ public class PlayerEssence : Interactable
         NotifyCollection();
 
         // Destroy with delay if effects are playing
-        if (m_collectionEffect != null || m_collectionSound != null)
+        if(m_collectionSound != null)
         {
             canInteract = false; // Prevent multiple collections
             Destroy(gameObject, m_destroyDelay);
@@ -76,16 +68,6 @@ public class PlayerEssence : Interactable
     /// </summary>
     private void ValidateComponents()
     {
-        // Check particle system
-        if (m_collectionEffect != null)
-        {
-            var main = m_collectionEffect.main;
-            if (main.duration > m_destroyDelay)
-            {
-                Debug.LogWarning($"[{gameObject.name}] Particle effect duration ({main.duration}s) is longer than destroy delay ({m_destroyDelay}s)!");
-            }
-        }
-
         // Check audio source
         if (m_collectionSound != null && m_collectionSound.clip != null)
         {
@@ -101,12 +83,6 @@ public class PlayerEssence : Interactable
     /// </summary>
     private void PlayCollectionEffects()
     {
-        // Play particle effect if assigned
-        if (m_collectionEffect != null)
-        {
-            m_collectionEffect.Play();
-        }
-
         // Play sound effect if assigned
         if (m_collectionSound != null)
         {

@@ -1,5 +1,3 @@
-using PixelCrushers.DialogueSystem;
-using System;
 using System.Collections;
 using System.Text;
 using TMPro;
@@ -32,7 +30,7 @@ public class SoulsCounter : MonoBehaviour
     /// <summary>
     /// Current number of souls displayed in the counter.
     /// </summary>
-    private int currentSouls;
+    private int currentDisplayedSouls;
 
     /// <summary>
     /// Number of souls waiting to be added to the counter.
@@ -55,11 +53,6 @@ public class SoulsCounter : MonoBehaviour
     private StringBuilder stringBuilder;
 
     /// <summary>
-    /// Constant name of the souls variable in DialogueLua.
-    /// </summary>
-    private const string SOULS_VARIABLE = "Souls";
-
-    /// <summary>
     /// Size of the number string cache for optimization.
     /// </summary>
     private const int CACHE_SIZE = 1000;
@@ -68,9 +61,19 @@ public class SoulsCounter : MonoBehaviour
     /// Cache of pre-generated number strings for frequent updates.
     /// </summary>
     private string[] numberCache;
+
+    /// <summary>
+    /// Reference to the SoulsManager component.
+    /// </summary>
+    private SoulsManager soulsManager;
+
+    /// <summary>
+    /// Tracks if the counter is currently initialized.
+    /// </summary>
+    private bool isInitialized;
     #endregion
 
-    #region Initialization
+    #region Unity Lifecycle
     /// <summary>
     /// Initializes the component and sets up caching systems.
     /// </summary>
@@ -78,6 +81,48 @@ public class SoulsCounter : MonoBehaviour
     {
         stringBuilder = new StringBuilder(16);
         InitializeNumberCache();
+        Initialize();
+    }
+
+    private void OnEnable()
+    {
+        if (GameEvents.Instance != null)
+        {
+            GameEvents.Instance.onPlayerSpawned += OnPlayerSpawned;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (GameEvents.Instance != null)
+        {
+            GameEvents.Instance.onPlayerSpawned -= OnPlayerSpawned;
+        }
+
+
+        StopAllCoroutines();
+    }
+    #endregion
+
+    #region Initialization
+    /// <summary>
+    /// Initializes the counter and subscribes to player events.
+    /// </summary>
+    private void Initialize()
+    {
+        if (isInitialized)
+        {
+            Debug.LogWarning("[SoulsCounter] Counter already initialized!");
+            return;
+        }
+
+        if (GameEvents.Instance == null)
+        {
+            Debug.LogError("[SoulsCounter] GameEvents instance is null!");
+            return;
+        }
+
+        isInitialized = true;
     }
 
     /// <summary>
@@ -93,52 +138,70 @@ public class SoulsCounter : MonoBehaviour
     }
     #endregion
 
-    #region Event Subscriptions
-    /// <summary>
-    /// Subscribes to necessary game events when the component is enabled.
-    /// </summary>
-    private void OnEnable()
-    {
-        if (GameEvents.Instance != null)
-        {
-            GameEvents.Instance.onSoulsReceived += OnSoulsReceived;
-            GameEvents.Instance.onNewSession += OnNewSession;
-        }
-    }
-
-    /// <summary>
-    /// Unsubscribes from game events when the component is disabled.
-    /// </summary>
-    private void OnDisable()
-    {
-        if (GameEvents.Instance != null)
-        {
-            GameEvents.Instance.onSoulsReceived -= OnSoulsReceived;
-            GameEvents.Instance.onNewSession -= OnNewSession;
-        }
-        StopAllCoroutines();
-    }
-    #endregion
-
     #region Event Handlers
     /// <summary>
-    /// Handles the start of a new game session by updating the souls counter.
+    /// Handles player spawn event by setting up souls manager reference.
     /// </summary>
-    private void OnNewSession()
+    private void OnPlayerSpawned()
     {
-        StopUpdateCoroutineIfRunning();
-        updateCoroutine = StartCoroutine(UpdateData());
+        if (Player.Instance == null || Player.Instance.Core == null)
+        {
+            Debug.LogError("[SoulsCounter] Player instance or core is null!");
+            return;
+        }
+
+        soulsManager = Player.Instance.Core.GetCoreComponent<SoulsManager>();
+        if (soulsManager == null)
+        {
+            Debug.LogError("[SoulsCounter] Could not find SoulsManager component on player!");
+            return;
+        }
+
+        // Start coroutine to wait for souls value
+        StartCoroutine(WaitForSoulsValue());
     }
 
     /// <summary>
-    /// Handles receiving new souls, updates the counter and triggers animation.
+    /// Waits for SoulsManager to load the value before displaying it
     /// </summary>
-    /// <param name="soulsAmount">Amount of souls received</param>
-    private void OnSoulsReceived(int soulsAmount)
+    private IEnumerator WaitForSoulsValue()
     {
-        pendingSouls += soulsAmount;
-        DialogueLua.SetVariable(SOULS_VARIABLE, currentSouls + soulsAmount);
+        yield return new WaitForEndOfFrame();
+        
+        // Get initial value
+        currentDisplayedSouls = soulsManager.CurrentSouls;
+        UpdateCounterText(currentDisplayedSouls);
 
+        // Subscribe to future changes
+        soulsManager.onSoulsValueChanged += OnSoulsValueChanged;
+    }
+
+    /// <summary>
+    /// Handles souls value changes from SoulsManager
+    /// </summary>
+    private void OnSoulsValueChanged(int newValue)
+    {
+        int difference = newValue - currentDisplayedSouls;
+        if (difference == 0) return;
+
+        pendingSouls += difference;
+        
+        if (!isUpdating)
+        {
+            StopUpdateCoroutineIfRunning();
+            updateCoroutine = StartCoroutine(UpdateCounter());
+        }
+    }
+
+    /// <summary>
+    /// Handles receiving new souls during gameplay
+    /// </summary>
+    private void OnSoulsReceived(int amount)
+    {
+        if (amount <= 0) return;
+
+        pendingSouls += amount;
+        
         if (!isUpdating)
         {
             StopUpdateCoroutineIfRunning();
@@ -147,45 +210,53 @@ public class SoulsCounter : MonoBehaviour
     }
     #endregion
 
-    #region Coroutines
+    #region UI Updates
     /// <summary>
-    /// Updates the souls counter data from the dialogue system.
-    /// Ensures proper initialization after frame rendering.
+    /// Updates the display to show current souls count.
     /// </summary>
-    private IEnumerator UpdateData()
+    private void UpdateDisplay()
     {
-        yield return new WaitForEndOfFrame();
-
-        pendingSouls = 0;
-        currentSouls = DialogueLua.GetVariable(SOULS_VARIABLE).asInt;
-        UpdateCounterText(currentSouls);
+        if (soulsManager != null)
+        {
+            currentDisplayedSouls = soulsManager.CurrentSouls;
+            UpdateCounterText(currentDisplayedSouls);
+        }
     }
 
     /// <summary>
-    /// Handles the smooth animation of the souls counter with dynamic speed adjustment.
-    /// Processes pending souls with optimized increment calculations.
+    /// Coroutine that smoothly updates the counter display.
     /// </summary>
     private IEnumerator UpdateCounter()
     {
         isUpdating = true;
 
-        while (pendingSouls > 0)
+        while (pendingSouls != 0)
         {
-            int increment = CalculateIncrement(pendingSouls);
-            float adjustedSpeed = CalculateSpeed(pendingSouls);
+            int step = pendingSouls > 0 ? 1 : -1;
+            if (Mathf.Abs(pendingSouls) > largeNumberThreshold)
+            {
+                step *= 10;
+            }
 
-            currentSouls += increment;
-            pendingSouls -= increment;
+            currentDisplayedSouls += step;
+            pendingSouls -= step;
 
-            UpdateCounterText(currentSouls);
-            yield return new WaitForSeconds(adjustedSpeed);
+            UpdateCounterText(currentDisplayedSouls);
+
+            yield return new WaitForSeconds(GetUpdateDelay(Mathf.Abs(pendingSouls)));
         }
 
         isUpdating = false;
     }
-    #endregion
 
-    #region Helper Methods
+    /// <summary>
+    /// Gets the delay between counter updates based on remaining souls.
+    /// </summary>
+    private float GetUpdateDelay(int remaining)
+    {
+        return remaining > largeNumberThreshold ? baseCounterSpeed / 2f : baseCounterSpeed;
+    }
+
     /// <summary>
     /// Stops the current update coroutine if one is running.
     /// </summary>
@@ -200,7 +271,6 @@ public class SoulsCounter : MonoBehaviour
 
     /// <summary>
     /// Updates the counter text with optimized string handling.
-    /// Uses cached strings for small numbers and StringBuilder for large ones.
     /// </summary>
     /// <param name="value">The value to display in the counter</param>
     private void UpdateCounterText(int value)
@@ -215,36 +285,6 @@ public class SoulsCounter : MonoBehaviour
             stringBuilder.Append(value);
             counter.text = stringBuilder.ToString();
         }
-    }
-
-    /// <summary>
-    /// Calculates the optimal increment size based on remaining souls.
-    /// Provides faster increments for large numbers to maintain smooth animation.
-    /// </summary>
-    /// <param name="remaining">Number of souls remaining to be added</param>
-    /// <returns>The calculated increment size</returns>
-    private int CalculateIncrement(int remaining)
-    {
-        if (remaining > largeNumberThreshold)
-        {
-            return Mathf.Max(1, remaining / 20); // Faster increment for large numbers
-        }
-        return 1;
-    }
-
-    /// <summary>
-    /// Calculates the optimal update speed based on remaining souls.
-    /// Provides faster updates for large numbers to maintain reasonable animation duration.
-    /// </summary>
-    /// <param name="remaining">Number of souls remaining to be added</param>
-    /// <returns>The calculated update speed in seconds</returns>
-    private float CalculateSpeed(int remaining)
-    {
-        if (remaining > largeNumberThreshold)
-        {
-            return baseCounterSpeed * 0.5f; // Faster updates for large numbers
-        }
-        return baseCounterSpeed;
     }
     #endregion
 }
