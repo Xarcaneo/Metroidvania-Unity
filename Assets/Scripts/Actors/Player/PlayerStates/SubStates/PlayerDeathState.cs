@@ -22,6 +22,11 @@ public class PlayerDeathState : PlayerState
     /// Flag indicating if the player is in contact with the ground
     /// </summary>
     private bool isGrounded;
+
+    /// <summary>
+    /// Flag indicating if the death sequence has been triggered
+    /// </summary>
+    private bool deathSequenceTriggered;
     #endregion
 
     #region Core Components
@@ -97,6 +102,9 @@ public class PlayerDeathState : PlayerState
     {
         base.Enter();
 
+        // Reset death sequence flag when entering state
+        deathSequenceTriggered = false;
+
         // Ensure player stops moving when death begins
         Movement?.SetVelocityX(0f);
     }
@@ -126,8 +134,9 @@ public class PlayerDeathState : PlayerState
         Movement?.SetVelocityX(0f);
 
         // Complete death sequence when animation is done and player is grounded
-        if (isAnimationFinished && isGrounded)
+        if (!deathSequenceTriggered && isAnimationFinished && isGrounded)
         {
+            deathSequenceTriggered = true;
             GameEvents.Instance.PlayerDied();
             PlayerDeath.Die();
         }

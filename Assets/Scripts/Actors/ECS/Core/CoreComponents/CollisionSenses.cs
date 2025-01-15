@@ -132,6 +132,10 @@ public class CollisionSenses : CoreComponent
     private LayerMask whatIsPlatform;
     public LayerMask WhatIsPlatform { get => whatIsPlatform; set => whatIsPlatform = value; }
 
+    [SerializeField, Tooltip("Layers considered as hazards (spikes, etc.)")] 
+    private LayerMask whatIsHazard;
+    public LayerMask WhatIsHazard { get => whatIsHazard; set => whatIsHazard = value; }
+
     #endregion
 
     #region Components
@@ -224,6 +228,23 @@ public class CollisionSenses : CoreComponent
     /// Checks if there is a platform below the entity.
     /// </summary>
     public bool Platform => Physics2D.OverlapCircle(platformCheck.position, platformCheckRadius, whatIsPlatform);
+
+    /// <summary>
+    /// Checks if the entity is currently on a hazard (spikes, etc.).
+    /// </summary>
+    public bool IsOnHazard
+    {
+        get
+        {
+            Vector2 leftRaycastOrigin = new Vector2(GroundCheck.position.x - groundCheckOffset, GroundCheck.position.y);
+            Vector2 rightRaycastOrigin = new Vector2(GroundCheck.position.x + groundCheckOffset, GroundCheck.position.y);
+
+            bool leftHit = Physics2D.Raycast(leftRaycastOrigin, Vector2.down, groundCheckDistance, whatIsHazard);
+            bool rightHit = Physics2D.Raycast(rightRaycastOrigin, Vector2.down, groundCheckDistance, whatIsHazard);
+
+            return leftHit || rightHit;
+        }
+    }
 
     #endregion
 

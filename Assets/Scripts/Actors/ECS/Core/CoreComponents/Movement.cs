@@ -24,6 +24,11 @@ public class Movement : CoreComponent
     public int FacingDirection => facingDirection;
 
     /// <summary>
+    /// The last safe position of the entity (not on hazards).
+    /// </summary>
+    public Vector2 LastSafePosition { get; private set; }
+
+    /// <summary>
     /// Whether the entity can change its velocity.
     /// </summary>
     public bool CanSetVelocity { get; set; } = true;
@@ -71,6 +76,15 @@ public class Movement : CoreComponent
     public override void LogicUpdate()
     {
         CurrentVelocity = rb.velocity;
+        
+        if (CollisionSenses.Ground)
+        {
+            // Update last safe position only when grounded and not on hazards
+            if (!CollisionSenses.IsOnHazard)
+            {
+                LastSafePosition = transform.position;
+            }
+        }
     }
 
     #endregion

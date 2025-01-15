@@ -15,11 +15,6 @@ public class PlayerDeath : Death
     /// </summary>
     [SerializeField] private PlayerEssence m_playerEssencePref;
 
-    /// <summary>
-    /// The offset from the player's position where the essence will spawn.
-    /// </summary>
-    [SerializeField] private float spawnOffset = 1.0f;
-
     #endregion
 
     #region Raycast Settings
@@ -51,12 +46,17 @@ public class PlayerDeath : Death
 
     #endregion
 
-    #region Death Implementation
+    #region Dependencies
 
     /// <summary>
-    /// Flag to determine if the essence can be spawned.
+    /// Reference to the Movement component.
     /// </summary>
-    public bool canSpawnEssence = true;
+    private Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
+    private Movement movement;
+
+    #endregion
+
+    #region Death Implementation
 
     /// <summary>
     /// Implements player-specific death behavior.
@@ -65,17 +65,12 @@ public class PlayerDeath : Death
     {
         base.Die();
 
-        if (canSpawnEssence)
-        {
-            SetUpPrefab();
+        SetUpPrefab();
 
-            int active_slot = GameManager.Instance.currentSaveSlot;
+        int active_slot = GameManager.Instance.currentSaveSlot;
 
-            // Wait for a frame to ensure that any changes to the prefab's state are applied
-            StartCoroutine(SaveAfterFrame(active_slot));
-
-            canSpawnEssence = false;
-        }
+        // Wait for a frame to ensure that any changes to the prefab's state are applied
+        StartCoroutine(SaveAfterFrame(active_slot));
     }
 
     #endregion
@@ -87,8 +82,9 @@ public class PlayerDeath : Death
     /// </summary>
     private void SetUpPrefab()
     {
-        PlayerEssence m_prefab = Instantiate(m_playerEssencePref, new Vector3(core.Parent.transform.position.x,
-            core.Parent.transform.position.y + spawnOffset, 0),
+        Vector2 spawnPosition = Movement.LastSafePosition;
+        PlayerEssence m_prefab = Instantiate(m_playerEssencePref, new Vector3(spawnPosition.x,
+            spawnPosition.y, 0),
             Quaternion.identity);
 
         MovePlayerEssence(m_prefab);

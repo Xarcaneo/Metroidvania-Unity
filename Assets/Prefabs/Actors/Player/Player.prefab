@@ -660,6 +660,9 @@ MonoBehaviour:
   whatIsPlatform:
     serializedVersion: 2
     m_Bits: 512
+  whatIsHazard:
+    serializedVersion: 2
+    m_Bits: 2147483648
   boxCollider2D: {fileID: 5445145942140402598}
 --- !u!1 &5445145942140402601
 GameObject:
@@ -1459,7 +1462,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_playerEssencePref: {fileID: 648413426062567378, guid: bae61c482ae4d8847818489c6d79b635, type: 3}
-  spawnOffset: 0.65
+  spawnOffset: 0
   solidLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -1467,7 +1470,6 @@ MonoBehaviour:
   downffsetRight: {x: 2, y: 0, z: 0}
   bottomOffset: {x: 0, y: -1.5, z: 0}
   topOffset: {x: 0, y: 0.5, z: 0}
-  canSpawnEssence: 1
 --- !u!1 &8513487157078769785
 GameObject:
   m_ObjectHideFlags: 0

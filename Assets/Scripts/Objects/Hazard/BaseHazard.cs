@@ -19,11 +19,5 @@ public abstract class BaseHazard : MonoBehaviour
         {
             damageable.InstantKill();
         }
-
-        // Special handling for player death (no essence spawning)
-        if (collision.CompareTag("Player"))
-        {
-            Player.Instance.Core.GetCoreComponent<PlayerDeath>().canSpawnEssence = false;
-        }
     }
 }
