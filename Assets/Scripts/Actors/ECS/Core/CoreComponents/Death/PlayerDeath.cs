@@ -54,6 +54,12 @@ public class PlayerDeath : Death
     private Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
     private Movement movement;
 
+    /// <summary>
+    /// Reference to the SoulsManager component.
+    /// </summary>
+    private SoulsManager SoulsManager { get => soulsManager ?? core.GetCoreComponent(ref soulsManager); }
+    private SoulsManager soulsManager;
+
     #endregion
 
     #region Death Implementation
@@ -86,6 +92,16 @@ public class PlayerDeath : Death
         PlayerEssence m_prefab = Instantiate(m_playerEssencePref, new Vector3(spawnPosition.x,
             spawnPosition.y, 0),
             Quaternion.identity);
+
+        // Get the active area from the AreaManager and set it as the parent
+        Transform activeArea = AreaManager.Instance?.ActiveArea;
+        if (activeArea != null)
+        {
+            m_prefab.transform.SetParent(activeArea);
+        }
+
+        int souls_extracted = m_prefab.ExtractSoulsOnDeath(SoulsManager.CurrentSouls);
+        soulsManager.RemoveSouls(souls_extracted);
 
         MovePlayerEssence(m_prefab);
 

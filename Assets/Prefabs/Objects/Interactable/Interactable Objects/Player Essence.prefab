@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 221759197188072574}
   - component: {fileID: 3804535558631968700}
   - component: {fileID: 648413426062567378}
-  - component: {fileID: 602617905717933907}
   - component: {fileID: 7597332350328878530}
   - component: {fileID: 267908592330953096}
+  - component: {fileID: 200275142917859647}
   m_Layer: 27
   m_Name: Player Essence
   m_TagString: Untagged
@@ -123,27 +123,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canInteract: 1
-  m_collectionEffect: {fileID: 0}
   m_collectionSound: {fileID: 0}
   m_destroyDelay: 0.5
---- !u!114 &602617905717933907
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3007819765888052664}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6bf72844540b7744b895a4c85c853e30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_key: 
-  m_appendSaverTypeToKey: 0
-  m_saveAcrossSceneChanges: 1
-  m_restoreStateOnStart: 0
-  m_despawnMode: 1
-  m_saveUniqueSaverData: 1
+  m_soulLossPercentage: 50
 --- !u!61 &7597332350328878530
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -191,6 +173,24 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 5
+--- !u!114 &200275142917859647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3007819765888052664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bf72844540b7744b895a4c85c853e30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_key: 
+  m_appendSaverTypeToKey: 0
+  m_saveAcrossSceneChanges: 1
+  m_restoreStateOnStart: 0
+  m_despawnMode: 0
+  m_saveUniqueSaverData: 1
 --- !u!1001 &2138889988787205325
 PrefabInstance:
   m_ObjectHideFlags: 0

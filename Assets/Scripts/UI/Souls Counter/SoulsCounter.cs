@@ -185,7 +185,10 @@ public class SoulsCounter : MonoBehaviour
         if (difference == 0) return;
 
         pendingSouls += difference;
-        
+
+        if (!gameObject.activeInHierarchy)
+            return;
+
         if (!isUpdating)
         {
             StopUpdateCoroutineIfRunning();

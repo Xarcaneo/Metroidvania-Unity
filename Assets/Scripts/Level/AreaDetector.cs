@@ -14,26 +14,12 @@ public class AreaDetector : MonoBehaviour
 
     #region Private Fields
     /// <summary>
-    /// Cached reference to GameEvents instance
+    /// Cached reference to GameEvents instance.
     /// </summary>
     private GameEvents m_gameEvents;
     #endregion
 
     #region Unity Lifecycle
-    /// <summary>
-    /// Validates component setup in the Unity Editor
-    /// </summary>
-    private void OnValidate()
-    {
-        if (roomNumber < 0)
-        {
-            Debug.LogWarning($"[{gameObject.name}] Room number should not be negative!");
-        }
-    }
-
-    /// <summary>
-    /// Initializes required components
-    /// </summary>
     private void Awake()
     {
         m_gameEvents = GameEvents.Instance;
@@ -43,10 +29,6 @@ public class AreaDetector : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Detects when an object enters the area trigger
-    /// </summary>
-    /// <param name="collision">The collider that entered the trigger</param>
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // Only notify if it's the player entering
@@ -56,10 +38,9 @@ public class AreaDetector : MonoBehaviour
             {
                 m_gameEvents.RoomChanged(roomNumber);
             }
-            else
-            {
-                Debug.LogError($"[{gameObject.name}] GameEvents instance is null!");
-            }
+
+            // Notify the AreaManager of the active area
+            AreaManager.Instance?.SetActiveArea(transform);
         }
     }
     #endregion
