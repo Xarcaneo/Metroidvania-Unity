@@ -28,6 +28,8 @@ public class PlayerCrouchIdleState : PlayerGroundedState
     /// </remarks>
     public bool isCrouching = false;
 
+    private bool m_hasTriggeredDropThrough = false;
+
     /// <summary>
     /// Initializes a new instance of the PlayerCrouchIdleState
     /// </summary>
@@ -53,6 +55,7 @@ public class PlayerCrouchIdleState : PlayerGroundedState
     {
         base.Enter();
 
+        m_hasTriggeredDropThrough = false;
         isCrouching = true;
         player.SetColliderHeight(playerData.rollColliderHeight);
     }
@@ -97,78 +100,77 @@ public class PlayerCrouchIdleState : PlayerGroundedState
         if (!isExitingState)
         {
             // Check for platform drop-through
-            if (jumpInput)
+            if (jumpInput && !m_hasTriggeredDropThrough)
             {
-                // Use the platform check point from CollisionSenses
-                Vector2 rayStart = CollisionSenses.PlatformCheck.position;
-                float rayDistance = 2f; // Much longer distance to ensure we can reach the platform
-
-                // Use the platform layer mask from CollisionSenses
-                RaycastHit2D hit = Physics2D.Raycast(
-                    rayStart,
-                    Vector2.down,
-                    rayDistance,
-                    CollisionSenses.WhatIsPlatform
-                );
-
-                // Debug visualization that will be visible in game view
-                Debug.Log($"Ray Start: {rayStart}, Ray End: {rayStart + Vector2.down * rayDistance}, Layer: {CollisionSenses.WhatIsPlatform.value}");
-                Debug.Log($"Platform check: Hit={hit.collider?.name ?? "null"}, Distance={hit.distance}, Point={hit.point}");
-                
-                // Draw a vertical line showing the full raycast path
-                Debug.DrawLine(rayStart, rayStart + Vector2.down * rayDistance, hit.collider != null ? Color.green : Color.red, 5f);
-                
-                // Draw crosses at both start and end points
-                float crossSize = 0.2f;
-                // Start point cross (yellow)
-                Debug.DrawLine(
-                    rayStart - Vector2.right * crossSize, 
-                    rayStart + Vector2.right * crossSize, 
-                    Color.yellow, 
-                    5f
-                );
-                Debug.DrawLine(
-                    rayStart - Vector2.up * crossSize, 
-                    rayStart + Vector2.up * crossSize, 
-                    Color.yellow, 
-                    5f
-                );
-                
-                // End point cross (blue)
-                Vector2 rayEnd = rayStart + Vector2.down * rayDistance;
-                Debug.DrawLine(
-                    rayEnd - Vector2.right * crossSize, 
-                    rayEnd + Vector2.right * crossSize, 
-                    Color.blue, 
-                    5f
-                );
-                Debug.DrawLine(
-                    rayEnd - Vector2.up * crossSize, 
-                    rayEnd + Vector2.up * crossSize, 
-                    Color.blue, 
-                    5f
-                );
-
-                if (hit.collider != null)
-                {
-                    var platform = hit.collider.GetComponent<IPlatform>();
-                    Debug.Log($"Found platform component: {platform != null}");
-                    if (platform != null)
-                    {
-                        Debug.Log($"Calling DropThrough on platform: {hit.collider.name}");
-                        platform.DropThrough();
-                    }
-                    else
-                    {
-                        Debug.LogWarning($"Found collider {hit.collider.name} but it doesn't have IPlatform component!");
-                    }
-                }
+                HandlePlatformDropThrough();
+                m_hasTriggeredDropThrough = true;
             }
             // Transition to idle if player releases crouch
             else if (yInput != -1)
             {
                 stateMachine.ChangeState(player.IdleState);
             }
+        }
+    }
+
+    /// <summary>
+    /// Handles the platform drop-through mechanic when the player is crouching and presses jump.
+    /// Casts multiple raycasts across the player's width to detect all platform segments beneath,
+    /// disables collision with these platforms, and applies a downward force to initiate falling.
+    /// </summary>
+    /// <remarks>
+    /// The method uses the CollisionSenses component to:
+    /// - Get the platform check position
+    /// - Determine the width of the check based on ground check offset
+    /// - Use the correct layer mask for platform detection
+    /// 
+    /// Multiple raycasts are used to ensure all connected platform segments are detected
+    /// and disabled simultaneously, preventing the player from getting stuck on partial segments.
+    /// </remarks>
+    private void HandlePlatformDropThrough()
+    {
+        Vector2 rayStart = CollisionSenses.PlatformCheck.position;
+        float rayDistance = 2f;
+        float checkWidth = CollisionSenses.GroundCheckOffset * 2f;
+        
+        // Do multiple raycasts across the check width
+        int numRays = 3;
+        bool foundAnyPlatform = false;
+        HashSet<IPlatform> platformsToDisable = new HashSet<IPlatform>();
+
+        for (int i = 0; i < numRays; i++)
+        {
+            float xOffset = (i / (float)(numRays - 1) - 0.5f) * checkWidth;
+            Vector2 rayOrigin = rayStart + new Vector2(xOffset, 0);
+            
+            RaycastHit2D hit = Physics2D.Raycast(
+                rayOrigin,
+                Vector2.down,
+                rayDistance,
+                CollisionSenses.WhatIsPlatform
+            );
+            
+            if (hit.collider != null)
+            {
+                var platform = hit.collider.GetComponent<IPlatform>();
+                if (platform != null)
+                {
+                    platformsToDisable.Add(platform);
+                    foundAnyPlatform = true;
+                }
+            }
+        }
+
+        // If we found any platforms, disable them all and apply downward force
+        if (foundAnyPlatform)
+        {
+            foreach (var platform in platformsToDisable)
+            {
+                platform.DropThrough();
+            }
+            
+            // Apply downward force to start falling
+            Movement?.SetVelocityY(-5f);
         }
     }
 }
