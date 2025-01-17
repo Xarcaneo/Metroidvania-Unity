@@ -88,6 +88,7 @@ public class CollisionSenses : CoreComponent
 
     [SerializeField, Tooltip("Horizontal offset for ground check points")] 
     private float groundCheckOffset;
+    public float GroundCheckOffset { get => groundCheckOffset; private set => groundCheckOffset = value; }
 
     [SerializeField, Tooltip("Distance to check for walls")] 
     private float wallCheckDistance;
