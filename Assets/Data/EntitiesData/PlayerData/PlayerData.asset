@@ -32,17 +32,20 @@ MonoBehaviour:
   variableJumpHeightMultiplier: 0.5
   dashVelocity: {x: 30, y: 0}
   dashAngle: {x: 1, y: 0}
-  dashCooldown: 1.5
+  dashCooldown: 0.8
   dashTime: 0.2
   rollSpeed: 10
   rollDuration: 0.7
-  rollCooldown: 1
+  rollCooldown: 0.8
   rollColliderHeight: 0.6
   crouchColliderHeight: 0.6
   attackMovementSpeed:
   - 0
   breakComboTime: 1
+  counterAttackDamageModifier: 3
+  BlockStateDuration: 0.2
   climbingVelocity: 5
+  ladderClimbCooldown: 0.2
   ladderJumpCooldown: 1
   climbFinishThresholdUp: 1
   ladderTopRaycastLength: 3

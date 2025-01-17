@@ -84,7 +84,7 @@ public class PlayerCounterAttackState : PlayerState
         base.Enter();
 
         // Initialize damage data with player's attack stat
-        m_damageData.SetData(player, Stats.GetAttack());
+        m_damageData.SetData(player, Mathf.RoundToInt(Stats.GetAttack() * playerData.CounterAttackDamageModifier));
         player.InputHandler.UseAttackInput();
     }
 
