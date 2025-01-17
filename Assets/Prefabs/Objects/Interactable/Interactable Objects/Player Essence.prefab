@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 648413426062567378}
   - component: {fileID: 7597332350328878530}
   - component: {fileID: 267908592330953096}
-  - component: {fileID: 200275142917859647}
+  - component: {fileID: 8079436973823373384}
   m_Layer: 27
   m_Name: Player Essence
   m_TagString: Untagged
@@ -173,7 +173,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 5
---- !u!114 &200275142917859647
+--- !u!114 &8079436973823373384
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -182,15 +182,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 3007819765888052664}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6bf72844540b7744b895a4c85c853e30, type: 3}
+  m_Script: {fileID: 11500000, guid: 1b791337c3fbc6740962779e25967821, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_key: 
   m_appendSaverTypeToKey: 0
   m_saveAcrossSceneChanges: 1
-  m_restoreStateOnStart: 0
-  m_despawnMode: 0
+  m_restoreStateOnStart: 1
+  m_despawnMode: 1
   m_saveUniqueSaverData: 1
+  customIntValue: 0
 --- !u!1001 &2138889988787205325
 PrefabInstance:
   m_ObjectHideFlags: 0

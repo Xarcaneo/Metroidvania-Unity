@@ -43,7 +43,7 @@ public class Skeleton_DeathState : DeathState
 
         if (isAnimationFinished)
         {
-            // Death and drops are already handled in EnemyDeath.Die()
+            EnemyDeath.Die();
             enemy.gameObject.SetActive(false);
         }
     }
