@@ -89,6 +89,7 @@ public class SoulsCounter : MonoBehaviour
         if (GameEvents.Instance != null)
         {
             GameEvents.Instance.onPlayerSpawned += OnPlayerSpawned;
+            GameEvents.Instance.OnSoulsChanged += OnSoulsChanged;
         }
     }
 
@@ -97,6 +98,7 @@ public class SoulsCounter : MonoBehaviour
         if (GameEvents.Instance != null)
         {
             GameEvents.Instance.onPlayerSpawned -= OnPlayerSpawned;
+            GameEvents.Instance.OnSoulsChanged -= OnSoulsChanged;
         }
 
 
@@ -171,9 +173,6 @@ public class SoulsCounter : MonoBehaviour
         // Get initial value
         currentDisplayedSouls = soulsManager.CurrentSouls;
         UpdateCounterText(currentDisplayedSouls);
-
-        // Subscribe to future changes
-        soulsManager.onSoulsValueChanged += OnSoulsValueChanged;
     }
 
     /// <summary>
@@ -197,12 +196,10 @@ public class SoulsCounter : MonoBehaviour
     }
 
     /// <summary>
-    /// Handles receiving new souls during gameplay
+    /// Handles receiving or losing souls during gameplay
     /// </summary>
-    private void OnSoulsReceived(int amount)
+    private void OnSoulsChanged(int amount)
     {
-        if (amount <= 0) return;
-
         pendingSouls += amount;
         
         if (!isUpdating)
@@ -278,6 +275,9 @@ public class SoulsCounter : MonoBehaviour
     /// <param name="value">The value to display in the counter</param>
     private void UpdateCounterText(int value)
     {
+        // Ensure value is not negative
+        value = Mathf.Max(0, value);
+
         if (value < CACHE_SIZE)
         {
             counter.text = numberCache[value];

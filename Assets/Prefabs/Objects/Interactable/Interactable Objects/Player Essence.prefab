@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 3670704610850011583}
   - component: {fileID: 221759197188072574}
   - component: {fileID: 3804535558631968700}
-  - component: {fileID: 648413426062567378}
   - component: {fileID: 7597332350328878530}
   - component: {fileID: 267908592330953096}
+  - component: {fileID: 648413426062567378}
   - component: {fileID: 8079436973823373384}
   m_Layer: 27
   m_Name: Player Essence
@@ -110,22 +110,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
---- !u!114 &648413426062567378
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3007819765888052664}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60822bac30424cc46b7e04a0e80ddbc2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canInteract: 1
-  m_collectionSound: {fileID: 0}
-  m_destroyDelay: 0.5
-  m_soulLossPercentage: 50
 --- !u!61 &7597332350328878530
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -173,6 +157,23 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 5
+--- !u!114 &648413426062567378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3007819765888052664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60822bac30424cc46b7e04a0e80ddbc2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canInteract: 1
+  m_collectionSound: {fileID: 0}
+  m_destroyDelay: 0.5
+  m_soulLossPercentage: 50
+  m_parentSaver: {fileID: 8079436973823373384}
 --- !u!114 &8079436973823373384
 MonoBehaviour:
   m_ObjectHideFlags: 0

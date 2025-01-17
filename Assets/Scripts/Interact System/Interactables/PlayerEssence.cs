@@ -31,6 +31,13 @@ public class PlayerEssence : Interactable
     /// Percentage of souls to be taken from the player upon death.
     /// </summary>
     private float m_soulLossPercentage = 50f;
+
+    [SerializeField]
+    [Tooltip("Reference to the SpawnedObjectParentSaver component")]
+    /// <summary>
+    /// Reference to the SpawnedObjectParentSaver component for saving collected souls.
+    /// </summary>
+    private SpawnedObjectParentSaver m_parentSaver;
     #endregion
 
     #region Private Fields
@@ -83,6 +90,13 @@ public class PlayerEssence : Interactable
     public int ExtractSoulsOnDeath(int playerSouls)
     {
         m_collectedSouls = Mathf.FloorToInt(playerSouls * (m_soulLossPercentage / 100f));
+        
+        // Save the collected souls amount to the parent saver
+        if (m_parentSaver != null)
+        {
+            m_parentSaver.CustomIntValue = m_collectedSouls;
+        }
+        
         return m_collectedSouls;
     }
 
@@ -126,13 +140,17 @@ public class PlayerEssence : Interactable
 
     /// <summary>
     /// Notifies the game system about essence collection.
-    /// Override this in derived classes to implement specific collection behavior.
     /// </summary>
     protected virtual void NotifyCollection()
     {
-        // Base implementation does nothing
-        // Derived classes can override to implement specific collection behavior
-        // such as updating player stats, quest progress, etc.
+        // If we have a parent saver, restore the collected souls from it
+        if (m_parentSaver != null)
+        {
+            m_collectedSouls = m_parentSaver.CustomIntValue;
+        }
+
+        GameEvents.Instance.SoulsChanged(m_collectedSouls);
     }
+
     #endregion
 }

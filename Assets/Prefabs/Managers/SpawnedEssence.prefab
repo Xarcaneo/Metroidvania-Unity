@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8564568151800716528}
   - component: {fileID: 7024427408183113477}
+  - component: {fileID: 7248982880119550244}
   m_Layer: 0
-  m_Name: SpawnedObjectsManager
+  m_Name: SpawnedEssence
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -53,3 +54,16 @@ MonoBehaviour:
   m_spawnedObjectPrefabLists: []
   m_spawnedObjects: []
   m_applySaveDataToSpawnedObjectsOnRestore: 1
+--- !u!114 &7248982880119550244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6042666354276593475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95d8a845f4214d64a83336e592d485f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_playerEssencePref: {fileID: 648413426062567378, guid: bae61c482ae4d8847818489c6d79b635, type: 3}
