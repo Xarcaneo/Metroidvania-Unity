@@ -56,7 +56,7 @@ public class PlayerGroundedState : PlayerState
     /// Updated every frame in LogicUpdate(). Triggers transition to JumpState when
     /// conditions are met (not crouching, minimal Y velocity).
     /// </remarks>
-    private bool jumpInput;
+    protected bool jumpInput;
 
     /// <summary>
     /// Flag indicating if attack button is pressed
