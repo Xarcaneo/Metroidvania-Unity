@@ -40,7 +40,7 @@ public class SoulsManager : CoreComponent
     {
         if (GameEvents.Instance != null)
         {
-            GameEvents.Instance.onSoulsReceived += AddSouls;
+            GameEvents.Instance.OnSoulsChanged += UpdateSouls;
         }
     }
 
@@ -48,7 +48,7 @@ public class SoulsManager : CoreComponent
     {
         if (GameEvents.Instance != null)
         {
-            GameEvents.Instance.onSoulsReceived -= AddSouls;
+            GameEvents.Instance.OnSoulsChanged -= UpdateSouls;
         }
     }
 
@@ -61,34 +61,20 @@ public class SoulsManager : CoreComponent
 
     #region Public Methods
     /// <summary>
-    /// Add souls to the player's total and save the new amount.
+    /// Updates the player's soul count. Can be positive (gain souls) or negative (lose souls).
     /// </summary>
-    /// <param name="amount">Amount of souls to add</param>
-    public void AddSouls(int amount)
+    /// <param name="amount">Amount of souls to add (positive) or remove (negative)</param>
+    private void UpdateSouls(int amount)
     {
-        if (amount <= 0) return;
+        // Prevent going below 0 souls
+        if (CurrentSouls + amount < 0)
+        {
+            amount = -CurrentSouls; // Only remove what we have
+        }
 
         CurrentSouls += amount;
         SaveSouls();
         onSoulsValueChanged?.Invoke(CurrentSouls);
-    }
-
-    /// <summary>
-    /// Remove souls from the player's total and save the new amount.
-    /// </summary>
-    /// <param name="amount">Amount of souls to remove</param>
-    /// <returns>True if souls were successfully removed, false if not enough souls</returns>
-    public bool RemoveSouls(int amount)
-    {
-        if (amount <= 0) return false;
-        if (CurrentSouls < amount) return false;
-
-        CurrentSouls -= amount;
-        SaveSouls();
-
-        onSoulsValueChanged?.Invoke(CurrentSouls);
-
-        return true;
     }
 
     /// <summary>

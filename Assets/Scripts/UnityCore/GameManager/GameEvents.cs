@@ -112,9 +112,13 @@ public class GameEvents : MonoBehaviour
     public event Action<string> onPuzzleClose;
     public void PuzzleClose(string puzzleName) => onPuzzleClose?.Invoke(puzzleName);
 
-    /// <summary>Event triggered when souls are collected.</summary>
-    public event Action<int> onSoulsReceived;
-    public void SoulsReceived(int soulsAmount) => onSoulsReceived?.Invoke(soulsAmount);
+    /// Event triggered when the soul count changes (can be positive or negative).
+    public event Action<int> OnSoulsChanged;
+    public void SoulsChanged(int soulsAmount) => OnSoulsChanged?.Invoke(soulsAmount);
+
+    /// <summary>Event triggered when player essence needs to be spawned</summary>
+    public event Action<Vector2, int> onPlayerEssenceSpawn;
+    public void PlayerEssenceSpawn(Vector2 position, int soulsAmount) => onPlayerEssenceSpawn?.Invoke(position, soulsAmount);
 
     /// <summary>Event triggered when the game language changes</summary>
     public event Action onLanguageChanged;

@@ -4,6 +4,7 @@ using UnityEngine;
 /// Handles player essence collectible functionality.
 /// Represents a collectible essence that can be gathered by the player,
 /// potentially providing various effects or progress tracking.
+/// Also manages the transfer of souls from the player on death.
 /// </summary>
 public class PlayerEssence : Interactable
 {
@@ -23,6 +24,27 @@ public class PlayerEssence : Interactable
     /// Allows time for effects to play. Default is 0.5 seconds.
     /// </summary>
     private float m_destroyDelay = 0.5f;
+
+    [SerializeField]
+    [Tooltip("Percentage of souls to take from the player on death")]
+    /// <summary>
+    /// Percentage of souls to be taken from the player upon death.
+    /// </summary>
+    private float m_soulLossPercentage = 50f;
+
+    [SerializeField]
+    [Tooltip("Reference to the SpawnedObjectParentSaver component")]
+    /// <summary>
+    /// Reference to the SpawnedObjectParentSaver component for saving collected souls.
+    /// </summary>
+    private SpawnedObjectParentSaver m_parentSaver;
+    #endregion
+
+    #region Private Fields
+    /// <summary>
+    /// Amount of souls collected from the player on death.
+    /// </summary>
+    private int m_collectedSouls;
     #endregion
 
     #region Unity Lifecycle
@@ -49,7 +71,7 @@ public class PlayerEssence : Interactable
         NotifyCollection();
 
         // Destroy with delay if effects are playing
-        if(m_collectionSound != null)
+        if (m_collectionSound != null)
         {
             canInteract = false; // Prevent multiple collections
             Destroy(gameObject, m_destroyDelay);
@@ -59,6 +81,32 @@ public class PlayerEssence : Interactable
             // Destroy immediately if no effects
             Destroy(gameObject);
         }
+    }
+
+    /// <summary>
+    /// Handles the transfer of souls from the player on death.
+    /// </summary>
+    /// <param name="playerSouls">The total amount of souls the player has on death.</param>
+    public int ExtractSoulsOnDeath(int playerSouls)
+    {
+        m_collectedSouls = Mathf.FloorToInt(playerSouls * (m_soulLossPercentage / 100f));
+        
+        // Save the collected souls amount to the parent saver
+        if (m_parentSaver != null)
+        {
+            m_parentSaver.CustomIntValue = m_collectedSouls;
+        }
+        
+        return m_collectedSouls;
+    }
+
+    /// <summary>
+    /// Gets the total amount of souls currently collected.
+    /// </summary>
+    /// <returns>The amount of souls collected.</returns>
+    public int GetCollectedSouls()
+    {
+        return m_collectedSouls;
     }
     #endregion
 
@@ -92,13 +140,17 @@ public class PlayerEssence : Interactable
 
     /// <summary>
     /// Notifies the game system about essence collection.
-    /// Override this in derived classes to implement specific collection behavior.
     /// </summary>
     protected virtual void NotifyCollection()
     {
-        // Base implementation does nothing
-        // Derived classes can override to implement specific collection behavior
-        // such as updating player stats, quest progress, etc.
+        // If we have a parent saver, restore the collected souls from it
+        if (m_parentSaver != null)
+        {
+            m_collectedSouls = m_parentSaver.CustomIntValue;
+        }
+
+        GameEvents.Instance.SoulsChanged(m_collectedSouls);
     }
+
     #endregion
 }

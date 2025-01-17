@@ -47,7 +47,7 @@ public class DeathState : State
         base.Enter();
 
         // Trigger event for souls received upon enemy death.
-        GameEvents.Instance.SoulsReceived(EnemyDeath.souls);
+        GameEvents.Instance.SoulsChanged(EnemyDeath.souls);
 
         // Disable components related to the enemy's ability to hurt other entities.
         core.GetCoreComponent<HurtArea>().EnableDisableComponent(false);
