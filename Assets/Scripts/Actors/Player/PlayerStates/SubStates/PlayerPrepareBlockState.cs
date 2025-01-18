@@ -101,7 +101,14 @@ public class PlayerPrepareBlockState : PlayerAbilityState
     {
         base.LogicUpdate();
 
-        if (isAnimationFinished)
+        // Ensure player remains stationary during prepare block
+        Movement?.SetVelocityX(0f);
+
+        if (successfulBlock)
+        {
+            stateMachine.ChangeState(player.BlockState);
+        }
+        else if (isAnimationFinished)
         {
             blockTimer += Time.deltaTime;
             if (blockTimer >= playerData.BlockStateDuration)
@@ -109,22 +116,6 @@ public class PlayerPrepareBlockState : PlayerAbilityState
                 stateMachine.ChangeState(player.IdleState);
                 return;
             }
-        }
-
-        if (!isExitingState)
-        {
-            if (player.InputHandler.AttackInput)
-            {
-                stateMachine.ChangeState(player.CounterAttackState);
-            }
-        }
-
-        // Ensure player remains stationary during prepare block
-        Movement?.SetVelocityX(0f);
-
-        if (successfulBlock)
-        {
-            stateMachine.ChangeState(player.BlockState);
         }
     }
 
