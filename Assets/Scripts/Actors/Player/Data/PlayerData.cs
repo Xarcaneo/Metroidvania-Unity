@@ -103,6 +103,17 @@ public class PlayerData : ScriptableObject
     public float[] attackMovementSpeed;
     [Tooltip("Time window to continue combo")]
     public float breakComboTime = 1.0f;
+
+    [Header("Counter Attack State")]
+    /// <summary>
+    /// Percentage modifier for counter attack damage (e.g., 1.5 = 150% damage)
+    /// </summary>
+    [SerializeField] private float counterAttackDamageModifier = 1.5f;
+    public float CounterAttackDamageModifier => counterAttackDamageModifier;
+
+    [Header("Block Settings")]
+    [Tooltip("Duration in seconds to maintain block state after animation finishes")]
+    public float BlockStateDuration = 0.5f;
     #endregion
 
     #region Ladder Parameters

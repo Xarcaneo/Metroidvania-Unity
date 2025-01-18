@@ -3,6 +3,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 namespace PixelCrushers
 {
@@ -15,10 +16,13 @@ namespace PixelCrushers
     public class UIButtonKeyTrigger : MonoBehaviour, IEventSystemUser
     {
 
-        [Tooltip("Trigger the selectable when this key is pressed.")]
+        [Tooltip("Input Action Reference for the new Input System.")]
+        public InputActionReference inputAction;
+
+        [Tooltip("Trigger the selectable when this key is pressed (Legacy Input System).")]
         public KeyCode key = KeyCode.None;
 
-        [Tooltip("Trigger the selectable when this input button is pressed.")]
+        [Tooltip("Trigger the selectable when this input button is pressed (Legacy Input System).")]
         public string buttonName = string.Empty;
 
         [Tooltip("Trigger if any key, input button, or mouse button is pressed.")]
@@ -58,22 +62,60 @@ namespace PixelCrushers
             if (m_selectable == null) enabled = false;
         }
 
-        protected void Update()
+        protected virtual void OnEnable()
         {
-            if (!monitorInput) return;
-            if (!(m_selectable.enabled && m_selectable.interactable && m_selectable.gameObject.activeInHierarchy)) return;
-            if (InputDeviceManager.IsKeyDown(key) || 
-                (!string.IsNullOrEmpty(buttonName) && InputDeviceManager.IsButtonDown(buttonName)) ||
-                (anyKeyOrButton && InputDeviceManager.IsAnyKeyDown()))
+            if (inputAction != null && inputAction.action != null)
             {
-                if (skipIfBeingClickedBySubmit && IsBeingClickedBySubmit()) return;
-                Click();
+                inputAction.action.Enable();
+                inputAction.action.performed += OnActionPerformed;
             }
+        }
+
+        protected virtual void OnDisable()
+        {
+            if (inputAction != null && inputAction.action != null)
+            {
+                inputAction.action.Disable();
+                inputAction.action.performed -= OnActionPerformed;
+            }
+        }
+
+        private void OnActionPerformed(InputAction.CallbackContext context)
+        {
+            if (IsButtonEnabled())
+            {
+                SimulateClick();
+            }
+        }
+
+        protected virtual void Update()
+        {
+            if (!IsButtonEnabled()) return;
+            if (!monitorInput) return;
+
+            // Check legacy input system
+            if ((key != KeyCode.None && Input.GetKeyDown(key)) ||
+                (!string.IsNullOrEmpty(buttonName) && Input.GetButtonDown(buttonName)) ||
+                (anyKeyOrButton && Input.anyKeyDown))
+            {
+                SimulateClick();
+            }
+        }
+
+        protected virtual bool IsButtonEnabled()
+        {
+            return m_selectable.enabled && m_selectable.interactable && m_selectable.gameObject.activeInHierarchy;
+        }
+
+        protected virtual void SimulateClick()
+        {
+            if (skipIfBeingClickedBySubmit && IsBeingClickedBySubmit()) return;
+            Click();
         }
 
         protected virtual bool IsBeingClickedBySubmit()
         {
-            return eventSystem  != null &&
+            return eventSystem != null &&
                 eventSystem.currentSelectedGameObject == m_selectable.gameObject &&
                 InputDeviceManager.instance != null &&
                 InputDeviceManager.IsButtonDown(InputDeviceManager.instance.submitButton);
@@ -93,16 +135,16 @@ namespace PixelCrushers
 
         protected IEnumerator SimulateButtonClick()
         {
-            m_selectable.OnPointerDown(new PointerEventData(eventSystem ));
+            m_selectable.OnPointerDown(new PointerEventData(eventSystem));
             var timeLeft = simulateButtonDownDuration;
             while (timeLeft > 0)
             {
                 yield return null;
                 timeLeft -= Time.unscaledDeltaTime;
             }
-            m_selectable.OnPointerUp(new PointerEventData(eventSystem ));
+            m_selectable.OnPointerUp(new PointerEventData(eventSystem));
             m_selectable.OnDeselect(null);
-            ExecuteEvents.Execute(m_selectable.gameObject, new PointerEventData(eventSystem ), ExecuteEvents.submitHandler);
+            ExecuteEvents.Execute(m_selectable.gameObject, new PointerEventData(eventSystem), ExecuteEvents.submitHandler);
         }
 
     }

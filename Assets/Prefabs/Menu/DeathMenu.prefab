@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2618614831822615012}
   - component: {fileID: 5448304561470150752}
   - component: {fileID: -6322259228835397112}
+  - component: {fileID: 4371006013931841726}
   m_Layer: 5
   m_Name: DeathMenu
   m_TagString: Untagged
@@ -139,6 +140,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonToFocus: {fileID: 0}
   startingLocation: Vestibule 0
+--- !u!225 &4371006013931841726
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2618614831822615013}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &4061661943724182959
 GameObject:
   m_ObjectHideFlags: 0

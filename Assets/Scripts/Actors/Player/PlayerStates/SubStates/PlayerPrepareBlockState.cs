@@ -35,6 +35,8 @@ public class PlayerPrepareBlockState : PlayerAbilityState
     /// Indicates whether a block was successfully performed
     /// </summary>
     private bool successfulBlock = false;
+
+    private float blockTimer;
     #endregion
 
     /// <summary>
@@ -64,6 +66,8 @@ public class PlayerPrepareBlockState : PlayerAbilityState
 
         // Consume block input to prevent double triggering
         player.InputHandler.UseBlockInput();
+
+        blockTimer = 0f;
     }
 
     /// <summary>
@@ -97,16 +101,30 @@ public class PlayerPrepareBlockState : PlayerAbilityState
     {
         base.LogicUpdate();
 
-        // Ensure player is stationary during block preparation
+        if (isAnimationFinished)
+        {
+            blockTimer += Time.deltaTime;
+            if (blockTimer >= playerData.BlockStateDuration)
+            {
+                stateMachine.ChangeState(player.IdleState);
+                return;
+            }
+        }
+
+        if (!isExitingState)
+        {
+            if (player.InputHandler.AttackInput)
+            {
+                stateMachine.ChangeState(player.CounterAttackState);
+            }
+        }
+
+        // Ensure player remains stationary during prepare block
         Movement?.SetVelocityX(0f);
 
         if (successfulBlock)
         {
             stateMachine.ChangeState(player.BlockState);
-        }
-        else if (!isExitingState && isAnimationFinished)
-        {
-            stateMachine.ChangeState(player.IdleState);
         }
     }
 
