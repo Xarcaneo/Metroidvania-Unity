@@ -1,54 +1,48 @@
+using PixelCrushers.DialogueSystem;
 using UnityEngine;
 
 /// <summary>
 /// State that handles the player's basic attack behavior.
 /// Inherits from PlayerAbilityState to maintain ability-based functionality.
 /// </summary>
-/// <remarks>
-/// This state is responsible for:
-/// - Managing the player's basic attack animations
-/// - Dealing damage to enemies
-/// - Handling block input during attacks
-/// - Managing attack-specific physics (like friction on slopes)
-/// 
-/// The state automatically transitions to:
-/// - PrepareBlockState: When block input is detected during attack
-/// - IdleState: When the attack animation is finished
-/// </remarks>
 public class PlayerAttackState : PlayerAbilityState
 {
+    #region Constants
+
+    /// <summary>
+    /// Lua variable name for the player's unlocked attack combo count.
+    /// </summary>
+    private const string AttackComboUnlockedVar = "Player.AttackComboUnlocked";
+
+    #endregion
+
     #region State Variables
 
     /// <summary>
     /// Flag indicating if the block input has been detected
     /// </summary>
-    /// <remarks>
-    /// Used to determine if the player wants to transition into blocking
-    /// during the attack animation.
-    /// </remarks>
     private bool blockInput;
+
+    /// <summary>
+    /// Tracks the player's current attack combo index.
+    /// Incremented each time the player successfully chains an attack.
+    /// </summary>
+    private int currentCombo;
+
+    /// <summary>
+    /// Keeps track of the last time (via Time.time) the player exited the attack state.
+    /// Used to determine if the combo should reset.
+    /// </summary>
+    private static float lastAttackExitTime = -999f;
 
     #endregion
 
     #region Core Components
 
-    /// <summary>
-    /// Reference to the DamageHitBox component, lazily loaded
-    /// </summary>
-    /// <remarks>
-    /// Handles collision detection and damage application to enemies
-    /// during the attack animation.
-    /// </remarks>
-    private DamageHitBox DamageHitBox { get => damageHitBox ?? core.GetCoreComponent(ref damageHitBox); }
+    private DamageHitBox DamageHitBox => damageHitBox ?? core.GetCoreComponent(ref damageHitBox);
     private DamageHitBox damageHitBox;
 
-    /// <summary>
-    /// Reference to the Stats component, lazily loaded
-    /// </summary>
-    /// <remarks>
-    /// Provides access to player's attack stats for damage calculation.
-    /// </remarks>
-    protected Stats Stats { get => stats ?? core.GetCoreComponent(ref stats); }
+    protected Stats Stats => stats ?? core.GetCoreComponent(ref stats);
     private Stats stats;
 
     #endregion
@@ -56,12 +50,6 @@ public class PlayerAttackState : PlayerAbilityState
     /// <summary>
     /// Data structure containing damage information for the attack
     /// </summary>
-    /// <remarks>
-    /// Stores information about:
-    /// - Damage source (the player)
-    /// - Damage amount (from player's attack stat)
-    /// - Any additional effects
-    /// </remarks>
     private IDamageable.DamageData m_damageData;
 
     /// <summary>
@@ -74,57 +62,56 @@ public class PlayerAttackState : PlayerAbilityState
     public PlayerAttackState(Player player, StateMachine stateMachine, PlayerData playerData, string animBoolName)
         : base(player, stateMachine, playerData, animBoolName)
     {
+        currentCombo = 0;
     }
 
     /// <summary>
     /// Called when entering the attack state
     /// </summary>
-    /// <remarks>
-    /// Sets up the attack by:
-    /// 1. Calling base class Enter method
-    /// 2. Setting up damage data with player's attack stat
-    /// 3. Consuming the attack input to prevent immediate re-trigger
-    /// </remarks>
     public override void Enter()
     {
         base.Enter();
 
+        // If too much time has passed since the last attack exit, reset the combo.
+        if (Time.time - lastAttackExitTime > playerData.breakComboTime)
+        {
+            currentCombo = 0;
+        }
+
         // Initialize damage data with player's attack stat
         m_damageData.SetData(player, Stats.GetAttack());
         player.InputHandler.UseAttackInput();
+
+        // Check how many combos are unlocked
+        int maxCombo = DialogueLua.GetVariable(AttackComboUnlockedVar).AsInt;
+
+        // Assign current combo index to animator
+        player.Anim.SetInteger("attackCombo", currentCombo);
+
+        // If we've reached or exceeded the max combo, reset
+        if (currentCombo >= maxCombo)
+            currentCombo = 0;
+        else
+            currentCombo++;
     }
 
     /// <summary>
     /// Called when exiting the attack state
     /// </summary>
-    /// <remarks>
-    /// Cleans up the attack state by:
-    /// 1. Calling base class Exit method
-    /// 2. Stopping any horizontal movement
-    /// </remarks>
     public override void Exit()
     {
         base.Exit();
 
         // Stop horizontal movement when exiting
         Movement?.SetVelocityX(0f);
+
+        // Record the time we exited this state
+        lastAttackExitTime = Time.time;
     }
 
     /// <summary>
     /// Updates the state's logic
     /// </summary>
-    /// <remarks>
-    /// Called every frame to:
-    /// 1. Call base class LogicUpdate
-    /// 2. Ensure player remains stationary during attack
-    /// 3. Check block input
-    /// 4. Handle slope physics
-    /// 5. Check for state transition conditions
-    /// 
-    /// The state will transition to:
-    /// - PrepareBlockState: When block input is detected
-    /// - IdleState: When the attack animation is finished
-    /// </remarks>
     public override void LogicUpdate()
     {
         base.LogicUpdate();
@@ -135,15 +122,13 @@ public class PlayerAttackState : PlayerAbilityState
         // Check for block input
         blockInput = player.InputHandler.BlockInput;
 
-        // Handle slope physics during attack
+        // Handle slope friction during attack
         if (isOnSlope)
         {
-            // Use full friction on slopes to prevent sliding
             player.RigidBody2D.sharedMaterial = playerData.fullFriction;
         }
         else
         {
-            // Use no friction on flat ground
             player.RigidBody2D.sharedMaterial = playerData.noFriction;
         }
 
@@ -162,17 +147,11 @@ public class PlayerAttackState : PlayerAbilityState
     /// <summary>
     /// Called by animation events during specific attack frames
     /// </summary>
-    /// <remarks>
-    /// Handles the actual damage application during the attack:
-    /// 1. Calls base class AnimationActionTrigger
-    /// 2. Applies melee damage to intersecting enemies
-    /// 3. Applies knockback effect in player's facing direction
-    /// </remarks>
     public override void AnimationActionTrigger()
     {
         base.AnimationActionTrigger();
 
-        // Apply damage and knockback to enemies in weapon hitbox
+        // Apply damage and knockback to enemies in the weapon hitbox
         DamageHitBox?.MeleeAttack(m_damageData);
         DamageHitBox?.Knockback(m_damageData, Movement.FacingDirection);
     }

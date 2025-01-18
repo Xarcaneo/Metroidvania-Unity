@@ -38,7 +38,6 @@ public class Stats : CoreComponent
 
     private Equipper m_Equipper;
     private StatUpgradeManager m_StatUpgradeManager;
-    private bool saveDataApplied = false;
 
     #endregion
 
@@ -92,28 +91,11 @@ public class Stats : CoreComponent
         {
             EventHandler.RegisterEvent(m_Equipper, EventNames.c_Equipper_OnChange, UpdateStats);
         }
-
-        InitializeStats();
+        else
+        {
+            InitializeStats();
+        }
     }
-
-    /// <summary>
-    /// Subscribes to save system events when enabled.
-    /// </summary>
-    private void OnEnable() => SaveSystem.saveDataApplied += OnSaveDataApplied;
-
-    /// <summary>
-    /// Unsubscribes from save system events when disabled.
-    /// </summary>
-    private void OnDisable() => SaveSystem.saveDataApplied -= OnSaveDataApplied;
-
-    #endregion
-
-    #region Save System Handlers
-
-    /// <summary>
-    /// Handles save data application events.
-    /// </summary>
-    private void OnSaveDataApplied() => saveDataApplied = true;
 
     #endregion
 
@@ -245,13 +227,7 @@ public class Stats : CoreComponent
     public virtual void UpdateStats()
     {
         if (!m_Equipper) return;
-
-        // Apply base stats with upgrade multiplier
-        float upgradeMultiplier = m_StatUpgradeManager != null ? m_StatUpgradeManager.CurrentBonusMultiplier : 1f;
-        maxHealth = m_BaseMaxHealth * upgradeMultiplier;
-        maxMana = m_BaseMaxMana * upgradeMultiplier;
-        attack = Mathf.RoundToInt(m_BaseAttack * upgradeMultiplier);
-        defense = Mathf.RoundToInt(m_BaseDefense * upgradeMultiplier);
+        InitializeStats();
 
         // Add equipment bonuses
         maxHealth += m_Equipper.GetEquipmentStatInt("Health");
@@ -260,8 +236,6 @@ public class Stats : CoreComponent
         defense += m_Equipper.GetEquipmentStatInt("Defense");
  
         StatsUpdated?.Invoke();
-
-        if (!saveDataApplied) InitializeStats();
     }
 
     #endregion
