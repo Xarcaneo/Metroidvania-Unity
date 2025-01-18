@@ -63,7 +63,6 @@ namespace PixelCrushers.DialogueSystem
             // Enable your input action (if assigned and not null):
             if (inputActionRef != null && inputActionRef.action != null)
             {
-                inputActionRef.action.Enable();
                 inputActionRef.action.performed += OnActionPerformed;
             }
         }
@@ -74,7 +73,6 @@ namespace PixelCrushers.DialogueSystem
             if (inputActionRef != null && inputActionRef.action != null)
             {
                 inputActionRef.action.performed -= OnActionPerformed;
-                inputActionRef.action.Disable();
             }
         }
 

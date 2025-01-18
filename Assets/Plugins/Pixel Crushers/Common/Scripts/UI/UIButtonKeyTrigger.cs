@@ -66,7 +66,6 @@ namespace PixelCrushers
         {
             if (inputAction != null && inputAction.action != null)
             {
-                inputAction.action.Enable();
                 inputAction.action.performed += OnActionPerformed;
             }
         }
@@ -75,7 +74,6 @@ namespace PixelCrushers
         {
             if (inputAction != null && inputAction.action != null)
             {
-                inputAction.action.Disable();
                 inputAction.action.performed -= OnActionPerformed;
             }
         }

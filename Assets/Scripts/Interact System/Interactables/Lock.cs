@@ -26,7 +26,7 @@ public class Lock : InteractableState
     /// Constants for animation state names to ensure consistency
     /// and prevent typos in animation calls.
     /// </summary>
-    private const string NO_KEY_ANIM = "NoKey";
+    private const string NO_KEY_ANIM = "NoKeyAnimation";
     private const string UNLOCKED_IDLE_ANIM = "Idle";
     #endregion
 
