@@ -43,6 +43,12 @@ public class GameEvents : MonoBehaviour
     /// <summary>Event triggered when UI visibility changes.</summary>
     public event Action<bool> onToggleUI;
     public void ToggleUI(bool state) => onToggleUI?.Invoke(state);
+
+    /// <summary>
+    /// Event triggered when the player menu is opened or closed.
+    /// </summary>
+    public event Action onPlayerMenuOpen;
+    public void PlayerMenuOpen() => onPlayerMenuOpen?.Invoke();
     #endregion
 
     #region Player Events

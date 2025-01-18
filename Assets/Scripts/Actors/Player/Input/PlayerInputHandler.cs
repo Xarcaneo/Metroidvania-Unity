@@ -289,6 +289,15 @@ public class PlayerInputHandler : MonoBehaviour
             GameEvents.Instance.InteractTrigger(context.started);
         }
     }
+
+    /// <summary>
+    /// Handles interact input events from the Input System
+    /// </summary>
+    public void OnPlayerMenuInput(InputAction.CallbackContext context)
+    {
+        if (context.started)
+            GameEvents.Instance.PlayerMenuOpen();
+    }
     #endregion
 
     #region Input Consumption Methods

@@ -90,11 +90,6 @@ public class InputManager : MonoBehaviour
     public event Action OnMenuReturn;
 
     /// <summary>
-    /// Event triggered when the player menu input is activated.
-    /// </summary>
-    public event Action OnMenuPlayerMenu;
-
-    /// <summary>
     /// Event triggered when the previous tab input is activated.
     /// </summary>
     public event Action OnMenuPreviousTab;
@@ -117,7 +112,6 @@ public class InputManager : MonoBehaviour
         if (!isInputActive || menuInput == null) return;
 
         if (menuInput.actions["Return"].triggered) OnMenuReturn?.Invoke();
-        else if (menuInput.actions["PlayerMenu"].triggered) OnMenuPlayerMenu?.Invoke();
         else if (menuInput.actions["PreviousTab"].triggered) OnMenuPreviousTab?.Invoke();
         else if (menuInput.actions["NextTab"].triggered) OnMenuNextTab?.Invoke();
         else if (menuInput.actions["Delete"].triggered) OnMenuDelete?.Invoke();

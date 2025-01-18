@@ -161,7 +161,7 @@ namespace Menu
 
             // Subscribe to input events
             InputManager.Instance.OnMenuReturn += OnReturnInput;
-            InputManager.Instance.OnMenuPlayerMenu += OnPlayerMenuInput;
+            GameEvents.Instance.onPlayerMenuOpen += OnPlayerMenuInput;
             InputManager.Instance.OnMenuDelete += OnPlayerDeleteInput;
         }
 
@@ -173,9 +173,10 @@ namespace Menu
             if (InputManager.Instance != null)
             {
                 InputManager.Instance.OnMenuReturn -= OnReturnInput;
-                InputManager.Instance.OnMenuPlayerMenu -= OnPlayerMenuInput;
                 InputManager.Instance.OnMenuDelete -= OnPlayerDeleteInput;
             }
+
+            GameEvents.Instance.onPlayerMenuOpen -= OnPlayerMenuInput;
         }
 
         /// <summary>
