@@ -64,6 +64,8 @@ public class PlayerEssence : Interactable
     /// </summary>
     public override void Interact()
     {
+        GameEvents.Instance.EssenceCollected(this);
+
         // Play collection effects
         PlayCollectionEffects();
 
@@ -74,12 +76,6 @@ public class PlayerEssence : Interactable
         if (m_collectionSound != null)
         {
             canInteract = false; // Prevent multiple collections
-            Destroy(gameObject, m_destroyDelay);
-        }
-        else
-        {
-            // Destroy immediately if no effects
-            Destroy(gameObject);
         }
     }
 

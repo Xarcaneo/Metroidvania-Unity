@@ -16,7 +16,7 @@ public class AreaManager : MonoBehaviour
     /// <summary>
     /// The currently active area.
     /// </summary>
-    public Transform ActiveArea { get; private set; }
+    public AreaDetector ActiveArea { get; private set; }
     #endregion
 
     #region Unity Lifecycle
@@ -38,7 +38,7 @@ public class AreaManager : MonoBehaviour
     /// Updates the active area.
     /// </summary>
     /// <param name="newArea">The transform of the new active area.</param>
-    public void SetActiveArea(Transform newArea)
+    public void SetActiveArea(AreaDetector newArea)
     {
         if (newArea != ActiveArea)
         {

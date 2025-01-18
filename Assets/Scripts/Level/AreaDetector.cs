@@ -40,7 +40,7 @@ public class AreaDetector : MonoBehaviour
             }
 
             // Notify the AreaManager of the active area
-            AreaManager.Instance?.SetActiveArea(transform);
+            AreaManager.Instance?.SetActiveArea(this);
         }
     }
     #endregion

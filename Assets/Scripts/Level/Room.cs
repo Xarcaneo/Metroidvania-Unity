@@ -47,6 +47,21 @@ public class Room : MonoBehaviour
     [Tooltip("Sprite for revealed hidden areas")]
     [SerializeField] private Sprite hiddenWallsImage;
 
+    /// <summary>
+    /// Image component representing additional information about the room.
+    /// Displays icons to indicate if the room contains specific elements such as
+    /// souls, NPCs, checkpoints, etc.
+    /// </summary>
+    [Tooltip("Image component indicating additional information about the room (e.g., souls, NPCs, checkpoints).")]
+    [SerializeField] private Image infoSymbol;
+
+    /// <summary>
+    /// Sprite used to visualize the presence of a soul in the room.
+    /// This icon will be displayed on the room's infoSymbol when a soul is present.
+    /// </summary>
+    [Tooltip("Sprite used to represent a soul in this room. Displays on the infoSymbol if a soul is present.")]
+    [SerializeField] private Sprite soulIcon;
+
     #endregion
 
     #region State Tracking
@@ -90,6 +105,19 @@ public class Room : MonoBehaviour
     {
         hasVisited = DialogueLua.GetVariable($"Room.{m_roomID}").asBool;
         hiddenRevealed = DialogueLua.GetVariable($"RoomRevealed.{m_roomID}").asBool;
+
+        // Check if the room has an essence and the icon is not already set
+        bool hasEssence = DialogueLua.GetVariable($"RoomHasEssence.{m_roomID}").asBool;
+        bool iconNotSet = infoSymbol.sprite == null;
+
+        // Determine if we can set the soul icon
+        bool canSetEssence = hasEssence && iconNotSet;
+
+        if (!canSetEssence)
+            return;
+
+        // Update the soul icon based on the condition
+        SetSoulIcon(canSetEssence);
     }
 
     #endregion
@@ -150,6 +178,23 @@ public class Room : MonoBehaviour
         if (wallsImage != null && hiddenWallsImage != null && hiddenRevealed)
         {
             wallsImage.sprite = hiddenWallsImage;
+        }
+    }
+
+    /// <summary>
+    /// Sets the infoSymbol sprite based on the presence of an essence in the room.
+    /// </summary>
+    /// <param name="hasEssence">True if the room contains an essence, false otherwise.</param>
+    public void SetSoulIcon(bool hasEssence)
+    {
+        if (infoSymbol != null)
+        {
+            infoSymbol.sprite = hasEssence ? soulIcon : null;
+
+            // Adjust transparency based on whether a sprite is assigned
+            Color color = infoSymbol.color;
+            color.a = hasEssence ? 1f : 0f; // Full opacity if sprite is set, fully transparent otherwise
+            infoSymbol.color = color;
         }
     }
 

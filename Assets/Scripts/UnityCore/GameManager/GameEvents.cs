@@ -82,6 +82,10 @@ public class GameEvents : MonoBehaviour
     public event Action<int> onRoomChanged;
     public void RoomChanged(int levelID) => onRoomChanged?.Invoke(levelID);
 
+    /// <summary>Event triggered when essence is spawned or collected in a sroom.</summary>
+    public event Action<int,bool> onRoomEssenceChanged;
+    public void RoomEssenceChanged(int levelID, bool spawned) => onRoomEssenceChanged?.Invoke(levelID, spawned);
+
     /// <summary>Event triggered when a hidden room is discovered.</summary>
     public event Action onHiddenRoomRevealed;
     public void HiddenRoomRevealed() => onHiddenRoomRevealed?.Invoke();
@@ -125,6 +129,10 @@ public class GameEvents : MonoBehaviour
     /// <summary>Event triggered when player essence needs to be spawned</summary>
     public event Action<Vector2, int> onPlayerEssenceSpawn;
     public void PlayerEssenceSpawn(Vector2 position, int soulsAmount) => onPlayerEssenceSpawn?.Invoke(position, soulsAmount);
+
+    /// <summary>Event triggered when a player essence is collected.</summary>
+    public event Action<PlayerEssence> onEssenceCollected;
+    public void EssenceCollected(PlayerEssence essence) => onEssenceCollected?.Invoke(essence);
 
     /// <summary>Event triggered when the game language changes</summary>
     public event Action onLanguageChanged;

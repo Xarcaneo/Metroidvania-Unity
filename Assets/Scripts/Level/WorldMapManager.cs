@@ -1,4 +1,5 @@
 using PixelCrushers.DialogueSystem;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -54,6 +55,7 @@ public class WorldMapManager : MonoBehaviour
         if (GameEvents.Instance != null)
         {
             GameEvents.Instance.onRoomChanged += OnRoomChanged;
+            GameEvents.Instance.onRoomEssenceChanged += OnRoomEssenceChanged;
             GameEvents.Instance.onGameSaving += SaveRoomStatus;
             GameEvents.Instance.onPlayerDied += SaveRoomStatus;
             GameEvents.Instance.onHiddenRoomRevealed += HiddenRoomRevealed;
@@ -119,6 +121,7 @@ public class WorldMapManager : MonoBehaviour
         {
             GameEvents.Instance.onGameSaving -= SaveRoomStatus;
             GameEvents.Instance.onRoomChanged -= OnRoomChanged;
+            GameEvents.Instance.onRoomEssenceChanged -= OnRoomEssenceChanged;
             GameEvents.Instance.onPlayerDied -= SaveRoomStatus;
             GameEvents.Instance.onHiddenRoomRevealed -= HiddenRoomRevealed;
         }
@@ -133,6 +136,18 @@ public class WorldMapManager : MonoBehaviour
         if (m_activeRoom != null)
         {
             m_activeRoom.RevealHidden();
+        }
+    }
+
+    private void OnRoomEssenceChanged(int roomID,bool spawned)
+    {
+        foreach (var room in m_rooms)
+        {
+            if (room != null && room.m_roomID == roomID)
+            {
+                room.SetSoulIcon(spawned);
+                return;
+            }
         }
     }
 
@@ -164,6 +179,5 @@ public class WorldMapManager : MonoBehaviour
 
         Debug.LogWarning($"[WorldMapManager] Could not find room with ID {levelID}!");
     }
-
     #endregion
 }

@@ -1,3 +1,4 @@
+using PixelCrushers.DialogueSystem;
 using UnityEngine;
 
 /// <summary>
@@ -39,6 +40,7 @@ public class PlayerEssenceManager : MonoBehaviour
     private void OnEnable()
     {
         GameEvents.Instance.onPlayerEssenceSpawn += SpawnEssence;
+        GameEvents.Instance.onEssenceCollected += CollectEssence;
     }
 
     private void OnDisable()
@@ -46,6 +48,7 @@ public class PlayerEssenceManager : MonoBehaviour
         if (GameEvents.Instance != null)
         {
             GameEvents.Instance.onPlayerEssenceSpawn -= SpawnEssence;
+            GameEvents.Instance.onEssenceCollected -= CollectEssence;
         }
     }
 
@@ -59,10 +62,12 @@ public class PlayerEssenceManager : MonoBehaviour
         PlayerEssence essence = Instantiate(m_playerEssencePref, new Vector3(position.x, position.y, 0), Quaternion.identity);
         
         // Get the active area from the AreaManager and set it as the parent
-        Transform activeArea = AreaManager.Instance?.ActiveArea;
+        AreaDetector activeArea = AreaManager.Instance?.ActiveArea;
         if (activeArea != null)
         {
-            essence.transform.SetParent(activeArea);
+            essence.transform.SetParent(activeArea.transform);
+            GameEvents.Instance.RoomEssenceChanged(activeArea.roomNumber,true);
+            DialogueLua.SetVariable($"RoomHasEssence.{activeArea.roomNumber}", true);
         }
 
         // Extract souls from the player and store them in the essence
@@ -79,6 +84,21 @@ public class PlayerEssenceManager : MonoBehaviour
             renderer.enabled = false;
         }
         essence.canInteract = false;
+    }
+
+    /// <summary>
+    /// Handles the collection of a player essence and updates its state.
+    /// </summary>
+    private void CollectEssence(PlayerEssence essence)
+    {
+        // Get the active area and update DialogueLua
+        AreaDetector activeArea = AreaManager.Instance?.ActiveArea;
+        if (activeArea != null)
+        {
+            DialogueLua.SetVariable($"RoomHasEssence.{activeArea.roomNumber}", false);
+            GameEvents.Instance.RoomEssenceChanged(activeArea.roomNumber, false);
+        }
+        Destroy(essence.gameObject);
     }
 
     /// <summary>
