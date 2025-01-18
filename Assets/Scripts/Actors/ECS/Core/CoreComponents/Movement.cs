@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 /// <summary>
@@ -5,6 +6,15 @@ using UnityEngine;
 /// </summary>
 public class Movement : CoreComponent
 {
+    #region Events
+
+    /// <summary>
+    /// Event triggered when the last safe position is updated.
+    /// </summary>
+    public event Action<Vector2> OnLastSafePositionUpdated;
+
+    #endregion
+
     #region Components
 
     /// <summary>
@@ -83,6 +93,9 @@ public class Movement : CoreComponent
             if (!CollisionSenses.IsOnHazard)
             {
                 LastSafePosition = transform.position;
+
+                // Trigger the event when LastSafePosition changes
+                OnLastSafePositionUpdated?.Invoke(LastSafePosition);
             }
         }
     }

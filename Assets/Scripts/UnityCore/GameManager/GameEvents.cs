@@ -127,8 +127,8 @@ public class GameEvents : MonoBehaviour
     public void SoulsChanged(int soulsAmount) => OnSoulsChanged?.Invoke(soulsAmount);
 
     /// <summary>Event triggered when player essence needs to be spawned</summary>
-    public event Action<Vector2, int> onPlayerEssenceSpawn;
-    public void PlayerEssenceSpawn(Vector2 position, int soulsAmount) => onPlayerEssenceSpawn?.Invoke(position, soulsAmount);
+    public event Action<Vector2, int, int> onPlayerEssenceSpawn;
+    public void PlayerEssenceSpawn(Vector2 position, int safeRoomID, int soulsAmount) => onPlayerEssenceSpawn?.Invoke(position, safeRoomID, soulsAmount);
 
     /// <summary>Event triggered when a player essence is collected.</summary>
     public event Action<PlayerEssence> onEssenceCollected;

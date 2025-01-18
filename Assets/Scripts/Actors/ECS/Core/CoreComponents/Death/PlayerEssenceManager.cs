@@ -57,20 +57,43 @@ public class PlayerEssenceManager : MonoBehaviour
     /// </summary>
     /// <param name="position">Position to spawn the essence</param>
     /// <param name="soulsAmount">Amount of souls to store in the essence</param>
-    private void SpawnEssence(Vector2 position, int soulsAmount)
+    private void SpawnEssence(Vector2 position,int safeRoomID, int soulsAmount)
     {
-        PlayerEssence essence = Instantiate(m_playerEssencePref, new Vector3(position.x, position.y, 0), Quaternion.identity);
-        
+        PlayerEssence essence = null;
+
         // Get the active area from the AreaManager and set it as the parent
-        AreaDetector activeArea = AreaManager.Instance?.ActiveArea;
-        if (activeArea != null)
+        AreaDetector lastSafeArea = AreaManager.Instance?.GetAreaByID(safeRoomID);
+        AreaManager.Instance?.ClearExistingEssences(lastSafeArea);
+
+        if (lastSafeArea != null)
         {
-            essence.transform.SetParent(activeArea.transform);
-            GameEvents.Instance.RoomEssenceChanged(activeArea.roomNumber,true);
-            DialogueLua.SetVariable($"RoomHasEssence.{activeArea.roomNumber}", true);
+            // Check if an essence already exists in the active area's children
+            foreach (Transform child in lastSafeArea.transform)
+            {
+                essence = child.GetComponent<PlayerEssence>();
+                if (essence != null)
+                {
+                    // If an existing essence is found, remove it
+                    Destroy(essence.gameObject);
+                    break;
+                }
+            }
+
+            // Instantiate and set the new essence as a child of the active area
+            essence = Instantiate(m_playerEssencePref, new Vector3(position.x, position.y, 0), Quaternion.identity);
+            essence.transform.SetParent(lastSafeArea.transform);
+
+            // Update the room essence state and DialogueLua variable
+            GameEvents.Instance.RoomEssenceChanged(lastSafeArea.roomNumber, true);
+            DialogueLua.SetVariable($"RoomHasEssence.{lastSafeArea.roomNumber}", true);
+        }
+        else
+        {
+            Debug.LogWarning("[PlayerEssenceManager] Active area is null. Essence could not be spawned.");
+            return;
         }
 
-        // Extract souls from the player and store them in the essence
+        // Extract souls from the player and store them in the new essence
         int extractedSouls = essence.ExtractSoulsOnDeath(soulsAmount);
         GameEvents.Instance.SoulsChanged(-extractedSouls);
 
@@ -85,6 +108,7 @@ public class PlayerEssenceManager : MonoBehaviour
         }
         essence.canInteract = false;
     }
+
 
     /// <summary>
     /// Handles the collection of a player essence and updates its state.

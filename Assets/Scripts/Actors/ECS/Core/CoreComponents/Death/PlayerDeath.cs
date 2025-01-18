@@ -7,15 +7,6 @@ using UnityEngine;
 /// </summary>
 public class PlayerDeath : Death
 {
-    #region Essence Prefab
-
-    /// <summary>
-    /// The prefab for the player's essence.
-    /// </summary>
-    [SerializeField] private PlayerEssence m_playerEssencePref;
-
-    #endregion
-
     #region Raycast Settings
 
     /// <summary>
@@ -59,6 +50,31 @@ public class PlayerDeath : Death
     private SoulsManager SoulsManager { get => soulsManager ?? core.GetCoreComponent(ref soulsManager); }
     private SoulsManager soulsManager;
 
+    /// <summary>
+    /// Stores the room number of the last safe position.
+    /// </summary>
+    public int LastSafeRoomNumber { get; private set; }
+
+    #endregion
+
+    #region Unity Lifecycle
+
+    private void OnEnable()
+    {
+        if (Movement != null)
+        {
+            Movement.OnLastSafePositionUpdated += HandleLastSafePositionUpdated;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (Movement != null)
+        {
+            Movement.OnLastSafePositionUpdated -= HandleLastSafePositionUpdated;
+        }
+    }
+
     #endregion
 
     #region Death Implementation
@@ -71,10 +87,22 @@ public class PlayerDeath : Death
         base.Die();
 
         // Trigger essence spawn event with last safe position and current souls amount
-        GameEvents.Instance.PlayerEssenceSpawn(Movement.LastSafePosition, SoulsManager.CurrentSouls);
+        GameEvents.Instance.PlayerEssenceSpawn(Movement.LastSafePosition,LastSafeRoomNumber, SoulsManager.CurrentSouls);
 
         int active_slot = GameManager.Instance.currentSaveSlot;
         StartCoroutine(SaveAfterFrame(active_slot));
+    }
+
+    /// <summary>
+    /// Updates the player's last safe position and its corresponding room number.
+    /// </summary>
+    /// <param name="position">The new last safe position.</param>
+    public void HandleLastSafePositionUpdated(Vector2 position)
+    {
+        if (AreaManager.Instance?.ActiveArea != null)
+        {
+            LastSafeRoomNumber = AreaManager.Instance.ActiveArea.roomNumber;
+        }
     }
 
     #endregion

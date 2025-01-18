@@ -45,5 +45,41 @@ public class AreaManager : MonoBehaviour
             ActiveArea = newArea;
         }
     }
+
+    /// <summary>
+    /// Removes existing player essences from the specified area.
+    /// </summary>
+    /// <param name="area">The area to clear of player essences.</param>
+    public void ClearExistingEssences(AreaDetector area)
+    {
+        foreach (Transform child in area.transform)
+        {
+            PlayerEssence existingEssence = child.GetComponent<PlayerEssence>();
+            if (existingEssence != null)
+            {
+                Destroy(existingEssence.gameObject);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Finds and returns the AreaDetector object with the specified room ID.
+    /// </summary>
+    /// <param name="roomID">The ID of the room to find.</param>
+    /// <returns>The AreaDetector object if found, otherwise null.</returns>
+    public AreaDetector GetAreaByID(int roomID)
+    {
+        foreach (Transform child in transform)
+        {
+            AreaDetector areaDetector = child.GetComponent<AreaDetector>();
+            if (areaDetector != null && areaDetector.roomNumber == roomID)
+            {
+                return areaDetector;
+            }
+        }
+
+        Debug.LogWarning($"[AreaManager] AreaDetector with room ID {roomID} not found!");
+        return null;
+    }
     #endregion
 }
