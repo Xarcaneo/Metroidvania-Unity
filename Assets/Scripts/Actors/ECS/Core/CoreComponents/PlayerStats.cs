@@ -9,37 +9,6 @@ using UnityEngine;
 /// </summary>
 public class PlayerStats : Stats 
 {
-    #region Fields
-
-    /// <summary>
-    /// Flag indicating if this is a new game session.
-    /// </summary>
-    private bool isNewSession = false;
-
-    #endregion
-
-    #region Unity Event Methods
-
-    /// <summary>
-    /// Subscribes to the new session event when the component is enabled.
-    /// </summary>
-    private void OnEnable() => GameEvents.Instance.onNewSession += OnNewSession;
-
-    /// <summary>
-    /// Unsubscribes from the new session event when the component is disabled.
-    /// </summary>
-    private void OnDisable() => GameEvents.Instance.onNewSession -= OnNewSession;
-
-    #endregion
-
-    #region Event Handlers
-
-    /// <summary>
-    /// Handles the new session event by setting the new session flag.
-    /// </summary>
-    private void OnNewSession() => isNewSession = true;
-
-    #endregion
 
     #region Stats Initialization
 
@@ -54,14 +23,11 @@ public class PlayerStats : Stats
         attack = m_BaseAttack;
         defense = m_BaseDefense;
 
-        if (isNewSession)
+        if (currentHealth <= 0)
         {
             currentHealth = maxHealth;
             currentMana = maxMana;
-
-            isNewSession = false;
         }
     }
-
     #endregion
 }
