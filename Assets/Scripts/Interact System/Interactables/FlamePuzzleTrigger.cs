@@ -140,6 +140,7 @@ public class FlamePuzzleTrigger : InteractableState
     private void OnPuzzleCompleted()
     {
         UnlockAndNotify();
+        UpdateVisuals(true);
 
         isCompleted = true;
 
