@@ -45,6 +45,7 @@ public class StatsPanel : MonoBehaviour
     /// </summary>
     private void OnDestroy()
     {
+        GameEvents.Instance.onPlayerSpawned -= OnPlayerSpawned;
         UnsubscribeFromEvents();
     }
     #endregion
@@ -122,12 +123,6 @@ public class StatsPanel : MonoBehaviour
         if (stats != null)
         {
             stats.StatsUpdated -= Draw;
-        }
-
-        if (GameEvents.Instance != null && isInitialized)
-        {
-            GameEvents.Instance.onPlayerSpawned -= OnPlayerSpawned;
-            isInitialized = false;
         }
     }
     #endregion
