@@ -59,6 +59,23 @@ public class FlamePuzzleTrigger : InteractableState
         InitializeComponents();
     }
 
+    /// <summary>
+    /// Updates trigger animations based on state.
+    /// </summary>
+    /// <param name="state">Current trigger state</param>
+    protected override void UpdateVisuals(bool state) => m_animator.SetBool(COMPLETED_PARAM, state);
+
+    /// <summary>
+    /// Called after state is initialized from Lua.
+    /// Override this to customize behavior when state is initialized.
+    /// </summary>
+    /// <param name="state">The initialized state value</param>
+    protected override void OnStateInitialized(bool state)
+    {
+        base.OnStateInitialized(state);
+        isCompleted = state;
+    }
+
     #endregion
 
     #region Public Methods

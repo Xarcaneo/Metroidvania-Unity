@@ -1,6 +1,7 @@
 using UnityEngine;
 using PixelCrushers.DialogueSystem;
 using System.Collections.Generic;
+using System.Collections;
 
 /// <summary>
 /// Base class for interactable objects that maintain state and have animations.
@@ -80,11 +81,14 @@ public abstract class InteractableState : Interactable
     /// Child classes can override this to add custom initialization logic.
     /// </summary>
     /// <returns>The current state value from Lua</returns>
-    protected virtual bool InitializeStateFromLua()
+    protected virtual IEnumerator InitializeStateFromLua()
     {
+        yield return null;
+
         bool savedState = DialogueLua.GetVariable($"{StatePrefix}{m_stateID}").asBool;
 
-        return savedState;
+        OnStateInitialized(savedState);
+        UpdateVisuals(savedState);
     }
 
     /// <summary>
@@ -93,9 +97,7 @@ public abstract class InteractableState : Interactable
     /// </summary>
     protected void InitializeState()
     {
-        bool savedState = InitializeStateFromLua();
-        OnStateInitialized(savedState);
-        UpdateVisuals(savedState);
+        StartCoroutine(InitializeStateFromLua());
     }
 
     /// <summary>
