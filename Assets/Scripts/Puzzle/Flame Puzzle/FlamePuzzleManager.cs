@@ -57,14 +57,13 @@ public class FlamePuzzleManager : MonoBehaviour
     /// <param name="puzzleID">Index of the puzzle prefab to instantiate</param>
     /// <param name="sceneName">Name of the scene to instantiate the puzzle in</param>
     /// <returns>The instantiated puzzle GameObject, or null if instantiation fails</returns>
-    public GameObject InstantiateObject(string triggerID, int puzzleID, string sceneName)
+    public GameObject InstantiateObject(int puzzleID, string sceneName)
     {
         if (!ValidatePuzzleParameters(puzzleID, sceneName, out Scene targetScene))
         {
             return null;
         }
 
-        m_triggerID = triggerID;
         GameObject prefabToInstantiate = puzzlePrefabs[puzzleID];
         GameObject instance = Instantiate(prefabToInstantiate, Vector3.zero, Quaternion.identity);
         SceneManager.MoveGameObjectToScene(instance, targetScene);
@@ -80,8 +79,6 @@ public class FlamePuzzleManager : MonoBehaviour
     public void OnPuzzleCompleted()
     {
         PuzzleCompleted?.Invoke();
-        DialogueLua.SetVariable("Trigger." + m_triggerID, true);
-        GameEvents.Instance.TriggerStateChanged(m_triggerID);
     }
 
     /// <summary>

@@ -67,17 +67,6 @@ public class Lock : InteractableState
     }
     #endregion
 
-    #region Protected Methods
-    /// <summary>
-    /// Handles state initialization for the lock.
-    /// </summary>
-    /// <param name="state">True if lock is unlocked, false otherwise</param>
-    protected override void OnStateInitialized(bool state)
-    {
-        canInteract = !state; // Can't interact if already unlocked
-    }
-    #endregion
-
     #region Private Methods
     /// <summary>
     /// Unlocks the lock and notifies connected gates

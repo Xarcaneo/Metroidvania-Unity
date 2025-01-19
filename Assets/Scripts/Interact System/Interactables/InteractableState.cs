@@ -61,6 +61,7 @@ public abstract class InteractableState : Interactable
     protected virtual void Awake()
     {
         InitializeComponents();
+        InitializeConnectedGates();
     }
 
     /// <summary>
@@ -82,7 +83,7 @@ public abstract class InteractableState : Interactable
     protected virtual bool InitializeStateFromLua()
     {
         bool savedState = DialogueLua.GetVariable($"{StatePrefix}{m_stateID}").asBool;
-        canInteract = true; // Default to allowing interaction unless overridden
+
         return savedState;
     }
 
@@ -104,7 +105,7 @@ public abstract class InteractableState : Interactable
     /// <param name="state">The initialized state value</param>
     protected virtual void OnStateInitialized(bool state)
     {
-        canInteract = true; // Default behavior
+        canInteract = !state;
     }
 
     /// <summary>
@@ -130,8 +131,6 @@ public abstract class InteractableState : Interactable
         {
             Debug.LogWarning($"[{gameObject.name}] GameEvents instance is null!");
         }
-
-        InitializeConnectedGates();
     }
 
     /// <summary>
@@ -153,20 +152,6 @@ public abstract class InteractableState : Interactable
                     m_connectedGates = new List<Gate>();
                 }
                 m_connectedGates.Add(gate);
-            }
-        }
-    }
-
-    /// <summary>
-    /// Notifies the game system of a state change.
-    /// </summary>
-    protected virtual void NotifyStateChange()
-    {
-        if (m_gameEvents != null)
-        {
-            foreach (var gateID in m_connectedGateIDs)
-            {
-                m_gameEvents.TriggerStateChanged(gateID);
             }
         }
     }

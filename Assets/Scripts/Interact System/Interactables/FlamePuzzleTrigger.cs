@@ -8,17 +8,9 @@ using UnityEngine.SceneManagement;
 /// Handles flame puzzle trigger functionality.
 /// Manages puzzle state, animations, and connected gate interactions.
 /// </summary>
-public class FlamePuzzleTrigger : Interactable
+public class FlamePuzzleTrigger : InteractableState
 {
     #region Serialized Fields
-    [SerializeField]
-    [Tooltip("Unique ID for this flame trigger (format: AREA_TRIGGER_PURPOSE)")]
-    /// <summary>
-    /// Unique identifier for this flame trigger.
-    /// Used to track and persist trigger state between game sessions.
-    /// </summary>
-    private string m_triggerID;
-
     [SerializeField]
     [Tooltip("ID for the puzzle instance")]
     /// <summary>
@@ -31,18 +23,6 @@ public class FlamePuzzleTrigger : Interactable
     #endregion
 
     #region Private Fields
-    /// <summary>
-    /// Reference to the animator component for flame animations.
-    /// Controls flame on/off animations.
-    /// </summary>
-    private Animator m_animator;
-
-    /// <summary>
-    /// Reference to game events system for state changes.
-    /// Cached for efficient access.
-    /// </summary>
-    private GameEvents m_gameEvents;
-
     // Animation parameter names
     private const string COMPLETED_PARAM = "isCompleted";
 
@@ -73,22 +53,12 @@ public class FlamePuzzleTrigger : Interactable
     /// Initializes the flame trigger by caching required components.
     /// Called when the script instance is being loaded.
     /// </summary>
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         InitializeComponents();
     }
 
-    /// <summary>
-    /// Initializes flame trigger state after all objects are initialized.
-    /// Checks if trigger was previously activated.
-    /// </summary>
-    private IEnumerator Start()
-    {
-        m_animator = GetComponent<Animator>();
-        yield return new WaitForEndOfFrame();
-        var triggerState = DialogueLua.GetVariable("FlamePuzzle." + m_triggerID).asBool;
-        if (triggerState) SetCompleted();
-    }
     #endregion
 
     #region Public Methods
@@ -106,33 +76,6 @@ public class FlamePuzzleTrigger : Interactable
 
     #region Private Methods
     /// <summary>
-    /// Initializes and caches required components.
-    /// </summary>
-    private void InitializeComponents()
-    {
-        if (m_animator == null)
-        {
-            m_animator = GetComponent<Animator>();
-        }
-
-        m_gameEvents = GameEvents.Instance;
-        if (m_gameEvents == null)
-        {
-            Debug.LogWarning($"[{gameObject.name}] GameEvents instance is null!");
-        }
-    }
-
-    /// <summary>
-    /// Sets the trigger to completed state
-    /// </summary>
-    private void SetCompleted()
-    {
-        canInteract = false;
-        isCompleted = true;
-        m_animator.SetBool(COMPLETED_PARAM, true);
-    }
-
-    /// <summary>
     /// Handles scene loading events
     /// </summary>
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -142,7 +85,7 @@ public class FlamePuzzleTrigger : Interactable
             var puzzleManager = FindObjectOfType<FlamePuzzleManager>();
             if (puzzleManager != null)
             {
-                puzzleManager.InstantiateObject(m_triggerID, m_puzzleID, PUZZLE_SCENE);
+                puzzleManager.InstantiateObject(m_puzzleID, PUZZLE_SCENE);
                 FlamePuzzleManager.Instance.PuzzleCompleted += OnPuzzleCompleted;
             }
         }
@@ -166,12 +109,23 @@ public class FlamePuzzleTrigger : Interactable
     }
 
     /// <summary>
+    /// Unlocks the lock and notifies connected gates
+    /// </summary>
+    private void UnlockAndNotify()
+    {
+        canInteract = false; // Disable further interaction
+        UpdateState(true);
+    }
+
+    /// <summary>
     /// Handles puzzle completion
     /// </summary>
     private void OnPuzzleCompleted()
     {
-        SetCompleted();
-        DialogueLua.SetVariable("FlamePuzzle." + m_triggerID, true);
+        UnlockAndNotify();
+
+        isCompleted = true;
+
         GameEvents.Instance.DeactivatePlayerInput(false);
         GameEvents.Instance.PuzzleClose(PUZZLE_SCENE);
     }

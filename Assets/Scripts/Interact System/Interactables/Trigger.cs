@@ -12,11 +12,6 @@ public class Trigger : InteractableState
 {
     #region Private Fields
     /// <summary>
-    /// Current state of the trigger (on/off). Used to track and persist trigger state.
-    /// </summary>
-    private bool m_triggerState;
-
-    /// <summary>
     /// Reference to player's movement component for handling player orientation.
     /// Used to ensure player faces the correct direction during interactions.
     /// </summary>
@@ -126,7 +121,6 @@ public class Trigger : InteractableState
     /// <param name="state">Current trigger state</param>
     protected override void OnStateInitialized(bool state)
     {
-        m_triggerState = state;
         base.OnStateInitialized(state);
     }
 
