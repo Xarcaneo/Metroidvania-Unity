@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 7209343877848794827}
   - component: {fileID: 8017180551207045624}
-  - component: {fileID: 554191142421580043}
   - component: {fileID: 2810324343388112173}
+  - component: {fileID: 943123913366903655}
   m_Layer: 28
-  m_Name: 'AreaEventTrigger '
+  m_Name: DialogueEvent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -60,21 +60,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5, y: 4}
   m_EdgeRadius: 0
---- !u!114 &554191142421580043
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5812799130931533105}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72850743e1436f24ea259e29f9f99fad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  eventToTrigger: 0
-  isOneShot: 1
-  stringVariable: 
 --- !u!114 &2810324343388112173
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94,3 +79,21 @@ MonoBehaviour:
   m_mode: 1
   m_destroyMode: 0
   m_destroyedVersionPrefab: {fileID: 0}
+--- !u!114 &943123913366903655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5812799130931533105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a82e804c0b47b32439d3b6315ea2109c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 8192
+  isOneShot: 1
+  cooldownTime: 0
+  m_dialogueID: 
