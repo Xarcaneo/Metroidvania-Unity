@@ -140,4 +140,21 @@ public class GameEvents : MonoBehaviour
     /// <summary>Notifies subscribers that the game language has changed</summary>
     public void OnLanguageChanged() => onLanguageChanged?.Invoke();
     #endregion
+
+    #region Scene Change Event
+
+    /// <summary>Event triggered when a portal is used to change scenes.</summary>
+    public event Action<string, string> onSceneChangeTriggered;
+
+    /// <summary>
+    /// Triggers a scene change event with the destination scene and spawn point.
+    /// </summary>
+    /// <param name="destinationSceneName">The name of the destination scene.</param>
+    /// <param name="spawnpointName">The spawn point in the destination scene.</param>
+    public void TriggerSceneChange(string destinationSceneName, string spawnpointName)
+    {
+        onSceneChangeTriggered?.Invoke(destinationSceneName, spawnpointName);
+    }
+
+    #endregion
 }

@@ -12,6 +12,7 @@ public class CustomLua : MonoBehaviour
     private MethodInfo cameraNewTargetMethod;
     private MethodInfo triggerStateChangedMethod;
     private MethodInfo playAnimationMethod;
+    private MethodInfo triggerSceneChangeMethod;
 
     /// <summary>
     /// Registers custom Lua functions when the component is enabled.
@@ -22,10 +23,12 @@ public class CustomLua : MonoBehaviour
         cameraNewTargetMethod = SymbolExtensions.GetMethodInfo(() => CameraNewTarget(string.Empty));
         triggerStateChangedMethod = SymbolExtensions.GetMethodInfo(() => TriggerStateChanged(string.Empty));
         playAnimationMethod = SymbolExtensions.GetMethodInfo(() => PlayAnimation(string.Empty, string.Empty));
+        triggerSceneChangeMethod = SymbolExtensions.GetMethodInfo(() => TriggerSceneChange(string.Empty, string.Empty));
 
         Lua.RegisterFunction(nameof(CameraNewTarget), this, cameraNewTargetMethod);
         Lua.RegisterFunction(nameof(TriggerStateChanged), this, triggerStateChangedMethod);
         Lua.RegisterFunction(nameof(PlayAnimation), this, playAnimationMethod);
+        Lua.RegisterFunction(nameof(TriggerSceneChange), this, triggerSceneChangeMethod);
     }
 
     /// <summary>
@@ -36,6 +39,7 @@ public class CustomLua : MonoBehaviour
         Lua.UnregisterFunction(nameof(CameraNewTarget));
         Lua.UnregisterFunction(nameof(TriggerStateChanged));
         Lua.UnregisterFunction(nameof(PlayAnimation));
+        Lua.UnregisterFunction(nameof(TriggerSceneChange));
     }
 
     /// <summary>
@@ -95,4 +99,25 @@ public class CustomLua : MonoBehaviour
             Debug.LogError($"Object not found: {objectName}");
         }
     }
+
+    #region Scene Change Event
+
+    /// <summary>
+    /// Triggers a scene change event with the destination scene and spawn point.
+    /// </summary>
+    /// <param name="destinationSceneName">The name of the destination scene.</param>
+    /// <param name="spawnpointName">The spawn point in the destination scene.</param>
+    public void TriggerSceneChange(string destinationSceneName, string spawnpointName)
+    {
+        if (GameEvents.Instance != null)
+        {
+            GameEvents.Instance.TriggerSceneChange(destinationSceneName, spawnpointName);
+        }
+        else
+        {
+            Debug.LogError("GameEvents.Instance or onSceneChangeTriggered is null. Cannot trigger scene change.");
+        }
+    }
+
+    #endregion
 }

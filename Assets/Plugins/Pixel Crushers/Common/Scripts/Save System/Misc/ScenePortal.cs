@@ -74,6 +74,17 @@ namespace PixelCrushers
             UsePortal();
         }
 
+        /// <summary>
+        /// Sets the destination scene and spawn point for the portal.
+        /// </summary>
+        /// <param name="destinationSceneName">The name of the destination scene.</param>
+        /// <param name="spawnpointName">The name of the spawn point in the destination scene.</param>
+        public void SetDestination(string destinationSceneName, string spawnpointName)
+        {
+            m_destinationSceneName = destinationSceneName;
+            m_spawnpointNameInDestinationScene = spawnpointName;
+        }
+
 #if USE_PHYSICS2D || !UNITY_2018_1_OR_NEWER
 
         private void OnTriggerEnter2D(Collider2D other)
