@@ -519,6 +519,7 @@ Transform:
   - {fileID: 2160142870104197261}
   - {fileID: 7783551256041399299}
   - {fileID: 8238870090031560362}
+  - {fileID: 6350781847840504462}
   m_Father: {fileID: 5445145942140402603}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1434,6 +1435,54 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HookID: Hook_Player
+--- !u!1 &5630298637494885438
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6350781847840504462}
+  - component: {fileID: 4179553947441785551}
+  m_Layer: 0
+  m_Name: FollowerManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6350781847840504462
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5630298637494885438}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.26, y: 0.91, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5445145941722871108}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4179553947441785551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5630298637494885438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 854b971597aeaf9439574dab36c90fe8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 6350781847840504462}
+  followerPrefab: {fileID: 8100464737482688727, guid: 5fc2f6cc114514c498ba5355e3c05dae, type: 3}
+  initialFollowerCount: 1
+  initializeOnStart: 1
 --- !u!1 &6770450666467460752
 GameObject:
   m_ObjectHideFlags: 0
@@ -1478,7 +1527,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc2cde1c025cb2e44be6c8ff23d9d909, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_playerEssencePref: {fileID: 648413426062567378, guid: bae61c482ae4d8847818489c6d79b635, type: 3}
   solidLayer:
     serializedVersion: 2
     m_Bits: 256

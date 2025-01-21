@@ -61,6 +61,7 @@ GameObject:
   - component: {fileID: 1633546501243925418}
   - component: {fileID: 5303564663126060344}
   - component: {fileID: 7308578284294314028}
+  - component: {fileID: 8857996662344938282}
   m_Layer: 30
   m_Name: Fireball
   m_TagString: Untagged
@@ -171,13 +172,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gravity: 0
   damageRadius: 0.2
+  damagePosition: {fileID: 5603553350036381460}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 8192
-  damagePosition: {fileID: 5603553350036381460}
 --- !u!95 &7308578284294314028
 Animator:
   serializedVersion: 5
@@ -198,3 +199,16 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+--- !u!114 &8857996662344938282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3660944233266723326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e612da36a58aff440b4db797dc40cf64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentName: PoolContainer

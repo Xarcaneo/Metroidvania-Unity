@@ -65,6 +65,7 @@ GameObject:
   - component: {fileID: 5375195961680457039}
   - component: {fileID: 9189063681371784612}
   - component: {fileID: -9124422921146538447}
+  - component: {fileID: 1548055269362122733}
   m_Layer: 27
   m_Name: Item Pickup Template
   m_TagString: Item
@@ -180,7 +181,7 @@ MonoBehaviour:
     m_ItemAmount:
       m_Amount: 0
       m_Item:
-        m_ID: 2188786338
+        m_ID: 1950635039
         m_Name: 
         m_ItemDefinitionID: 0
         m_ItemDefinition: {fileID: 0}
@@ -256,6 +257,19 @@ MonoBehaviour:
   m_mode: 0
   m_destroyMode: 0
   m_destroyedVersionPrefab: {fileID: 0}
+--- !u!114 &1548055269362122733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4814415899790352498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e612da36a58aff440b4db797dc40cf64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentName: PoolContainer
 --- !u!1 &4828985783154798544
 GameObject:
   m_ObjectHideFlags: 0

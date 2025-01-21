@@ -1,0 +1,47 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public abstract class FollowerBehavior : MonoBehaviour
+{
+    #region Follower Properties
+    [Header("Follower Settings")]
+    [SerializeField] protected float followSpeed = 5.0f; // Speed of following the target
+    [SerializeField] protected float followDistance = 2.0f; // Distance to maintain from the target
+    [SerializeField] protected float followDelay = 0.5f; // Delay before starting to follow
+
+    protected Transform target;
+    #endregion
+
+    #region Abstract Methods
+    /// <summary>
+    /// Abstract method to define how the follower should follow the target.
+    /// Derived classes must implement this method.
+    /// </summary>
+    /// <param name="target">The target to follow.</param>
+    public abstract void FollowTarget(Transform target);
+
+    /// <summary>
+    /// Sets the target to follow.
+    /// </summary>
+    /// <param name="target">The target transform to follow.</param>
+    public virtual void SetTarget(Transform target)
+    {
+        this.target = target;
+    }
+
+    #endregion
+
+    #region Unity Lifecycle
+    // Optionally, derived classes can override these if needed.
+    protected virtual void Start()
+    {
+        // Initialization logic for derived classes
+    }
+
+    protected virtual void Update()
+    {
+        // Frame-by-frame logic for derived classes
+    }
+    #endregion
+}

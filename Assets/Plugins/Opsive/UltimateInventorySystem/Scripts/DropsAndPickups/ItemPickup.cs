@@ -136,7 +136,7 @@ namespace Opsive.UltimateInventorySystem.DropsAndPickups
         public override void Deactivate()
         {
             UpdateState(m_ItemObject);
-            base.Deactivate();
+            Destroy(gameObject);
         }
 
         /// <summary>

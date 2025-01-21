@@ -76,8 +76,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6094089539860800046}
-  - {fileID: 1590678167247243250}
   - {fileID: 1969349454984799642}
+  - {fileID: 1590678167247243250}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -91,7 +91,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1590678167247243250}
   m_Layer: 0
-  m_Name: DroppedItemsContainer
+  m_Name: PoolContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -110,7 +110,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6094089540204173975}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &7894807665502517610
 PrefabInstance:
@@ -127,9 +127,13 @@ PrefabInstance:
       propertyPath: m_restoreStateOnStart
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7248982880119550244, guid: fd9f083aba16a2f48bdfe5942d8b05bb, type: 3}
+      propertyPath: solidLayer.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
     - target: {fileID: 8564568151800716528, guid: fd9f083aba16a2f48bdfe5942d8b05bb, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8564568151800716528, guid: fd9f083aba16a2f48bdfe5942d8b05bb, type: 3}
       propertyPath: m_LocalPosition.x

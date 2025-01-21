@@ -47,23 +47,6 @@ public class LocationBasedItemDropper : Dropper
     [Tooltip("The current drop table being used")]
     private ItemDropChance[] m_CurrentDrops;
 
-    private static GameObject s_DroppedItemsContainer;
-    private static GameObject DroppedItemsContainer 
-    {
-        get 
-        {
-            if (s_DroppedItemsContainer == null)
-            {
-                s_DroppedItemsContainer = GameObject.Find("DroppedItemsContainer");
-                if (s_DroppedItemsContainer == null)
-                {
-                    s_DroppedItemsContainer = new GameObject("DroppedItemsContainer");
-                    UnityEngine.Object.DontDestroyOnLoad(s_DroppedItemsContainer);
-                }
-            }
-            return s_DroppedItemsContainer;
-        }
-    }
 
     private void Start()
     {
@@ -191,7 +174,6 @@ public class LocationBasedItemDropper : Dropper
                 var position = m_DropTransform != null ? m_DropTransform.position : transform.position;
                 var dropPosition = position + DropOffset();
                 var pickupGameObject = ObjectPool.Instantiate(m_PickUpPrefab, dropPosition, Quaternion.identity);
-                pickupGameObject.transform.SetParent(DroppedItemsContainer.transform);
                 var itemObject = pickupGameObject.GetComponent<ItemObject>();
 
                 if (itemObject != null)

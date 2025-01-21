@@ -40,24 +40,6 @@ namespace Opsive.UltimateInventorySystem.ItemActions
         protected GameObject m_PickUpGameObject;
         public GameObject PickUpGameObject => m_PickUpGameObject;
 
-        private static GameObject s_DroppedItemsContainer;
-        private static GameObject DroppedItemsContainer 
-        {
-            get 
-            {
-                if (s_DroppedItemsContainer == null)
-                {
-                    s_DroppedItemsContainer = GameObject.Find("DroppedItemsContainer");
-                    if (s_DroppedItemsContainer == null)
-                    {
-                        s_DroppedItemsContainer = new GameObject("DroppedItemsContainer");
-                        Object.DontDestroyOnLoad(s_DroppedItemsContainer);
-                    }
-                }
-                return s_DroppedItemsContainer;
-            }
-        }
-
         /// <summary>
         /// Default constructor.
         /// </summary>
@@ -112,7 +94,7 @@ namespace Opsive.UltimateInventorySystem.ItemActions
         public static GameObject DropItem(ItemInfo itemInfo, GameObject prefab, Vector3 position)
         {
             var pickupGameObject = ObjectPool.Instantiate(prefab, position, Quaternion.identity);
-            pickupGameObject.transform.SetParent(DroppedItemsContainer.transform);
+
             var itemObject = pickupGameObject.GetComponent<ItemObject>();
 
             if (itemObject != null) {
