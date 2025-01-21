@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 8100464737482688727}
   - component: {fileID: 395685506972901932}
   - component: {fileID: 1508746814494494529}
+  - component: {fileID: 8253873248682849496}
   m_Layer: 0
-  m_Name: Follower
+  m_Name: Maurice
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -90,7 +91,7 @@ SpriteRenderer:
   m_SortingLayerID: 1302704177
   m_SortingLayer: 6
   m_SortingOrder: 0
-  m_Sprite: {fileID: -737377118, guid: f5562f9b007633543a6ae62c540a9fe5, type: 3}
+  m_Sprite: {fileID: -2066912355, guid: f5562f9b007633543a6ae62c540a9fe5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -114,3 +115,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentName: PoolContainer
+--- !u!95 &8253873248682849496
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6739036395629126802}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
