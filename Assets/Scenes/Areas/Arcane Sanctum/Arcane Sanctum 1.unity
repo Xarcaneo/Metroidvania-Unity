@@ -130,6 +130,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1326687609}
     m_Modifications:
+    - target: {fileID: 1780255190044962477, guid: 3fb448f11a94aca4f9d1fd2b14e749db, type: 3}
+      propertyPath: m_destinationSceneName
+      value: Chamber of Echoes 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1780255190044962477, guid: 3fb448f11a94aca4f9d1fd2b14e749db, type: 3}
+      propertyPath: m_spawnpointNameInDestinationScene
+      value: Vertical Entrance/Exit Point
+      objectReference: {fileID: 0}
     - target: {fileID: 1780255190955042648, guid: 3fb448f11a94aca4f9d1fd2b14e749db, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -188,7 +196,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1780255190955042650, guid: 3fb448f11a94aca4f9d1fd2b14e749db, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8899372542515419004, guid: 3fb448f11a94aca4f9d1fd2b14e749db, type: 3}
       propertyPath: m_LocalPosition.x
@@ -196,7 +204,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8899372542515419004, guid: 3fb448f11a94aca4f9d1fd2b14e749db, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 12.114
+      value: 12.16
       objectReference: {fileID: 0}
     - target: {fileID: 8899372542515419004, guid: 3fb448f11a94aca4f9d1fd2b14e749db, type: 3}
       propertyPath: m_LocalPosition.z
