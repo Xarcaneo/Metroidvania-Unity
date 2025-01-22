@@ -1,3 +1,4 @@
+using PixelCrushers.DialogueSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -36,6 +37,12 @@ public class PlayerSpawnedState : PlayerState
     /// </summary>
     private CollisionSenses CollisionSenses { get => collisionSenses ?? core.GetCoreComponent(ref collisionSenses); }
     private CollisionSenses collisionSenses;
+
+    /// <summary>
+    /// Reference to the FollowerManager component, lazily loaded
+    /// </summary>
+    private FollowerManager FollowerManager => followerManager ?? core.GetCoreComponent(ref followerManager);
+    private FollowerManager followerManager;
     #endregion
 
     /// <summary>
@@ -48,6 +55,23 @@ public class PlayerSpawnedState : PlayerState
     public PlayerSpawnedState(Player player, StateMachine stateMachine, PlayerData playerData, string animBoolName) 
         : base(player, stateMachine, playerData, animBoolName)
     {
+    }
+
+    /// <summary>
+    /// Called when exiting the state
+    /// </summary>
+    /// <remarks>
+    /// Cleans up the blocking state by:
+    /// 1. Calling base class Exit method
+    /// 2. Any additional block-specific cleanup can be added here
+    /// </remarks>
+    public override void Exit()
+    {
+        base.Exit();
+
+        bool hasFollower = DialogueLua.GetVariable("Player.HasFollower").asBool;
+        if(hasFollower)
+            FollowerManager?.AddFollower();
     }
 
     /// <summary>

@@ -6,6 +6,7 @@ public class FollowerManager : CoreComponent
     #region Follower Management
     [Header("Follower Settings")]
     [SerializeField] private Transform target; // The target that followers will follow
+    [SerializeField] private Transform scaleTarget; // The target transform to track scale for followers
     [SerializeField] private FollowerBehavior followerPrefab; // Prefab for the follower object
     [SerializeField] private int initialFollowerCount = 5; // Initial number of followers to instantiate
     [SerializeField] private bool initializeOnStart = true; // Flag to determine if followers are initialized on start
@@ -32,6 +33,9 @@ public class FollowerManager : CoreComponent
     #endregion
 
     #region Follower Initialization
+    /// <summary>
+    /// Initializes the specified number of followers.
+    /// </summary>
     private void InitializeFollowers()
     {
         for (int i = 0; i < initialFollowerCount; i++)
@@ -41,18 +45,21 @@ public class FollowerManager : CoreComponent
     }
 
     /// <summary>
-    /// Instantiates a new follower and adds it to the list.
+    /// Instantiates a new follower, sets its target and scale target, and adds it to the list.
     /// </summary>
     public void AddFollower()
     {
         FollowerBehavior newFollower = Instantiate(followerPrefab, transform);
         followers.Add(newFollower);
 
-        // If a target is assigned, set it for the follower
-        FollowerBehavior followerComponent = newFollower.GetComponent<FollowerBehavior>();
-        if (followerComponent != null && target != null)
+        // Set the target and scale target for the new follower
+        if (newFollower != null)
         {
-            followerComponent.SetTarget(target);
+            if (target != null)
+                newFollower.SetTarget(target);
+
+            if (scaleTarget != null)
+                newFollower.SetScaleTarget(scaleTarget);
         }
     }
 
@@ -65,7 +72,7 @@ public class FollowerManager : CoreComponent
         if (followers.Contains(follower))
         {
             followers.Remove(follower);
-            Destroy(follower);
+            Destroy(follower.gameObject);
         }
     }
     #endregion
@@ -78,7 +85,7 @@ public class FollowerManager : CoreComponent
     {
         foreach (FollowerBehavior follower in followers)
         {
-            Destroy(follower);
+            Destroy(follower.gameObject);
         }
         followers.Clear();
     }

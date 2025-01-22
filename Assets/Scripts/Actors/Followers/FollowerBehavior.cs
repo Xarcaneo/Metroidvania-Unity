@@ -1,7 +1,9 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Abstract base class for implementing following behavior.
+/// </summary>
 public abstract class FollowerBehavior : MonoBehaviour
 {
     #region Follower Properties
@@ -9,6 +11,8 @@ public abstract class FollowerBehavior : MonoBehaviour
     [SerializeField] protected float followSpeed = 5.0f; // Speed of following the target
     [SerializeField] protected float followDistance = 2.0f; // Distance to maintain from the target
     [SerializeField] protected float followDelay = 0.5f; // Delay before starting to follow
+
+    protected Transform targetToTrackScale; // Transform to track for scale synchronization
 
     protected Transform target;
     #endregion
@@ -30,6 +34,14 @@ public abstract class FollowerBehavior : MonoBehaviour
         this.target = target;
     }
 
+    /// <summary>
+    /// Sets the transform whose scale will be tracked.
+    /// </summary>
+    /// <param name="scaleTarget">The target transform for scale tracking.</param>
+    public virtual void SetScaleTarget(Transform scaleTarget)
+    {
+        targetToTrackScale = scaleTarget;
+    }
     #endregion
 
     #region Unity Lifecycle

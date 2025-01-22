@@ -12,7 +12,6 @@ public class AutoSetParent : MonoBehaviour
 
     private void OnEnable()
     {
-        Debug.Log("enabled");
         SetParent();
     }
 

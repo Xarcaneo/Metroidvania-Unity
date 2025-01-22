@@ -74,25 +74,12 @@ public class PlayerFollower : FollowerBehavior
             // Gradually move towards the desired position
             transform.position = Vector3.Lerp(transform.position, desiredPosition, followSpeed * Time.deltaTime);
 
-            // Ensure the follower faces the same direction as the target
-            Vector3 directionToTarget = (target.position - transform.position).normalized;
-            if (directionToTarget.x != 0)
+            // Synchronize follower's scale with the target's scale if provided
+            if (targetToTrackScale != null)
             {
                 Vector3 localScale = transform.localScale;
-                localScale.x = Mathf.Abs(localScale.x) * (directionToTarget.x > 0 ? 1 : -1);
+                localScale.x = Mathf.Abs(localScale.x) * Mathf.Sign(targetToTrackScale.localScale.x);
                 transform.localScale = localScale;
-            }
-
-            // Check if within followDistance and the target isn't moving significantly
-            if (Vector2.Distance(new Vector2(transform.position.x, transform.position.y),
-                                  new Vector2(desiredPosition.x, desiredPosition.y)) <= followDistance)
-            {
-                // Break the loop only if the target stops and we're close enough
-                if (target.hasChanged == false)
-                {
-                    followCoroutine = null;
-                    yield break;
-                }
             }
 
             yield return null; // Wait until the next frame
