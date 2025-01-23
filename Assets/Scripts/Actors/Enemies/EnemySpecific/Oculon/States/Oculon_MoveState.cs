@@ -47,6 +47,8 @@ public class Oculon_MoveState : MoveState
     /// </summary>
     public override void PhysicsUpdate()
     {
+        DoChecks();
+
         Vector2 currentPosition = enemy.transform.position;
         Vector2 targetPosition = targetPoints[targetPointIndex].position;
 
