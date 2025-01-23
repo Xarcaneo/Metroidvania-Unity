@@ -595,9 +595,14 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Welcome to the fortress! I have been waiting for you eagerly. Unfortunately,
-          I couldn't greet you personally. I am waiting in a safe place, in my chamber.
-          I will be expecting your arrival in the further part of the fortress.
+        value: "Welcome to the fortress! I have been waiting for you eagerly. Unfortunately,
+          I couldn't greet you personally. The demons that have overrun the fortress
+          make it too dangerous for me to leave my chamber. I am waiting in a safe
+          place, deep within my chamber, which is secured against their intrusion.
+          I will be expecting your arrival in the further part of the fortress. Please
+          tread carefully\u2014while the way to my chamber should be relatively safe,
+          there are still a few demons you might encounter in certain areas. Time
+          is of the essence, as every moment counts in addressing this dire situation."
         type: 0
         typeString: CustomFieldType_Text
       - title: Parenthetical
@@ -617,10 +622,9 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: pl
-        value: "Witaj w twierdzy! Oczekiwa\u0142em Ci\u0119 z niecierpliwo\u015Bci\u0105,
-          niestety nie mog\u0142em przywita\u0107 Ci\u0119 osobi\u015Bcie. Czekam
-          w bezpiecznym miejscu, w mojej komnacie. B\u0119d\u0119 oczekiwa\u0142
-          Twojego przybycia w dalszej cz\u0119\u015Bci twierdzy."
+        value: '
+
+'
         type: 4
         typeString: CustomFieldType_Localization
       - title: Response Menu Sequence
@@ -1474,8 +1478,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 0}
-    canvasZoom: 0.7900002
+    canvasScrollPosition: {x: 136.3755, y: 46.985306}
+    canvasZoom: 1.2099998
   - id: 2
     fields:
     - title: Title
