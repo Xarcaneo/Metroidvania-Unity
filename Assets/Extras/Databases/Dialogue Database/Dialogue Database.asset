@@ -564,8 +564,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 300
-        y: 20
+        x: 392
+        y: 50
         width: 160
         height: 30
     - id: 17
@@ -595,9 +595,14 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Welcome to the fortress! I have been waiting for you eagerly. Unfortunately,
-          I couldn't greet you personally. I am waiting in a safe place, in my chamber.
-          I will be expecting your arrival in the further part of the fortress.
+        value: "Welcome to the fortress! I have been waiting for you eagerly. Unfortunately,
+          I couldn't greet you personally. The demons that have overrun the fortress
+          make it too dangerous for me to leave my chamber. I am waiting in a safe
+          place, deep within my chamber, which is secured against their intrusion.
+          I will be expecting your arrival in the further part of the fortress. Please
+          tread carefully\u2014while the way to my chamber should be relatively safe,
+          there are still a few demons you might encounter in certain areas. Time
+          is of the essence, as every moment counts in addressing this dire situation."
         type: 0
         typeString: CustomFieldType_Text
       - title: Parenthetical
@@ -617,10 +622,9 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: pl
-        value: "Witaj w twierdzy! Oczekiwa\u0142em Ci\u0119 z niecierpliwo\u015Bci\u0105,
-          niestety nie mog\u0142em przywita\u0107 Ci\u0119 osobi\u015Bcie. Czekam
-          w bezpiecznym miejscu, w mojej komnacie. B\u0119d\u0119 oczekiwa\u0142
-          Twojego przybycia w dalszej cz\u0119\u015Bci twierdzy."
+        value: '
+
+'
         type: 4
         typeString: CustomFieldType_Localization
       - title: Response Menu Sequence
@@ -648,8 +652,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 305.1546
-        y: 71.030914
+        x: 392
+        y: 134
         width: 160
         height: 30
     - id: 18
@@ -727,8 +731,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 30
-        y: 218.96909
+        x: 80
+        y: 386
         width: 160
         height: 30
     - id: 19
@@ -806,8 +810,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 210
-        y: 220
+        x: 288
+        y: 386
         width: 160
         height: 30
     - id: 20
@@ -885,8 +889,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 390
-        y: 220
+        x: 496
+        y: 386
         width: 160
         height: 30
     - id: 21
@@ -916,9 +920,12 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: The rift we were guarding was opened for unknown reasons. The fortress
-          has been taken over by demons from the void. I will tell you more when
-          you reach me.
+        value: The rift we were guarding was opened for unknown reasons. This breach
+          allowed demons from the void to flood the fortress. We were unprepared
+          for such an onslaught, and many were either killed or forced to flee to
+          safer areas. I managed to secure myself in my chamber, but the rest of
+          the fortress remains overrun. I will share more details once you reach
+          me, as we must act quickly to contain this crisis.
         type: 0
         typeString: CustomFieldType_Text
       - title: Parenthetical
@@ -938,9 +945,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: pl
-        value: "Szczelina, kt\xF3rej pilnowali\u015Bmy, z niewiadomych przyczyn zosta\u0142a
-          otwarta. Forteca zosta\u0142a opanowana przez demony z pustki. Wi\u0119cej
-          powiem Ci, gdy do mnie dotrzesz."
+        value: 
         type: 4
         typeString: CustomFieldType_Localization
       - title: Response Menu Sequence
@@ -968,8 +973,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 30
-        y: 270
+        x: 80
+        y: 470
         width: 160
         height: 30
     - id: 22
@@ -1065,8 +1070,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 300
-        y: 320
+        x: 392
+        y: 302
         width: 160
         height: 30
     - id: 23
@@ -1097,7 +1102,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Dialogue Text
         value: Keep going deeper into the fortress; you definitely won't miss my
-          chamber.
+          chamber. There is a sign further inside the fortress that will direct you
+          to it. Stay cautious and follow the path indicated.
         type: 0
         typeString: CustomFieldType_Text
       - title: Parenthetical
@@ -1146,8 +1152,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 210
-        y: 270
+        x: 288
+        y: 470
         width: 160
         height: 30
     - id: 24
@@ -1178,7 +1184,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Dialogue Text
         value: The path to my chamber should be fairly safe; you might encounter
-          a few demons.
+          a few demons, but they are scattered and unlikely to pose a significant
+          threat. Just remain vigilant and avoid unnecessary risks.
         type: 0
         typeString: CustomFieldType_Text
       - title: Parenthetical
@@ -1227,8 +1234,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 387.46835
-        y: 273.79745
+        x: 496
+        y: 470
         width: 160
         height: 30
     - id: 25
@@ -1307,8 +1314,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 570
-        y: 220
+        x: 704
+        y: 386
         width: 160
         height: 30
     - id: 26
@@ -1380,8 +1387,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 570
-        y: 270
+        x: 704
+        y: 470
         width: 160
         height: 30
     - id: 27
@@ -1469,13 +1476,13 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 300
-        y: 120
+        x: 392
+        y: 218
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 0}
-    canvasZoom: 0.7900002
+    canvasScrollPosition: {x: 35.29413, y: 15.294098}
+    canvasZoom: 0.85
   - id: 2
     fields:
     - title: Title
@@ -1771,7 +1778,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 30
+        x: 31
         y: 119
         width: 160
         height: 30
@@ -2096,10 +2103,12 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: You made it! Now we can talk. The rift you created a few years ago
-          has served us well all this time. However, recently something happened
-          that caused it to open again. So far, we have no information on what might
-          have caused this.
+        value: "You made it, Victor! Now we can finally talk. The rift you helped
+          create a few years ago has served as a powerful barrier, keeping the demons
+          at bay all this time. However, something has happened\u2014something we
+          couldn\u2019t foresee\u2014that caused it to open again. We have no information
+          yet on what might have triggered this event, but it has already started
+          to endanger the entire fortress."
         type: 0
         typeString: CustomFieldType_Text
       - title: Parenthetical
@@ -2185,9 +2194,10 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: We learned from other wizards that some magical anomaly appeared in
-          the ancient crypt. I think you should go there and investigate what exactly
-          is happening.
+        value: "From what we\u2019ve learned through our surviving wizards, a magical
+          anomaly has appeared in the ancient crypt. This anomaly seems to be connected
+          to the rift\u2019s instability. I believe you are the only one who can
+          investigate this and help us understand what\u2019s happening."
         type: 0
         typeString: CustomFieldType_Text
       - title: Parenthetical
@@ -2269,10 +2279,13 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Together with the entire circle of wizards, we know that you lost
-          your magical abilities when you created the rift a few years ago. However,
-          we know that you have skills that can help us in the investigation. You
-          have vast knowledge and close combat abilities.
+        value: " I know you lost your magical abilities when you locked the rift
+          years ago, and you left to hone your combat and agility skills. While your
+          magic is gone, your expertise in close combat and your vast knowledge of
+          our circle\u2019s practices make you uniquely suited for this task. Additionally,
+          the void particles scattered through the fortress as a result of the rift\u2019s
+          breach might present an opportunity to regain your magical powers. This
+          is your chance to reclaim what you\u2019ve lost and help us restore order."
         type: 0
         typeString: CustomFieldType_Text
       - title: Parenthetical
@@ -2314,7 +2327,7 @@ MonoBehaviour:
       - originConversationID: 3
         originDialogueID: 4
         destinationConversationID: 3
-        destinationDialogueID: 5
+        destinationDialogueID: 18
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -2422,7 +2435,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 392
-        y: 386
+        y: 470
         width: 160
         height: 30
     - id: 6
@@ -2501,7 +2514,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 80
-        y: 470
+        y: 554
         width: 160
         height: 30
     - id: 7
@@ -2581,7 +2594,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 288
-        y: 470
+        y: 554
         width: 160
         height: 30
     - id: 8
@@ -2660,7 +2673,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 496
-        y: 470
+        y: 554
         width: 160
         height: 30
     - id: 9
@@ -2739,7 +2752,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 704
-        y: 470
+        y: 554
         width: 160
         height: 30
     - id: 10
@@ -2769,8 +2782,9 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: I only have this one elixir of life. Unfortunately, I can't help you
-          more.
+        value: I only have this one elixir of life. It will restore you if you are
+          gravely injured. Unfortunately, I can't spare anything else, as our supplies
+          have been severely diminished due to the demon incursion. Use it wisely.
         type: 0
         typeString: CustomFieldType_Text
       - title: Parenthetical
@@ -2820,7 +2834,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 496
-        y: 554
+        y: 638
         width: 160
         height: 30
     - id: 11
@@ -2850,8 +2864,9 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: It seems it won't be soon. I know that the alchemist wants to meet
-          you once you finish the investigation in the ancient crypt.
+        value: It seems it won't be soon. The others are scattered or in hiding due
+          to the demons. However, I do know that the alchemist wants to meet you
+          once you finish the investigation in the ancient crypt.
         type: 0
         typeString: CustomFieldType_Text
       - title: Parenthetical
@@ -2871,9 +2886,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: pl
-        value: "Wygl\u0105da na to, \u017Ce nie pr\u0119dko. Wiem, \u017Ce alchemiczka
-          chce si\u0119 z tob\u0105 widzie\u0107, gdy zako\u0144czysz dochodzenie
-          w staro\u017Cytnej krypcie."
+        value: 
         type: 4
         typeString: CustomFieldType_Localization
       - title: Response Menu Sequence
@@ -2902,7 +2915,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 80
-        y: 554
+        y: 638
         width: 160
         height: 30
     - id: 12
@@ -2932,8 +2945,11 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: We don't have much information. No one has visited that area since
-          the death of your friend who went there 10 years ago.
+        value: "We don't have much information. Your friend went there recently to
+          investigate some unusual magical disturbances, but the fortress became
+          too dangerous before we could follow or check on him. The increasing demon
+          activity has made it impossible to send anyone else. Whatever happened
+          to him remains unknown, but it\u2019s crucial we uncover the truth now."
         type: 0
         typeString: CustomFieldType_Text
       - title: Parenthetical
@@ -2953,9 +2969,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: pl
-        value: "Nie mamy zbyt wiele informacji. Nikt nie odwiedza\u0142 tamtego rejonu
-          od czasu \u015Bmierci twojego przyjaciela, kt\xF3ry uda\u0142 si\u0119
-          tam 10 lat temu."
+        value: 
         type: 4
         typeString: CustomFieldType_Localization
       - title: Response Menu Sequence
@@ -2984,7 +2998,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 288
-        y: 554
+        y: 638
         width: 160
         height: 30
     - id: 13
@@ -3014,7 +3028,9 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Take this key with you to open the gate further inside the fortress.
+        value: "Take this key. It will allow you to access the ancient crypt. Please,
+          tread carefully, and remember\u2014the fortress and its people are depending
+          on you. Good luck!"
         type: 0
         typeString: CustomFieldType_Text
       - title: Parenthetical
@@ -3058,7 +3074,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 704
-        y: 722
+        y: 806
         width: 160
         height: 30
     - id: 14
@@ -3137,7 +3153,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 496
-        y: 638
+        y: 722
         width: 160
         height: 30
     - id: 15
@@ -3216,7 +3232,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 496
-        y: 722
+        y: 806
         width: 160
         height: 30
     - id: 16
@@ -3295,7 +3311,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 704
-        y: 554
+        y: 638
         width: 160
         height: 30
     - id: 17
@@ -3374,12 +3390,93 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 704
-        y: 638
+        y: 722
+        width: 160
+        height: 30
+    - id: 18
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Pictures
+        value: '[]'
+        type: 3
+        typeString: CustomFieldType_Files
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 3
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: "Take this key. It will allow you to access the ancient crypt. Please,
+          tread carefully, and remember\u2014the fortress and its people are depending
+          on you."
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Parenthetical
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Audio Files
+        value: '[]'
+        type: 3
+        typeString: CustomFieldType_Files
+      - title: Video File
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: pl
+        value: 
+        type: 4
+        typeString: CustomFieldType_Localization
+      - title: Response Menu Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 3
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 3
+        originDialogueID: 18
+        destinationConversationID: 3
+        destinationDialogueID: 5
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 392
+        y: 386
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 114.022575, y: 385.59024}
-    canvasZoom: 0.82000005
+    canvasScrollPosition: {x: 1.5625, y: 210.93741}
+    canvasZoom: 0.6400002
   - id: 4
     fields:
     - title: Title
@@ -3754,7 +3851,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 30
+        x: 34.395607
         y: 70
         width: 160
         height: 30
@@ -3909,7 +4006,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: 2
+        value: 4
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -3965,7 +4062,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 392
+        x: 496
         y: 50
         width: 160
         height: 30
@@ -3996,10 +4093,11 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: I am a lost soul, one of many in this fortress. My body was defiled
-          by a necromancer who once lived in this part of the castle. He cast a curse
-          on me and sealed me in my old rag doll. Will you help lift the curse and
-          bring me peace?
+        value: "I am a lost soul, one of many wandering this fortress. My body was
+          defiled by a necromancer who once dwelled in this part of the castle. He
+          cursed me and bound my spirit to my old rag doll, trapping me in this torment.
+          Please, will you help lift the curse and grant me the peace I\u2019ve long
+          yearned for?"
         type: 0
         typeString: CustomFieldType_Text
       - title: Parenthetical
@@ -4052,7 +4150,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 392
+        x: 496
         y: 134
         width: 160
         height: 30
@@ -4393,8 +4491,9 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Like most necromancers, he was a sick and degenerate wizard, performing
-          experiments on dead beings.
+        value: He was a sick and degenerate wizard, obsessed with his twisted experiments
+          on the dead. He saw me as nothing more than a test subject for his dark
+          magic, using my soul to fuel his grotesque creations.
         type: 0
         typeString: CustomFieldType_Text
       - title: Parenthetical
@@ -4475,8 +4574,9 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: His doll is somewhere nearby, I can feel its energy around his old
-          notes in a room not far from here.
+        value: "The rag doll is somewhere nearby. I can feel its energy emanating
+          from the necromancer\u2019s old study, a room not far from here. Be cautious\u2014the
+          area may still be tainted by his dark magic."
         type: 0
         typeString: CustomFieldType_Text
       - title: Parenthetical
@@ -4556,7 +4656,8 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Thank you, I will reward you for your help.
+        value: You have no idea what this means to me. I promise I will reward you
+          for your kindness once the curse is lifted.
         type: 0
         typeString: CustomFieldType_Text
       - title: Parenthetical
@@ -4599,7 +4700,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 496
-        y: 552.68427
+        y: 554
         width: 160
         height: 30
     - id: 21
@@ -4688,6 +4789,12 @@ MonoBehaviour:
         destinationDialogueID: 17
         isConnector: 0
         priority: 2
+      - originConversationID: 5
+        originDialogueID: 21
+        destinationConversationID: 5
+        destinationDialogueID: 24
+        isConnector: 0
+        priority: 2
       conditionsString: 
       userScript: 
       onExecute:
@@ -4695,7 +4802,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 392
+        x: 496
         y: 218
         width: 160
         height: 30
@@ -4857,9 +4964,171 @@ MonoBehaviour:
         y: 470
         width: 160
         height: 30
+    - id: 24
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Pictures
+        value: '[]'
+        type: 3
+        typeString: CustomFieldType_Files
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 4
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: Why did the other wizards allow that?
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Parenthetical
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Audio Files
+        value: '[]'
+        type: 3
+        typeString: CustomFieldType_Files
+      - title: Video File
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: pl
+        value: 
+        type: 4
+        typeString: CustomFieldType_Localization
+      - title: Response Menu Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 5
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 5
+        originDialogueID: 24
+        destinationConversationID: 5
+        destinationDialogueID: 25
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 912
+        y: 302
+        width: 160
+        height: 30
+    - id: 25
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Pictures
+        value: '[]'
+        type: 3
+        typeString: CustomFieldType_Files
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 4
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: "The necromancer hid his true nature well, masking his dark experiments
+          under the guise of advancing magical knowledge. By the time his actions
+          were uncovered, it was too late\u2014he had grown too powerful, and many
+          feared confronting him directly. Some tried to stop him, but they either
+          failed or disappeared, leaving the rest of us to suffer under his cruelty."
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Parenthetical
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Audio Files
+        value: '[]'
+        type: 3
+        typeString: CustomFieldType_Files
+      - title: Video File
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: pl
+        value: 
+        type: 4
+        typeString: CustomFieldType_Localization
+      - title: Response Menu Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 5
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 5
+        originDialogueID: 25
+        destinationConversationID: 5
+        destinationDialogueID: 21
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 912
+        y: 386
+        width: 160
+        height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 13.157898, y: 39.473663}
-    canvasZoom: 0.7600002
+    canvasScrollPosition: {x: 148.66968, y: 103.802765}
+    canvasZoom: 0.7000003
   - id: 6
     fields:
     - title: Title
@@ -6690,8 +6959,9 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Return to me when you discover the secrets hidden within the ancient
-          crypt.
+        value: "Return to me when you discover the secrets hidden within the ancient
+          crypt. Only then can we determine our next course of action. Stay safe,
+          Victor, and don\u2019t take unnecessary risks."
         type: 0
         typeString: CustomFieldType_Text
       - title: Parenthetical
@@ -6740,7 +7010,7 @@ MonoBehaviour:
         height: 30
     entryGroups: []
     canvasScrollPosition: {x: 0, y: 0}
-    canvasZoom: 1
+    canvasZoom: 0.85000014
   - id: 10
     fields:
     - title: Title
@@ -7108,10 +7378,10 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: "<i>(Loud, maniacal tone)</i> HEY! HEY YOU! YES, YOU, WITH THE FLESHY
-          FACE! FINALLY, A VISITOR! I\u2019ve been stuck here for AGES! Ages, I tell
-          you! Hoo-boy, the things I\u2019ve seen. And smelt. You won\u2019t believe
-          it!"
+        value: "<color=#4FA5A2>[Loud, maniacal tone]</color> HEY! HEY YOU! YES, YOU,
+          WITH THE FLESHY FACE! FINALLY, A VISITOR! I\u2019ve been stuck here for
+          AGES! Ages, I tell you! Hoo-boy, the things I\u2019ve seen. And smelt.
+          You won\u2019t believe it!\n\n"
         type: 0
         typeString: CustomFieldType_Text
       - title: Parenthetical
@@ -7357,7 +7627,9 @@ MonoBehaviour:
         value: "Who am I? WHO AM I? I\u2019m the unlucky sap who got chained to this
           wall by a loony necromancer with a \u2018creative\u2019 sense of humor!
           Brought me back to life JUST to suffer. He called it \u2018art.\u2019 HA!
-          ART! I call it pure torture with a side of insanity fries!"
+          ART! I call it pure torture with a side of insanity fries!\n\n<color=#4FA5A2>[Maurice
+          throws his head back and cackles maniacally before glaring at you]</color>
+          Torture doesn\u2019t even begin to describe it!"
         type: 0
         typeString: CustomFieldType_Text
       - title: Parenthetical
@@ -7436,10 +7708,14 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: "Who am I? WHO AM I? Oh, you sweet, naive sack of bones and meat\u2014I'm
-          the one and only Edgar Von Bonebottom! Yes, that\u2019s right! Former sorcerer
-          extraordinaire, now part-time wall decoration and full-time lunatic! But
-          seriously, I\u2019ve been here WAY too long. You got any snacks?"
+        value: "<color=#4FA5A2>[Maurice pauses, then bursts into laughter, shaking
+          his chained skull]</color> HELP? Oh, that\u2019s rich! Coming from a fleshy
+          little mortal like you! Let me guess, you\u2019re here to save the day?
+          Fix all the problems? Well, congratulations\u2014you\u2019ve found the
+          BIGGEST problem of them all: ME!\n\n<color=#4FA5A2>[His laughter fades
+          into a low, menacing chuckle]</color> But seriously, you\u2019re not wrong.
+          I do need help. Preferably before I lose what\u2019s left of my mind\u2026
+          if I haven\u2019t already!"
         type: 0
         typeString: CustomFieldType_Text
       - title: Parenthetical
@@ -7488,7 +7764,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 704
-        y: 386
+        y: 384.7342
         width: 160
         height: 30
     - id: 6
@@ -7518,9 +7794,9 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: "<i>Suddenly stops and leans forward as much as the chains allow,
-          squinting at the player</i> Wait... wait a second. That face... That smell...
-          THAT HAIR!\t"
+        value: <color=#4FA5A2>[Suddenly stops and leans forward as much as the chains
+          allow, squinting at the player]</color> Wait... wait a second. That face...
+          That smell... THAT HAIR!
         type: 0
         typeString: CustomFieldType_Text
       - title: Parenthetical
@@ -7599,8 +7875,8 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: "<i>Gasps dramatically</i> It\u2019s YOU! VICTOR! My old buddy, my
-          pal, my comrade-in-chaos! I\u2019d recognize that brooding expression anywhere!"
+        value: "It\u2019s YOU! VICTOR! My old buddy, my pal, my comrade-in-chaos!
+          I\u2019d recognize that brooding expression anywhere!"
         type: 0
         typeString: CustomFieldType_Text
       - title: Parenthetical
@@ -7843,10 +8119,13 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: <i>Mock disbelief</i> How do I know your name? Victor, you absolute
-          turnip! We were best friends! Partners in crime! Do you have any idea how
-          many plans we hatched together before you went AWOL? Too many to count!
-          And now you pretend not to know me? Oh, the betrayal!
+        value: "<color=#4FA5A2>[Mock disbelief]</color> How do I know your name?
+          Victor, you absolute turnip! We were best friends! Partners in crime! Do
+          you have any idea how many plans we hatched together before you went AWOL?
+          Too many to count!\n\n<color=#4FA5A2>[Maurice dramatically throws his head
+          back, pretending to faint]</color> And now you pretend not to know me?
+          Oh, the betrayal! The sheer audacity! My poor, bony heart can\u2019t take
+          it!"
         type: 0
         typeString: CustomFieldType_Text
       - title: Parenthetical
@@ -7925,11 +8204,12 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: "<i>Dramatically gasps</i> \"Wrong guy?! WRONG GUY?! Victor, you really
-          wound me! Metaphorically, of course\u2014I\u2019m already all bones, so
-          no actual wounding left to do. But you can\u2019t fool me, buddy. That\u2019s
+        value: "<color=#4FA5A2>[Dramatically gasps]</color> Wrong guy?! WRONG GUY?!
+          Victor, you really wound me! Metaphorically, of course\u2014I\u2019m already
+          all bones, so no actual wounding left to do.\n\n<color=#4FA5A2>[He points
+          a bony finger at you]</color> But you can\u2019t fool me, buddy. That\u2019s
           your face, your voice, and your \u2018I\u2019m better than this place\u2019
-          attitude!"
+          attitude! It\u2019s unmistakable!"
         type: 0
         typeString: CustomFieldType_Text
       - title: Parenthetical
@@ -8008,12 +8288,13 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: "<i>Suddenly serious</i> Victor... don\u2019t tell me you\u2019ve
-          forgotten me. I\u2019m Maurice! Maurice the Magnificent! Your brilliant,
-          daring, devilishly handsome\u2014well, I was handsome\u2014partner in all
-          things magical and ridiculous! We ruled this fortress together before you
-          disappeared! And now, look at me\u2014reduced to a pile of bones, chained
-          to a wall, thanks to that wretched necromancer."
+        value: "<color=#4FA5A2>[Suddenly serious]</color> Victor... don\u2019t tell
+          me you\u2019ve forgotten me. I\u2019m Maurice! Maurice the Magnificent!
+          Your brilliant, daring, devilishly handsome\u2014well, I was handsome\u2014partner
+          in all things magical and ridiculous!\n\n<color=#4FA5A2>[He gestures weakly
+          with his chained hands]</color> We ruled this fortress together before
+          you disappeared! And now, look at me\u2014reduced to a pile of bones, chained
+          to a wall, thanks to that wretched necromancer. The audacity of it all!"
         type: 0
         typeString: CustomFieldType_Text
       - title: Parenthetical
@@ -8256,11 +8537,13 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: "<i>Offended</i> Dead? Pfft! That would\u2019ve been a mercy! No,
-          no, Victor, I\u2019m much worse than dead. The necromancer didn\u2019t
-          just kill me\u2014oh no! He brought me back as this skeletal masterpiece
-          to suffer eternally. Isn\u2019t it grand? And where were you when I needed
-          help, huh?"
+        value: "<color=#4FA5A2>[Offended]</color> Dead? Pfft! That would\u2019ve
+          been a mercy! No, no, Victor, I\u2019m much worse than dead. The necromancer
+          didn\u2019t just kill me\u2014oh no! He brought me back as this skeletal
+          masterpiece to suffer eternally.\n\n<color=#4FA5A2>[He gestures dramatically
+          to his bony form]</color> Isn\u2019t it grand? And where were you when
+          I needed help, huh? Off gallivanting somewhere while I was stuck here,
+          rotting away... figuratively, of course!"
         type: 0
         typeString: CustomFieldType_Text
       - title: Parenthetical
@@ -8309,7 +8592,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 80
-        y: 974
+        y: 972.6301
         width: 160
         height: 30
     - id: 16
@@ -8339,10 +8622,11 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: <i>Smugly</i> Ah, so you DO remember! Yes, the Maurice! Maurice the
-          Magnificent, the Master of Mayhem, the Sultan of Spectacle! Oh, I see that
-          glimmer of recognition. Took you long enough. Now, how about getting me
-          out of this mess?
+        value: "<color=#4FA5A2>[Smugly]</color> Ah, so you DO remember! Yes, the
+          Maurice! Maurice the Magnificent, the Master of Mayhem, the Sultan of Spectacle!\n\n<color=#4FA5A2>[He
+          tilts his skull proudly]</color> Oh, I see that glimmer of recognition.
+          Took you long enough. Now, how about getting me out of this mess? It\u2019s
+          not exactly cozy being chained to a wall, you know!"
         type: 0
         typeString: CustomFieldType_Text
       - title: Parenthetical
@@ -8501,10 +8785,11 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: "<i>Excitedly</i> Oh, Victor, you glorious bag of flesh and regrets!
-          You won\u2019t regret this. Well, you might, but I sure won\u2019t! The
-          Loyal Servant, huh? Haven\u2019t seen him in a while. Still as stoic as
-          ever, I bet."
+        value: "<color=#4FA5A2>[Excitedly]</color> Oh, Victor, you glorious bag of
+          flesh and regrets! You won\u2019t regret this. Well, you might, but I sure
+          won\u2019t!\n\n<color=#4FA5A2>[He grins mischievously]</color> The Loyal
+          Servant, huh? Haven\u2019t seen him in a while. Still as stoic as ever,
+          I bet. Always the serious type\u2014this is going to be fun!"
         type: 0
         typeString: CustomFieldType_Text
       - title: Parenthetical
@@ -8741,10 +9026,15 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: "<i>Suddenly inspired</i> But wait! Why bother walking through all
-          these dreadful corridors? What if... I still have some of my magic? Aha!
-          I\u2019ll teleport us straight out of this Arcane Sanctum! Easy peasy...
-          probably."
+        value: "<color=#4FA5A2>[Maurice suddenly notices the faint glow emanating
+          from the void particle nearby]</color> Wait a second... That glow! That\u2019s
+          the void particle I\u2019ve been sensing!\n\n<color=#4FA5A2>[He leans forward,
+          his eye sockets practically glowing with excitement]</color> That explains
+          it! No wonder the wizards felt something strange here. That particle must
+          hold some serious power\u2014it\u2019s probably enough to reawaken part
+          of your magic!\n\nVictor, once you\u2019ve got it,<color=#28406B>open your
+          spellbook and try teleporting us out of here!</color> That spell might
+          be all you can manage for now, but it\u2019s enough to get us to safety."
         type: 0
         typeString: CustomFieldType_Text
       - title: Parenthetical
@@ -8823,7 +9113,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: "Wait\u2014probably?"
+        value: Why only that spell?
         type: 0
         typeString: CustomFieldType_Text
       - title: Parenthetical
@@ -8872,7 +9162,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 80
-        y: 1478
+        y: 1476.4375
         width: 160
         height: 30
     - id: 23
@@ -8902,7 +9192,10 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: 
+        value: "<color=#4FA5A2>[Shrugs dramatically]</color> The void particles are
+          unstable\u2014they\u2019re giving you just enough power to tap into your
+          old magic, but not enough for anything complex. Be grateful, Victor! A
+          teleport spell is better than nothing."
         type: 0
         typeString: CustomFieldType_Text
       - title: Parenthetical
@@ -8981,12 +9274,13 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: "<i>Pausing for dramatic effect</i> Wait a second... hold on... am
-          I just a floating skull now? Hah! Oh, Victor, this is rich! No arms, no
-          legs, no torso\u2014just pure, concentrated genius floating through the
-          air!\n\n<i>Laughing maniacally</i> Oh, the necromancer thought he\u2019d
-          break me with this? Joke\u2019s on him! Less body means less to slow me
-          down. Watch out world\u2014Maurice the Flying Skull is coming for you!"
+        value: "<color=#4FA5A2>[Pausing for dramatic effect]</color> Wait a second...
+          hold on... am I just a floating skull now? Hah! Oh, Victor, this is rich!
+          No arms, no legs, no torso\u2014just pure, concentrated genius floating
+          through the air!\n\n<color=#4FA5A2>[Laughing maniacally]</color> Oh, the
+          necromancer thought he\u2019d break me with this? Joke\u2019s on him! Less
+          body means less to slow me down. Watch out, world\u2014Maurice the Flying
+          Skull is coming for you!"
         type: 0
         typeString: CustomFieldType_Text
       - title: Parenthetical
@@ -9036,79 +9330,6 @@ MonoBehaviour:
         serializedVersion: 2
         x: 80
         y: 1226
-        width: 160
-        height: 30
-    - id: 25
-      fields:
-      - title: Title
-        value: Trigger Teleport
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Pictures
-        value: '[]'
-        type: 3
-        typeString: CustomFieldType_Files
-      - title: Description
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Actor
-        value: 6
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Conversant
-        value: 6
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Menu Text
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Dialogue Text
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Parenthetical
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Audio Files
-        value: '[]'
-        type: 3
-        typeString: CustomFieldType_Files
-      - title: Video File
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Sequence
-        value: Continue()
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: pl
-        value: 
-        type: 4
-        typeString: CustomFieldType_Localization
-      - title: Response Menu Sequence
-        value: 
-        type: 0
-        typeString: 
-      conversationID: 11
-      isRoot: 0
-      isGroup: 0
-      nodeColor: 
-      delaySimStatus: 0
-      falseConditionAction: Block
-      conditionPriority: 2
-      outgoingLinks: []
-      conditionsString: 
-      userScript: TriggerSceneChange("Vestibule 3", "Horizontal Entrance/Exit Point")
-      onExecute:
-        m_PersistentCalls:
-          m_Calls: []
-      canvasRect:
-        serializedVersion: 2
-        x: 80
-        y: 1730
         width: 160
         height: 30
     - id: 26
@@ -9172,13 +9393,7 @@ MonoBehaviour:
       delaySimStatus: 0
       falseConditionAction: Block
       conditionPriority: 2
-      outgoingLinks:
-      - originConversationID: 11
-        originDialogueID: 26
-        destinationConversationID: 11
-        destinationDialogueID: 25
-        isConnector: 0
-        priority: 2
+      outgoingLinks: []
       conditionsString: 
       userScript: Variable["Player.HasFollower"] = true;
       onExecute:
@@ -9191,8 +9406,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 44.6084}
-    canvasZoom: 0.21999985
+    canvasScrollPosition: {x: 0, y: 1129.9238}
+    canvasZoom: 0.54999995
   syncInfo:
     syncActors: 0
     syncItems: 0
