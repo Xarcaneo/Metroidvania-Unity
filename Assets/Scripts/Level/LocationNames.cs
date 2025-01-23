@@ -6,7 +6,7 @@ public enum LocationName
     None,
     Vestibule,
     ArcaneSanctum,
-    ChamberOfEchoes
+    Passage
 }
 
 public static class LocationNameExtensions
