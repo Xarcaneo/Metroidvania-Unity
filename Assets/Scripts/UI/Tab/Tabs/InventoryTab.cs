@@ -1,5 +1,6 @@
 using Opsive.UltimateInventorySystem.UI.Panels;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 /// <summary>
 /// Manages the inventory tab in the UI, handling the display and updates of the player's inventory.
@@ -17,5 +18,10 @@ public class InventoryTab : Tab
     /// <summary>
     /// Closes the inventory display when the tab is disabled.
     /// </summary>
-    private void OnDisable() => displayPanel.SmartClose();
+    private void OnDisable()
+    {
+        displayPanel.SmartClose();
+
+        EventSystem.current.SetSelectedGameObject(null);
+    }
 }

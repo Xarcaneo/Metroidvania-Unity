@@ -105,6 +105,16 @@ public class InputManager : MonoBehaviour
     public event Action OnMenuDelete;
 
     /// <summary>
+    /// Event triggered when the category up input is activated.
+    /// </summary>
+    public event Action OnCategoryUp;
+
+    /// <summary>
+    /// Event triggered when the category down input is activated.
+    /// </summary>
+    public event Action OnCategoryDown;
+
+    /// <summary>
     /// Updates the menu input state based on player input.
     /// </summary>
     private void MenuInputUpdate()
@@ -115,6 +125,8 @@ public class InputManager : MonoBehaviour
         else if (menuInput.actions["PreviousTab"].triggered) OnMenuPreviousTab?.Invoke();
         else if (menuInput.actions["NextTab"].triggered) OnMenuNextTab?.Invoke();
         else if (menuInput.actions["Delete"].triggered) OnMenuDelete?.Invoke();
+        else if (menuInput.actions["CategoryUp"].triggered) OnCategoryUp?.Invoke(); 
+        else if (menuInput.actions["CategoryDown"].triggered) OnCategoryDown?.Invoke();
     }
 
     /// <summary>
