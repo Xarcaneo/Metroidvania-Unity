@@ -42,6 +42,11 @@ public class SpellCategorySlot : MonoBehaviour
     [SerializeField] private SpellCategory spellCategory;
 
     /// <summary>
+    /// Gets the SpellCategory assigned to this slot.
+    /// </summary>
+    public SpellCategory AssignedCategory => spellCategory;
+
+    /// <summary>
     /// Assigns the category data to the UI elements.
     /// </summary>
     public void SetupCategorySlot()
@@ -53,7 +58,7 @@ public class SpellCategorySlot : MonoBehaviour
         }
         else
         {
-            Debug.LogError($"SpellCategory is not assigned to {gameObject.name}");
+            slotButton.interactable = false;
             gameObject.SetActive(false);
         }
 

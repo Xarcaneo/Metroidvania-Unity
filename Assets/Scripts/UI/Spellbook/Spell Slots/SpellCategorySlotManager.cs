@@ -6,11 +6,24 @@ using UnityEngine;
 /// </summary>
 public class SpellCategorySlotManager : MonoBehaviour
 {
+    [Header("Slot Manager Reference")]
+    /// <summary>
+    /// Reference to the SlotManager to retrieve and manage spell slots.
+    /// </summary>
+    [Tooltip("Reference to the SlotManager to manage spell slots dynamically.")]
+    [SerializeField] private SlotManager slotManager;
+
     /// <summary>
     /// Array of all spell category slots managed by this manager.
     /// </summary>
     [Tooltip("Array of all spell category slots to manage.")]
     [SerializeField] private SpellCategorySlot[] slots;
+
+    /// <summary>
+    /// Array of spell slots to populate with spells from the selected category.
+    /// </summary>
+    [Tooltip("Spell slots to populate with spells from the selected category.")]
+    [SerializeField] private Slot[] spellSlots;
 
     /// <summary>
     /// Index of the currently focused slot.
@@ -42,6 +55,9 @@ public class SpellCategorySlotManager : MonoBehaviour
     /// </summary>
     private void SubscribeToInputEvents()
     {
+        if (InputManager.Instance == null)
+            return;
+
         InputManager.Instance.OnCategoryUp += MoveFocusUp;
         InputManager.Instance.OnCategoryDown += MoveFocusDown;
     }
@@ -51,6 +67,9 @@ public class SpellCategorySlotManager : MonoBehaviour
     /// </summary>
     private void UnsubscribeFromInputEvents()
     {
+        if (InputManager.Instance == null)
+            return;
+
         InputManager.Instance.OnCategoryUp -= MoveFocusUp;
         InputManager.Instance.OnCategoryDown -= MoveFocusDown;
     }
@@ -103,6 +122,8 @@ public class SpellCategorySlotManager : MonoBehaviour
             if (i == index)
             {
                 slots[i].OnSelect(); // Highlight the currently focused slot
+                PopulateSpellSlots(slots[i].AssignedCategory);
+                slotManager.SelectFirstSlot();
             }
             else
             {
@@ -123,6 +144,33 @@ public class SpellCategorySlotManager : MonoBehaviour
             {
                 slot.SetupCategorySlot(); // Refresh the slot's UI
             }
+        }
+    }
+
+    /// <summary>
+    /// Populates the spell slots with spells from the selected category.
+    /// </summary>
+    /// <param name="category">The selected spell category.</param>
+    private void PopulateSpellSlots(SpellCategory category)
+    {
+        ClearAllSpellSlots();
+
+        if (category == null || category.spells == null) return;
+
+        for (int i = 0; i < spellSlots.Length && i < category.spells.Count; i++)
+        {
+            spellSlots[i].AssignSpell(category.spells[i]);
+        }
+    }
+
+    /// <summary>
+    /// Clears all spell slots.
+    /// </summary>
+    private void ClearAllSpellSlots()
+    {
+        foreach (var slot in spellSlots)
+        {
+            slot.ClearSlot();
         }
     }
 }

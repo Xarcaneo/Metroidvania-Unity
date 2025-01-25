@@ -1,31 +1,41 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using TMPro;
+using System;
 
-/// <summary>
-/// Represents a UI slot that can be focused and interacted with.
-/// Includes functionality for highlighting a frame when the slot is focused.
-/// </summary>
 public class Slot : MonoBehaviour, ISelectHandler, IDeselectHandler
 {
-    /// <summary>
-    /// The frame that highlights this slot when it is focused.
-    /// This should be a RectTransform representing a UI element, such as a border or glow effect.
-    /// </summary>
     [Header("Focus Frame")]
     [Tooltip("The UI element that highlights this slot when focused.")]
     [SerializeField] private RectTransform focusFrame;
 
+    [Header("UI Elements")]
+    [Tooltip("The UI Image to display the spell's icon.")]
+    [SerializeField] private Image spellIconImage;
+
     /// <summary>
-    /// Cached reference to the Button component attached to this slot.
-    /// Used to ensure the slot is interactable.
+    /// The name of the spell displayed in this slot.
     /// </summary>
+    public string SpellNameText { get; private set; }
+
+    /// <summary>
+    /// The description of the spell displayed in this slot.
+    /// </summary>
+    public string SpellDescriptionText { get; private set; }
+
     private Button button;
 
     /// <summary>
-    /// Called when the script instance is being loaded.
-    /// Caches the Button component and ensures the focus frame is hidden initially.
+    /// Event triggered when this slot is selected.
     /// </summary>
+    public event Action<Slot> OnSlotSelected;
+
+    /// <summary>
+    /// Event triggered when this slot is deselected.
+    /// </summary>
+    public event Action<Slot> OnSlotDeselected;
+
     private void Awake()
     {
         // Cache the Button component
@@ -33,6 +43,12 @@ public class Slot : MonoBehaviour, ISelectHandler, IDeselectHandler
         if (button == null)
         {
             Debug.LogError($"No Button component found on {gameObject.name}. This script requires a Button.");
+        }
+
+        // Hide the focus frame initially
+        if (focusFrame != null)
+        {
+            focusFrame.gameObject.SetActive(false);
         }
     }
 
@@ -45,10 +61,12 @@ public class Slot : MonoBehaviour, ISelectHandler, IDeselectHandler
     {
         if (focusFrame != null)
         {
-            // Align the focus frame to the position of this slot
             focusFrame.position = transform.position;
             focusFrame.gameObject.SetActive(true);
         }
+
+        // Trigger the OnSlotSelected event
+        OnSlotSelected?.Invoke(this);
     }
 
     /// <summary>
@@ -62,5 +80,38 @@ public class Slot : MonoBehaviour, ISelectHandler, IDeselectHandler
         {
             focusFrame.gameObject.SetActive(false);
         }
+
+        // Trigger the OnSlotDeselected event
+        OnSlotDeselected?.Invoke(this);
+    }
+
+    /// <summary>
+    /// Assigns a spell to this slot and updates its UI.
+    /// </summary>
+    /// <param name="spell">The spell to assign.</param>
+    public void AssignSpell(Spell spell)
+    {
+        if (spell != null)
+        {
+            spellIconImage.gameObject.SetActive(true);
+            spellIconImage.sprite = spell.spellIcon;
+            SpellNameText = spell.spellName;
+            SpellDescriptionText = spell.spellDescription;
+        }
+        else
+        {
+            ClearSlot();
+        }
+    }
+
+    /// <summary>
+    /// Clears the slot's data and UI.
+    /// </summary>
+    public void ClearSlot()
+    {
+        spellIconImage.gameObject.SetActive(false);
+        spellIconImage.sprite = null;
+        SpellNameText = string.Empty;
+        SpellDescriptionText = string.Empty;
     }
 }
