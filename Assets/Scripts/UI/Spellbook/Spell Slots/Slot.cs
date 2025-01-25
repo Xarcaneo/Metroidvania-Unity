@@ -39,12 +39,6 @@ public class Slot : MonoBehaviour, ISelectHandler, IDeselectHandler
         {
             Debug.LogError($"No Button component found on {gameObject.name}. This script requires a Button.");
         }
-
-        // Hide the focus frame initially
-        if (focusFrame != null)
-        {
-            focusFrame.gameObject.SetActive(false);
-        }
     }
 
     /// <summary>

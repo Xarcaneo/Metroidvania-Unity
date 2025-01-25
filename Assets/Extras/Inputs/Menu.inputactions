@@ -157,6 +157,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "AssignSpellToHotbar",
+                    "type": "PassThrough",
+                    "id": "2b0a60e7-ece7-43d3-9ff5-446ba1d79673",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -663,6 +672,39 @@
                     "processors": "",
                     "groups": "",
                     "action": "CategoryDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d7f56527-da71-418b-879a-f03c3a3a1833",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AssignSpellToHotbar",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "136d4438-a3cc-4c67-9406-981c7053b1a3",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AssignSpellToHotbar",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e386b375-2bfe-4e25-8768-ffc81cc2d12d",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AssignSpellToHotbar",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

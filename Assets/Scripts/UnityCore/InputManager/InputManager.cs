@@ -15,28 +15,12 @@ public class InputManager : MonoBehaviour
     /// <summary>
     /// Singleton instance of the InputManager.
     /// </summary>
-    public static InputManager Instance { get => _instance; }
-
-    /// <summary>
-    /// Called when the InputManager is instantiated.
-    /// Ensures only one instance is active.
-    /// </summary>
-    private void Awake()
-    {
-        if (_instance != null)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            _instance = this;
-        }
-    }
+    public static InputManager Instance => _instance;
 
     /// <summary>
     /// The PlayerInput component handling menu inputs.
     /// </summary>
-    [SerializeField] public PlayerInput menuInput;
+    [SerializeField] private PlayerInput menuInput;
 
     /// <summary>
     /// Indicates whether input is currently active.
@@ -44,8 +28,39 @@ public class InputManager : MonoBehaviour
     public bool isInputActive = true;
 
     /// <summary>
-    /// Called when the InputManager starts.
-    /// Subscribes to the dialogue trigger event if GameEvents is available.
+    /// Event triggered when the menu return input is activated.
+    /// </summary>
+    public event Action OnMenuReturn;
+
+    public event Action OnMenuPreviousTab;
+    public event Action OnMenuNextTab;
+    public event Action OnMenuDelete;
+    public event Action OnCategoryUp;
+    public event Action OnCategoryDown;
+    public event Action<int> OnAssignSpellToHotbar;
+
+    /// <summary>
+    /// Ensures only one instance of InputManager exists.
+    /// </summary>
+    private void Awake()
+    {
+        if (_instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        _instance = this;
+        DontDestroyOnLoad(gameObject);
+
+        if (menuInput == null)
+        {
+            Debug.LogError("PlayerInput component is not assigned.");
+        }
+    }
+
+    /// <summary>
+    /// Subscribes to events when the script starts.
     /// </summary>
     private void Start()
     {
@@ -55,13 +70,12 @@ public class InputManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("GameEvents instance is not available.");
+            Debug.LogWarning("GameEvents instance is not available.");
         }
     }
 
     /// <summary>
-    /// Called when the InputManager is destroyed.
-    /// Unsubscribes from the dialogue trigger event and clears the singleton instance.
+    /// Unsubscribes from events when the script is destroyed.
     /// </summary>
     private void OnDestroy()
     {
@@ -85,36 +99,6 @@ public class InputManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Event triggered when the menu return input is activated.
-    /// </summary>
-    public event Action OnMenuReturn;
-
-    /// <summary>
-    /// Event triggered when the previous tab input is activated.
-    /// </summary>
-    public event Action OnMenuPreviousTab;
-
-    /// <summary>
-    /// Event triggered when the next tab input is activated.
-    /// </summary>
-    public event Action OnMenuNextTab;
-
-    /// <summary>
-    /// Event triggered when the delete input is activated.
-    /// </summary>
-    public event Action OnMenuDelete;
-
-    /// <summary>
-    /// Event triggered when the category up input is activated.
-    /// </summary>
-    public event Action OnCategoryUp;
-
-    /// <summary>
-    /// Event triggered when the category down input is activated.
-    /// </summary>
-    public event Action OnCategoryDown;
-
-    /// <summary>
     /// Updates the menu input state based on player input.
     /// </summary>
     private void MenuInputUpdate()
@@ -122,15 +106,33 @@ public class InputManager : MonoBehaviour
         if (!isInputActive || menuInput == null) return;
 
         if (menuInput.actions["Return"].triggered) OnMenuReturn?.Invoke();
-        else if (menuInput.actions["PreviousTab"].triggered) OnMenuPreviousTab?.Invoke();
-        else if (menuInput.actions["NextTab"].triggered) OnMenuNextTab?.Invoke();
-        else if (menuInput.actions["Delete"].triggered) OnMenuDelete?.Invoke();
-        else if (menuInput.actions["CategoryUp"].triggered) OnCategoryUp?.Invoke(); 
-        else if (menuInput.actions["CategoryDown"].triggered) OnCategoryDown?.Invoke();
+        if (menuInput.actions["PreviousTab"].triggered) OnMenuPreviousTab?.Invoke();
+        if (menuInput.actions["NextTab"].triggered) OnMenuNextTab?.Invoke();
+        if (menuInput.actions["Delete"].triggered) OnMenuDelete?.Invoke();
+        if (menuInput.actions["CategoryUp"].triggered) OnCategoryUp?.Invoke();
+        if (menuInput.actions["CategoryDown"].triggered) OnCategoryDown?.Invoke();
+
+        // Handle hotbar assignment
+        if (menuInput.actions["AssignSpellToHotbar"].triggered)
+        {
+            // Loop through the possible hotbar slots and check which key was pressed
+            if (Keyboard.current.digit1Key.wasPressedThisFrame)
+            {
+                OnAssignSpellToHotbar?.Invoke(0);
+            }
+            else if (Keyboard.current.digit2Key.wasPressedThisFrame)
+            {
+                OnAssignSpellToHotbar?.Invoke(1);
+            }
+            else if (Keyboard.current.digit3Key.wasPressedThisFrame)
+            {
+                OnAssignSpellToHotbar?.Invoke(2);
+            }
+        }
     }
 
     /// <summary>
-    /// Handles the dialogue trigger event to toggle input activity.
+    /// Toggles input activity when a dialogue is triggered.
     /// </summary>
     /// <param name="dialogueState">Indicates whether a dialogue is active.</param>
     private void OnDialogueTrigger(bool dialogueState)
