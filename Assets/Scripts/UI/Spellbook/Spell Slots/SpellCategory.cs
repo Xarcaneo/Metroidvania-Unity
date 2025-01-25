@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -18,9 +19,9 @@ public class SpellCategory : ScriptableObject
     [Tooltip("The icon representing the spell category.")]
     public Sprite categoryIcon;
 
-    ///// <summary>
-    ///// List of spells belonging to this category.
-    ///// </summary>
-    //[Tooltip("List of spells in this category.")]
-    //public Spell[] spells;
+    /// <summary>
+    /// List of spells belonging to this category.
+    /// </summary>
+    [Tooltip("List of spells in this category.")]
+    public List<Spell> spells = new List<Spell>();
 }
