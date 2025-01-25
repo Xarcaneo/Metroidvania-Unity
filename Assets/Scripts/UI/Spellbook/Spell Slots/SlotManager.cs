@@ -108,7 +108,7 @@ public class SlotManager : MonoBehaviour
     {
         if (selectedSlot != null)
         {
-            spellDescriptionUI.UpdateSpellDescription(selectedSlot.SpellNameText, selectedSlot.SpellDescriptionText);
+            spellDescriptionUI.UpdateSpellDescription(selectedSlot.AssignedSpell);
         }
     }
 

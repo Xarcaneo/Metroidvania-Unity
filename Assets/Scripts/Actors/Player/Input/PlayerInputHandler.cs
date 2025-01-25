@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -21,6 +22,8 @@ public class PlayerInputHandler : MonoBehaviour
     /// Flag to disable all input processing
     /// </summary>
     public bool DisableInput = false;
+
+    private bool isDialogueActive = false;
 
     /// <summary>
     /// Normalized X-axis input (-1, 0, 1)
@@ -110,6 +113,7 @@ public class PlayerInputHandler : MonoBehaviour
             GameEvents.Instance.onPauseTrigger += EnableDisablePlayerInput;
             GameEvents.Instance.onDialogueTrigger += EnableDisablePlayerInput;
             GameEvents.Instance.onDeactivatePlayerInput += EnableDisablePlayerInput;
+            GameEvents.Instance.onDialogueTrigger += OnDialogueTrigger;
         }
         catch
         {
@@ -124,6 +128,8 @@ public class PlayerInputHandler : MonoBehaviour
             GameEvents.Instance.onPauseTrigger -= EnableDisablePlayerInput;
             GameEvents.Instance.onDialogueTrigger -= EnableDisablePlayerInput;
             GameEvents.Instance.onDeactivatePlayerInput -= EnableDisablePlayerInput;
+            GameEvents.Instance.onDialogueTrigger -= OnDialogueTrigger;
+
         }
         catch
         {
@@ -295,8 +301,11 @@ public class PlayerInputHandler : MonoBehaviour
     /// </summary>
     public void OnPlayerMenuInput(InputAction.CallbackContext context)
     {
-        if (context.started)
-            GameEvents.Instance.PlayerMenuOpen();
+        if (!isDialogueActive)
+        {
+            if (context.started)
+                GameEvents.Instance.PlayerMenuOpen();
+        }
     }
     #endregion
 
@@ -375,5 +384,7 @@ public class PlayerInputHandler : MonoBehaviour
             NormInputY = 0;
         }
     }
+
+    private void OnDialogueTrigger(bool isDialogueActive) => this.isDialogueActive = isDialogueActive;
     #endregion
 }

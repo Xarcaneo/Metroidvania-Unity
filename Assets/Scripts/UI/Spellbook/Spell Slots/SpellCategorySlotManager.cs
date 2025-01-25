@@ -159,7 +159,7 @@ public class SpellCategorySlotManager : MonoBehaviour
 
         for (int i = 0; i < spellSlots.Length && i < category.spells.Count; i++)
         {
-            spellSlots[i].AssignSpell(category.spells[i]);
+            spellSlots[i].AssignSpell(category.spells[i].spellData);
         }
     }
 

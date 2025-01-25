@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Checkpoint Teleport
   m_EditorClassIdentifier: 
   spellName: Teleport to checkpoint
-  spellIcon: {fileID: 0}
+  spellIcon: {fileID: 21300000, guid: e80dc0483b82b7046a67426fe3973c0a, type: 3}
   spellDescription: sdasdasdasdasddas
   spellType: 0
-  effectsWithDelays: []
+  effectsWithDelays:
+  - effect: {fileID: 11400000, guid: 280d8732850eb7549bf99ca8d9f6fcf6, type: 2}
+    delayAfterEffect: 0

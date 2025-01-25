@@ -24,11 +24,11 @@ public class SpellDescriptionUI : MonoBehaviour
     /// </summary>
     /// <param name="spellName">The name of the spell.</param>
     /// <param name="spellDescription">The description of the spell.</param>
-    public void UpdateSpellDescription(string spellName, string spellDescription)
+    public void UpdateSpellDescription(SpellData spellData)
     {
         if (spellNameText != null)
         {
-            spellNameText.text = spellName;
+            spellNameText.text = spellData.SpellName;
         }
         else
         {
@@ -37,7 +37,7 @@ public class SpellDescriptionUI : MonoBehaviour
 
         if (spellDescriptionText != null)
         {
-            spellDescriptionText.text = spellDescription;
+            spellDescriptionText.text = spellData.SpellDescription;
         }
         else
         {

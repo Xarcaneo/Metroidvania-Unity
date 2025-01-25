@@ -15,14 +15,9 @@ public class Slot : MonoBehaviour, ISelectHandler, IDeselectHandler
     [SerializeField] private Image spellIconImage;
 
     /// <summary>
-    /// The name of the spell displayed in this slot.
+    /// The data of the spell displayed in this slot.
     /// </summary>
-    public string SpellNameText { get; private set; }
-
-    /// <summary>
-    /// The description of the spell displayed in this slot.
-    /// </summary>
-    public string SpellDescriptionText { get; private set; }
+    public SpellData AssignedSpell { get; private set; }
 
     private Button button;
 
@@ -89,19 +84,11 @@ public class Slot : MonoBehaviour, ISelectHandler, IDeselectHandler
     /// Assigns a spell to this slot and updates its UI.
     /// </summary>
     /// <param name="spell">The spell to assign.</param>
-    public void AssignSpell(Spell spell)
+    public void AssignSpell(SpellData spellData)
     {
-        if (spell != null)
-        {
-            spellIconImage.gameObject.SetActive(true);
-            spellIconImage.sprite = spell.spellIcon;
-            SpellNameText = spell.spellName;
-            SpellDescriptionText = spell.spellDescription;
-        }
-        else
-        {
-            ClearSlot();
-        }
+        spellIconImage.gameObject.SetActive(true);
+        spellIconImage.sprite = spellData.SpellIcon;
+        AssignedSpell = spellData;
     }
 
     /// <summary>
@@ -111,7 +98,6 @@ public class Slot : MonoBehaviour, ISelectHandler, IDeselectHandler
     {
         spellIconImage.gameObject.SetActive(false);
         spellIconImage.sprite = null;
-        SpellNameText = string.Empty;
-        SpellDescriptionText = string.Empty;
+        AssignedSpell = default;
     }
 }

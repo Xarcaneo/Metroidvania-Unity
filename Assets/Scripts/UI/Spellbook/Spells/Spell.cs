@@ -9,10 +9,11 @@ using UnityEngine;
 public class Spell : ScriptableObject
 {
     [Header("Spell Properties")]
-    public string spellName;
-    public Sprite spellIcon;
-    public string spellDescription;
-
+    /// <summary>
+    /// The core data of the spell, including name, icon, description, and ID.
+    /// </summary>
+    [Tooltip("The core data of the spell.")]
+    public SpellData spellData;
 
     [Header("Spell Metadata")]
     [Tooltip("The type of the spell (e.g., Projectile, Utility, Buff).")]
@@ -31,7 +32,7 @@ public class Spell : ScriptableObject
     {
         if (effectsWithDelays == null || effectsWithDelays.Count == 0)
         {
-            Debug.LogWarning($"{spellName} has no effects to cast.");
+            Debug.LogWarning($"{spellData.SpellName} has no effects to cast.");
             return;
         }
 
