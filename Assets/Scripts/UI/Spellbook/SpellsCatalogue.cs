@@ -11,24 +11,53 @@ public class SpellsCatalogue : ScriptableObject
     [Tooltip("List of all spells in the game.")]
     [SerializeField] private List<Spell> allSpells;
 
+    private static SpellsCatalogue instance;
+    
     /// <summary>
     /// The singleton instance of the SpellsCatalogue.
     /// </summary>
-    public static SpellsCatalogue Instance { get; private set; }
+    public static SpellsCatalogue Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                Debug.LogError("SpellsCatalogue instance is null! Make sure to assign it in the GameManager or another initialization script.");
+            }
+            return instance;
+        }
+    }
+
+    /// <summary>
+    /// Initialize the SpellsCatalogue instance.
+    /// Call this from a manager script in Awake or Start.
+    /// </summary>
+    public static void Initialize(SpellsCatalogue catalogue)
+    {
+        if (catalogue == null)
+        {
+            Debug.LogError("Trying to initialize SpellsCatalogue with null reference!");
+            return;
+        }
+        
+        instance = catalogue;
+        Debug.Log("SpellsCatalogue initialized successfully!");
+    }
 
     /// <summary>
     /// Called when the ScriptableObject is enabled.
-    /// Ensures only one instance of SpellsCatalogue exists.
     /// </summary>
     private void OnEnable()
     {
-        if (Instance != null && Instance != this)
-        {
-            Debug.LogWarning("Multiple instances of SpellsCatalogue detected. Only one instance should exist.");
-            return;
-        }
+        // No need to set instance here anymore
+    }
 
-        Instance = this;
+    private void OnDisable()
+    {
+        if (instance == this)
+        {
+            instance = null;
+        }
     }
 
     /// <summary>
@@ -41,8 +70,20 @@ public class SpellsCatalogue : ScriptableObject
         if (id == 0)
             return null;
 
+        if (allSpells == null)
+        {
+            Debug.LogError("SpellsCatalogue: allSpells list is null!");
+            return null;
+        }
+
         foreach (var spell in allSpells)
         {
+            if (spell == null)
+            {
+                Debug.LogWarning("Null spell found in SpellsCatalogue!");
+                continue;
+            }
+
             if (spell.spellData.SpellID == id)
             {
                 return spell;
