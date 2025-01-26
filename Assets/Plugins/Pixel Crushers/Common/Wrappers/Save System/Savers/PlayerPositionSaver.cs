@@ -10,6 +10,30 @@ namespace PixelCrushers
         static string previousCheckpointSceneName;
         static Vector3 previousCheckpointPosition;
 
+        public override void Awake()
+        {
+            base.Awake();
+            // Initialize checkpoint data with current scene if not set
+            if (string.IsNullOrEmpty(previousCheckpointSceneName))
+            {
+                previousCheckpointSceneName = SceneManager.GetActiveScene().name;
+                previousCheckpointPosition = transform.position;
+                m_data.checkpointSceneName = previousCheckpointSceneName;
+                m_data.position = previousCheckpointPosition;
+            }
+        }
+
+        public PositionSaver.PositionData GetPositionData()
+        {
+            // Ensure we're returning the latest checkpoint data
+            if (string.IsNullOrEmpty(m_data.checkpointSceneName))
+            {
+                m_data.checkpointSceneName = previousCheckpointSceneName;
+                m_data.position = previousCheckpointPosition;
+            }
+            return m_data;
+        }
+
         public override void ApplyData(string s)
         {
             if (usePlayerSpawnpoint && SaveSystem.playerSpawnpoint != null)
@@ -32,24 +56,31 @@ namespace PixelCrushers
             Camera.main.transform.position = cameraPos;
 
             ProCamera2D m_proCamera2D = FindObjectOfType<ProCamera2D>();
-            m_proCamera2D.MoveCameraInstantlyToPosition(cameraPos);
+            if (m_proCamera2D != null)
+            {
+                m_proCamera2D.MoveCameraInstantlyToPosition(cameraPos);
+            }
         }
 
         public override string RecordData()
         {
-           var currentScene = SceneManager.GetActiveScene().buildIndex;
+            var currentScene = SceneManager.GetActiveScene().buildIndex;
 
             if (isCheckpoint)
             {
+                // Save new checkpoint
                 m_data.checkpointSceneName = SceneManager.GetActiveScene().name;
                 SaveSystem.currentSavedGameData.sceneName = SceneManager.GetActiveScene().name;
                 m_data.position = target.transform.position;
 
                 previousCheckpointSceneName = m_data.checkpointSceneName;
                 previousCheckpointPosition = m_data.position;
+                
+                Debug.Log($"Saved checkpoint at position {m_data.position} in scene {m_data.checkpointSceneName}");
             }
             else
             {
+                // Use existing checkpoint data
                 m_data.position = previousCheckpointPosition;
                 m_data.checkpointSceneName = previousCheckpointSceneName;
                 SaveSystem.currentSavedGameData.sceneName = previousCheckpointSceneName;

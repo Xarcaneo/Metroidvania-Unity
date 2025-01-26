@@ -14,5 +14,5 @@ public abstract class SpellEffect : ScriptableObject
     /// </summary>
     /// <param name="caster">The GameObject casting the spell.</param>
     /// <param name="target">The target GameObject of the spell (can be null).</param>
-    public abstract void TriggerEffect(GameObject caster, GameObject target);
+    public abstract void TriggerEffect(Entity caster, Entity target);
 }

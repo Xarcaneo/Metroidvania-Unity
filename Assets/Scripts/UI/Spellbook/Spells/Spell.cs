@@ -34,7 +34,7 @@ public class Spell : ScriptableObject
     /// </summary>
     /// <param name="caster">The GameObject casting the spell.</param>
     /// <param name="target">The target GameObject (can be null).</param>
-    public void Cast(GameObject caster, GameObject target)
+    public void Cast(Entity caster, Entity target)
     {
         if (effectsWithDelays == null || effectsWithDelays.Count == 0)
         {
@@ -51,7 +51,7 @@ public class Spell : ScriptableObject
     /// </summary>
     /// <param name="caster">The GameObject casting the spell.</param>
     /// <param name="target">The target GameObject.</param>
-    private IEnumerator ApplyEffects(GameObject caster, GameObject target)
+    private IEnumerator ApplyEffects(Entity caster, Entity target)
     {
         foreach (var effectWithDelay in effectsWithDelays)
         {

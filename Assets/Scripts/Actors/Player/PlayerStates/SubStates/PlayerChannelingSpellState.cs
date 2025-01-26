@@ -15,6 +15,11 @@ public class PlayerChannelingSpellState : PlayerSpellCastState
     /// Maximum duration the spell can be channeled
     /// </summary>
     private float channelDuration;
+
+    /// <summary>
+    /// Initial hotbar slot number
+    /// </summary>
+    private int initialHotbarSlot;
     #endregion
 
     /// <summary>
@@ -38,6 +43,10 @@ public class PlayerChannelingSpellState : PlayerSpellCastState
         
         stateTimer = 0f;
         channelDuration = PlayerMagic.currentSpell.channelingTime;
+        initialHotbarSlot = player.InputHandler.UseSpellHotbarNumber;
+        
+        // Start the channeling bar animation
+        PlayerMagic.StartChannelingBar(channelDuration);
     }
 
     /// <summary>
@@ -46,7 +55,12 @@ public class PlayerChannelingSpellState : PlayerSpellCastState
     public override void Exit()
     {
         base.Exit();
+
+        player.InputHandler.UseSpellCastInput();
         stateTimer = 0f;
+
+        // Stop the channeling bar animation
+        PlayerMagic.StopChannelingBar();
     }
 
     /// <summary>
@@ -56,13 +70,31 @@ public class PlayerChannelingSpellState : PlayerSpellCastState
     {
         base.LogicUpdate();
 
+        // Ensure player remains stationary during block
+        Movement?.SetVelocityX(0f);
+
         if (!isExitingState)
         {
+            // Check if player changed hotbar slot
+            if (player.InputHandler.UseSpellHotbarNumber != initialHotbarSlot)
+            {
+                stateMachine.ChangeState(player.IdleState);
+                return;
+            }
+
             stateTimer += Time.deltaTime;
 
-            // Exit if we release the button or exceed channel duration
-            if (!player.InputHandler.SpellCastInput || stateTimer >= channelDuration)
+            // Check if channeling is complete
+            if (stateTimer >= channelDuration)
             {
+                // Cast the spell and exit
+                PlayerMagic.currentSpell.Cast(player, null);
+                stateMachine.ChangeState(player.IdleState);
+            }
+            // Check if player released the button early
+            else if (!player.InputHandler.SpellCastInput)
+            {
+                // Just exit without casting
                 stateMachine.ChangeState(player.IdleState);
             }
         }

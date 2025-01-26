@@ -272,33 +272,38 @@ public class PlayerInputHandler : MonoBehaviour
     {
         if (!DisableInput)
         {
+            // Get the index of the triggered binding
+            var bindingIndex = context.action.GetBindingIndexForControl(context.control);
+
             if (context.started)
             {
                 SpellCastInput = true;
-                
-                // Get the index of the triggered binding
-                var bindingIndex = context.action.GetBindingIndexForControl(context.control);
-
-                // Map the binding index to spell types (first, second, third)
-                switch (bindingIndex)
-                {
-                    case 0: // First spell binding
-                        UseSpellHotbarNumber = 0;
-                        break;
-                    case 1: // Second spell binding
-                        UseSpellHotbarNumber = 1;
-                        break;
-                    case 2: // Third spell binding
-                        UseSpellHotbarNumber = 2;
-                        break;
-                    default:
-                        UseSpellHotbarNumber = 0; // Default to first spell type
-                        break;
-                }
             }
             else if (context.canceled)
             {
-                SpellCastInput = false;
+                // Only reset SpellCastInput if this is the key we're currently using
+                if (bindingIndex == UseSpellHotbarNumber)
+                {
+                    SpellCastInput = false;
+                }
+                return;
+            }
+
+            // Always update the hotbar number when any spell key changes
+            switch (bindingIndex)
+            {
+                case 0: // First spell binding
+                    UseSpellHotbarNumber = 0;
+                    break;
+                case 1: // Second spell binding
+                    UseSpellHotbarNumber = 1;
+                    break;
+                case 2: // Third spell binding
+                    UseSpellHotbarNumber = 2;
+                    break;
+                default:
+                    UseSpellHotbarNumber = 0; // Default to first spell type
+                    break;
             }
         }
     }
