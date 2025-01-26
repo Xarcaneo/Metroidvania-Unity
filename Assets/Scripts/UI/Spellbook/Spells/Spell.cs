@@ -19,6 +19,12 @@ public class Spell : ScriptableObject
     [Tooltip("The type of the spell (e.g., Projectile, Utility, Buff).")]
     public SpellType spellType;
 
+    [Tooltip("How the spell is cast (e.g., Instant, Channeled, Charged).")]
+    public CastType castType;
+
+    [Tooltip("Maximum channeling duration for channeled spells (in seconds).")]
+    public float channelingTime = 0f;
+
     [Header("Spell Effects")]
     [Tooltip("The list of effects this spell applies, with configurable delays.")]
     public List<EffectWithDelay> effectsWithDelays;

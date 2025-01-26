@@ -38,6 +38,9 @@ public class SpellsCatalogue : ScriptableObject
     /// <returns>The spell with the matching ID, or null if not found.</returns>
     public Spell GetSpellByID(int id)
     {
+        if (id == 0)
+            return null;
+
         foreach (var spell in allSpells)
         {
             if (spell.spellData.SpellID == id)

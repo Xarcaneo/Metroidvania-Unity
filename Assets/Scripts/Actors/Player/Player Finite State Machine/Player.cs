@@ -41,6 +41,7 @@ public class Player : Entity
     public PlayerUseHotbarItem UseHotbarItem { get; private set; }
     public PlayerGripWallState GripWallState { get; private set; }
     public PlayerJumpAttackState JumpAttackState { get; private set; }
+    public PlayerChannelingSpellState ChannelingSpellState { get; private set; }
 
     [SerializeField, Tooltip("ScriptableObject containing player configuration data")]
     private PlayerData playerData;
@@ -179,6 +180,7 @@ public class Player : Entity
         UseHotbarItem = new PlayerUseHotbarItem(this, StateMachine, playerData, "useHotbarItem");
         GripWallState = new PlayerGripWallState(this, StateMachine, playerData, "gripWall");
         JumpAttackState = new PlayerJumpAttackState(this, StateMachine, playerData, "jumpAttack");
+        ChannelingSpellState = new PlayerChannelingSpellState(this, StateMachine, playerData, "channeling");
     }
 
     private void InitializeStartupState()

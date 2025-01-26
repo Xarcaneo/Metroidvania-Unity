@@ -90,9 +90,8 @@ public class SpellHotbar : MonoBehaviour
         {
             // Retrieve the saved spell ID from Lua
             Lua.Result luaResult = DialogueLua.GetVariable($"{StatePrefix}{slotID}");
-            if (!luaResult.isNumber)
+            if (!luaResult.isNumber || luaResult.asInt == 0)
             {
-                Debug.LogWarning($"No valid spell ID stored for slot {slotID} in Lua. Clearing slot.");
                 hotbarSlots[slotID].AssignSpell(null);
                 continue;
             }
@@ -105,7 +104,6 @@ public class SpellHotbar : MonoBehaviour
             // Check if the slot needs to be updated
             if (hotbarSlots[slotID].GetAssignedSpell() != savedSpell)
             {
-                Debug.Log($"Synchronizing slot {slotID} with saved spell ID: {savedSpellID}.");
                 hotbarSlots[slotID].AssignSpell(savedSpell);
             }
         }
@@ -123,8 +121,6 @@ public class SpellHotbar : MonoBehaviour
                 slot.AssignSpell(null); // Clear the slot by assigning null
             }
         }
-
-        Debug.Log("Hotbar slots cleared.");
     }
 
     /// <summary>

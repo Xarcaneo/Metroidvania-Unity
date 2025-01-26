@@ -11,6 +11,11 @@ public class SpellHotbarSlot : MonoBehaviour
     [Tooltip("The spell currently assigned to this slot.")]
     private Spell assignedSpell;
 
+    /// <summary>
+    /// Gets the currently assigned spell in this slot.
+    /// </summary>
+    public Spell CurrentSpell => assignedSpell;
+
     [Header("UI Components")]
     [Tooltip("The Image component for displaying the spell's icon.")]
     [SerializeField] private Image spellIcon;
@@ -35,8 +40,6 @@ public class SpellHotbarSlot : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("AssignedSpell is null. Clearing the slot.");
-
             // Clear the spell icon
             if (spellIcon != null)
             {
