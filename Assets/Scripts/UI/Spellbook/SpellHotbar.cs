@@ -55,7 +55,27 @@ public class SpellHotbar : MonoBehaviour
     }
 
     /// <summary>
+    /// Finds the slot ID that currently has the specified spell assigned.
+    /// </summary>
+    /// <param name="spellID">The ID of the spell to find</param>
+    /// <returns>The slot ID where the spell is found, or -1 if not found</returns>
+    private int FindSpellSlot(int spellID)
+    {
+        for (int i = 0; i < hotbarSlots.Length; i++)
+        {
+            Spell slotSpell = hotbarSlots[i].GetAssignedSpell();
+            if (slotSpell != null && slotSpell.spellData.SpellID == spellID)
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /// <summary>
     /// Assigns a spell to the specified hotbar slot based on the provided spell ID.
+    /// If the spell is already assigned to another slot, it will be moved to the new slot.
+    /// If the new slot is occupied, the spells will be swapped.
     /// </summary>
     /// <param name="spellID">The ID of the spell to assign.</param>
     /// <param name="slotID">The slot ID (index) in the hotbar to assign the spell to.</param>
@@ -69,16 +89,49 @@ public class SpellHotbar : MonoBehaviour
         }
 
         // Retrieve the Spell from the SpellsCatalogue by ID
-        Spell spell = SpellsCatalogue.Instance.GetSpellByID(spellID);
-        if (spell == null)
+        Spell newSpell = SpellsCatalogue.Instance.GetSpellByID(spellID);
+        if (newSpell == null)
         {
             Debug.LogWarning($"No valid spell found for ID {spellID}.");
             return;
         }
 
-        // Assign the spell to the corresponding hotbar slot
-        DialogueLua.SetVariable($"{StatePrefix}{slotID}", spellID); // Save to Lua
-        hotbarSlots[slotID].AssignSpell(spell);
+        // Find if this spell is already assigned somewhere
+        int existingSlot = FindSpellSlot(spellID);
+        
+        // Get the spell currently in the target slot
+        Spell currentSpell = hotbarSlots[slotID].GetAssignedSpell();
+        int currentSpellID = currentSpell?.spellData.SpellID ?? 0;
+
+        if (existingSlot != -1)
+        {
+            // Spell is already assigned somewhere
+            if (existingSlot == slotID)
+            {
+                // Spell is already in this slot, nothing to do
+                return;
+            }
+
+            // Clear the spell from its old slot
+            DialogueLua.SetVariable($"{StatePrefix}{existingSlot}", 0);
+            hotbarSlots[existingSlot].AssignSpell(null);
+
+            if (currentSpell != null)
+            {
+                // Move the current spell to the old slot
+                DialogueLua.SetVariable($"{StatePrefix}{existingSlot}", currentSpellID);
+                hotbarSlots[existingSlot].AssignSpell(currentSpell);
+            }
+        }
+        else if (currentSpell != null)
+        {
+            // Target slot is occupied but spell isn't elsewhere, just keep the current spell where it is
+            Debug.Log($"Assigning spell {newSpell.name} to slot {slotID}, replacing {currentSpell.name}");
+        }
+
+        // Assign the new spell to the target slot
+        DialogueLua.SetVariable($"{StatePrefix}{slotID}", spellID);
+        hotbarSlots[slotID].AssignSpell(newSpell);
     }
 
     /// <summary>
