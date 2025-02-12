@@ -64,6 +64,7 @@ public class NPC : Interactable
     {
         if (!ValidateComponents()) return;
         DialogueManager.StartConversation(m_dialogueID);
+        GameEvents.Instance.DialogueTrigger(true);
     }
     #endregion
 

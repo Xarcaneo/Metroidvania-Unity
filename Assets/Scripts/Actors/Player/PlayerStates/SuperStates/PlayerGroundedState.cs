@@ -77,6 +77,15 @@ public class PlayerGroundedState : PlayerState
     private bool blockInput;
 
     /// <summary>
+    /// Flag indicating if spell cast button is pressed
+    /// </summary>
+    /// <remarks>
+    /// Updated every frame in LogicUpdate(). Triggers transition to appropriate
+    /// spell casting state based on the current spell data.
+    /// </remarks>
+    private bool spellCastInput;
+
+    /// <summary>
     /// Flag indicating if action (roll) button is pressed
     /// </summary>
     /// <remarks>
@@ -148,6 +157,16 @@ public class PlayerGroundedState : PlayerState
     /// </remarks>
     protected CollisionSenses CollisionSenses { get => collisionSenses ?? core.GetCoreComponent(ref collisionSenses); }
     private CollisionSenses collisionSenses;
+
+    /// <summary>
+    /// Reference to the PlayerCoreMagic component, lazily loaded
+    /// </summary>
+    /// <remarks>
+    /// Provides access to spell casting functionality and cast type determination.
+    /// Loaded on first access using core.GetCoreComponent().
+    /// </remarks>
+    protected PlayerCoreMagic PlayerMagic { get => playerMagic ?? core.GetCoreComponent(ref playerMagic); }
+    private PlayerCoreMagic playerMagic;
 
     #endregion
 
@@ -247,6 +266,7 @@ public class PlayerGroundedState : PlayerState
         attackInput = player.InputHandler.AttackInput;
         blockInput = player.InputHandler.BlockInput;
         useHotbarItemInput = player.InputHandler.HotbarActionInput;
+        spellCastInput = player.InputHandler.SpellCastInput;
 
         // Handle slope physics
         HandleSlopePhysics();
@@ -259,6 +279,22 @@ public class PlayerGroundedState : PlayerState
         else if (blockInput)
         {
             stateMachine.ChangeState(player.PrepareBlockState);
+        }
+        else if (spellCastInput)
+        {
+            bool isSpellAssigned = PlayerMagic.SetCurrentSpell(player.InputHandler.UseSpellHotbarNumber);
+
+            if (!isSpellAssigned)
+                return;
+
+            CastType castType = PlayerMagic.GetSpellCastType(player.InputHandler.UseSpellHotbarNumber);
+
+            switch (castType)
+            {
+                case CastType.Channeled:
+                    stateMachine.ChangeState(player.ChannelingSpellState);
+                    break;
+            }
         }
         else if (useHotbarItemInput && !Menu.GameMenu.Instance.gameHotbar.IsSlotEmpty())
         {

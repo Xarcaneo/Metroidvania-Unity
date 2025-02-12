@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -21,6 +22,8 @@ public class PlayerInputHandler : MonoBehaviour
     /// Flag to disable all input processing
     /// </summary>
     public bool DisableInput = false;
+
+    private bool isDialogueActive = false;
 
     /// <summary>
     /// Normalized X-axis input (-1, 0, 1)
@@ -71,6 +74,20 @@ public class PlayerInputHandler : MonoBehaviour
     /// Item switch right button pressed state
     /// </summary>
     public bool ItemSwitchRightInput { get; private set; }
+
+    /// <summary>
+    /// Hotbar number currently triggered.
+    /// </summary>
+    public int UseSpellHotbarNumber { get; private set; }
+
+    /// <summary>
+    /// Flag indicating if spell cast button is pressed
+    /// </summary>
+    /// <remarks>
+    /// Set when any spell input is triggered. Used in conjunction with UseSpellType
+    /// to determine which spell to cast.
+    /// </remarks>
+    public bool SpellCastInput { get; private set; }
     #endregion
 
     #region Input Settings
@@ -110,6 +127,7 @@ public class PlayerInputHandler : MonoBehaviour
             GameEvents.Instance.onPauseTrigger += EnableDisablePlayerInput;
             GameEvents.Instance.onDialogueTrigger += EnableDisablePlayerInput;
             GameEvents.Instance.onDeactivatePlayerInput += EnableDisablePlayerInput;
+            GameEvents.Instance.onDialogueTrigger += OnDialogueTrigger;
         }
         catch
         {
@@ -124,6 +142,8 @@ public class PlayerInputHandler : MonoBehaviour
             GameEvents.Instance.onPauseTrigger -= EnableDisablePlayerInput;
             GameEvents.Instance.onDialogueTrigger -= EnableDisablePlayerInput;
             GameEvents.Instance.onDeactivatePlayerInput -= EnableDisablePlayerInput;
+            GameEvents.Instance.onDialogueTrigger -= OnDialogueTrigger;
+
         }
         catch
         {
@@ -245,6 +265,50 @@ public class PlayerInputHandler : MonoBehaviour
     }
 
     /// <summary>
+    /// Handles spell input events from the Input System.
+    /// Determines the spell type based on the binding index (e.g., first, second, third).
+    /// </summary>
+    public void OnUseSpellInput(InputAction.CallbackContext context)
+    {
+        if (!DisableInput)
+        {
+            // Get the index of the triggered binding
+            var bindingIndex = context.action.GetBindingIndexForControl(context.control);
+
+            if (context.started)
+            {
+                SpellCastInput = true;
+            }
+            else if (context.canceled)
+            {
+                // Only reset SpellCastInput if this is the key we're currently using
+                if (bindingIndex == UseSpellHotbarNumber)
+                {
+                    SpellCastInput = false;
+                }
+                return;
+            }
+
+            // Always update the hotbar number when any spell key changes
+            switch (bindingIndex)
+            {
+                case 0: // First spell binding
+                    UseSpellHotbarNumber = 0;
+                    break;
+                case 1: // Second spell binding
+                    UseSpellHotbarNumber = 1;
+                    break;
+                case 2: // Third spell binding
+                    UseSpellHotbarNumber = 2;
+                    break;
+                default:
+                    UseSpellHotbarNumber = 0; // Default to first spell type
+                    break;
+            }
+        }
+    }
+
+    /// <summary>
     /// Handles jump input events from the Input System
     /// </summary>
     public void OnJumpInput(InputAction.CallbackContext context)
@@ -295,8 +359,11 @@ public class PlayerInputHandler : MonoBehaviour
     /// </summary>
     public void OnPlayerMenuInput(InputAction.CallbackContext context)
     {
-        if (context.started)
-            GameEvents.Instance.PlayerMenuOpen();
+        if (!isDialogueActive)
+        {
+            if (context.started)
+                GameEvents.Instance.PlayerMenuOpen();
+        }
     }
     #endregion
 
@@ -335,6 +402,19 @@ public class PlayerInputHandler : MonoBehaviour
     /// Consumes the item switch right input
     /// </summary>
     public void UseItemSwitchRightInput() => ItemSwitchRightInput = false;
+
+    /// <summary>
+    /// Consumes the spell cast input
+    /// </summary>
+    /// <remarks>
+    /// Resets both SpellCastInput and UseSpellType to prevent unintended spell casting
+    /// </remarks>
+    public void UseSpellCastInput()
+    {
+        SpellCastInput = false;
+        UseSpellHotbarNumber = 0;
+    }
+
     #endregion
 
     #region Input Check Methods
@@ -375,5 +455,7 @@ public class PlayerInputHandler : MonoBehaviour
             NormInputY = 0;
         }
     }
+
+    private void OnDialogueTrigger(bool isDialogueActive) => this.isDialogueActive = isDialogueActive;
     #endregion
 }

@@ -18,6 +18,10 @@ public class GameManager : MonoBehaviour
     [Header("Input Settings")]
     [Tooltip("Reference to the Input Action Asset containing all input bindings")]
     [SerializeField] private InputActionAsset actions;
+
+    [Header("Game Systems")]
+    [Tooltip("Reference to the SpellsCatalogue ScriptableObject")]
+    [SerializeField] private SpellsCatalogue spellsCatalogue;
     #endregion
 
     #region Public Properties
@@ -54,6 +58,16 @@ public class GameManager : MonoBehaviour
 
         _instance = this;
         DontDestroyOnLoad(gameObject);
+
+        // Initialize SpellsCatalogue
+        if (spellsCatalogue != null)
+        {
+            SpellsCatalogue.Initialize(spellsCatalogue);
+        }
+        else
+        {
+            Debug.LogError("SpellsCatalogue reference is missing in GameManager!");
+        }
 
         // Lock and hide cursor
         Cursor.visible = false;
