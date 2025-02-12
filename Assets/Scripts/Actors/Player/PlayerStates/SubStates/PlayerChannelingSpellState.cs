@@ -1,66 +1,36 @@
 using UnityEngine;
 
 /// <summary>
-/// State for channeling spells that require holding the cast button.
+/// State for playing the starting animation of channeling spells.
 /// </summary>
-public class PlayerChannelingSpellState : PlayerSpellCastState
+public class PlayerChannelingSpellStartState : PlayerSpellCastState
 {
-    #region State Variables
     /// <summary>
-    /// Timer to track channeling duration
-    /// </summary>
-    private float stateTimer;
-
-    /// <summary>
-    /// Maximum duration the spell can be channeled
-    /// </summary>
-    private float channelDuration;
-
-    /// <summary>
-    /// Initial hotbar slot number
-    /// </summary>
-    private int initialHotbarSlot;
-    #endregion
-
-    /// <summary>
-    /// Initializes a new instance of the PlayerChannelingSpellState
+    /// Initializes a new instance of the PlayerChannelingSpellStartState
     /// </summary>
     /// <param name="player">Reference to the Player component</param>
     /// <param name="stateMachine">Reference to the state machine managing player states</param>
     /// <param name="playerData">Reference to the player's data container</param>
     /// <param name="animBoolName">Name of the animation boolean parameter for this state</param>
-    public PlayerChannelingSpellState(Player player, StateMachine stateMachine, PlayerData playerData, string animBoolName) 
+    public PlayerChannelingSpellStartState(Player player, StateMachine stateMachine, PlayerData playerData, string animBoolName) 
         : base(player, stateMachine, playerData, animBoolName)
     {
     }
 
     /// <summary>
-    /// Called when entering the channeling state
+    /// Called when entering the channeling start state
     /// </summary>
     public override void Enter()
     {
         base.Enter();
-        
-        stateTimer = 0f;
-        channelDuration = PlayerMagic.currentSpell.channelingTime;
-        initialHotbarSlot = player.InputHandler.UseSpellHotbarNumber;
-        
-        // Start the channeling bar animation
-        PlayerMagic.StartChannelingBar(channelDuration);
     }
 
     /// <summary>
-    /// Called when exiting the channeling state
+    /// Called when exiting the channeling start state
     /// </summary>
     public override void Exit()
     {
         base.Exit();
-
-        player.InputHandler.UseSpellCastInput();
-        stateTimer = 0f;
-
-        // Stop the channeling bar animation
-        PlayerMagic.StopChannelingBar();
     }
 
     /// <summary>
@@ -70,33 +40,32 @@ public class PlayerChannelingSpellState : PlayerSpellCastState
     {
         base.LogicUpdate();
 
-        // Ensure player remains stationary during block
+        // Ensure player remains stationary during animation
         Movement?.SetVelocityX(0f);
 
         if (!isExitingState)
         {
-            // Check if player changed hotbar slot
-            if (player.InputHandler.UseSpellHotbarNumber != initialHotbarSlot)
+            // If player releases button early during start animation
+            if (!player.InputHandler.SpellCastInput)
             {
                 stateMachine.ChangeState(player.IdleState);
-                return;
             }
+        }
+    }
 
-            stateTimer += Time.deltaTime;
-
-            // Check if channeling is complete
-            if (stateTimer >= channelDuration)
-            {
-                // Cast the spell and exit
-                PlayerMagic.currentSpell.Cast(player, null);
-                stateMachine.ChangeState(player.IdleState);
-            }
-            // Check if player released the button early
-            else if (!player.InputHandler.SpellCastInput)
-            {
-                // Just exit without casting
-                stateMachine.ChangeState(player.IdleState);
-            }
+    /// <summary>
+    /// Called when the start animation finishes
+    /// </summary>
+    public override void AnimationFinishTrigger()
+    {
+        base.AnimationFinishTrigger();
+        if (player.InputHandler.SpellCastInput)
+        {
+            stateMachine.ChangeState(player.ActiveChannelingSpellState);
+        }
+        else
+        {
+            stateMachine.ChangeState(player.IdleState);
         }
     }
 }

@@ -292,7 +292,7 @@ public class PlayerGroundedState : PlayerState
             switch (castType)
             {
                 case CastType.Channeled:
-                    stateMachine.ChangeState(player.ChannelingSpellState);
+                    stateMachine.ChangeState(player.ChannelingSpellStartState);
                     break;
             }
         }
