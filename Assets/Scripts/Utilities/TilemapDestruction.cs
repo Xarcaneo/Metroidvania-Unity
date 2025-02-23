@@ -43,9 +43,6 @@ public class TilemapDestruction : MonoBehaviour
     [SerializeField]
     private DestructionAnimationHandler animationHandler;
 
-    // Cached reference to the SpriteRenderer component of the hidden entrance.
-    private SpriteRenderer hiddenEntranceRenderer;
-
 #if UNITY_EDITOR
     private void OnValidate()
     {
@@ -60,7 +57,6 @@ public class TilemapDestruction : MonoBehaviour
 
     private void Start()
     {
-        hiddenEntranceRenderer = hiddenEntrance.GetComponent<SpriteRenderer>();
         UpdateVisualOnly();
     }
 
@@ -97,11 +93,7 @@ public class TilemapDestruction : MonoBehaviour
         // If we've exceeded the last level, start final destruction
         if (currentLevel >= destructionLevels.Length)
         {
-            // Reveal the hidden entrance by enabling its SpriteRenderer
-            if (hiddenEntranceRenderer != null)
-            {
-                hiddenEntranceRenderer.enabled = true;
-            }
+            hiddenEntrance.gameObject.SetActive(true);
 
             // Play the final destruction animation
             if (animationHandler != null)
