@@ -20,8 +20,14 @@ public class InventoryTab : Tab
     /// </summary>
     private void OnDisable()
     {
-        displayPanel.SmartClose();
+        if (displayPanel != null)
+        {
+            displayPanel.SmartClose();
+        }
 
-        EventSystem.current.SetSelectedGameObject(null);
+        if (EventSystem.current != null)
+        {
+            EventSystem.current.SetSelectedGameObject(null);
+        }
     }
 }

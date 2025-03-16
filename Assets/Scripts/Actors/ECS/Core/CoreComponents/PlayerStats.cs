@@ -23,7 +23,7 @@ public class PlayerStats : Stats
         attack = m_BaseAttack;
         defense = m_BaseDefense;
 
-        if (currentHealth <= 0)
+        if (currentHealth <= 0 || currentMana <= 0)
         {
             currentHealth = maxHealth;
             currentMana = maxMana;

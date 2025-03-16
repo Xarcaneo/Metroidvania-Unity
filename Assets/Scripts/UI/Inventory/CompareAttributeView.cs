@@ -210,8 +210,11 @@ namespace Opsive.UltimateInventorySystem.Demo.UI.VisualStructures.AttributeUIs
             // If item is equipped, hide the comparison background
             if (m_Equipper.IsEquipped(item))
             {
-                m_ComparisonBackground.SetActive(false);
-                return;
+                m_NewValueText.gameObject.SetActive(false);
+            }
+            else
+            {
+                m_NewValueText.gameObject.SetActive(true);
             }
 
             // Make sure the comparison background is visible for unequipped items

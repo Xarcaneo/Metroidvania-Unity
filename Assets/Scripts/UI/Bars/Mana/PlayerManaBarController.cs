@@ -87,6 +87,10 @@ public class PlayerManaBarController : ManaBarController
             currentValue = maxManaValue;
             isNewSession = false;
         }
+        else
+        {
+            stats.SetMana(currentValue);
+        }
 
         SubscribeToEvents();
     }

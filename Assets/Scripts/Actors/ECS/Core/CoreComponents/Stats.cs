@@ -152,6 +152,12 @@ public class Stats : CoreComponent
     public void SetHealth(float amount) => currentHealth = amount;
 
     /// <summary>
+    /// Sets mana to a specific value.
+    /// </summary>
+    /// <param name="amount">New mana value</param>
+    public void SetMana(float amount) => currentMana = amount;
+
+    /// <summary>
     /// Decreases mana by the specified amount.
     /// </summary>
     /// <param name="amount">Amount of mana to consume</param>

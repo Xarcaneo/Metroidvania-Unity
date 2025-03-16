@@ -318,7 +318,7 @@ GameObject:
   - component: {fileID: 3995669774063870866}
   - component: {fileID: 8741217062078613051}
   m_Layer: 5
-  m_Name: HealthBarBackground
+  m_Name: ManaBarBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -341,7 +341,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 156, y: -107}
+  m_AnchoredPosition: {x: 156, y: -117}
   m_SizeDelta: {x: 72, y: 8}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &3995669774063870866
@@ -372,7 +372,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 258824317, guid: 3a1fca187d434984e80d9c5e2d8fc605, type: 3}
+  m_Sprite: {fileID: -452738574, guid: 3a1fca187d434984e80d9c5e2d8fc605, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -394,7 +394,7 @@ GameObject:
   - component: {fileID: 8012336523401970586}
   - component: {fileID: 871494358715559540}
   m_Layer: 5
-  m_Name: FrontHealthBar
+  m_Name: FrontManaBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -417,7 +417,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 160, y: -107}
+  m_AnchoredPosition: {x: 160, y: -117}
   m_SizeDelta: {x: 68, y: 8}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &8012336523401970586
@@ -448,7 +448,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1664540660, guid: 25d39cc02e5a17047b09393c5ac17a15, type: 3}
+  m_Sprite: {fileID: 1000281863, guid: 25d39cc02e5a17047b09393c5ac17a15, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -470,7 +470,7 @@ GameObject:
   - component: {fileID: 7985562802367147338}
   - component: {fileID: 4123045126910051156}
   m_Layer: 5
-  m_Name: BackHealthBar
+  m_Name: BackManaBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -493,7 +493,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 160, y: -107}
+  m_AnchoredPosition: {x: 160, y: -117}
   m_SizeDelta: {x: 68, y: 8}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &7985562802367147338
@@ -524,7 +524,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1361972498, guid: 20d1f56ce007da04e8b4e09270b2708c, type: 3}
+  m_Sprite: {fileID: -233253428, guid: 20d1f56ce007da04e8b4e09270b2708c, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -544,6 +544,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7685775037522023524}
   - component: {fileID: 5293184776530044635}
+  - component: {fileID: 8742274781514449307}
   m_Layer: 5
   m_Name: PlayerBar
   m_TagString: Untagged
@@ -588,6 +589,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   frontBar: {fileID: 1635008643026367089}
   backBar: {fileID: 3061655184863350448}
+  chipSpeed: 2
+--- !u!114 &8742274781514449307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8903196672269711014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2309b73979c99a478b49a39fb91ace8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frontBar: {fileID: 871494358715559540}
+  backBar: {fileID: 4123045126910051156}
   chipSpeed: 2
 --- !u!1 &9120173868098385386
 GameObject:
