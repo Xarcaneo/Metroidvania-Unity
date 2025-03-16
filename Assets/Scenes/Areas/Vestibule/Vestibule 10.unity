@@ -54925,7 +54925,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 622619104236007423, guid: 13e8ec8515311df4d8477a6c6383e25f, type: 3}
       propertyPath: m_gateID
-      value: VESTIBULE10_02
+      value: Gate.VESTIBULE10_02
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13e8ec8515311df4d8477a6c6383e25f, type: 3}
@@ -55320,7 +55320,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 622619104236007423, guid: 13e8ec8515311df4d8477a6c6383e25f, type: 3}
       propertyPath: m_gateID
-      value: VESTIBULE10_01
+      value: Gate.VESTIBULE10_01
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13e8ec8515311df4d8477a6c6383e25f, type: 3}
@@ -55342,7 +55342,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 343317267089884458, guid: 9945fe1796b2dd6419894f0d0fa3c120, type: 3}
       propertyPath: m_stateID
-      value: VESTIBULE10_02
+      value: Trigger.VESTIBULE10_02
       objectReference: {fileID: 0}
     - target: {fileID: 343317267089884458, guid: 9945fe1796b2dd6419894f0d0fa3c120, type: 3}
       propertyPath: triggerID
@@ -55374,7 +55374,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 343317267089884458, guid: 9945fe1796b2dd6419894f0d0fa3c120, type: 3}
       propertyPath: m_connectedGateIDs.Array.data[0]
-      value: VESTIBULE10_01
+      value: Gate.VESTIBULE10_01
       objectReference: {fileID: 0}
     - target: {fileID: 5924340701713213752, guid: 9945fe1796b2dd6419894f0d0fa3c120, type: 3}
       propertyPath: m_Name
@@ -55983,7 +55983,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6323214256313279159, guid: be9fe6a688e23d946a6fa42d2f8ec38d, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7296917269738561194, guid: be9fe6a688e23d946a6fa42d2f8ec38d, type: 3}
       propertyPath: m_RootOrder
@@ -56817,7 +56817,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2915233666846887821, guid: a3624a8c2d8eb804d85ab689acf79b78, type: 3}
       propertyPath: m_stateID
-      value: VESTIBULE10_01
+      value: Trigger.VESTIBULE10_01
       objectReference: {fileID: 0}
     - target: {fileID: 2915233666846887821, guid: a3624a8c2d8eb804d85ab689acf79b78, type: 3}
       propertyPath: m_itemName
@@ -56841,7 +56841,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2915233666846887821, guid: a3624a8c2d8eb804d85ab689acf79b78, type: 3}
       propertyPath: m_connectedGateIDs.Array.data[0]
-      value: VESTIBULE10_02
+      value: Gate.VESTIBULE10_02
       objectReference: {fileID: 0}
     - target: {fileID: 2915233666846887821, guid: a3624a8c2d8eb804d85ab689acf79b78, type: 3}
       propertyPath: m_itemName.m_ItemAmount.m_Amount

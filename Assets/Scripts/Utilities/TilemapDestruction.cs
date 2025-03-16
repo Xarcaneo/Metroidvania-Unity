@@ -93,7 +93,22 @@ public class TilemapDestruction : MonoBehaviour
         // If we've exceeded the last level, start final destruction
         if (currentLevel >= destructionLevels.Length)
         {
-            hiddenEntrance.gameObject.SetActive(true);
+            currentLevel = destructionLevels.Length - 1; // Stay within valid range
+
+            // Disable all destruction levels
+            foreach (var level in destructionLevels)
+            {
+                if (level.levelObject != null)
+                {
+                    level.levelObject.SetActive(false);
+                }
+            }
+
+            // Reveal the hidden entrance
+            if (hiddenEntrance != null)
+            {
+                hiddenEntrance.SetActive(true);
+            }
 
             // Play the final destruction animation
             if (animationHandler != null)
@@ -111,6 +126,7 @@ public class TilemapDestruction : MonoBehaviour
             {
                 animationHandler.PlayDestructionAnimation();
             }
+
             UpdateVisualOnly();
         }
     }
