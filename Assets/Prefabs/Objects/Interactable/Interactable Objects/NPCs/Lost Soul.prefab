@@ -115,6 +115,9 @@ MonoBehaviour:
   setQuestEntryState: 0
   questEntryNumber: 1
   questEntryState: 0
+  setAnotherQuestEntryState: 0
+  anotherQuestEntryNumber: 1
+  anotherQuestEntryState: 0
   luaCode: 
   sequence: 
   sequenceSpeaker: {fileID: 0}
@@ -126,6 +129,8 @@ MonoBehaviour:
   sendMessages: []
   barkSource: 0
   barkConversation: 
+  barkEntryID: -1
+  barkEntryTitle: 
   barkText: 
   barkTextSequence: 
   barker: {fileID: 0}
@@ -138,10 +143,15 @@ MonoBehaviour:
   conversationConversant: {fileID: 260146653147533380}
   conversationActor: {fileID: 0}
   startConversationEntryID: -1
+  startConversationEntryTitle: 
+  overrideDialogueUI: {fileID: 0}
   exclusive: 0
   replace: 0
+  queue: 0
   skipIfNoValidEntries: 0
+  preventRestartOnSameFrameEnded: 0
   stopConversationOnTriggerExit: 0
+  marginToAllowTriggerExit: 0.2
   stopConversationIfTooFar: 0
   maxConversationDistance: 5
   monitorConversationDistanceFrequency: 1

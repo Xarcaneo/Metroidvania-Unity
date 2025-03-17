@@ -946,6 +946,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 469606869}
     m_Modifications:
+    - target: {fileID: 7572704072764019, guid: c3ff24290d916d843b50768cc037d002, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 260146653147533380, guid: c3ff24290d916d843b50768cc037d002, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -1005,6 +1009,25 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 260146653147533380, guid: c3ff24290d916d843b50768cc037d002, type: 3}
   m_PrefabInstance: {fileID: 1224095527}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1224095529 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 260146653147533383, guid: c3ff24290d916d843b50768cc037d002, type: 3}
+  m_PrefabInstance: {fileID: 1224095527}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1224095530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1224095529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89df888cd86a65e4e8a5fff2080048ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  variableName: Lost_Soul.rag_doll_returned
+  expectedValue: 1
 --- !u!1 &1373841941
 GameObject:
   m_ObjectHideFlags: 0
