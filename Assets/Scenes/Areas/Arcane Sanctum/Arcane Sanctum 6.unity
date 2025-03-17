@@ -15489,6 +15489,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 635620403}
     m_Modifications:
+    - target: {fileID: 7572704072764029, guid: 932b5a60fe7d3ad44bfb54b16d9217f8, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 260146653147533380, guid: 932b5a60fe7d3ad44bfb54b16d9217f8, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -15538,8 +15542,31 @@ PrefabInstance:
       value: Maurice
       objectReference: {fileID: 0}
     - target: {fileID: 4030998680822540438, guid: 932b5a60fe7d3ad44bfb54b16d9217f8, type: 3}
+      propertyPath: canInteract
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4030998680822540438, guid: 932b5a60fe7d3ad44bfb54b16d9217f8, type: 3}
       propertyPath: m_dialogueID
       value: Maurice/Initial
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 932b5a60fe7d3ad44bfb54b16d9217f8, type: 3}
+--- !u!1 &2687912437346182834 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 260146653147533383, guid: 932b5a60fe7d3ad44bfb54b16d9217f8, type: 3}
+  m_PrefabInstance: {fileID: 2687912437346182833}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2687912437346182835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2687912437346182834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89df888cd86a65e4e8a5fff2080048ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  variableName: Player.HasFollower
+  expectedValue: 1

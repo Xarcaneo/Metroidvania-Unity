@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 260146653147533381}
   - component: {fileID: 260146653147533382}
   - component: {fileID: 1832972356}
-  - component: {fileID: 4030998680822540438}
   - component: {fileID: 9196362261441546374}
   m_Layer: 0
   m_Name: Maurice
@@ -32,8 +31,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 7572704072764030}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -115,6 +113,9 @@ MonoBehaviour:
   setQuestEntryState: 0
   questEntryNumber: 1
   questEntryState: 0
+  setAnotherQuestEntryState: 0
+  anotherQuestEntryNumber: 1
+  anotherQuestEntryState: 0
   luaCode: 
   sequence: 
   sequenceSpeaker: {fileID: 0}
@@ -126,6 +127,8 @@ MonoBehaviour:
   sendMessages: []
   barkSource: 0
   barkConversation: 
+  barkEntryID: -1
+  barkEntryTitle: 
   barkText: 
   barkTextSequence: 
   barker: {fileID: 0}
@@ -138,10 +141,15 @@ MonoBehaviour:
   conversationConversant: {fileID: 260146653147533380}
   conversationActor: {fileID: 0}
   startConversationEntryID: -1
+  startConversationEntryTitle: 
+  overrideDialogueUI: {fileID: 0}
   exclusive: 0
   replace: 0
+  queue: 0
   skipIfNoValidEntries: 0
+  preventRestartOnSameFrameEnded: 0
   stopConversationOnTriggerExit: 0
+  marginToAllowTriggerExit: 0.2
   stopConversationIfTooFar: 0
   maxConversationDistance: 5
   monitorConversationDistanceFrequency: 1
@@ -177,20 +185,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
---- !u!114 &4030998680822540438
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 260146653147533383}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3015084b42c10a24296bdbb1f1cf5cb2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canInteract: 1
-  m_dialogueID: 
 --- !u!114 &9196362261441546374
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -264,119 +258,3 @@ MonoBehaviour:
   m_completedQuestDialogueMode: 0
   m_questDialogueUI: {fileID: 0}
   m_cooldownCheckFrequency: 0
---- !u!1001 &1793447477104463078
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 260146653147533380}
-    m_Modifications:
-    - target: {fileID: 229851882679837210, guid: 55187ab96d3c4fa42b7efdbc97ee1486, type: 3}
-      propertyPath: interactableObject
-      value: 
-      objectReference: {fileID: 4030998680822540438}
-    - target: {fileID: 809836684806532773, guid: 55187ab96d3c4fa42b7efdbc97ee1486, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 809836684806532773, guid: 55187ab96d3c4fa42b7efdbc97ee1486, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 809836684806532773, guid: 55187ab96d3c4fa42b7efdbc97ee1486, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 809836684806532773, guid: 55187ab96d3c4fa42b7efdbc97ee1486, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -1.5587444
-      objectReference: {fileID: 0}
-    - target: {fileID: 1799607720511194773, guid: 55187ab96d3c4fa42b7efdbc97ee1486, type: 3}
-      propertyPath: m_Name
-      value: InteractHandler
-      objectReference: {fileID: 0}
-    - target: {fileID: 1799607720511194776, guid: 55187ab96d3c4fa42b7efdbc97ee1486, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1799607720511194776, guid: 55187ab96d3c4fa42b7efdbc97ee1486, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1799607720511194776, guid: 55187ab96d3c4fa42b7efdbc97ee1486, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.28125
-      objectReference: {fileID: 0}
-    - target: {fileID: 1799607720511194776, guid: 55187ab96d3c4fa42b7efdbc97ee1486, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1799607720511194776, guid: 55187ab96d3c4fa42b7efdbc97ee1486, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1799607720511194776, guid: 55187ab96d3c4fa42b7efdbc97ee1486, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1799607720511194776, guid: 55187ab96d3c4fa42b7efdbc97ee1486, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1799607720511194776, guid: 55187ab96d3c4fa42b7efdbc97ee1486, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1799607720511194776, guid: 55187ab96d3c4fa42b7efdbc97ee1486, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1799607720511194776, guid: 55187ab96d3c4fa42b7efdbc97ee1486, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1799607720511194776, guid: 55187ab96d3c4fa42b7efdbc97ee1486, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1799607720511194779, guid: 55187ab96d3c4fa42b7efdbc97ee1486, type: 3}
-      propertyPath: m_Radius
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2951407107322837980, guid: 55187ab96d3c4fa42b7efdbc97ee1486, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2951407107322837980, guid: 55187ab96d3c4fa42b7efdbc97ee1486, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6149369864332334251, guid: 55187ab96d3c4fa42b7efdbc97ee1486, type: 3}
-      propertyPath: m_Size.x
-      value: 2.5625
-      objectReference: {fileID: 0}
-    - target: {fileID: 6149369864332334251, guid: 55187ab96d3c4fa42b7efdbc97ee1486, type: 3}
-      propertyPath: m_Size.y
-      value: 2.5625
-      objectReference: {fileID: 0}
-    - target: {fileID: 6149369864332334251, guid: 55187ab96d3c4fa42b7efdbc97ee1486, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 968439262, guid: f5508d0db7dd3af41bb4c4c9bf9a5981, type: 3}
-    - target: {fileID: 6149369864332334251, guid: 55187ab96d3c4fa42b7efdbc97ee1486, type: 3}
-      propertyPath: m_WasSpriteAssigned
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6988817352765390500, guid: 55187ab96d3c4fa42b7efdbc97ee1486, type: 3}
-      propertyPath: interactableObject
-      value: 
-      objectReference: {fileID: 4030998680822540438}
-    m_RemovedComponents:
-    - {fileID: 6988817352765390500, guid: 55187ab96d3c4fa42b7efdbc97ee1486, type: 3}
-    - {fileID: 2195405035957763965, guid: 55187ab96d3c4fa42b7efdbc97ee1486, type: 3}
-  m_SourcePrefab: {fileID: 100100000, guid: 55187ab96d3c4fa42b7efdbc97ee1486, type: 3}
---- !u!4 &7572704072764030 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1799607720511194776, guid: 55187ab96d3c4fa42b7efdbc97ee1486, type: 3}
-  m_PrefabInstance: {fileID: 1793447477104463078}
-  m_PrefabAsset: {fileID: 0}

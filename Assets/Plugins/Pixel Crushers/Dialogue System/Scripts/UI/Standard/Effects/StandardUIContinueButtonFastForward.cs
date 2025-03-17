@@ -34,7 +34,12 @@ namespace PixelCrushers.DialogueSystem
         [Tooltip("If alert is displaying, continue past it.")]
         public bool continueAlertPanel = true;
 
+        [Tooltip("Cooldown time in seconds between fast forwards")]
+        public float fastForwardCooldown = 0.2f;
+
         protected UnityEngine.UI.Button continueButton;
+
+        protected float nextFastForwardTime = 0f;
 
         protected AbstractDialogueUI m_runtimeDialogueUI;
         protected virtual AbstractDialogueUI runtimeDialogueUI
@@ -68,6 +73,10 @@ namespace PixelCrushers.DialogueSystem
 
         public virtual void OnFastForward()
         {
+            if (Time.time < nextFastForwardTime) return;
+
+            nextFastForwardTime = Time.time + fastForwardCooldown;
+
             if ((typewriterEffect != null) && typewriterEffect.isPlaying)
             {
                 typewriterEffect.Stop();
