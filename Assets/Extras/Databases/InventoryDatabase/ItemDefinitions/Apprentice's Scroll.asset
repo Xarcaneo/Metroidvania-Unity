@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 53ac5fa5da8102b468a92c21620db0d0, type: 3}
-  m_Name: Big Health Potion
+  m_Name: Apprentice's Scroll
   m_EditorClassIdentifier: 
-  m_ID: 461421827
-  m_Category: {fileID: 11400000, guid: ef7911c7655c06f46a4379786ed139a7, type: 2}
+  m_ID: 3174201915
+  m_Category: {fileID: 11400000, guid: 16e299484448ce34587dacc06f0c033f, type: 2}
   m_Parent: {fileID: 0}
   m_ChildrenData:
     m_ObjectType: Opsive.Shared.Utility.ResizableArray`1[[Opsive.UltimateInventorySystem.Core.ItemDefinition,
@@ -30,8 +30,8 @@ MonoBehaviour:
         mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]
       m_ValueHashes: 
       m_LongValueHashes: 0d00eb254f8d1b295b713f72e636d894086efd392442dff734ebab2aec72d130f446621b49ba2a58a8823c4a519fa65195fdf7a7e477b768d9cf911486f57b1d
-      m_ValuePositions: 000000000b0000000c0000000c0000001000000010000000140000002e000000
-      m_Values: 4465736372697074696f6e01010000008494b8885468697320697320626967206865616c746820706f74696f6e2e5468697320697320626967206865616c746820706f74696f6e2e
+      m_ValuePositions: 000000000b0000000c0000000c0000001000000010000000140000003b000000
+      m_Values: 4465736372697074696f6e010100000085d252bb41207363726f6c6c206e6561746c7920696e6b65642062792061206e6f76696365206d6167652e41207363726f6c6c206e6561746c7920696e6b65642062792061206e6f76696365206d6167652e
       m_UnityObjects: []
       m_Version: 3.2
     - m_ObjectType: Opsive.UltimateInventorySystem.Core.AttributeSystem.Attribute`1[[UnityEngine.Sprite,
@@ -39,17 +39,17 @@ MonoBehaviour:
       m_ValueHashes: 
       m_LongValueHashes: 0d00eb254f8d1b295b713f72e636d894086efd392442dff734ebab2aec72d130f446621b49ba2a58a8823c4a519fa651af0255e014ce1cfaf3d4ee4cb64be1ae
       m_ValuePositions: 0000000004000000050000000500000009000000090000000d00000011000000
-      m_Values: 49636f6e0101000000d6a675380000000001000000
+      m_Values: 49636f6e01010000005f58d9600000000001000000
       m_UnityObjects:
-      - {fileID: 21300000, guid: c62ae2be80968e945a6d72a876e7988e, type: 3}
-      - {fileID: 21300000, guid: c62ae2be80968e945a6d72a876e7988e, type: 3}
+      - {fileID: 21300000, guid: 361f6729097b8614284b2688679a9ced, type: 3}
+      - {fileID: 21300000, guid: 361f6729097b8614284b2688679a9ced, type: 3}
       m_Version: 3.2
     - m_ObjectType: Opsive.UltimateInventorySystem.Core.AttributeSystem.Attribute`1[[UnityEngine.GameObject,
         UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]
       m_ValueHashes: 
       m_LongValueHashes: 0d00eb254f8d1b295b713f72e636d894086efd392442dff734ebab2aec72d130f446621b49ba2a58a8823c4a519fa651bbc6d22cc378a73fff986c9964f66bf4
       m_ValuePositions: 000000000f00000010000000100000001400000014000000180000001c000000
-      m_Values: 45717569706d656e7450726566616201000000008ec692a4ffffffff00000000
+      m_Values: 45717569706d656e745072656661620100000000f5ac1c25ffffffff00000000
       m_UnityObjects:
       - {fileID: 6316912482438463736, guid: 33a66bb1acec0634b8f365bf32895a46, type: 3}
       m_Version: 3.2
@@ -58,30 +58,46 @@ MonoBehaviour:
       m_ValueHashes: 
       m_LongValueHashes: 0d00eb254f8d1b295b713f72e636d894086efd392442dff734ebab2aec72d130f446621b49ba2a58a8823c4a519fa651b175f34de81be63f3fc8a5ed13d36c4ef5478dba8999aaf4778bda36620bea62
       m_ValuePositions: 000000000600000007000000070000000b0000000b0000000f0000000f0000001300000013000000
-      m_Values: 5261726974790100000000ec10f07e0000000000000000
+      m_Values: 5261726974790100000000097f11300000000000000000
       m_UnityObjects: []
       m_Version: 3.2
   m_DefaultItem:
-    m_ID: 3875603436
-    m_Name: Big Health Potion
-    m_ItemDefinitionID: 461421827
+    m_ID: 1866384650
+    m_Name: Apprentice's Scroll
+    m_ItemDefinitionID: 3174201915
     m_ItemDefinition: {fileID: 11400000}
     m_ItemAttributeCollection:
       m_AttributeCollectionData:
-      - m_ObjectType: Opsive.UltimateInventorySystem.Core.AttributeSystem.Attribute`1[[System.Single,
+      - m_ObjectType: Opsive.UltimateInventorySystem.Core.AttributeSystem.Attribute`1[[System.Int32,
           mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]
         m_ValueHashes: 
-        m_LongValueHashes: 0d00eb254f8d1b295b713f72e636d894086efd392442dff734ebab2aec72d130f446621b49ba2a58a8823c4a519fa651cc215ba7e477b76810f4f41386f57b1d
-        m_ValuePositions: 000000000a0000000b0000000b0000000f0000000f0000001300000017000000
-        m_Values: 4865616c416d6f756e740001000000c96ab2c10000a0410000a041
+        m_LongValueHashes: 0d00eb254f8d1b295b713f72e636d894086efd392442dff734ebab2aec72d130f446621b49ba2a58a8823c4a519fa651424b280f5394b559861dc27bf4117a0e
+        m_ValuePositions: 000000000600000007000000070000000b0000000b0000000f00000013000000
+        m_Values: 41747461636b01010000003b33c1cf0200000002000000
         m_UnityObjects: []
         m_Version: 3.2
       - m_ObjectType: Opsive.UltimateInventorySystem.Core.AttributeSystem.Attribute`1[[System.Int32,
           mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]
         m_ValueHashes: 
         m_LongValueHashes: 0d00eb254f8d1b295b713f72e636d894086efd392442dff734ebab2aec72d130f446621b49ba2a58a8823c4a519fa651424b280f5394b559861dc27bf4117a0e
-        m_ValuePositions: 000000000a0000000b0000000b0000000f0000000f0000001300000017000000
-        m_Values: 4d616e61416d6f756e7401000000002494901e0000000000000000
+        m_ValuePositions: 000000000700000008000000080000000c0000000c0000001000000014000000
+        m_Values: 446566656e7365010100000068ead9a60000000000000000
+        m_UnityObjects: []
+        m_Version: 3.2
+      - m_ObjectType: Opsive.UltimateInventorySystem.Core.AttributeSystem.Attribute`1[[System.Int32,
+          mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]
+        m_ValueHashes: 
+        m_LongValueHashes: 0d00eb254f8d1b295b713f72e636d894086efd392442dff734ebab2aec72d130f446621b49ba2a58a8823c4a519fa651424b280f5394b559861dc27bf4117a0e
+        m_ValuePositions: 000000000600000007000000070000000b0000000b0000000f00000013000000
+        m_Values: 4865616c74680101000000f042cb130500000005000000
+        m_UnityObjects: []
+        m_Version: 3.2
+      - m_ObjectType: Opsive.UltimateInventorySystem.Core.AttributeSystem.Attribute`1[[System.Int32,
+          mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]
+        m_ValueHashes: 
+        m_LongValueHashes: 0d00eb254f8d1b295b713f72e636d894086efd392442dff734ebab2aec72d130f446621b49ba2a58a8823c4a519fa651424b280f5394b559861dc27bf4117a0e
+        m_ValuePositions: 0000000004000000050000000500000009000000090000000d00000011000000
+        m_Values: 4d616e6101010000009a5804820200000002000000
         m_UnityObjects: []
         m_Version: 3.2
   m_EditorIcon: {fileID: 0}

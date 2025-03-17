@@ -13,7 +13,7 @@ public class Chest : Interactable
     /// <summary>
     /// Unique ID for this chest used to track its state.
     /// </summary>
-    [SerializeField] private int m_ChestID;
+    [SerializeField] private string m_ChestID;
 
     /// <summary>
     /// Reference to the ItemDropper component for dropping items when opened.

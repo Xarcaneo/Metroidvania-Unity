@@ -240,7 +240,7 @@ public class Stats : CoreComponent
         maxMana += m_Equipper.GetEquipmentStatInt("Mana");
         attack += m_Equipper.GetEquipmentStatInt("Attack");
         defense += m_Equipper.GetEquipmentStatInt("Defense");
- 
+
         StatsUpdated?.Invoke();
     }
 

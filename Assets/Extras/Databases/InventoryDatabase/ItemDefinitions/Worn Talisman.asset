@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 53ac5fa5da8102b468a92c21620db0d0, type: 3}
-  m_Name: Mage Staff
+  m_Name: Worn Talisman
   m_EditorClassIdentifier: 
-  m_ID: 1340229932
-  m_Category: {fileID: 11400000, guid: 913d971d930692c4a959fd47c4f48dff, type: 2}
+  m_ID: 728438536
+  m_Category: {fileID: 11400000, guid: de9b7ffcbb6506646bd4bd9178c2b274, type: 2}
   m_Parent: {fileID: 0}
   m_ChildrenData:
     m_ObjectType: Opsive.Shared.Utility.ResizableArray`1[[Opsive.UltimateInventorySystem.Core.ItemDefinition,
@@ -26,12 +26,21 @@ MonoBehaviour:
     m_Version: 3.2
   m_ItemDefinitionAttributeCollection:
     m_AttributeCollectionData:
+    - m_ObjectType: Opsive.UltimateInventorySystem.Core.AttributeSystem.Attribute`1[[UnityEngine.GameObject,
+        UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]
+      m_ValueHashes: 
+      m_LongValueHashes: 0d00eb254f8d1b295b713f72e636d894086efd392442dff734ebab2aec72d130f446621b49ba2a58a8823c4a519fa651bbc6d22cc378a73fff986c9964f66bf4
+      m_ValuePositions: 000000000f00000010000000100000001400000014000000180000001c000000
+      m_Values: 45717569706d656e7450726566616201000000009045037dffffffff00000000
+      m_UnityObjects:
+      - {fileID: 6316912482438463736, guid: 33a66bb1acec0634b8f365bf32895a46, type: 3}
+      m_Version: 3.2
     - m_ObjectType: Opsive.UltimateInventorySystem.Core.AttributeSystem.Attribute`1[[System.String,
         mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]
       m_ValueHashes: 
       m_LongValueHashes: 0d00eb254f8d1b295b713f72e636d894086efd392442dff734ebab2aec72d130f446621b49ba2a58a8823c4a519fa65195fdf7a7e477b768d9cf911486f57b1d
-      m_ValuePositions: 000000000b0000000c0000000c00000010000000100000001400000074000000
-      m_Values: 4465736372697074696f6e010100000091ae5dc04120737461666620696e667573656420776974682072656d6e616e7473206f6620796f7572206c6f7374206d616769632e20596f7572207472757374656420636f6d70616e696f6e20696e207468697320666f7273616b656e20706c6163652e4120737461666620696e667573656420776974682072656d6e616e7473206f6620796f7572206c6f7374206d616769632e20596f7572207472757374656420636f6d70616e696f6e20696e207468697320666f7273616b656e20706c6163652e
+      m_ValuePositions: 000000000b0000000c0000000c0000001000000010000000140000005a000000
+      m_Values: 4465736372697074696f6e01010000002996039a412073696d706c6520636861726d2073686f77696e67207369676e73206f66206865617679207573652c20697473206d61676963206e6561726c79206578686175737465642e412073696d706c6520636861726d2073686f77696e67207369676e73206f66206865617679207573652c20697473206d61676963206e6561726c79206578686175737465642e
       m_UnityObjects: []
       m_Version: 3.2
     - m_ObjectType: Opsive.UltimateInventorySystem.Core.AttributeSystem.Attribute`1[[UnityEngine.Sprite,
@@ -39,32 +48,23 @@ MonoBehaviour:
       m_ValueHashes: 
       m_LongValueHashes: 0d00eb254f8d1b295b713f72e636d894086efd392442dff734ebab2aec72d130f446621b49ba2a58a8823c4a519fa651af0255e014ce1cfaf3d4ee4cb64be1ae
       m_ValuePositions: 0000000004000000050000000500000009000000090000000d00000011000000
-      m_Values: 49636f6e0101000000196fb16f0000000001000000
+      m_Values: 49636f6e01010000003341ede30000000001000000
       m_UnityObjects:
-      - {fileID: 21300000, guid: e496b4d4a8479084988758a385ef3624, type: 3}
-      - {fileID: 21300000, guid: e496b4d4a8479084988758a385ef3624, type: 3}
+      - {fileID: 21300000, guid: 249fa48d97af52e43823607ee2c5ab59, type: 3}
+      - {fileID: 21300000, guid: 249fa48d97af52e43823607ee2c5ab59, type: 3}
       m_Version: 3.2
     - m_ObjectType: Opsive.UltimateInventorySystem.Core.AttributeSystem.Attribute`1[[ItemRarity,
         Assembly-CSharp-firstpass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]
       m_ValueHashes: 
       m_LongValueHashes: 0d00eb254f8d1b295b713f72e636d894086efd392442dff734ebab2aec72d130f446621b49ba2a58a8823c4a519fa651b175f34de81be63f3fc8a5ed13d36c4ef5478dba8999aaf4778bda36620bea62
       m_ValuePositions: 000000000600000007000000070000000b0000000b0000000f0000000f0000001300000013000000
-      m_Values: 5261726974790100000000ec10f07e0000000000000000
+      m_Values: 5261726974790100000000bcca0fe00000000000000000
       m_UnityObjects: []
       m_Version: 3.2
-    - m_ObjectType: Opsive.UltimateInventorySystem.Core.AttributeSystem.Attribute`1[[UnityEngine.GameObject,
-        UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]
-      m_ValueHashes: 
-      m_LongValueHashes: 0d00eb254f8d1b295b713f72e636d894086efd392442dff734ebab2aec72d130f446621b49ba2a58a8823c4a519fa651bbc6d22cc378a73fff986c9964f66bf4
-      m_ValuePositions: 000000000f00000010000000100000001400000014000000180000001c000000
-      m_Values: 45717569706d656e74507265666162010000000025ec466dffffffff00000000
-      m_UnityObjects:
-      - {fileID: 6316912482438463736, guid: 33a66bb1acec0634b8f365bf32895a46, type: 3}
-      m_Version: 3.2
   m_DefaultItem:
-    m_ID: 1824459620
-    m_Name: Mage Staff
-    m_ItemDefinitionID: 1340229932
+    m_ID: 971464986
+    m_Name: Worn Talisman
+    m_ItemDefinitionID: 728438536
     m_ItemDefinition: {fileID: 11400000}
     m_ItemAttributeCollection:
       m_AttributeCollectionData:
@@ -72,16 +72,16 @@ MonoBehaviour:
           mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]
         m_ValueHashes: 
         m_LongValueHashes: 0d00eb254f8d1b295b713f72e636d894086efd392442dff734ebab2aec72d130f446621b49ba2a58a8823c4a519fa651424b280f5394b559861dc27bf4117a0e
-        m_ValuePositions: 000000000600000007000000070000000b0000000b0000000f00000013000000
-        m_Values: 41747461636b01010000003b33c1cf0500000005000000
+        m_ValuePositions: 000000000700000008000000080000000c0000000c0000001000000014000000
+        m_Values: 446566656e7365010100000068ead9a60500000005000000
         m_UnityObjects: []
         m_Version: 3.2
       - m_ObjectType: Opsive.UltimateInventorySystem.Core.AttributeSystem.Attribute`1[[System.Int32,
           mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]
         m_ValueHashes: 
         m_LongValueHashes: 0d00eb254f8d1b295b713f72e636d894086efd392442dff734ebab2aec72d130f446621b49ba2a58a8823c4a519fa651424b280f5394b559861dc27bf4117a0e
-        m_ValuePositions: 000000000700000008000000080000000c0000000c0000001000000014000000
-        m_Values: 446566656e7365010000000068ead9a60000000000000000
+        m_ValuePositions: 000000000600000007000000070000000b0000000b0000000f00000013000000
+        m_Values: 41747461636b01010000003b33c1cf0200000002000000
         m_UnityObjects: []
         m_Version: 3.2
       - m_ObjectType: Opsive.UltimateInventorySystem.Core.AttributeSystem.Attribute`1[[System.Int32,

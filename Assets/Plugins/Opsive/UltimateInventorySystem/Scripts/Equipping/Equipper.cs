@@ -1,4 +1,4 @@
-﻿/// ---------------------------------------------
+/// ---------------------------------------------
 /// Ultimate Inventory System
 /// Copyright (c) Opsive. All Rights Reserved.
 /// https://www.opsive.com
@@ -360,9 +360,10 @@ namespace Opsive.UltimateInventorySystem.Equipping
         public int GetEquipmentStatPreviewAdd(string attributeName, Item itemPreview)
         {
             var stat = 0f;
+            var previewAdded = false; // Track if we've already added the preview item
+
             for (int i = 0; i < m_Slots.Length; i++)
             {
-
                 Item item = null;
 
                 if (itemPreview == null)
@@ -370,9 +371,10 @@ namespace Opsive.UltimateInventorySystem.Equipping
                     if (m_Slots[i].ItemObject == null) { continue; }
                     item = m_Slots[i].ItemObject.Item;
                 }
-                else if (m_Slots[i].Category.InherentlyContains(itemPreview.Category))
+                else if (!previewAdded && m_Slots[i].Category.InherentlyContains(itemPreview.Category))
                 {
                     item = itemPreview;
+                    previewAdded = true; // Mark that we've added the preview item
                 }
                 else
                 {

@@ -78,6 +78,9 @@ MonoBehaviour:
   whatIsPlatform:
     serializedVersion: 2
     m_Bits: 0
+  whatIsHazard:
+    serializedVersion: 2
+    m_Bits: 0
   boxCollider2D: {fileID: 0}
 --- !u!1 &705878691846171140
 GameObject:
@@ -294,6 +297,8 @@ MonoBehaviour:
     m_PossibleDrops:
     - m_ItemDefinition: {fileID: 11400000, guid: a0f71f47e6107cb4ea5c5242ebb8050f, type: 2}
       m_DropChance: 35
+    - m_ItemDefinition: {fileID: 11400000, guid: 95c474c9bc8f9f94e937d326df5899d4, type: 2}
+      m_DropChance: 15
   m_DebugTableIndex: 0
   m_ShowDebugLogs: 0
 --- !u!1 &779569396468210762

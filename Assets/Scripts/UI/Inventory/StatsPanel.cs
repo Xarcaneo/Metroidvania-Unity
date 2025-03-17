@@ -25,6 +25,11 @@ public class StatsPanel : MonoBehaviour
     /// Text component displaying player's maximum health.
     /// </summary>
     [SerializeField] private TextMeshProUGUI HealthText;
+
+    /// <summary>
+    /// Text component displaying player's maximum mana.
+    /// </summary>
+    [SerializeField] private TextMeshProUGUI ManaText;
     #endregion
 
     #region Private Fields
@@ -113,6 +118,7 @@ public class StatsPanel : MonoBehaviour
         if (AttackText != null) AttackText.text = stats.GetAttack().ToString();
         if (DefenseText != null) DefenseText.text = stats.GetDefense().ToString();
         if (HealthText != null) HealthText.text = stats.GetMaxHealth().ToString();
+        if (ManaText != null) ManaText.text = stats.GetMaxMana().ToString();
     }
 
     /// <summary>

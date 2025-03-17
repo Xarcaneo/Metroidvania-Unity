@@ -20,6 +20,22 @@ using UnityEngine;
 public class PlayerIdleState : PlayerGroundedState
 {
     /// <summary>
+    /// Time delay in seconds before allowing ladder interaction after entering idle state
+    /// </summary>
+    /// <remarks>
+    /// This delay prevents accidentally grabbing ladders when landing from jumps
+    /// </remarks>
+    private float ladderInteractionDelay = 0.1f;
+
+    /// <summary>
+    /// Time when the idle state was entered
+    /// </summary>
+    /// <remarks>
+    /// Used to track the delay before allowing ladder interaction
+    /// </remarks>
+    private float timeEnteredState;
+
+    /// <summary>
     /// Initializes a new instance of the PlayerIdleState
     /// </summary>
     /// <param name="player">Reference to the Player component</param>
@@ -49,6 +65,7 @@ public class PlayerIdleState : PlayerGroundedState
     {
         base.Enter();
         Movement?.SetVelocityX(0f);
+        timeEnteredState = Time.time;
     }
 
     /// <summary>
@@ -82,7 +99,7 @@ public class PlayerIdleState : PlayerGroundedState
             {
                 stateMachine.ChangeState(player.MoveState);
             }
-            else if (yInput != 0)
+            else if (yInput != 0 && Time.time >= timeEnteredState + ladderInteractionDelay)
             {
                 if (yInput == -1 && CollisionSenses.LadderBottom || yInput == 1 && CollisionSenses.LadderTop)
                 {

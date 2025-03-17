@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 53ac5fa5da8102b468a92c21620db0d0, type: 3}
-  m_Name: Silver Ring
+  m_Name: Cracked Rune
   m_EditorClassIdentifier: 
-  m_ID: 2883802728
-  m_Category: {fileID: 11400000, guid: 559e08f033e6ce246a60d9967038785b, type: 2}
+  m_ID: 4156408819
+  m_Category: {fileID: 11400000, guid: dc7bdc0cb17a52f4baf94ac7591499e5, type: 2}
   m_Parent: {fileID: 0}
   m_ChildrenData:
     m_ObjectType: Opsive.Shared.Utility.ResizableArray`1[[Opsive.UltimateInventorySystem.Core.ItemDefinition,
@@ -26,12 +26,21 @@ MonoBehaviour:
     m_Version: 3.2
   m_ItemDefinitionAttributeCollection:
     m_AttributeCollectionData:
+    - m_ObjectType: Opsive.UltimateInventorySystem.Core.AttributeSystem.Attribute`1[[UnityEngine.GameObject,
+        UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]
+      m_ValueHashes: 
+      m_LongValueHashes: 0d00eb254f8d1b295b713f72e636d894086efd392442dff734ebab2aec72d130f446621b49ba2a58a8823c4a519fa651bbc6d22cc378a73fff986c9964f66bf4
+      m_ValuePositions: 000000000f00000010000000100000001400000014000000180000001c000000
+      m_Values: 45717569706d656e7450726566616201000000003197569bffffffff00000000
+      m_UnityObjects:
+      - {fileID: 6316912482438463736, guid: 33a66bb1acec0634b8f365bf32895a46, type: 3}
+      m_Version: 3.2
     - m_ObjectType: Opsive.UltimateInventorySystem.Core.AttributeSystem.Attribute`1[[System.String,
         mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]
       m_ValueHashes: 
       m_LongValueHashes: 0d00eb254f8d1b295b713f72e636d894086efd392442dff734ebab2aec72d130f446621b49ba2a58a8823c4a519fa65195fdf7a7e477b768d9cf911486f57b1d
-      m_ValuePositions: 000000000b0000000c0000000c000000100000001000000014000000db000000
-      m_Values: 4465736372697074696f6e0101000000747ff0e9546869732073696d706c652073696c7665722072696e67206d6179206e6f7420626520746865206d6f7374206578747261766167616e74207069656365206f66206a6577656c72792c206275742069742070726f766964657320736f6d6520726573697374616e636520616761696e737420706879736963616c2061747461636b732e2049742773206e6f74206d7563682c20627574206974277320626574746572207468616e20676f696e6720696e746f20626174746c6520656d7074792d68616e6465642e546869732073696d706c652073696c7665722072696e67206d6179206e6f7420626520746865206d6f7374206578747261766167616e74207069656365206f66206a6577656c72792c206275742069742070726f766964657320736f6d6520726573697374616e636520616761696e737420706879736963616c2061747461636b732e2049742773206e6f74206d7563682c20627574206974277320626574746572207468616e20676f696e6720696e746f20626174746c6520656d7074792d68616e6465642e
+      m_ValuePositions: 000000000b0000000c0000000c00000010000000100000001400000045000000
+      m_Values: 4465736372697074696f6e0101000000879825da4120636869707065642072756e6520656d697474696e672061206661696e742c20756e737461626c6520656e657267792e4120636869707065642072756e6520656d697474696e672061206661696e742c20756e737461626c6520656e657267792e
       m_UnityObjects: []
       m_Version: 3.2
     - m_ObjectType: Opsive.UltimateInventorySystem.Core.AttributeSystem.Attribute`1[[UnityEngine.Sprite,
@@ -39,32 +48,23 @@ MonoBehaviour:
       m_ValueHashes: 
       m_LongValueHashes: 0d00eb254f8d1b295b713f72e636d894086efd392442dff734ebab2aec72d130f446621b49ba2a58a8823c4a519fa651af0255e014ce1cfaf3d4ee4cb64be1ae
       m_ValuePositions: 0000000004000000050000000500000009000000090000000d00000011000000
-      m_Values: 49636f6e0101000000ebac8ea90000000001000000
+      m_Values: 49636f6e0101000000345d70c60000000001000000
       m_UnityObjects:
-      - {fileID: 21300000, guid: 3d460da1730d6604a949dcc54be53679, type: 3}
-      - {fileID: 21300000, guid: 3d460da1730d6604a949dcc54be53679, type: 3}
+      - {fileID: 21300000, guid: 8c9adbd841dc47448b9d0b72ac730e29, type: 3}
+      - {fileID: 21300000, guid: 8c9adbd841dc47448b9d0b72ac730e29, type: 3}
       m_Version: 3.2
     - m_ObjectType: Opsive.UltimateInventorySystem.Core.AttributeSystem.Attribute`1[[ItemRarity,
         Assembly-CSharp-firstpass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]
       m_ValueHashes: 
       m_LongValueHashes: 0d00eb254f8d1b295b713f72e636d894086efd392442dff734ebab2aec72d130f446621b49ba2a58a8823c4a519fa651b175f34de81be63f3fc8a5ed13d36c4ef5478dba8999aaf4778bda36620bea62
       m_ValuePositions: 000000000600000007000000070000000b0000000b0000000f0000000f0000001300000013000000
-      m_Values: 5261726974790100000000ec10f07e0000000000000000
+      m_Values: 52617269747901000000003ebaf9820000000000000000
       m_UnityObjects: []
       m_Version: 3.2
-    - m_ObjectType: Opsive.UltimateInventorySystem.Core.AttributeSystem.Attribute`1[[UnityEngine.GameObject,
-        UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]
-      m_ValueHashes: 
-      m_LongValueHashes: 0d00eb254f8d1b295b713f72e636d894086efd392442dff734ebab2aec72d130f446621b49ba2a58a8823c4a519fa651bbc6d22cc378a73fff986c9964f66bf4
-      m_ValuePositions: 000000000f00000010000000100000001400000014000000180000001c000000
-      m_Values: 45717569706d656e74507265666162010000000025ec466dffffffff00000000
-      m_UnityObjects:
-      - {fileID: 6316912482438463736, guid: 33a66bb1acec0634b8f365bf32895a46, type: 3}
-      m_Version: 3.2
   m_DefaultItem:
-    m_ID: 57762079
-    m_Name: Silver Ring
-    m_ItemDefinitionID: 2883802728
+    m_ID: 2014958042
+    m_Name: Cracked Rune
+    m_ItemDefinitionID: 4156408819
     m_ItemDefinition: {fileID: 11400000}
     m_ItemAttributeCollection:
       m_AttributeCollectionData:
@@ -72,8 +72,16 @@ MonoBehaviour:
           mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]
         m_ValueHashes: 
         m_LongValueHashes: 0d00eb254f8d1b295b713f72e636d894086efd392442dff734ebab2aec72d130f446621b49ba2a58a8823c4a519fa651424b280f5394b559861dc27bf4117a0e
+        m_ValuePositions: 000000000600000007000000070000000b0000000b0000000f00000013000000
+        m_Values: 41747461636b0101000000aa00052a0100000001000000
+        m_UnityObjects: []
+        m_Version: 3.2
+      - m_ObjectType: Opsive.UltimateInventorySystem.Core.AttributeSystem.Attribute`1[[System.Int32,
+          mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]
+        m_ValueHashes: 
+        m_LongValueHashes: 0d00eb254f8d1b295b713f72e636d894086efd392442dff734ebab2aec72d130f446621b49ba2a58a8823c4a519fa651424b280f5394b559861dc27bf4117a0e
         m_ValuePositions: 000000000700000008000000080000000c0000000c0000001000000014000000
-        m_Values: 446566656e736501010000001b4817b20d0000000d000000
+        m_Values: 446566656e73650101000000d014c6970200000002000000
         m_UnityObjects: []
         m_Version: 3.2
       - m_ObjectType: Opsive.UltimateInventorySystem.Core.AttributeSystem.Attribute`1[[System.Int32,
@@ -81,15 +89,7 @@ MonoBehaviour:
         m_ValueHashes: 
         m_LongValueHashes: 0d00eb254f8d1b295b713f72e636d894086efd392442dff734ebab2aec72d130f446621b49ba2a58a8823c4a519fa651424b280f5394b559861dc27bf4117a0e
         m_ValuePositions: 000000000600000007000000070000000b0000000b0000000f00000013000000
-        m_Values: 41747461636b0100000000aa00052a0000000000000000
-        m_UnityObjects: []
-        m_Version: 3.2
-      - m_ObjectType: Opsive.UltimateInventorySystem.Core.AttributeSystem.Attribute`1[[System.Int32,
-          mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]
-        m_ValueHashes: 
-        m_LongValueHashes: 0d00eb254f8d1b295b713f72e636d894086efd392442dff734ebab2aec72d130f446621b49ba2a58a8823c4a519fa651424b280f5394b559861dc27bf4117a0e
-        m_ValuePositions: 000000000600000007000000070000000b0000000b0000000f00000013000000
-        m_Values: 4865616c7468010000000044d2033b0000000000000000
+        m_Values: 4865616c74680100000000ce23e3600000000000000000
         m_UnityObjects: []
         m_Version: 3.2
       - m_ObjectType: Opsive.UltimateInventorySystem.Core.AttributeSystem.Attribute`1[[System.Int32,

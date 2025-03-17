@@ -6,15 +6,12 @@
 
 namespace Opsive.UltimateInventorySystem.UI.Item
 {
-    using PixelCrushers;
-    using PixelCrushers.DialogueSystem;
     using UnityEngine;
     using Text = Opsive.Shared.UI.Text;
     using Object = UnityEngine.Object;
 
     /// <summary>
     /// Handles the display of item descriptions including name, description text, and rarity icon.
-    /// Supports localization through TextTables.
     /// </summary>
     public class ItemDescription : ItemDescriptionBase
     {
@@ -36,12 +33,6 @@ namespace Opsive.UltimateInventorySystem.UI.Item
         [SerializeField] protected string m_NoItemSelectedMessage = "No Item selected";
         [Tooltip("Message shown when item has no description")]
         [SerializeField] protected string m_NoDescriptionMessage = "The item does not have a description";
-
-        [Header("Localization")]
-        [Tooltip("Text table for description localization")]
-        [SerializeField] private TextTable m_DescriptionTextTable;
-        [Tooltip("Text table for item name localization")]
-        [SerializeField] private TextTable m_ItemNameTextTable;
         #endregion
 
         #region Constants
@@ -80,16 +71,6 @@ namespace Opsive.UltimateInventorySystem.UI.Item
             if (m_ItemRarityIcon == null)
             {
                 Debug.LogWarning($"[ItemDescription] Item rarity icon component missing on {gameObject.name}", this);
-            }
-
-            if (m_DescriptionTextTable == null)
-            {
-                Debug.LogWarning($"[ItemDescription] Description text table not assigned on {gameObject.name}", this);
-            }
-
-            if (m_ItemNameTextTable == null)
-            {
-                Debug.LogWarning($"[ItemDescription] Item name text table not assigned on {gameObject.name}", this);
             }
         }
 
@@ -131,21 +112,16 @@ namespace Opsive.UltimateInventorySystem.UI.Item
         }
 
         /// <summary>
-        /// Updates the item name display with localization support.
+        /// Updates the item name display.
         /// </summary>
         protected virtual void UpdateItemName()
         {
-            if (Object.ReferenceEquals(m_ItemNameText, null) || m_ItemNameTextTable == null) return;
-
-            string localizedName = m_ItemNameTextTable.GetFieldTextForLanguage(
-                ItemInfo.Item.name, 
-                Localization.Language);
-
-            m_ItemNameText.text = localizedName;
+            if (Object.ReferenceEquals(m_ItemNameText, null)) return;
+            m_ItemNameText.text = ItemInfo.Item.name;
         }
 
         /// <summary>
-        /// Updates the description text with localization support.
+        /// Updates the description text.
         /// </summary>
         protected virtual void UpdateDescription()
         {
@@ -157,17 +133,7 @@ namespace Opsive.UltimateInventorySystem.UI.Item
                 return;
             }
 
-            if (m_DescriptionTextTable != null)
-            {
-                string localizedDescription = m_DescriptionTextTable.GetFieldTextForLanguage(
-                    descriptionValue,
-                    Localization.Language);
-                m_DescriptionText.text = localizedDescription;
-            }
-            else
-            {
-                m_DescriptionText.text = descriptionValue;
-            }
+            m_DescriptionText.text = descriptionValue;
         }
 
         /// <summary>

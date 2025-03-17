@@ -214,6 +214,10 @@ MonoBehaviour:
     m_PossibleDrops:
     - m_ItemDefinition: {fileID: 11400000, guid: a02165c450d40534bae8ba1ba4a9a049, type: 2}
       m_DropChance: 35
+    - m_ItemDefinition: {fileID: 11400000, guid: a0f71f47e6107cb4ea5c5242ebb8050f, type: 2}
+      m_DropChance: 20
+    - m_ItemDefinition: {fileID: 11400000, guid: b9618c308ad6b64439f1202f0870b7ed, type: 2}
+      m_DropChance: 15
   m_DebugTableIndex: 0
   m_ShowDebugLogs: 0
 --- !u!1 &1795069383799447301
@@ -519,6 +523,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   whatIsPlatform:
+    serializedVersion: 2
+    m_Bits: 0
+  whatIsHazard:
     serializedVersion: 2
     m_Bits: 0
   boxCollider2D: {fileID: 0}

@@ -3018,7 +3018,7 @@ MonoBehaviour:
     - id: 14
       fields:
       - title: Title
-        value: AddItem
+        value: GiveItem
         type: 0
         typeString: CustomFieldType_Text
       - title: Pictures
@@ -3084,7 +3084,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: uisAddItem("Big Health Potion", 1, "", "");
+      userScript: uisAddItem("Medium Health Potion", 1, "", "");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -3332,8 +3332,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 163.81726}
-    canvasZoom: 0.5500003
+    canvasScrollPosition: {x: 190.10912, y: 238.71124}
+    canvasZoom: 0.85
   - id: 4
     fields:
     - title: Title
@@ -4335,10 +4335,10 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: "The doll is close\u2014I sense it in the necromancer's old study
-          nearby. There's a hidden chamber behind a weakened wall there.\n<color=#F1821B>
-          You'll need to break through that wall to reach the doll.</color> Be cautious;
-          dark magic still lingers."
+        value: "The doll is close\u2014I sense its energy coming from the necromancer\u2019s
+          old study nearby. There's a hidden chamber behind a weakened wall there.\n<color=#F1821B>You'll
+          need to break through that wall to reach it.</color> Be cautious; traces
+          of dark magic still linger."
         type: 0
         typeString: CustomFieldType_Text
       - title: Parenthetical
@@ -4886,8 +4886,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 14.0625, y: 89.326416}
-    canvasZoom: 0.64000034
+    canvasScrollPosition: {x: 60.01658, y: 79.882324}
+    canvasZoom: 0.73000026
   - id: 6
     fields:
     - title: Title
@@ -5293,8 +5293,10 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: His doll is somewhere nearby, I can feel its energy around his old
-          notes in a room not far from here.
+        value: "The doll is close\u2014I sense its energy coming from the necromancer\u2019s
+          old study nearby. There's a hidden chamber behind a weakened wall there.\n<color=#F1821B>You'll
+          need to break through that wall to reach it.</color> Be cautious; traces
+          of dark magic still linger."
         type: 0
         typeString: CustomFieldType_Text
       - title: Parenthetical
@@ -5314,8 +5316,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: pl
-        value: "Jego lalka jest gdzie\u015B w pobli\u017Cu, czuj\u0119 jej energi\u0119
-          wok\xF3\u0142 jego starych notatek w pokoju niedaleko st\u0105d."
+        value: 
         type: 4
         typeString: CustomFieldType_Localization
       - title: Response Menu Sequence
@@ -5494,7 +5495,7 @@ MonoBehaviour:
       - originConversationID: 6
         originDialogueID: 6
         destinationConversationID: 6
-        destinationDialogueID: 26
+        destinationDialogueID: 27
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -5888,12 +5889,91 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 288.1882
-        y: 710.9897
+        y: 770.3304
+        width: 160
+        height: 30
+    - id: 27
+      fields:
+      - title: Title
+        value: GiveItem
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Pictures
+        value: '[]'
+        type: 3
+        typeString: CustomFieldType_Files
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 6
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 6
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Parenthetical
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Audio Files
+        value: '[]'
+        type: 3
+        typeString: CustomFieldType_Files
+      - title: Video File
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: Continue()
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: pl
+        value: 
+        type: 4
+        typeString: CustomFieldType_Localization
+      - title: Response Menu Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 6
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 6
+        originDialogueID: 27
+        destinationConversationID: 6
+        destinationDialogueID: 26
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: uisAddItem("Apprentice's Scroll", 1, "", "");
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 291.49866
+        y: 704.0071
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 0}
-    canvasZoom: 0.58000046
+    canvasScrollPosition: {x: 0, y: 14.403458}
+    canvasZoom: 0.6700004
   - id: 8
     fields:
     - title: Title
@@ -9003,8 +9083,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 851.1627}
-    canvasZoom: 0.43000004
+    canvasScrollPosition: {x: 0, y: 1061.2244}
+    canvasZoom: 0.49000004
   syncInfo:
     syncActors: 0
     syncItems: 0
