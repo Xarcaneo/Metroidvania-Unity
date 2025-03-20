@@ -94,14 +94,21 @@ public class CollisionSenses : CoreComponent
     private float wallCheckDistance;
     public float WallCheckDistance { get => wallCheckDistance; set => wallCheckDistance = value; }
 
-    [SerializeField, Tooltip("Radius of the ladder detection circle")] 
-    private float ladderCheckRadius;
+    [Header("Ladder Detection Settings")]
+    [Space(10)]
+    [SerializeField, Tooltip("Width of the ladder detection box")] 
+    private float ladderCheckWidth = 0.3f;
+    [SerializeField, Tooltip("Height of the ladder detection box")] 
+    private float ladderCheckHeight = 1f;
 
-    [SerializeField, Tooltip("Distance to check above for ladder top")] 
-    private float ladderTopDistance;
-
-    [SerializeField, Tooltip("Distance to check below for ladder bottom")] 
-    private float ladderBottomDistance;
+    [Header("Ladder Continuation Settings")]
+    [Space(10)]
+    [SerializeField, Tooltip("Radius for checking if player can continue climbing up/down")] 
+    private float ladderContinueRadius = 0.15f;
+    [SerializeField, Tooltip("How far up to check for ladder continuation")] 
+    private float ladderTopDistance = 1f;
+    [SerializeField, Tooltip("How far down to check for ladder continuation")] 
+    private float ladderBottomDistance = 1f;
 
     [SerializeField, Tooltip("Distance to check for slopes")] 
     private float slopeCheckDistance;
@@ -211,19 +218,47 @@ public class CollisionSenses : CoreComponent
     public bool LedgeHorizontal => Physics2D.Raycast(LedgeCheckHorizontal.position, Vector2.right * Movement.FacingDirection, wallCheckDistance, whatIsGround);
 
     /// <summary>
-    /// Checks if there is a ladder at the check point.
+    /// Checks if there is a ladder at the check point using a box check.
     /// </summary>
-    public bool Ladder => Physics2D.OverlapCircle(LadderCheck.position, ladderCheckRadius, whatIsLadder);
+    public bool Ladder
+    {
+        get
+        {
+            Vector2 boxCenter = LadderCheck.position;
+            Vector2 boxSize = new Vector2(ladderCheckWidth, ladderCheckHeight);
+            return Physics2D.OverlapBox(boxCenter, boxSize, 0f, whatIsLadder);
+        }
+    }
 
     /// <summary>
     /// Checks if there is a ladder below the entity.
     /// </summary>
-    public bool LadderBottom => Physics2D.OverlapCircle(LadderCheck.position - new Vector3(0, ladderBottomDistance, 0), ladderCheckRadius, whatIsLadder);
+    public bool LadderBottom
+    {
+        get
+        {
+            if (!Ladder) return false;
+
+            // Check only at the bottom point
+            Vector2 bottomPoint = LadderCheck.position + Vector3.down * ladderBottomDistance;
+            return Physics2D.OverlapCircle(bottomPoint, ladderContinueRadius, whatIsLadder);
+        }
+    }
 
     /// <summary>
     /// Checks if there is a ladder above the entity.
     /// </summary>
-    public bool LadderTop => Physics2D.OverlapCircle(LadderCheck.position - new Vector3(0, ladderTopDistance, 0), ladderCheckRadius, whatIsLadder);
+    public bool LadderTop
+    {
+        get
+        {
+            if (!Ladder) return false;
+
+            // Check only at the top point
+            Vector2 topPoint = LadderCheck.position + Vector3.up * ladderTopDistance;
+            return Physics2D.OverlapCircle(topPoint, ladderContinueRadius, whatIsLadder);
+        }
+    }
 
     /// <summary>
     /// Checks if there is a platform below the entity.
@@ -294,9 +329,69 @@ public class CollisionSenses : CoreComponent
     /// <returns>The ladder's position, or null if not on a ladder.</returns>
     public Vector3? GetLadderPosition()
     {
-        Collider2D collider = Physics2D.OverlapCircle(LadderCheck.position, ladderCheckRadius, whatIsLadder);
+        Collider2D collider = Physics2D.OverlapBox(LadderCheck.position, new Vector2(ladderCheckWidth, ladderCheckHeight), 0f, whatIsLadder);
         return collider?.transform.position;
     }
 
     #endregion
+
+    private void OnDrawGizmos()
+    {
+        if (!Application.isPlaying) return;
+
+        // Draw ladder box check
+        Gizmos.color = Color.blue;
+        Vector2 boxCenter = LadderCheck.position;
+        Vector2 boxSize = new Vector2(ladderCheckWidth, ladderCheckHeight);
+        DrawWireBox(boxCenter, boxSize);
+
+        // Draw ladder endpoint checks
+        Gizmos.color = Color.cyan;
+        // Top check point
+        Vector3 topPoint = LadderCheck.position + Vector3.up * ladderTopDistance;
+        DrawCircle(topPoint, ladderContinueRadius, 32);
+        Gizmos.DrawLine(LadderCheck.position, topPoint);
+        
+        // Bottom check point
+        Vector3 bottomPoint = LadderCheck.position + Vector3.down * ladderBottomDistance;
+        DrawCircle(bottomPoint, ladderContinueRadius, 32);
+        Gizmos.DrawLine(LadderCheck.position, bottomPoint);
+
+        // Draw ground checks
+        Gizmos.color = Color.green;
+        Vector2 leftRaycastOrigin = new Vector2(GroundCheck.position.x - groundCheckOffset, GroundCheck.position.y);
+        Vector2 rightRaycastOrigin = new Vector2(GroundCheck.position.x + groundCheckOffset, GroundCheck.position.y);
+        Gizmos.DrawLine(leftRaycastOrigin, leftRaycastOrigin + Vector2.down * groundCheckDistance);
+        Gizmos.DrawLine(rightRaycastOrigin, rightRaycastOrigin + Vector2.down * groundCheckDistance);
+    }
+
+    private void DrawCircle(Vector3 center, float radius, int segments)
+    {
+        float angleStep = 360f / segments;
+        Vector3 lastPoint = center + Vector3.right * radius;
+
+        for (int i = 1; i <= segments; i++)
+        {
+            float angle = i * angleStep * Mathf.Deg2Rad;
+            Vector3 nextPoint = center + new Vector3(Mathf.Cos(angle), Mathf.Sin(angle)) * radius;
+            Gizmos.DrawLine(lastPoint, nextPoint);
+            lastPoint = nextPoint;
+        }
+    }
+
+    private void DrawWireBox(Vector2 center, Vector2 size)
+    {
+        Vector2 halfSize = size * 0.5f;
+        
+        // Draw the box edges
+        Vector2 topLeft = center + new Vector2(-halfSize.x, halfSize.y);
+        Vector2 topRight = center + new Vector2(halfSize.x, halfSize.y);
+        Vector2 bottomLeft = center + new Vector2(-halfSize.x, -halfSize.y);
+        Vector2 bottomRight = center + new Vector2(halfSize.x, -halfSize.y);
+
+        Gizmos.DrawLine(topLeft, topRight);
+        Gizmos.DrawLine(topRight, bottomRight);
+        Gizmos.DrawLine(bottomRight, bottomLeft);
+        Gizmos.DrawLine(bottomLeft, topLeft);
+    }
 }

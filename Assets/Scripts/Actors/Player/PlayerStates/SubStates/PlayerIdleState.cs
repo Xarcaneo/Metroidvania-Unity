@@ -101,7 +101,7 @@ public class PlayerIdleState : PlayerGroundedState
             }
             else if (yInput != 0 && Time.time >= timeEnteredState + ladderInteractionDelay)
             {
-                if (yInput == -1 && CollisionSenses.LadderBottom || yInput == 1 && CollisionSenses.LadderTop)
+                if (CollisionSenses.Ladder && ((yInput == -1 && CollisionSenses.LadderBottom) || (yInput == 1 && CollisionSenses.LadderTop)))
                 {
                     if (player.LadderClimbState.CanEnterLadder())
                     {

@@ -222,7 +222,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4941782774186192986}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -689,9 +689,11 @@ MonoBehaviour:
   groundCheckDistance: 0.6
   groundCheckOffset: 0.45
   wallCheckDistance: 1
-  ladderCheckRadius: 0.3
-  ladderTopDistance: -1
-  ladderBottomDistance: 5
+  ladderCheckWidth: 1
+  ladderCheckHeight: 2.6
+  ladderContinueRadius: 0.15
+  ladderTopDistance: 3
+  ladderBottomDistance: 3
   slopeCheckDistance: 0.7
   platformCheckRadius: 2
   whatIsGround:
