@@ -132,6 +132,9 @@ public class SlotManager : MonoBehaviour
     /// <param name="slot">The slot that was selected.</param>
     private void HandleSlotSelected(Slot slot)
     {
+        // Track the currently selected slot
+        currentlySelectedSlot = slot;
+
         if (spellDescriptionUI != null)
         {
             spellDescriptionUI.UpdateSpellDescription(slot.AssignedSpell, slot.IsLocked);
@@ -164,6 +167,13 @@ public class SlotManager : MonoBehaviour
         if (currentlySelectedSlot == null)
         {
             Debug.LogWarning("No slot is currently selected. Cannot assign a spell.");
+            return;
+        }
+
+        // Prevent assigning locked spells
+        if (currentlySelectedSlot.IsLocked)
+        {
+            Debug.LogWarning("Cannot assign a locked spell to hotbar.");
             return;
         }
 
