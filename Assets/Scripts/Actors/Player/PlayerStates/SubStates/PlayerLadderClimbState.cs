@@ -123,13 +123,6 @@ public class PlayerLadderClimbState : PlayerState
     /// <summary>
     /// Called when entering the ladder climb state
     /// </summary>
-    /// <remarks>
-    /// Sets up climbing by:
-    /// 1. Resetting available jumps
-    /// 2. Pausing climb animation
-    /// 3. Disabling gravity
-    /// 4. Aligning player with ladder center
-    /// </remarks>
     public override void Enter()
     {
         base.Enter();
@@ -140,9 +133,13 @@ public class PlayerLadderClimbState : PlayerState
         prevGravityScale = m_rigidbody.gravityScale;
         m_rigidbody.gravityScale = 0;
 
-        Vector3 beforeAlignPos = player.transform.position;
-        AlignPlayerWithLadderCenter();
-        Vector3 afterAlignPos = player.transform.position;
+        // Instant X alignment for ladder grab
+        Vector3? ladderPosition = GetLadderPositionWithWideScan();
+        if (ladderPosition.HasValue)
+        {
+            Vector3 newPosition = new Vector3(ladderPosition.Value.x, player.transform.position.y, player.transform.position.z);
+            player.transform.position = newPosition;
+        }
     }
 
     /// <summary>
@@ -303,7 +300,7 @@ public class PlayerLadderClimbState : PlayerState
         }
     }
 
-    private Vector3? GetLadderPositionWithWideScan()
+    public Vector3? GetLadderPositionWithWideScan()
     {
         // First try the normal ladder check
         Vector3? normalCheck = CollisionSenses.GetLadderPosition();

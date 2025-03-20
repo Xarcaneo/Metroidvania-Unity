@@ -117,12 +117,18 @@ public class PlayerData : ScriptableObject
     #endregion
 
     #region Ladder Parameters
-    [Header("Ladder Climb State")]
-    [Tooltip("Vertical climbing speed on ladders")]
+    [Header("Ladder Settings")]
+    [SerializeField, Tooltip("How fast to climb up/down ladders")] 
     public float climbingVelocity = 5f;
+
+    [SerializeField, Tooltip("How fast to interpolate down when starting to climb down")] 
+    public float climbDownInterpolationSpeed = 8f;
+
+    [SerializeField, Tooltip("Cooldown between ladder grabs")] 
+    public float ladderClimbCooldown = 0.5f;
+
+    [Header("Ladder Climb State")]
     [Tooltip("Time before allowing another ladder climb")]
-    public float ladderClimbCooldown = 0.2f;
-    [Tooltip("Time before allowing another ladder jump")]
     public float ladderJumpCooldown = 1.0f;
     [Tooltip("Distance from top to finish climbing")]
     public float climbFinishThresholdUp = 1.0f;

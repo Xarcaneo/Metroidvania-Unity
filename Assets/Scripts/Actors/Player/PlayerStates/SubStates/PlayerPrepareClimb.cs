@@ -22,6 +22,11 @@ public class PlayerPrepareClimb : PlayerState
     /// Direction of climbing (-1 for down, 0 for none, 1 for up)
     /// </summary>
     private int climbingDirection;
+
+    private bool isAligningDown = false;
+    private float targetYPosition;
+    private float startYPosition;
+    private float alignmentProgress = 0f;
     #endregion
 
     #region Core Components
@@ -45,23 +50,33 @@ public class PlayerPrepareClimb : PlayerState
     }
 
     /// <summary>
+    /// Called when entering the prepare climb state
+    /// </summary>
+    public override void Enter()
+    {
+        base.Enter();
+
+        // Only interpolate Y position when climbing down from ground
+        if (climbingDirection == -1)
+        {
+            isAligningDown = true;
+            alignmentProgress = 0f;
+            startYPosition = player.transform.position.y;
+            // Move down by 1 unit to get onto ladder
+            targetYPosition = startYPosition - playerData.startPosDown;
+        }
+    }
+
+    /// <summary>
     /// Called when exiting the prepare climb state
     /// </summary>
-    /// <remarks>
-    /// Adjusts the player's position based on climbing direction:
-    /// - Moves up if entering ladder from bottom
-    /// - Moves down if entering ladder from top
-    /// - Resets climbing direction
-    /// </remarks>
     public override void Exit()
     {
         base.Exit();
 
-        // Adjust position based on climbing direction
+        // Only adjust position when climbing up
         if (climbingDirection == 1)
             Player.Instance.gameObject.transform.position += new Vector3(0, playerData.startPosUp, 0);
-        else if (climbingDirection == -1)
-            Player.Instance.gameObject.transform.position -= new Vector3(0, playerData.startPosDown, 0);
 
         climbingDirection = 0;
     }
@@ -69,24 +84,45 @@ public class PlayerPrepareClimb : PlayerState
     /// <summary>
     /// Updates the state's logic
     /// </summary>
-    /// <remarks>
-    /// Called every frame to:
-    /// 1. Stop all movement during preparation
-    /// 2. Check for animation completion
-    /// 3. Transition to ladder climb state when ready
-    /// </remarks>
     public override void LogicUpdate()
     {
         base.LogicUpdate();
 
-        // Ensure player is stationary during preparation
-        Movement?.SetVelocityX(0f);
-        Movement?.SetVelocityY(0f);
-
-        // Transition to climb state when preparation is complete
-        if (isAnimationFinished)
+        // Handle Y position interpolation when climbing down
+        if (isAligningDown)
         {
-            stateMachine.ChangeState(player.LadderClimbState);
+            alignmentProgress += Time.deltaTime * playerData.climbDownInterpolationSpeed;
+            
+            // Get ladder X position for alignment
+            Vector3? ladderPosition = player.LadderClimbState.GetLadderPositionWithWideScan();
+            float newY = Mathf.Lerp(startYPosition, targetYPosition, alignmentProgress);
+            
+            // Update both X and Y position
+            if (ladderPosition.HasValue)
+            {
+                player.transform.position = new Vector3(ladderPosition.Value.x, newY, player.transform.position.z);
+            }
+
+            // Check if we're done aligning
+            if (alignmentProgress >= 1f)
+            {
+                isAligningDown = false;
+                player.transform.position = new Vector3(player.transform.position.x, targetYPosition, player.transform.position.z);
+                stateMachine.ChangeState(player.LadderClimbState);
+                return;
+            }
+        }
+        else
+        {
+            // Ensure player is stationary during preparation
+            Movement?.SetVelocityX(0f);
+            Movement?.SetVelocityY(0f);
+
+            // Transition to climb state when preparation is complete
+            if (isAnimationFinished)
+            {
+                stateMachine.ChangeState(player.LadderClimbState);
+            }
         }
     }
 
