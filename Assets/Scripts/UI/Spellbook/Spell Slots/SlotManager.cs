@@ -12,6 +12,10 @@ public class SlotManager : MonoBehaviour
     [Tooltip("Reference to the SpellDescriptionUI for displaying spell details.")]
     [SerializeField] private SpellDescriptionUI spellDescriptionUI;
 
+    [Header("Managers")]
+    [Tooltip("Reference to the SpellCategorySlotManager to refresh categories after spell state changes.")]
+    [SerializeField] private SpellCategorySlotManager categoryManager;
+
     [Header("Hotbar Reference (Optional)")]
     [Tooltip("Reference to the SpellHotbar for assigning spells by ID to a specific hotbar slot.")]
     [SerializeField] private SpellHotbar spellHotbar;
@@ -34,6 +38,12 @@ public class SlotManager : MonoBehaviour
     {
         InitializeSlots();
         SelectFirstSlot();
+
+        // Force category refresh to update UI with new spell states
+        if (categoryManager != null)
+        {
+            categoryManager.RefreshCurrentCategory();
+        }
 
         if (InputManager.Instance != null)
         {
@@ -116,16 +126,15 @@ public class SlotManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Handles slot selection to update the spell description UI
-    /// and track the currently selected slot.
+    /// Called when a slot is selected.
+    /// Updates the spell description UI with the selected spell's information.
     /// </summary>
-    /// <param name="selectedSlot">The slot that was selected.</param>
-    private void HandleSlotSelected(Slot selectedSlot)
+    /// <param name="slot">The slot that was selected.</param>
+    private void HandleSlotSelected(Slot slot)
     {
-        if (selectedSlot != null)
+        if (spellDescriptionUI != null)
         {
-            currentlySelectedSlot = selectedSlot;
-            spellDescriptionUI.UpdateSpellDescription(selectedSlot.AssignedSpell);
+            spellDescriptionUI.UpdateSpellDescription(slot.AssignedSpell, slot.IsLocked);
         }
     }
 

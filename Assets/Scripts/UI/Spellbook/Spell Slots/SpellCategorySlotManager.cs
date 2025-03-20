@@ -2,7 +2,7 @@ using UnityEngine;
 
 /// <summary>
 /// Manages the navigation and focus of spell category slots.
-/// Automatically selects the first slot when enabled and updates focus based on input events.
+/// Automatically selects the first slot and updates focus based on input events.
 /// </summary>
 public class SpellCategorySlotManager : MonoBehaviour
 {
@@ -36,6 +36,13 @@ public class SpellCategorySlotManager : MonoBehaviour
     /// </summary>
     private void OnEnable()
     {
+        // First refresh spell states from Lua
+        if (SpellsCatalogue.Instance != null)
+        {
+            SpellsCatalogue.Instance.RefreshSpellStates();
+        }
+
+        // Then update UI
         UpdateAllSlots();
         SelectFirstSlot();
         SubscribeToInputEvents();
@@ -148,7 +155,23 @@ public class SpellCategorySlotManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Forces a refresh of the current category's spells.
+    /// Call this after spell states have been updated.
+    /// </summary>
+    public void RefreshCurrentCategory()
+    {
+        if (slots == null || slots.Length == 0 || currentSlotIndex >= slots.Length) return;
+        
+        var currentCategory = slots[currentSlotIndex].AssignedCategory;
+        if (currentCategory != null)
+        {
+            PopulateSpellSlots(currentCategory);
+        }
+    }
+
+    /// <summary>
     /// Populates the spell slots with spells from the selected category.
+    /// Shows all spells, with locked spells appearing disabled.
     /// </summary>
     /// <param name="category">The selected spell category.</param>
     private void PopulateSpellSlots(SpellCategory category)
@@ -157,9 +180,14 @@ public class SpellCategorySlotManager : MonoBehaviour
 
         if (category == null || category.spells == null) return;
 
-        for (int i = 0; i < spellSlots.Length && i < category.spells.Count; i++)
+        for (int i = 0; i < category.spells.Count && i < spellSlots.Length; i++)
         {
-            spellSlots[i].AssignSpell(category.spells[i].spellData);
+            var spell = category.spells[i];
+            if (spell == null) continue;
+
+            // Assign the spell and set its locked state
+            spellSlots[i].AssignSpell(spell.spellData);
+            spellSlots[i].SetLocked(!spell.IsUnlocked);
         }
     }
 

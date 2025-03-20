@@ -61,6 +61,30 @@ public class SpellsCatalogue : ScriptableObject
     }
 
     /// <summary>
+    /// Refreshes the unlock states for all spells in the catalogue.
+    /// Call this when opening the spellbook to ensure states are up to date.
+    /// </summary>
+    public void RefreshSpellStates()
+    {
+        if (allSpells == null)
+        {
+            Debug.LogError("SpellsCatalogue: allSpells list is null!");
+            return;
+        }
+
+        foreach (var spell in allSpells)
+        {
+            if (spell == null)
+            {
+                Debug.LogWarning("Null spell found in SpellsCatalogue!");
+                continue;
+            }
+
+            spell.InitializeUnlockState();
+        }
+    }
+
+    /// <summary>
     /// Retrieves a spell by its unique ID.
     /// </summary>
     /// <param name="id">The ID of the spell to retrieve.</param>

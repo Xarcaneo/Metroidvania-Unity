@@ -4,6 +4,10 @@ using UnityEngine.EventSystems;
 using TMPro;
 using System;
 
+/// <summary>
+/// Represents a UI slot that can hold and display spell data.
+/// Handles selection, deselection, and spell assignment.
+/// </summary>
 public class Slot : MonoBehaviour, ISelectHandler, IDeselectHandler
 {
     [Header("Focus Frame")]
@@ -13,6 +17,9 @@ public class Slot : MonoBehaviour, ISelectHandler, IDeselectHandler
     [Header("UI Elements")]
     [Tooltip("The UI Image to display the spell's icon.")]
     [SerializeField] private Image spellIconImage;
+
+    [Tooltip("Optional reference to a lock icon Image component")]
+    [SerializeField] private Image lockIcon;
 
     /// <summary>
     /// The data of the spell displayed in this slot.
@@ -30,6 +37,12 @@ public class Slot : MonoBehaviour, ISelectHandler, IDeselectHandler
     /// Event triggered when this slot is deselected.
     /// </summary>
     public event Action<Slot> OnSlotDeselected;
+
+    /// <summary>
+    /// Whether this slot is currently locked.
+    /// </summary>
+    public bool IsLocked => isLocked;
+    private bool isLocked = false;
 
     private void Awake()
     {
@@ -83,6 +96,21 @@ public class Slot : MonoBehaviour, ISelectHandler, IDeselectHandler
         spellIconImage.gameObject.SetActive(true);
         spellIconImage.sprite = spellData.SpellIcon;
         AssignedSpell = spellData;
+        UpdateVisuals();
+    }
+
+    /// <summary>
+    /// Sets whether this slot is locked and updates visuals accordingly.
+    /// </summary>
+    /// <param name="locked">Whether the slot should be locked.</param>
+    public void SetLocked(bool locked)
+    {
+        isLocked = locked;
+
+        if (lockIcon != null)
+        {
+            lockIcon.gameObject.SetActive(locked);
+        }
     }
 
     /// <summary>
@@ -93,5 +121,30 @@ public class Slot : MonoBehaviour, ISelectHandler, IDeselectHandler
         spellIconImage.gameObject.SetActive(false);
         spellIconImage.sprite = null;
         AssignedSpell = default;
+        isLocked = false;
+
+        // Hide the lock icon for empty slots
+        if (lockIcon != null)
+        {
+            lockIcon.gameObject.SetActive(false);
+        }
+    }
+
+    /// <summary>
+    /// Updates the visual elements of the slot based on current state.
+    /// </summary>
+    private void UpdateVisuals()
+    {
+        bool hasSpell = !AssignedSpell.Equals(default);
+
+        if (spellIconImage != null)
+        {
+            spellIconImage.enabled = hasSpell;
+        }
+
+        if (lockIcon != null)
+        {
+            lockIcon.gameObject.SetActive(hasSpell && isLocked);
+        }
     }
 }

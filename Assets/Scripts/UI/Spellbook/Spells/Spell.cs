@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using PixelCrushers.DialogueSystem;
 
 /// <summary>
 /// Represents a spell that can apply multiple effects with configurable delays between them.
@@ -30,12 +31,43 @@ public class Spell : ScriptableObject
     public List<EffectWithDelay> effectsWithDelays;
 
     /// <summary>
+    /// Whether this spell is currently unlocked
+    /// </summary>
+    private bool m_isUnlocked = false;
+
+    /// <summary>
+    /// Gets whether the spell is currently unlocked
+    /// </summary>
+    public bool IsUnlocked => m_isUnlocked;
+
+    /// <summary>
+    /// Initializes the spell's unlock state from the Dialogue System's Lua variables
+    /// </summary>
+    public void InitializeUnlockState()
+    {
+        if (string.IsNullOrEmpty(spellData.SpellUnlockID))
+        {
+            Debug.LogWarning($"[{spellData.SpellName}] SpellUnlockID is not set!");
+            return;
+        }
+
+        string fullVariableName = SpellData.SPELL_PREFIX + spellData.SpellUnlockID;
+        m_isUnlocked = DialogueLua.GetVariable(fullVariableName).asBool;
+    }
+
+    /// <summary>
     /// Casts the spell, applying its effects in sequence with delays.
     /// </summary>
     /// <param name="caster">The GameObject casting the spell.</param>
     /// <param name="target">The target GameObject (can be null).</param>
     public void Cast(Entity caster, Entity target)
     {
+        if (!m_isUnlocked)
+        {
+            Debug.LogWarning($"Attempted to cast locked spell: {spellData.SpellName}");
+            return;
+        }
+
         if (effectsWithDelays == null || effectsWithDelays.Count == 0)
         {
             Debug.LogWarning($"{spellData.SpellName} has no effects to cast.");

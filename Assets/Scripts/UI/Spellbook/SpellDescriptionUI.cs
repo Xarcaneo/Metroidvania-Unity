@@ -1,52 +1,63 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 /// <summary>
-/// Manages the UI for displaying the name and description of a spell.
+/// Handles displaying spell descriptions in the UI.
 /// </summary>
 public class SpellDescriptionUI : MonoBehaviour
 {
-    [Header("UI Elements")]
-    /// <summary>
-    /// The TextMeshProUGUI element for displaying the spell's name.
-    /// </summary>
-    [Tooltip("UI element for the spell's name.")]
+    [Header("UI References")]
+    [Tooltip("Text component for displaying the spell name")]
     [SerializeField] private TextMeshProUGUI spellNameText;
 
-    /// <summary>
-    /// The TextMeshProUGUI element for displaying the spell's description.
-    /// </summary>
-    [Tooltip("UI element for the spell's description.")]
+    [Tooltip("Text component for displaying the spell description")]
     [SerializeField] private TextMeshProUGUI spellDescriptionText;
 
+    [Tooltip("Image component for displaying the spell icon")]
+    [SerializeField] private Image spellIconImage;
+
     /// <summary>
-    /// Updates the UI with the provided spell name and description.
+    /// Updates the UI with information from the given spell.
+    /// If the spell is locked, shows placeholder text instead.
     /// </summary>
-    /// <param name="spellName">The name of the spell.</param>
-    /// <param name="spellDescription">The description of the spell.</param>
-    public void UpdateSpellDescription(SpellData spellData)
+    /// <param name="spellData">The spell data to display.</param>
+    /// <param name="isLocked">Whether the spell is locked.</param>
+    public void UpdateSpellDescription(SpellData spellData, bool isLocked)
     {
-        if (spellNameText != null)
+        if (spellData.Equals(default))
         {
-            spellNameText.text = spellData.SpellName;
-        }
-        else
-        {
-            Debug.LogWarning("Spell name text is not assigned.");
+            ClearDescription();
+            return;
         }
 
+        // Update spell name
+        if (spellNameText != null)
+        {
+            spellNameText.text = isLocked ? SpellData.LOCKED_SPELL_NAME : spellData.SpellName;
+        }
+
+        // Update spell description
         if (spellDescriptionText != null)
         {
-            spellDescriptionText.text = spellData.SpellDescription;
+            spellDescriptionText.text = isLocked ? SpellData.LOCKED_SPELL_DESCRIPTION : spellData.SpellDescription;
         }
-        else
+
+        // Update spell icon
+        if (spellIconImage != null)
         {
-            Debug.LogWarning("Spell description text is not assigned.");
+            spellIconImage.sprite = spellData.SpellIcon;
+            spellIconImage.enabled = true;
+
+            // Make the icon semi-transparent if the spell is locked
+            Color iconColor = spellIconImage.color;
+            iconColor.a = isLocked ? 0.5f : 1f;
+            spellIconImage.color = iconColor;
         }
     }
 
     /// <summary>
-    /// Clears the spell description UI.
+    /// Clears all spell information from the UI.
     /// </summary>
     public void ClearDescription()
     {
@@ -58,6 +69,12 @@ public class SpellDescriptionUI : MonoBehaviour
         if (spellDescriptionText != null)
         {
             spellDescriptionText.text = string.Empty;
+        }
+
+        if (spellIconImage != null)
+        {
+            spellIconImage.sprite = null;
+            spellIconImage.enabled = false;
         }
     }
 }
