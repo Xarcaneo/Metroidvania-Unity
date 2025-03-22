@@ -75,28 +75,41 @@ public class HintBox : MonoBehaviour
 
         try
         {
-            // Find all placeholders in the text (e.g., {Attack}) and replace them with keybindings
-            int startPlaceholderIndex = modifiedText.IndexOf('{');
-            while (startPlaceholderIndex >= 0)
+            int startIndex = 0;
+            while (true)
             {
-                int endPlaceholderIndex = modifiedText.IndexOf('}', startPlaceholderIndex + 1);
-                if (endPlaceholderIndex > startPlaceholderIndex)
+                // Find next placeholder
+                int startPlaceholderIndex = modifiedText.IndexOf('{', startIndex);
+                if (startPlaceholderIndex == -1) break; // No more placeholders
+
+                int endPlaceholderIndex = modifiedText.IndexOf('}', startPlaceholderIndex);
+                if (endPlaceholderIndex == -1) // No closing brace
                 {
-                    string placeholder = modifiedText.Substring(startPlaceholderIndex + 1, endPlaceholderIndex - startPlaceholderIndex - 1);
-                    string keybinding = GameManager.Instance != null ? 
-                        GameManager.Instance.GetKeybindingForAction(placeholder) : 
-                        placeholder;
-                    modifiedText = modifiedText.Replace("{" + placeholder + "}", keybinding);
+                    Debug.LogWarning($"[HintBox] Missing closing brace in text: {modifiedText}");
+                    break;
                 }
 
-                startPlaceholderIndex = modifiedText.IndexOf('{', endPlaceholderIndex + 1);
+                // Extract placeholder and get keybinding
+                string placeholder = modifiedText.Substring(startPlaceholderIndex + 1, 
+                    endPlaceholderIndex - startPlaceholderIndex - 1);
+                string keybinding = GameManager.Instance != null ? 
+                    GameManager.Instance.GetKeybindingForAction(placeholder) : 
+                    placeholder;
+
+                // Replace this instance of the placeholder
+                modifiedText = modifiedText.Remove(startPlaceholderIndex, 
+                    endPlaceholderIndex - startPlaceholderIndex + 1)
+                    .Insert(startPlaceholderIndex, keybinding);
+
+                // Move start index past this replacement
+                startIndex = startPlaceholderIndex + keybinding.Length;
             }
 
             hintText.SetText(modifiedText);
         }
         catch (Exception e)
         {
-            Debug.LogError("[HintBox] Error setting text: " + e.Message);
+            Debug.LogError($"[HintBox] Error setting text: {e.Message}\nText was: {initialHintText}");
         }
     }
 
@@ -209,7 +222,7 @@ public class HintBox : MonoBehaviour
     /// <param name="isPaused">True if game is paused, false otherwise.</param>
     private void HandlePauseTrigger(bool isPaused)
     {
-        if (!isPaused)
+        if (!isPaused && !string.IsNullOrEmpty(initialHintText))
         {
             SetHintText();
         }

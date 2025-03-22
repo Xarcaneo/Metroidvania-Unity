@@ -136,8 +136,10 @@ public class GameManager : MonoBehaviour
 
     /// <summary>
     /// Retrieves the current keybinding display string for a specific action.
+    /// For composite actions (like Movement), you can specify a part name (e.g., "Movement.down")
+    /// For indexed actions (like UseSpell), you can specify the index (e.g., "UseSpell.1")
     /// </summary>
-    /// <param name="actionName">Name of the input action to look up</param>
+    /// <param name="actionName">Name of the input action to look up, optionally with part name or index</param>
     /// <returns>Display string for the action's current binding, or empty string if not found</returns>
     public string GetKeybindingForAction(string actionName)
     {
@@ -153,16 +155,64 @@ public class GameManager : MonoBehaviour
             return string.Empty;
         }
 
+        // Split action name to handle composite parts (e.g., "Movement.down") or indices (e.g., "UseSpell.1")
+        string[] parts = actionName.Split('.');
+        string baseActionName = parts[0];
+        string compositePart = parts.Length > 1 ? parts[1].ToLower() : string.Empty;
+
         foreach (InputActionMap actionMap in actions.actionMaps)
         {
-            InputAction action = actionMap.FindAction(actionName);
+            InputAction action = actionMap.FindAction(baseActionName);
 
             if (action != null)
             {
-                foreach (InputBinding binding in action.bindings)
+                // For composite bindings (like Movement)
+                if (!string.IsNullOrEmpty(compositePart))
                 {
-                    return binding.ToDisplayString(
-                        InputBinding.DisplayStringOptions.DontIncludeInteractions);
+                    // For numeric indices (like UseSpell.1)
+                    if (int.TryParse(compositePart, out int index))
+                    {
+                        // Find the binding for this index (1-based to 0-based)
+                        int targetIndex = index - 1;
+                        int currentIndex = 0;
+                        
+                        foreach (InputBinding binding in action.bindings)
+                        {
+                            if (!binding.isPartOfComposite)
+                            {
+                                if (currentIndex == targetIndex)
+                                {
+                                    return binding.ToDisplayString(
+                                        InputBinding.DisplayStringOptions.DontIncludeInteractions);
+                                }
+                                currentIndex++;
+                            }
+                        }
+                    }
+                    // For named composite parts (like Movement.down)
+                    else
+                    {
+                        foreach (InputBinding binding in action.bindings)
+                        {
+                            if (binding.isPartOfComposite && binding.name.ToLower() == compositePart)
+                            {
+                                return binding.ToDisplayString(
+                                    InputBinding.DisplayStringOptions.DontIncludeInteractions);
+                            }
+                        }
+                    }
+                }
+                // For regular bindings
+                else
+                {
+                    foreach (InputBinding binding in action.bindings)
+                    {
+                        if (!binding.isPartOfComposite)
+                        {
+                            return binding.ToDisplayString(
+                                InputBinding.DisplayStringOptions.DontIncludeInteractions);
+                        }
+                    }
                 }
             }
         }

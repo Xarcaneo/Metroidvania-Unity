@@ -215,9 +215,9 @@ MonoBehaviour:
     - m_ItemDefinition: {fileID: 11400000, guid: a02165c450d40534bae8ba1ba4a9a049, type: 2}
       m_DropChance: 35
     - m_ItemDefinition: {fileID: 11400000, guid: a0f71f47e6107cb4ea5c5242ebb8050f, type: 2}
-      m_DropChance: 20
+      m_DropChance: 10
     - m_ItemDefinition: {fileID: 11400000, guid: b9618c308ad6b64439f1202f0870b7ed, type: 2}
-      m_DropChance: 15
+      m_DropChance: 10
   m_DebugTableIndex: 0
   m_ShowDebugLogs: 0
 --- !u!1 &1795069383799447301
@@ -505,7 +505,9 @@ MonoBehaviour:
   groundCheckDistance: 1
   groundCheckOffset: 0
   wallCheckDistance: 1
-  ladderCheckRadius: 0
+  ladderCheckWidth: 0.3
+  ladderCheckHeight: 1
+  ladderContinueRadius: 0.15
   ladderTopDistance: 0
   ladderBottomDistance: 0
   slopeCheckDistance: 0

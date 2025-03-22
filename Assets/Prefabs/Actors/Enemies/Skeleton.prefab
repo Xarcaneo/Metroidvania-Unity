@@ -120,7 +120,9 @@ MonoBehaviour:
   groundCheckDistance: 1
   groundCheckOffset: 0
   wallCheckDistance: 1
-  ladderCheckRadius: 0
+  ladderCheckWidth: 0.3
+  ladderCheckHeight: 1
+  ladderContinueRadius: 0.15
   ladderTopDistance: 0
   ladderBottomDistance: 0
   slopeCheckDistance: 0
@@ -562,7 +564,7 @@ MonoBehaviour:
     - m_ItemDefinition: {fileID: 11400000, guid: 60e225846befd2c4c9266942141dd56f, type: 2}
       m_DropChance: 10
     - m_ItemDefinition: {fileID: 11400000, guid: a0f71f47e6107cb4ea5c5242ebb8050f, type: 2}
-      m_DropChance: 15
+      m_DropChance: 10
   m_DebugTableIndex: 0
   m_ShowDebugLogs: 0
 --- !u!1 &4970596625883562115

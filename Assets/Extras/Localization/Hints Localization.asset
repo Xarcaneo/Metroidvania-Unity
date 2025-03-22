@@ -17,7 +17,7 @@ MonoBehaviour:
   - en
   - pl
   m_languageValues: 000000000100000002000000
-  m_fieldKeys: 080000000a0000000b0000000d0000000f000000090000000e000000100000000c00000011000000
+  m_fieldKeys: 080000000a0000000b0000000d0000000f000000090000000e000000100000000c00000011000000120000001300000014000000
   m_fieldValues:
   - m_fieldName: HINT_Interact
     m_keys: 000000000100000002000000
@@ -46,7 +46,8 @@ MonoBehaviour:
   - m_fieldName: HINT_LeapPlatforms
     m_keys: 010000000000000002000000
     m_values:
-    - 'Leap off platforms: Crouch and <color="red>{Jump}</color> together!'
+    - 'Leap off platforms: <color="red">{Movement.down}</color> and <color="red">{Jump}</color>
+      together!'
     - 
     - 
   - m_fieldName: HINT_AccessToolkit
@@ -79,7 +80,30 @@ MonoBehaviour:
     m_keys: 000000000100000002000000
     m_values:
     - 
-    - 'Red dots above an enemy''s health bar indicate their strength level.       '
+    - Red dots above an enemy's health bar indicate their strength level.
+    - 
+  - m_fieldName: HINT_LightAllRuneBoxes
+    m_keys: 010000000000000002000000
+    m_values:
+    - Light all rune fields with the <color="red">flame</color>! Move it using <color="red">{Movement.up}</color>,
+      <color="red">{Movement.down}</color>, <color="red">{Movement.left}</color>,
+      <color="red">{Movement.right}</color>.
+    - 
+    - 
+  - m_fieldName: HINT_GroundRollToDodge
+    m_keys: 000000000100000002000000
+    m_values:
+    - 
+    - Roll with <color="red>{Action}</color> while on the ground to dodge incoming
+      damage!
+    - 
+  - m_fieldName: HINT_UseAndAssignSpells
+    m_keys: 000000000100000002000000
+    m_values:
+    - 
+    - Hold <color="red">{UseSpell.1}</color>, <color="red">{UseSpell.2}</color>,
+      or <color="red">{UseSpell.3}</color> to cast assigned spells. Open your spellbook
+      to equip them first!
     - 
   m_nextLanguageID: 3
-  m_nextFieldID: 18
+  m_nextFieldID: 21

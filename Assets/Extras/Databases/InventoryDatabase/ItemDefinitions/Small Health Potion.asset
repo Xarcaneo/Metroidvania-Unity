@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 53ac5fa5da8102b468a92c21620db0d0, type: 3}
-  m_Name: Green Potion
+  m_Name: Small Health Potion
   m_EditorClassIdentifier: 
-  m_ID: 1649163353
+  m_ID: 3313320149
   m_Category: {fileID: 11400000, guid: ef7911c7655c06f46a4379786ed139a7, type: 2}
   m_Parent: {fileID: 0}
   m_ChildrenData:
@@ -30,8 +30,8 @@ MonoBehaviour:
         mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]
       m_ValueHashes: 
       m_LongValueHashes: 0d00eb254f8d1b295b713f72e636d894086efd392442dff734ebab2aec72d130f446621b49ba2a58a8823c4a519fa65195fdf7a7e477b768d9cf911486f57b1d
-      m_ValuePositions: 000000000b0000000c0000000c0000001000000010000000140000002f000000
-      m_Values: 4465736372697074696f6e010100000057b7e4205468697320697320776569726420677265656e20706f74696f6e2e5468697320697320776569726420677265656e20706f74696f6e2e
+      m_ValuePositions: 000000000b0000000c0000000c00000010000000100000001400000030000000
+      m_Values: 4465736372697074696f6e010100000091ae5dc05468697320697320736d616c6c206865616c746820706f74696f6e2e5468697320697320736d616c6c206865616c746820706f74696f6e2e
       m_UnityObjects: []
       m_Version: 3.2
     - m_ObjectType: Opsive.UltimateInventorySystem.Core.AttributeSystem.Attribute`1[[UnityEngine.Sprite,
@@ -39,17 +39,17 @@ MonoBehaviour:
       m_ValueHashes: 
       m_LongValueHashes: 0d00eb254f8d1b295b713f72e636d894086efd392442dff734ebab2aec72d130f446621b49ba2a58a8823c4a519fa651af0255e014ce1cfaf3d4ee4cb64be1ae
       m_ValuePositions: 0000000004000000050000000500000009000000090000000d00000011000000
-      m_Values: 49636f6e01010000007b0b34ec0000000001000000
+      m_Values: 49636f6e0101000000196fb16f0000000001000000
       m_UnityObjects:
-      - {fileID: 21300000, guid: bbee2c2bda6dda940b0fa031e8b9501f, type: 3}
-      - {fileID: 21300000, guid: bbee2c2bda6dda940b0fa031e8b9501f, type: 3}
+      - {fileID: 21300000, guid: 7df16cb87b16cef40a8c6e1e66446685, type: 3}
+      - {fileID: 21300000, guid: 7df16cb87b16cef40a8c6e1e66446685, type: 3}
       m_Version: 3.2
     - m_ObjectType: Opsive.UltimateInventorySystem.Core.AttributeSystem.Attribute`1[[UnityEngine.GameObject,
         UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]
       m_ValueHashes: 
       m_LongValueHashes: 0d00eb254f8d1b295b713f72e636d894086efd392442dff734ebab2aec72d130f446621b49ba2a58a8823c4a519fa651bbc6d22cc378a73fff986c9964f66bf4
       m_ValuePositions: 000000000f00000010000000100000001400000014000000180000001c000000
-      m_Values: 45717569706d656e7450726566616201000000003d5362f9ffffffff00000000
+      m_Values: 45717569706d656e7450726566616200000000003ccb2368ffffffff00000000
       m_UnityObjects:
       - {fileID: 6316912482438463736, guid: 33a66bb1acec0634b8f365bf32895a46, type: 3}
       m_Version: 3.2
@@ -58,13 +58,13 @@ MonoBehaviour:
       m_ValueHashes: 
       m_LongValueHashes: 0d00eb254f8d1b295b713f72e636d894086efd392442dff734ebab2aec72d130f446621b49ba2a58a8823c4a519fa651b175f34de81be63f3fc8a5ed13d36c4ef5478dba8999aaf4778bda36620bea62
       m_ValuePositions: 000000000600000007000000070000000b0000000b0000000f0000000f0000001300000013000000
-      m_Values: 5261726974790100000000ec10f07e0000000000000000
+      m_Values: 5261726974790000000000ec10f07e0000000000000000
       m_UnityObjects: []
       m_Version: 3.2
   m_DefaultItem:
-    m_ID: 537825613
-    m_Name: Green Potion
-    m_ItemDefinitionID: 1649163353
+    m_ID: 2517885956
+    m_Name: Small Health Potion
+    m_ItemDefinitionID: 3313320149
     m_ItemDefinition: {fileID: 11400000}
     m_ItemAttributeCollection:
       m_AttributeCollectionData:
@@ -73,7 +73,7 @@ MonoBehaviour:
         m_ValueHashes: 
         m_LongValueHashes: 0d00eb254f8d1b295b713f72e636d894086efd392442dff734ebab2aec72d130f446621b49ba2a58a8823c4a519fa651cc215ba7e477b76810f4f41386f57b1d
         m_ValuePositions: 000000000a0000000b0000000b0000000f0000000f0000001300000017000000
-        m_Values: 4865616c416d6f756e740001000000c96ab2c10000a0400000a040
+        m_Values: 4865616c416d6f756e740101000000c96ab2c10000a0410000a041
         m_UnityObjects: []
         m_Version: 3.2
       - m_ObjectType: Opsive.UltimateInventorySystem.Core.AttributeSystem.Attribute`1[[System.Int32,
@@ -81,7 +81,7 @@ MonoBehaviour:
         m_ValueHashes: 
         m_LongValueHashes: 0d00eb254f8d1b295b713f72e636d894086efd392442dff734ebab2aec72d130f446621b49ba2a58a8823c4a519fa651424b280f5394b559861dc27bf4117a0e
         m_ValuePositions: 000000000a0000000b0000000b0000000f0000000f0000001300000017000000
-        m_Values: 4d616e61416d6f756e7401000000002494901e0000000000000000
+        m_Values: 4d616e61416d6f756e7400000000002494901e0000000000000000
         m_UnityObjects: []
         m_Version: 3.2
   m_EditorIcon: {fileID: 0}
