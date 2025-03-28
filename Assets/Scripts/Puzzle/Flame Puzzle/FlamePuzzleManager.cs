@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityCore.GameManager;
 using Menu;
 using System.Collections;
+using UnityEngine.UI;
 
 /// <summary>
 /// Manages the flame puzzle system across the game, handling puzzle instantiation and completion.
@@ -18,6 +19,11 @@ public class FlamePuzzleManager : MonoBehaviour
     [Header("Puzzle Settings")]
     [Tooltip("Array of puzzle prefabs that can be instantiated")]
     [SerializeField] private GameObject[] puzzlePrefabs;
+
+    [Header("Transition Settings")]
+    [SerializeField] private Image fadePanel;
+    [SerializeField] private float fadeTime = 0.5f;
+    [SerializeField] private float delayBetweenPuzzles = 0.3f;
 
     /// <summary>
     /// Event triggered when a single puzzle is completed.
@@ -34,6 +40,7 @@ public class FlamePuzzleManager : MonoBehaviour
         if (_instance == null)
         {
             _instance = this;
+            InitializeFadePanel();
         }
         else
         {
@@ -42,6 +49,27 @@ public class FlamePuzzleManager : MonoBehaviour
         }
 
         GameMenu.GameState.OnMinigameSetup += OnMinigameSetup;
+    }
+
+    private void InitializeFadePanel()
+    {
+        if (fadePanel == null)
+        {
+            // Create fade panel if not assigned
+            var go = new GameObject("PuzzleFadePanel");
+            go.transform.SetParent(transform);
+            var canvas = go.AddComponent<Canvas>();
+            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            canvas.sortingOrder = 999; // Ensure it's on top
+            
+            fadePanel = go.AddComponent<Image>();
+            fadePanel.color = Color.clear;
+            
+            var rect = fadePanel.rectTransform;
+            rect.anchorMin = Vector2.zero;
+            rect.anchorMax = Vector2.one;
+            rect.sizeDelta = Vector2.zero;
+        }
     }
 
     private void OnDestroy()
@@ -69,7 +97,26 @@ public class FlamePuzzleManager : MonoBehaviour
             remainingPuzzleIds = GameMenu.GameState.GetCurrentPuzzleIds();
             currentPuzzleIndex = -1;
             isTransitioning = false;
-            StartCoroutine(LoadNextPuzzleRoutine());
+            fadePanel.color = Color.clear;
+            LoadFirstPuzzle();
+        }
+    }
+
+    private void LoadFirstPuzzle()
+    {
+        currentPuzzleIndex++;
+        if (remainingPuzzleIds != null && currentPuzzleIndex < remainingPuzzleIds.Length)
+        {
+            int puzzleId = remainingPuzzleIds[currentPuzzleIndex];
+            if (puzzleId >= 0 && puzzleId < puzzlePrefabs.Length)
+            {
+                currentPuzzleInstance = Instantiate(puzzlePrefabs[puzzleId]);
+            }
+            else
+            {
+                Debug.LogError($"Invalid puzzle ID: {puzzleId}");
+                FinishAllPuzzles();
+            }
         }
     }
 
@@ -78,10 +125,17 @@ public class FlamePuzzleManager : MonoBehaviour
         if (isTransitioning) yield break;
 
         isTransitioning = true;
-        CleanupCurrentPuzzle();
 
-        // Wait a frame to ensure cleanup is complete
-        yield return null;
+        // Fade out
+        LeanTween.value(fadePanel.gameObject, 0f, 1f, fadeTime)
+            .setOnUpdate((float val) => {
+                fadePanel.color = new Color(0, 0, 0, val);
+            });
+        
+        yield return new WaitForSeconds(fadeTime);
+
+        CleanupCurrentPuzzle();
+        yield return new WaitForSeconds(delayBetweenPuzzles);
         
         currentPuzzleIndex++;
         if (remainingPuzzleIds != null && currentPuzzleIndex < remainingPuzzleIds.Length)
@@ -91,6 +145,14 @@ public class FlamePuzzleManager : MonoBehaviour
             {
                 currentPuzzleInstance = Instantiate(puzzlePrefabs[puzzleId]);
                 Debug.Log($"Loading puzzle {currentPuzzleIndex + 1} of {remainingPuzzleIds.Length} (ID: {puzzleId})");
+
+                // Fade in
+                LeanTween.value(fadePanel.gameObject, 1f, 0f, fadeTime)
+                    .setOnUpdate((float val) => {
+                        fadePanel.color = new Color(0, 0, 0, val);
+                    });
+                
+                yield return new WaitForSeconds(fadeTime);
             }
             else
             {
@@ -124,7 +186,6 @@ public class FlamePuzzleManager : MonoBehaviour
     {
         if (isTransitioning) return;
 
-        Debug.Log($"Puzzle {currentPuzzleIndex + 1} of {remainingPuzzleIds.Length} completed!");
         bool isLastPuzzle = currentPuzzleIndex + 1 >= remainingPuzzleIds.Length;
         PuzzleCompleted?.Invoke(isLastPuzzle);
 
@@ -135,7 +196,7 @@ public class FlamePuzzleManager : MonoBehaviour
         }
         else
         {
-            Invoke(nameof(FinishAllPuzzles), 0.5f);
+            FinishAllPuzzles();
         }
     }
 }
