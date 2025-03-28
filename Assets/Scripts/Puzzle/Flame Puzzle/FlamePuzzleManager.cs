@@ -2,6 +2,9 @@ using PixelCrushers.DialogueSystem;
 using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityCore.GameManager;
+using Menu;
+using System.Collections;
 
 /// <summary>
 /// Manages the flame puzzle system across the game, handling puzzle instantiation and completion.
@@ -10,100 +13,129 @@ using UnityEngine.SceneManagement;
 public class FlamePuzzleManager : MonoBehaviour
 {
     private static FlamePuzzleManager _instance;
-
-    /// <summary>
-    /// Gets the singleton instance of the FlamePuzzleManager.
-    /// </summary>
     public static FlamePuzzleManager Instance => _instance;
 
     [Header("Puzzle Settings")]
     [Tooltip("Array of puzzle prefabs that can be instantiated")]
     [SerializeField] private GameObject[] puzzlePrefabs;
 
-    private string m_triggerID;
-
     /// <summary>
-    /// Event triggered when any flame puzzle is completed.
+    /// Event triggered when a single puzzle is completed.
     /// </summary>
-    public event Action PuzzleCompleted;
+    public event Action<bool> PuzzleCompleted;
 
-    /// <summary>
-    /// Initializes the singleton instance on Awake.
-    /// </summary>
+    private GameObject currentPuzzleInstance;
+    private int[] remainingPuzzleIds;
+    private int currentPuzzleIndex = -1;
+    private bool isTransitioning = false;
+
     private void Awake()
     {
-        InitializeSingleton();
-    }
-
-    /// <summary>
-    /// Sets up the singleton pattern, ensuring only one instance exists.
-    /// </summary>
-    private void InitializeSingleton()
-    {
-        if (_instance != null)
-        {
-            Destroy(gameObject);
-        }
-        else
+        if (_instance == null)
         {
             _instance = this;
         }
-    }
-
-    /// <summary>
-    /// Instantiates a puzzle prefab in the specified scene.
-    /// </summary>
-    /// <param name="triggerID">ID of the trigger that activated this puzzle</param>
-    /// <param name="puzzleID">Index of the puzzle prefab to instantiate</param>
-    /// <param name="sceneName">Name of the scene to instantiate the puzzle in</param>
-    /// <returns>The instantiated puzzle GameObject, or null if instantiation fails</returns>
-    public GameObject InstantiateObject(int puzzleID, string sceneName)
-    {
-        if (!ValidatePuzzleParameters(puzzleID, sceneName, out Scene targetScene))
+        else
         {
-            return null;
+            Destroy(gameObject);
+            return;
         }
 
-        GameObject prefabToInstantiate = puzzlePrefabs[puzzleID];
-        GameObject instance = Instantiate(prefabToInstantiate, Vector3.zero, Quaternion.identity);
-        SceneManager.MoveGameObjectToScene(instance, targetScene);
-        SceneManager.SetActiveScene(targetScene);
+        GameMenu.GameState.OnMinigameSetup += OnMinigameSetup;
+    }
+
+    private void OnDestroy()
+    {
+        if (_instance == this)
+        {
+            GameMenu.GameState.OnMinigameSetup -= OnMinigameSetup;
+            CleanupCurrentPuzzle();
+        }
+    }
+
+    private void CleanupCurrentPuzzle()
+    {
+        if (currentPuzzleInstance != null)
+        {
+            Destroy(currentPuzzleInstance);
+            currentPuzzleInstance = null;
+        }
+    }
+
+    private void OnMinigameSetup(string sceneName)
+    {
+        if (sceneName == "Flame Puzzle")
+        {
+            remainingPuzzleIds = GameMenu.GameState.GetCurrentPuzzleIds();
+            currentPuzzleIndex = -1;
+            isTransitioning = false;
+            StartCoroutine(LoadNextPuzzleRoutine());
+        }
+    }
+
+    private IEnumerator LoadNextPuzzleRoutine()
+    {
+        if (isTransitioning) yield break;
+
+        isTransitioning = true;
+        CleanupCurrentPuzzle();
+
+        // Wait a frame to ensure cleanup is complete
+        yield return null;
         
-        return instance;
+        currentPuzzleIndex++;
+        if (remainingPuzzleIds != null && currentPuzzleIndex < remainingPuzzleIds.Length)
+        {
+            int puzzleId = remainingPuzzleIds[currentPuzzleIndex];
+            if (puzzleId >= 0 && puzzleId < puzzlePrefabs.Length)
+            {
+                currentPuzzleInstance = Instantiate(puzzlePrefabs[puzzleId]);
+                Debug.Log($"Loading puzzle {currentPuzzleIndex + 1} of {remainingPuzzleIds.Length} (ID: {puzzleId})");
+            }
+            else
+            {
+                Debug.LogError($"Invalid puzzle ID: {puzzleId}");
+                FinishAllPuzzles();
+            }
+        }
+        else
+        {
+            // All puzzles completed
+            Debug.Log("All puzzles completed!");
+            FinishAllPuzzles();
+            yield break;
+        }
+
+        isTransitioning = false;
+    }
+
+    private void FinishAllPuzzles()
+    {
+        bool isLastPuzzle = true;
+        PuzzleCompleted?.Invoke(isLastPuzzle);
+        CleanupCurrentPuzzle();
+        GameMenu.GameState.CloseMinigame();
     }
 
     /// <summary>
     /// Called when a puzzle is completed. Updates the game state and triggers relevant events.
-    /// Sets the trigger variable in the dialogue system and notifies the game event system.
     /// </summary>
     public void OnPuzzleCompleted()
     {
-        PuzzleCompleted?.Invoke();
-    }
+        if (isTransitioning) return;
 
-    /// <summary>
-    /// Validates the puzzle parameters and ensures the target scene exists.
-    /// </summary>
-    /// <param name="puzzleID">ID of the puzzle to validate</param>
-    /// <param name="sceneName">Name of the target scene</param>
-    /// <param name="targetScene">Output parameter containing the target scene if valid</param>
-    /// <returns>True if parameters are valid, false otherwise</returns>
-    private bool ValidatePuzzleParameters(int puzzleID, string sceneName, out Scene targetScene)
-    {
-        targetScene = SceneManager.GetSceneByName(sceneName);
+        Debug.Log($"Puzzle {currentPuzzleIndex + 1} of {remainingPuzzleIds.Length} completed!");
+        bool isLastPuzzle = currentPuzzleIndex + 1 >= remainingPuzzleIds.Length;
+        PuzzleCompleted?.Invoke(isLastPuzzle);
 
-        if (puzzleID < 0 || puzzleID >= puzzlePrefabs.Length)
+        if (!isLastPuzzle)
         {
-            Debug.LogError($"Invalid puzzle ID: {puzzleID}");
-            return false;
+            // Use coroutine for better transition control
+            StartCoroutine(LoadNextPuzzleRoutine());
         }
-
-        if (!targetScene.IsValid())
+        else
         {
-            Debug.LogError($"Scene {sceneName} not found.");
-            return false;
+            Invoke(nameof(FinishAllPuzzles), 0.5f);
         }
-
-        return true;
     }
 }

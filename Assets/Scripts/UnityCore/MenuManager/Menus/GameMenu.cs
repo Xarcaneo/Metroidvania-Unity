@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityCore.GameManager;
 
 namespace Menu
 {
@@ -14,20 +15,8 @@ namespace Menu
     /// </summary>
     public class GameMenu : Menu<GameMenu>
     {
-        /// <summary>
-        /// Enum representing different game modes.
-        /// </summary>
-        public enum GameMode { GAMEPLAY, MINIGAME };
-
-        /// <summary>
-        /// The current game mode.
-        /// </summary>
-        public GameMode gameMode = GameMode.GAMEPLAY;
-
-        /// <summary>
-        /// The name of the currently opened minigame.
-        /// </summary>
-        private string minigameOpened;
+        private static GameStateManager _gameStateManager;
+        public static GameStateManager GameState => _gameStateManager ??= new GameStateManager();
 
         /// <summary>
         /// The health bar controller component.
@@ -91,12 +80,12 @@ namespace Menu
             {
                 GameEvents.Instance.onPlayerDied += OnPlayerDied;
                 GameEvents.Instance.onToggleUI += OnToggleUI;
-                GameEvents.Instance.onNewSession += onNewSession;
-                GameEvents.Instance.onPuzzleOpen += onPuzzleOpen;
-                GameEvents.Instance.onPuzzleClose += onPuzzleClose;
+                GameEvents.Instance.onNewSession += OnNewSession;
+                GameEvents.Instance.onPuzzleOpen += OnPuzzleOpen;
+                GameEvents.Instance.onPuzzleClose += OnPuzzleClose;
             }
 
-            SceneManager.sceneUnloaded += onSceneUnloaded;
+            SceneManager.sceneUnloaded += OnSceneUnloaded;
             SaveSystem.saveDataApplied += OnSaveDataApplied;
         }
 
@@ -111,12 +100,12 @@ namespace Menu
             {
                 GameEvents.Instance.onPlayerDied -= OnPlayerDied;
                 GameEvents.Instance.onToggleUI -= OnToggleUI;
-                GameEvents.Instance.onNewSession -= onNewSession;
-                GameEvents.Instance.onPuzzleOpen -= onPuzzleOpen;
-                GameEvents.Instance.onPuzzleClose -= onPuzzleClose;
+                GameEvents.Instance.onNewSession -= OnNewSession;
+                GameEvents.Instance.onPuzzleOpen -= OnPuzzleOpen;
+                GameEvents.Instance.onPuzzleClose -= OnPuzzleClose;
             }
 
-            SceneManager.sceneUnloaded -= onSceneUnloaded;
+            SceneManager.sceneUnloaded -= OnSceneUnloaded;
             SaveSystem.saveDataApplied -= OnSaveDataApplied;
         }
 
@@ -135,7 +124,7 @@ namespace Menu
         /// Called when a scene is unloaded. Deactivates the quest monitor UI.
         /// </summary>
         /// <param name="arg0">The unloaded scene.</param>
-        private void onSceneUnloaded(Scene arg0)
+        private void OnSceneUnloaded(Scene arg0)
         {
             if (m_QuestMonitor != null)
             {
@@ -176,13 +165,13 @@ namespace Menu
         /// </summary>
         public void OnPausePressed()
         {
-            if (gameMode == GameMode.GAMEPLAY)
+            if (GameState.CurrentMode == GameStateManager.GameMode.GAMEPLAY)
             {
                 PauseMenu.Open();
             }
             else
             {
-                onPuzzleClose(minigameOpened);
+                GameState.CloseMinigame(true);
             }
         }
 
@@ -201,7 +190,7 @@ namespace Menu
         /// <summary>
         /// Handles the new session event. Activates the game hotbar and deactivates the quest monitor.
         /// </summary>
-        private void onNewSession()
+        private void OnNewSession()
         {
             if (gameHotbar != null)
             {
@@ -217,25 +206,17 @@ namespace Menu
         /// <summary>
         /// Closes a minigame by unloading its scene.
         /// </summary>
-        /// <param name="puzzleName">The name of the minigame scene to unload.</param>
-        private void onPuzzleClose(string puzzleName)
+        private void OnPuzzleClose(string puzzleName)
         {
-            if (SceneManager.GetSceneByName(puzzleName).isLoaded)
-            {
-                SceneManager.UnloadSceneAsync(puzzleName);
-                gameMode = GameMode.GAMEPLAY;
-            }
+            GameState.CloseMinigame();
         }
 
         /// <summary>
         /// Opens a minigame by loading its scene additively.
         /// </summary>
-        /// <param name="puzzleName">The name of the minigame scene to load.</param>
-        private void onPuzzleOpen(string puzzleName)
+        private void OnPuzzleOpen(string puzzleName, int[] puzzleIds)
         {
-            gameMode = GameMode.MINIGAME;
-            minigameOpened = puzzleName;
-            SceneManager.LoadScene(puzzleName, LoadSceneMode.Additive);
+            GameState.OpenMinigame(puzzleName, puzzleIds ?? new int[] { 0 });
         }
     }
 }

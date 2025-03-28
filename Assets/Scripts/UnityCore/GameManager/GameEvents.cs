@@ -115,8 +115,8 @@ public class GameEvents : MonoBehaviour
     public void TriggerStateChanged(string triggerID) => onTriggerStateChanged?.Invoke(triggerID);
 
     /// <summary>Event triggered when a puzzle is opened.</summary>
-    public event Action<string> onPuzzleOpen;
-    public void PuzzleOpen(string puzzleName) => onPuzzleOpen?.Invoke(puzzleName);
+    public event Action<string, int[]> onPuzzleOpen;
+    public void PuzzleOpen(string puzzleName, params int[] puzzleIds) => onPuzzleOpen?.Invoke(puzzleName, puzzleIds);
 
     /// <summary>Event triggered when a puzzle is closed.</summary>
     public event Action<string> onPuzzleClose;
