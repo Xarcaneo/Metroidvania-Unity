@@ -1,4 +1,5 @@
 using UnityEngine;
+using FMOD.Studio;
 
 /// <summary>
 /// State for actively channeling spells that require holding the cast button.
@@ -21,6 +22,11 @@ public class PlayerActiveChannelingSpellState : PlayerSpellCastState
     /// Initial hotbar slot number
     /// </summary>
     private int initialHotbarSlot;
+
+    /// <summary>
+    /// FMOD event instance for the channeling sound
+    /// </summary>
+    private EventInstance channelingSoundInstance;
     #endregion
 
     /// <summary>
@@ -43,6 +49,11 @@ public class PlayerActiveChannelingSpellState : PlayerSpellCastState
         base.Enter();
         
         stateTimer = 0f;
+
+        // Create and start the looping channeling sound
+        channelingSoundInstance = FMODUnity.RuntimeManager.CreateInstance("event:/Characters/Player/Combat/Spells/Player_SpellChannel");
+        channelingSoundInstance.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(player.transform.position));
+        channelingSoundInstance.start();
         channelDuration = PlayerMagic.currentSpell.channelingTime;
         initialHotbarSlot = player.InputHandler.UseSpellHotbarNumber;
         
@@ -55,6 +66,10 @@ public class PlayerActiveChannelingSpellState : PlayerSpellCastState
     /// </summary>
     public override void Exit()
     {
+        // Stop and release the channeling sound
+        channelingSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        channelingSoundInstance.release();
+
         base.Exit();
 
         player.InputHandler.UseSpellCastInput();

@@ -65,7 +65,7 @@ public class PlayerJumpState : PlayerAbilityState
         player.InAirState.SetIsJumping();
 
         // Play jump sound effect
-        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/ActorsEvents/PlayerEvents/PlayerJump", this.player.transform.position);
+        FMODUnity.RuntimeManager.PlayOneShot("event:/Characters/Player/Movement/Player_Jump", this.player.transform.position);
     }
 
     /// <summary>

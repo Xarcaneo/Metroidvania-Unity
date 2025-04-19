@@ -359,8 +359,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 527f2846b63c1dd4793c313ef0c80c10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
-  transitionFinished: 0
 --- !u!95 &4580064112165888028
 Animator:
   serializedVersion: 5
@@ -388,14 +386,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3617593063433126369}
     m_Modifications:
-    - target: {fileID: 3761120358834807169, guid: 27d77dbb131b0ac4aace80d2617465d7, type: 3}
-      propertyPath: onSelectSoundPath
-      value: event:/SFX/UIEvents/ButtonFocused
-      objectReference: {fileID: 0}
-    - target: {fileID: 3761120358834807169, guid: 27d77dbb131b0ac4aace80d2617465d7, type: 3}
-      propertyPath: onPressedSoundPath
-      value: event:/SFX/UIEvents/ButtonPressed
-      objectReference: {fileID: 0}
     - target: {fileID: 6094467527249545860, guid: 27d77dbb131b0ac4aace80d2617465d7, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -526,14 +516,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3617593063433126369}
     m_Modifications:
-    - target: {fileID: 3761120358834807169, guid: 27d77dbb131b0ac4aace80d2617465d7, type: 3}
-      propertyPath: onSelectSoundPath
-      value: event:/SFX/UIEvents/ButtonFocused
-      objectReference: {fileID: 0}
-    - target: {fileID: 3761120358834807169, guid: 27d77dbb131b0ac4aace80d2617465d7, type: 3}
-      propertyPath: onPressedSoundPath
-      value: event:/SFX/UIEvents/ButtonPressed
-      objectReference: {fileID: 0}
     - target: {fileID: 6094467527249545860, guid: 27d77dbb131b0ac4aace80d2617465d7, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -664,14 +646,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3617593063433126369}
     m_Modifications:
-    - target: {fileID: 3761120358834807169, guid: 27d77dbb131b0ac4aace80d2617465d7, type: 3}
-      propertyPath: onSelectSoundPath
-      value: event:/SFX/UIEvents/ButtonFocused
-      objectReference: {fileID: 0}
-    - target: {fileID: 3761120358834807169, guid: 27d77dbb131b0ac4aace80d2617465d7, type: 3}
-      propertyPath: onPressedSoundPath
-      value: event:/SFX/UIEvents/ButtonPressed
-      objectReference: {fileID: 0}
     - target: {fileID: 6094467527249545860, guid: 27d77dbb131b0ac4aace80d2617465d7, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -802,18 +776,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3617593063433126369}
     m_Modifications:
-    - target: {fileID: 3761120358834807169, guid: 27d77dbb131b0ac4aace80d2617465d7, type: 3}
-      propertyPath: muteSound
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3761120358834807169, guid: 27d77dbb131b0ac4aace80d2617465d7, type: 3}
-      propertyPath: onSelectSoundPath
-      value: event:/SFX/UIEvents/ButtonFocused
-      objectReference: {fileID: 0}
-    - target: {fileID: 3761120358834807169, guid: 27d77dbb131b0ac4aace80d2617465d7, type: 3}
-      propertyPath: onPressedSoundPath
-      value: event:/SFX/UIEvents/ButtonPressed
-      objectReference: {fileID: 0}
     - target: {fileID: 6094467527249545860, guid: 27d77dbb131b0ac4aace80d2617465d7, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

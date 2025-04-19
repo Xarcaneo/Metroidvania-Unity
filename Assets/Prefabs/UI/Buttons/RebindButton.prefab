@@ -79,7 +79,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Left
+  m_Text: A
 --- !u!1 &6161120886177336345
 GameObject:
   m_ObjectHideFlags: 0
@@ -444,6 +444,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   muteSound: 0
-  onSelectSoundPath: event:/SFX/UIEvents/ButtonFocused
-  onPressedSoundPath: event:/SFX/UIEvents/ButtonPressed
+  onSelectSoundPath: event:/UI/Buttons/UI_Button_Focus_01
+  onPressedSoundPath: event:/UI/Buttons/UI_Button_Press_01
   m_rebindingPanel: {fileID: 0}

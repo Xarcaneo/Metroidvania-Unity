@@ -70,7 +70,7 @@ namespace FMODUnity
             if (globalSettings.HasPlatforms)
             {
                 bankFolder = RuntimeUtils.GetCommonPlatformPath(Path.Combine(bankFolder, BuildDirectory));
-            } 
+            }
 
             return bankFolder;
         }
@@ -78,7 +78,7 @@ namespace FMODUnity
 #if UNITY_EDITOR
         internal override string GetPluginPath(string pluginName)
         {
-            string platformsFolder = $"{Application.dataPath}/{RuntimeUtils.PluginBasePath}/platforms";
+            string platformsFolder = Path.GetFullPath($"{RuntimeUtils.PluginBasePath}/platforms");
 
 #if UNITY_EDITOR_WIN && UNITY_EDITOR_64
             return string.Format("{0}/win/lib/x86_64/{1}.dll", platformsFolder, pluginName);

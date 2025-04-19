@@ -25,6 +25,12 @@ MonoBehaviour:
     Overlay:
       Value: 0
       HasValue: 0
+    OverlayPosition:
+      Value: 0
+      HasValue: 0
+    OverlayFontSize:
+      Value: 0
+      HasValue: 0
     Logging:
       Value: 0
       HasValue: 0
@@ -90,6 +96,85 @@ MonoBehaviour:
       Value: 0
       HasValue: 0
     Overlay:
+      Value: 0
+      HasValue: 0
+    OverlayPosition:
+      Value: 0
+      HasValue: 0
+    OverlayFontSize:
+      Value: 0
+      HasValue: 0
+    Logging:
+      Value: 0
+      HasValue: 0
+    SampleRate:
+      Value: 0
+      HasValue: 0
+    BuildDirectory:
+      Value: 
+      HasValue: 0
+    SpeakerMode:
+      Value: 0
+      HasValue: 0
+    VirtualChannelCount:
+      Value: 0
+      HasValue: 0
+    RealChannelCount:
+      Value: 0
+      HasValue: 0
+    DSPBufferLength:
+      Value: 0
+      HasValue: 0
+    DSPBufferCount:
+      Value: 0
+      HasValue: 0
+    Plugins:
+      Value: []
+      HasValue: 0
+    StaticPlugins:
+      Value: []
+      HasValue: 0
+    CallbackHandler:
+      Value: {fileID: 0}
+      HasValue: 0
+  OutputTypeName: 
+  threadAffinities:
+    Value: []
+    HasValue: 0
+  displaySortOrder: 0
+  childIdentifiers: []
+  codecChannels:
+    Value: []
+    HasValue: 0
+--- !u!114 &-5616032066797839918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f591a193113347409efedcc618e83d6, type: 3}
+  m_Name: FMODStudioSettingsPlatform
+  m_EditorClassIdentifier: 
+  identifier: de700ef3f37a49b58a57ae3addf01ad9
+  parentIdentifier: default
+  active: 0
+  Properties:
+    LiveUpdate:
+      Value: 0
+      HasValue: 0
+    LiveUpdatePort:
+      Value: 0
+      HasValue: 0
+    Overlay:
+      Value: 0
+      HasValue: 0
+    OverlayPosition:
+      Value: 0
+      HasValue: 0
+    OverlayFontSize:
       Value: 0
       HasValue: 0
     Logging:
@@ -159,6 +244,12 @@ MonoBehaviour:
     Overlay:
       Value: 0
       HasValue: 0
+    OverlayPosition:
+      Value: 0
+      HasValue: 0
+    OverlayFontSize:
+      Value: 0
+      HasValue: 0
     Logging:
       Value: 0
       HasValue: 0
@@ -226,6 +317,12 @@ MonoBehaviour:
     Overlay:
       Value: 0
       HasValue: 0
+    OverlayPosition:
+      Value: 0
+      HasValue: 0
+    OverlayFontSize:
+      Value: 0
+      HasValue: 0
     Logging:
       Value: 0
       HasValue: 0
@@ -283,8 +380,8 @@ MonoBehaviour:
   switchSettingsMigration: 1
   HasSourceProject: 1
   HasPlatforms: 1
-  sourceProjectPath: ../The-Abyss-FMOD/FMOD/The Abyss.fspro
-  sourceBankPath: ../The-Abyss-FMOD/FMOD/Build
+  sourceProjectPath: C:/Users/Patry/source/repos/The-Abyss-FMOD/FMOD/The Abyss.fspro
+  sourceBankPath: C:/Users/Patry/source/repos/The-Abyss-FMOD/FMOD/Build
   sourceBankPathUnformatted: 
   BankRefreshCooldown: 5
   ShowBankRefreshWindow: 1
@@ -310,6 +407,7 @@ MonoBehaviour:
   Banks:
   - Music
   - SFX
+  - SFX2
   BanksToLoad: []
   LiveUpdatePort: 9264
   EnableMemoryTracking: 0
@@ -321,10 +419,11 @@ MonoBehaviour:
   EnableErrorCallback: 0
   SharedLibraryUpdateStage: 0
   SharedLibraryTimeSinceStart: 0
-  CurrentVersion: 131603
+  CurrentVersion: 131847
   HideSetupWizard: 1
   LastEventReferenceScanVersion: 131603
   Platforms:
+  - {fileID: -5616032066797839918}
   - {fileID: -8945358606946542608}
   - {fileID: -7573353856029419226}
   - {fileID: -1731838737599305631}
@@ -336,7 +435,7 @@ MonoBehaviour:
   - {fileID: 5464746236615858078}
   - {fileID: 6901652129333765917}
   - {fileID: 7705706076648779195}
-  MigratedPlatforms: 0c000000150000000b0000000a00000009000000120000000800000005000000060000000200000001000000
+  MigratedPlatforms: 0c000000150000000b0000000a0000000900000012000000080000000500000006000000020000000100000000000000
 --- !u!114 &35301912253596114
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -360,6 +459,12 @@ MonoBehaviour:
       Value: 0
       HasValue: 0
     Overlay:
+      Value: 0
+      HasValue: 0
+    OverlayPosition:
+      Value: 0
+      HasValue: 0
+    OverlayFontSize:
       Value: 0
       HasValue: 0
     Logging:
@@ -429,6 +534,12 @@ MonoBehaviour:
     Overlay:
       Value: 0
       HasValue: 0
+    OverlayPosition:
+      Value: 0
+      HasValue: 0
+    OverlayFontSize:
+      Value: 0
+      HasValue: 0
     Logging:
       Value: 0
       HasValue: 0
@@ -496,6 +607,12 @@ MonoBehaviour:
     Overlay:
       Value: 1
       HasValue: 1
+    OverlayPosition:
+      Value: 0
+      HasValue: 0
+    OverlayFontSize:
+      Value: 0
+      HasValue: 0
     Logging:
       Value: 0
       HasValue: 0
@@ -561,6 +678,12 @@ MonoBehaviour:
       Value: 0
       HasValue: 0
     Overlay:
+      Value: 0
+      HasValue: 0
+    OverlayPosition:
+      Value: 0
+      HasValue: 0
+    OverlayFontSize:
       Value: 0
       HasValue: 0
     Logging:
@@ -630,6 +753,12 @@ MonoBehaviour:
     Overlay:
       Value: 0
       HasValue: 0
+    OverlayPosition:
+      Value: 0
+      HasValue: 0
+    OverlayFontSize:
+      Value: 0
+      HasValue: 0
     Logging:
       Value: 0
       HasValue: 0
@@ -697,6 +826,12 @@ MonoBehaviour:
     Overlay:
       Value: 0
       HasValue: 0
+    OverlayPosition:
+      Value: 0
+      HasValue: 0
+    OverlayFontSize:
+      Value: 0
+      HasValue: 0
     Logging:
       Value: 0
       HasValue: 0
@@ -736,6 +871,7 @@ MonoBehaviour:
     HasValue: 0
   displaySortOrder: 0
   childIdentifiers:
+  - de700ef3f37a49b58a57ae3addf01ad9
   - 46fbfdf3fc43db0458918377fd40293e
   - c88d16e5272a4e241b0ef0ac2e53b73d
   - 0f8eb3f400726694eb47beb1a9f94ce8
@@ -771,6 +907,12 @@ MonoBehaviour:
       Value: 0
       HasValue: 0
     Overlay:
+      Value: 0
+      HasValue: 0
+    OverlayPosition:
+      Value: 0
+      HasValue: 0
+    OverlayFontSize:
       Value: 0
       HasValue: 0
     Logging:

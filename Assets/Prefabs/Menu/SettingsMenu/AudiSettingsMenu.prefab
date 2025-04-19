@@ -645,12 +645,32 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7359373680585070498, guid: 071dca8e4d204d8489bdcbff2cf0f7be, type: 3}
   m_PrefabInstance: {fileID: 5977012961654210761}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 3819950883430347283}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &3819950883430347283 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7489957355795264218, guid: 071dca8e4d204d8489bdcbff2cf0f7be, type: 3}
+  m_PrefabInstance: {fileID: 5977012961654210761}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3691966536414662710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3819950883430347283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a70de47ba1026645bfb41b0e64ad596, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  muteSound: 0
+  onSelectSoundPath: event:/UI/Buttons/UI_Button_Focus_01
+  onSlideSoundPath: event:/UI/Buttons/UI_Slider_Move_01
 --- !u!1001 &7371611663372561403
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -917,12 +937,32 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7359373680585070498, guid: 071dca8e4d204d8489bdcbff2cf0f7be, type: 3}
   m_PrefabInstance: {fileID: 7371611663372561403}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 125139027445848353}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &125139027445848353 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7489957355795264218, guid: 071dca8e4d204d8489bdcbff2cf0f7be, type: 3}
+  m_PrefabInstance: {fileID: 7371611663372561403}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6802164436602059821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 125139027445848353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a70de47ba1026645bfb41b0e64ad596, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  muteSound: 0
+  onSelectSoundPath: event:/UI/Buttons/UI_Button_Focus_01
+  onSlideSoundPath: event:/UI/Buttons/UI_Slider_Move_01
 --- !u!224 &3975216540868515520 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5865929312796622139, guid: 071dca8e4d204d8489bdcbff2cf0f7be, type: 3}
@@ -1289,6 +1329,21 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7489957355795264218, guid: 071dca8e4d204d8489bdcbff2cf0f7be, type: 3}
   m_PrefabInstance: {fileID: 8529188566588219800}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &943431313049603324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1273515149043454786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a70de47ba1026645bfb41b0e64ad596, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  muteSound: 0
+  onSelectSoundPath: event:/UI/Buttons/UI_Button_Focus_01
+  onSlideSoundPath: event:/UI/Buttons/UI_Slider_Move_01
 --- !u!224 &2826629364439538851 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5865929312796622139, guid: 071dca8e4d204d8489bdcbff2cf0f7be, type: 3}
