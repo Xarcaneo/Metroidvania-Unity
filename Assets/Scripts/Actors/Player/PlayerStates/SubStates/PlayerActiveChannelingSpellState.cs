@@ -1,5 +1,6 @@
 using UnityEngine;
 using FMOD.Studio;
+using UnityCore.AudioManager;
 
 /// <summary>
 /// State for actively channeling spells that require holding the cast button.
@@ -51,7 +52,7 @@ public class PlayerActiveChannelingSpellState : PlayerSpellCastState
         stateTimer = 0f;
 
         // Create and start the looping channeling sound
-        channelingSoundInstance = FMODUnity.RuntimeManager.CreateInstance("event:/Characters/Player/Combat/Spells/Player_SpellChannel");
+        channelingSoundInstance = AudioManager.instance.CreateEventInstance(AudioEventId.Player_SpellChannel);
         channelingSoundInstance.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(player.transform.position));
         channelingSoundInstance.start();
         channelDuration = PlayerMagic.currentSpell.channelingTime;

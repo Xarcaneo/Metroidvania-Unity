@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using FMODUnity;
+using UnityCore.AudioManager;
 
 /// <summary>
 /// Handles sound playback through Unity animation events.
@@ -78,21 +79,21 @@ public class PlayAnimationEvents : MonoBehaviour
     /// Plays a sound at the object's position with optional offset.
     /// This method is called through animation events.
     /// </summary>
-    /// <param name="path">The FMOD event path to play</param>
+    /// <param name="eventId">The ID of the audio event to play</param>
     /// <remarks>
     /// The sound position is determined by:
     /// - useWorldPosition: Whether to use world or local space
     /// - soundOffset: Additional offset from the object's position
-    /// The sound will not play if muteSounds is true or if the path is invalid.
+    /// The sound will not play if muteSounds is true or if AudioManager is not available.
     /// </remarks>
-    private void PlaySound(string path)
+    private void PlaySound(AudioEventId eventId)
     {
         if (!isInitialized)
         {
             Initialize();
         }
 
-        if (muteSounds || string.IsNullOrEmpty(path)) return;
+        if (muteSounds || AudioManager.instance == null) return;
 
         try
         {
@@ -100,16 +101,16 @@ public class PlayAnimationEvents : MonoBehaviour
                 ? cachedTransform.position + soundOffset 
                 : soundOffset;
 
-            RuntimeManager.PlayOneShot(path, soundPosition);
+            AudioManager.instance.PlaySound(eventId, soundPosition);
 
             if (logDebugInfo)
             {
-                Debug.Log($"Playing sound {path} at position {soundPosition}");
+                Debug.Log($"Playing sound {eventId} at position {soundPosition}");
             }
         }
         catch (Exception e)
         {
-            Debug.LogError($"Failed to play sound {path}: {e.Message}");
+            Debug.LogError($"Failed to play sound {eventId}: {e.Message}");
         }
     }
     #endregion

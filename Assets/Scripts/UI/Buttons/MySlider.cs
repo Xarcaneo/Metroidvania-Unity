@@ -1,3 +1,4 @@
+using UnityCore.AudioManager;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -15,16 +16,14 @@ public class MySlider : MonoBehaviour, ISelectHandler
     [SerializeField] bool muteSound = false;
 
     /// <summary>
-    /// FMOD event path for slider selection sound.
-    /// Defaults to "event:/SFX/UIEvents/ButtonFocused".
+    /// Sound to play when slider is selected/focused
     /// </summary>
-    [SerializeField] private string onSelectSoundPath;
+    [SerializeField] private AudioEventId onSelectSound = AudioEventId.UI_Button_Focus;
 
     /// <summary>
-    /// FMOD event path for slider value change sound.
-    /// Defaults to "event:/SFX/UIEvents/SliderMove".
+    /// Sound to play when slider value changes
     /// </summary>
-    [SerializeField] private string onSlideSoundPath;
+    [SerializeField] private AudioEventId onSlideSound = AudioEventId.UI_Slider_Move;
 
     /// <summary>
     /// Reference to the Slider component
@@ -38,9 +37,6 @@ public class MySlider : MonoBehaviour, ISelectHandler
     /// </summary>
     private void Awake()
     {
-        if (onSelectSoundPath == null) onSelectSoundPath = "event:/SFX/UIEvents/ButtonFocused";
-        if (onSlideSoundPath == null) onSlideSoundPath = "event:/SFX/UIEvents/UI_Slider_Move_01";
-
         slider = GetComponent<Slider>();
         if (slider != null)
         {
@@ -64,7 +60,10 @@ public class MySlider : MonoBehaviour, ISelectHandler
     /// </summary>
     public void OnSelect(BaseEventData eventData)
     {
-        PlaySound(onSelectSoundPath);
+        if (!muteSound)
+        {
+            AudioManager.instance.PlayUISound(onSelectSound);
+        }
         OnSelectAction();
     }
 
@@ -74,7 +73,10 @@ public class MySlider : MonoBehaviour, ISelectHandler
     /// </summary>
     private void OnSliderValueChanged(float value)
     {
-        PlaySound(onSlideSoundPath);
+        if (!muteSound)
+        {
+            AudioManager.instance.PlayUISound(onSlideSound);
+        }
         OnSlideAction(value);
     }
     #endregion

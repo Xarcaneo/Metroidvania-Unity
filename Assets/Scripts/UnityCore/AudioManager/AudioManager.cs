@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using FMODUnity;
 using FMOD.Studio;
+using UnityCore.AudioManager;
 
 /// <summary>
 /// Core audio management system that handles FMOD audio integration.
@@ -33,7 +34,11 @@ public class AudioManager : MonoBehaviour
 
     [Header("Debug Settings")]
     [Tooltip("If true, enables detailed logging of audio operations")]
-    [SerializeField] private bool logDebugInfo = false;
+    [SerializeField] protected bool logDebugInfo = false;
+
+    [Header("Audio Events")]
+    [Tooltip("Database containing all audio event mappings")]
+    [SerializeField] private AudioEventsDatabaseSO audioEventsDatabase;
     #endregion
 
     #region Private Fields
@@ -42,7 +47,7 @@ public class AudioManager : MonoBehaviour
     private Bus sfxBus;
     private Bus sfx2Bus;
 
-    private readonly List<EventInstance> eventInstances = new List<EventInstance>();
+    protected readonly List<EventInstance> eventInstances = new List<EventInstance>();
     private readonly List<StudioEventEmitter> eventEmitters = new List<StudioEventEmitter>();
 
     private EventInstance musicEventInstance;
@@ -271,10 +276,45 @@ public class AudioManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Plays background music from an FMOD event.
+    /// Plays background music from an audio event ID.
     /// </summary>
-    /// <param name="musicEventReference">The FMOD event to play</param>
+    /// <param name="musicEventId">The ID of the music event to play</param>
     /// <param name="stopCurrent">If true, stops currently playing music first</param>
+    public void PlayMusic(AudioEventId musicEventId, bool stopCurrent = true)
+    {
+        try
+        {
+            if (stopCurrent)
+            {
+                StopMusic();
+            }
+
+            string eventPath = audioEventsDatabase.GetEventPath(musicEventId);
+            if (string.IsNullOrEmpty(eventPath))
+            {
+                Debug.LogWarning($"Music event ID not found: {musicEventId}");
+                return;
+            }
+
+            musicEventInstance = RuntimeManager.CreateInstance(eventPath);
+            eventInstances.Add(musicEventInstance);
+            musicEventInstance.start();
+
+            if (logDebugInfo)
+            {
+                Debug.Log($"Playing music: {musicEventId} at path: {eventPath}");
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"Failed to play music: {e.Message}");
+        }
+    }
+
+    /// <summary>
+    /// Legacy method for playing music using FMOD EventReference.
+    /// Consider using PlayMusic(AudioEventId) instead.
+    /// </summary>
     public void PlayMusic(EventReference musicEventReference, bool stopCurrent = true)
     {
         try
@@ -284,12 +324,13 @@ public class AudioManager : MonoBehaviour
                 StopMusic();
             }
 
-            musicEventInstance = CreateInstance(musicEventReference);
+            musicEventInstance = RuntimeManager.CreateInstance(musicEventReference);
+            eventInstances.Add(musicEventInstance);
             musicEventInstance.start();
 
             if (logDebugInfo)
             {
-                Debug.Log($"Playing music: {musicEventReference.ToString()}");
+                Debug.Log($"Playing music: {musicEventReference}");
             }
         }
         catch (Exception e)
@@ -322,53 +363,7 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Plays a one-shot sound at a specific position in the world.
-    /// </summary>
-    /// <param name="sound">The FMOD event to play</param>
-    /// <param name="worldPos">The position in world space to play the sound</param>
-    public void PlayOneShot(EventReference sound, Vector3 worldPos)
-    {
-        try
-        {
-            RuntimeManager.PlayOneShot(sound, worldPos);
 
-            if (logDebugInfo)
-            {
-                Debug.Log($"Playing one-shot sound at {worldPos}: {sound.ToString()}");
-            }
-        }
-        catch (Exception e)
-        {
-            Debug.LogError($"Failed to play one-shot sound: {e.Message}");
-        }
-    }
-
-    /// <summary>
-    /// Creates and tracks a new FMOD event instance.
-    /// </summary>
-    /// <param name="eventReference">The FMOD event to create</param>
-    /// <returns>The created event instance</returns>
-    public EventInstance CreateInstance(EventReference eventReference)
-    {
-        try
-        {
-            EventInstance eventInstance = RuntimeManager.CreateInstance(eventReference);
-            eventInstances.Add(eventInstance);
-
-            if (logDebugInfo)
-            {
-                Debug.Log($"Created event instance: {eventReference.ToString()}");
-            }
-
-            return eventInstance;
-        }
-        catch (Exception e)
-        {
-            Debug.LogError($"Failed to create event instance: {e.Message}");
-            throw;
-        }
-    }
 
     /// <summary>
     /// Initializes an FMOD event emitter on a GameObject.
@@ -471,5 +466,71 @@ public class AudioManager : MonoBehaviour
         volumeSettings.sfx = PlayerPrefs.GetFloat("SFXVolume", 1f);
         volumeSettings.sfx2 = PlayerPrefs.GetFloat("SFX2Volume", 1f);
     }
+    #endregion
+
+    #region Audio Events Methods
+    /// <summary>
+    /// Plays a one-shot sound using its event ID from the database
+    /// </summary>
+    /// <param name="eventId">The ID of the audio event to play</param>
+    /// <param name="position">World position to play the sound at</param>
+    public void PlaySound(AudioEventId eventId, Vector3 position)
+    {
+        string eventPath = audioEventsDatabase.GetEventPath(eventId);
+        if (string.IsNullOrEmpty(eventPath))
+        {
+            Debug.LogWarning($"Audio event ID not found: {eventId}");
+            return;
+        }
+
+        RuntimeManager.PlayOneShot(eventPath, position);
+        if (logDebugInfo)
+        {
+            Debug.Log($"Playing sound: {eventId} at path: {eventPath}");
+        }
+    }
+
+    /// <summary>
+    /// Creates an FMOD EventInstance for the specified event ID
+    /// </summary>
+    /// <param name="eventId">The ID of the audio event</param>
+    /// <returns>An FMOD EventInstance if found, default otherwise</returns>
+    public EventInstance CreateEventInstance(AudioEventId eventId)
+    {
+        string eventPath = audioEventsDatabase.GetEventPath(eventId);
+        if (string.IsNullOrEmpty(eventPath))
+        {
+            Debug.LogWarning($"Audio event ID not found: {eventId}");
+            return default;
+        }
+
+        var instance = RuntimeManager.CreateInstance(eventPath);
+        eventInstances.Add(instance);
+        
+        if (logDebugInfo)
+        {
+            Debug.Log($"Created event instance: {eventId} at path: {eventPath}");
+        }
+
+        return instance;
+    }
+
+    /// <summary>
+    /// Plays a one-shot sound at the camera's position (useful for UI sounds)
+    /// </summary>
+    /// <param name="eventId">The ID of the audio event to play</param>
+    public void PlayUISound(AudioEventId eventId)
+    {
+        if (Camera.main != null)
+        {
+            PlaySound(eventId, Camera.main.transform.position);
+        }
+        else
+        {
+            PlaySound(eventId, Vector3.zero);
+        }
+    }
+
+
     #endregion
 }

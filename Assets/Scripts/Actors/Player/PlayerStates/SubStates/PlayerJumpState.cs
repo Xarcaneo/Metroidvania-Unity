@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
+using UnityCore.AudioManager;
 
 /// <summary>
 /// State that handles the player's jump ability.
@@ -65,7 +66,7 @@ public class PlayerJumpState : PlayerAbilityState
         player.InAirState.SetIsJumping();
 
         // Play jump sound effect
-        FMODUnity.RuntimeManager.PlayOneShot("event:/Characters/Player/Movement/Player_Jump", this.player.transform.position);
+        AudioManager.instance.PlaySound(AudioEventId.Player_Jump, this.player.transform.position);
     }
 
     /// <summary>

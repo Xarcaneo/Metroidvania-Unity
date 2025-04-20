@@ -1,3 +1,4 @@
+using UnityCore.AudioManager;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -15,16 +16,14 @@ public class MyButton : MonoBehaviour, ISelectHandler
     [SerializeField] bool muteSound = false;
 
     /// <summary>
-    /// FMOD event path for button selection sound.
-    /// Defaults to "event:/SFX/UIEvents/ButtonFocused".
+    /// Sound to play when button is selected/focused
     /// </summary>
-    [SerializeField] private string onSelectSoundPath;
+    [SerializeField] private AudioEventId onSelectSound = AudioEventId.UI_Button_Focus;
 
     /// <summary>
-    /// FMOD event path for button press sound.
-    /// Defaults to "event:/SFX/UIEvents/ButtonPressed".
+    /// Sound to play when button is pressed
     /// </summary>
-    [SerializeField] private string onPressedSoundPath;
+    [SerializeField] private AudioEventId onPressedSound = AudioEventId.UI_Button_Press;
     #endregion
 
     #region Unity Event Functions
@@ -33,8 +32,7 @@ public class MyButton : MonoBehaviour, ISelectHandler
     /// </summary>
     private void Awake()
     {
-        if (onSelectSoundPath == null) onSelectSoundPath = "event:/SFX/UIEvents/ButtonFocused";
-        if (onPressedSoundPath == null) onPressedSoundPath = "event:/SFX/UIEvents/ButtonPressed";
+        // No need to set defaults as they're set in the field declarations
     }
     #endregion
 
@@ -46,7 +44,10 @@ public class MyButton : MonoBehaviour, ISelectHandler
     /// <param name="eventData">Event data from the UI system</param>
     public void OnSelect(BaseEventData eventData)
     {
-        PlaySound(onSelectSoundPath);
+        if (!muteSound)
+        {
+            AudioManager.instance.PlayUISound(onSelectSound);
+        }
         OnSelectAction();
     }
 
@@ -56,7 +57,10 @@ public class MyButton : MonoBehaviour, ISelectHandler
     /// </summary>
     protected virtual void OnPressed()
     {
-        PlaySound(onPressedSoundPath);
+        if (!muteSound)
+        {
+            AudioManager.instance.PlayUISound(onPressedSound);
+        }
         OnPressedAction();
     }
     #endregion
