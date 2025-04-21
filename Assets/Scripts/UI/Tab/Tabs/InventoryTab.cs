@@ -1,6 +1,7 @@
 using Opsive.UltimateInventorySystem.UI.Panels;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityCore.AudioManager;
 
 /// <summary>
 /// Manages the inventory tab in the UI, handling the display and updates of the player's inventory.
@@ -13,7 +14,12 @@ public class InventoryTab : Tab
     /// <summary>
     /// Opens the inventory display when the tab is enabled.
     /// </summary>
-    private void OnEnable() => displayPanel.SmartOpen();
+    private void OnEnable()
+    {
+        // Reset inventory audio state
+        InventoryAudioState.Reset();
+        displayPanel.SmartOpen();
+    }
 
     /// <summary>
     /// Closes the inventory display when the tab is disabled.

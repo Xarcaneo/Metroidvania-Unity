@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
+using UnityCore.AudioManager;
 
 /// <summary>
 /// Represents a slot in the UI for a spell category.
@@ -72,11 +73,17 @@ public class SpellCategorySlot : MonoBehaviour
     /// Called when the slot gains focus or is selected.
     /// Activates the focus frame to visually indicate the slot is focused.
     /// </summary>
-    public void OnSelect()
+    public void OnSelect(bool isFirstSelection = false)
     {
         if (focusFrame != null)
         {
             focusFrame.gameObject.SetActive(true); // Show focus frame
+        }
+
+        // Play tab change sound when selecting category (except for first selection)
+        if (!isFirstSelection)
+        {
+            AudioManager.instance.PlayUISound(AudioEventId.UI_Tab_Next);
         }
     }
 

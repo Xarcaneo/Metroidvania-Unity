@@ -1,4 +1,4 @@
-﻿/// ---------------------------------------------
+/// ---------------------------------------------
 /// Ultimate Inventory System
 /// Copyright (c) Opsive. All Rights Reserved.
 /// https://www.opsive.com
@@ -42,7 +42,7 @@ namespace Opsive.UltimateInventorySystem.UI.CompoundElements
         public event Action<PointerEventData> OnEndDragE;
         public event Action<PointerEventData> OnDragE;
         public event Action<PointerEventData> OnDropE;
-
+        
         [Tooltip("Disable and selected sprite, an extension for the selectable sprite transitions.")]
         [SerializeField] protected Sprite m_DisabledAndSelectedSprite;
         [Tooltip("Disable and selected color, an extension for the selectable color transitions.")]

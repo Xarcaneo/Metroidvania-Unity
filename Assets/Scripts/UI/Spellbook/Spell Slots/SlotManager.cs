@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
+using UnityCore.AudioManager;
 
 /// <summary>
 /// Manages slot focus within a specific canvas.
@@ -31,11 +32,17 @@ public class SlotManager : MonoBehaviour
     private Slot currentlySelectedSlot;
 
     /// <summary>
+    /// Tracks if this is the first selection when opening the spellbook
+    /// </summary>
+    private bool isFirstSelection = true;
+
+    /// <summary>
     /// Called when the object is enabled.
     /// Dynamically gathers all slots, focuses the first slot, and subscribes to events.
     /// </summary>
     private void OnEnable()
     {
+        isFirstSelection = true;
         InitializeSlots();
         SelectFirstSlot();
 
@@ -134,6 +141,13 @@ public class SlotManager : MonoBehaviour
     {
         // Track the currently selected slot
         currentlySelectedSlot = slot;
+
+        // Play sound for all selections except the first one when opening spellbook
+        if (!isFirstSelection)
+        {
+            AudioManager.instance.PlayUISound(AudioEventId.UI_Slot_Navigate);
+        }
+        isFirstSelection = false;
 
         if (spellDescriptionUI != null)
         {

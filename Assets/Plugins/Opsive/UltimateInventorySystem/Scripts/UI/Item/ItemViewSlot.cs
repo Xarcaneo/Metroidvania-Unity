@@ -30,7 +30,6 @@ namespace Opsive.UltimateInventorySystem.UI.Item
         [SerializeField] private GameObject m_Frame;
         [Tooltip("The slot frame offset.")]
         [SerializeField] private Vector3 m_FrameOffset;
-
         protected ItemViewSlotRestriction[] m_ItemViewSlotRestrictions;
 
         public int Index => m_Index;

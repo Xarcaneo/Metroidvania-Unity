@@ -31,11 +31,17 @@ public class SpellCategorySlotManager : MonoBehaviour
     private int currentSlotIndex = 0;
 
     /// <summary>
+    /// Tracks if this is the first selection when opening the spellbook
+    /// </summary>
+    private bool isFirstSelection = true;
+
+    /// <summary>
     /// Automatically called when the object is enabled.
     /// Selects the first slot.
     /// </summary>
     private void OnEnable()
     {
+        isFirstSelection = true;
         // First refresh spell states from Lua
         if (SpellsCatalogue.Instance != null)
         {
@@ -124,11 +130,14 @@ public class SpellCategorySlotManager : MonoBehaviour
     /// <param name="index">The index of the slot to focus.</param>
     private void UpdateSlotFocus(int index)
     {
+        bool wasFirstSelection = isFirstSelection;
+        isFirstSelection = false;
+
         for (int i = 0; i < slots.Length; i++)
         {
             if (i == index)
             {
-                slots[i].OnSelect(); // Highlight the currently focused slot
+                slots[i].OnSelect(wasFirstSelection); // Highlight the currently focused slot
                 PopulateSpellSlots(slots[i].AssignedCategory);
                 slotManager.SelectFirstSlot();
             }

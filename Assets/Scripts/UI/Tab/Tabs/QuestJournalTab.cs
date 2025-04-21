@@ -1,5 +1,6 @@
 using PixelCrushers.QuestMachine;
 using UnityEngine;
+using UnityCore.AudioManager;
 
 /// <summary>
 /// Manages the quest journal tab in the UI, handling the display and updates of quest information.
@@ -15,6 +16,15 @@ public class QuestJournalTab : Tab
     private void Awake()
     {
         QuestMachine.defaultQuestJournalUI = unityUIQuestJournalUI;
+    }
+
+    /// <summary>
+    /// Resets the quest UI audio state when the tab is opened.
+    /// </summary>
+    private void OnEnable()
+    {
+        // Reset quest UI audio state when tab is opened
+        QuestUIAudioState.Reset();
     }
 
     /// <summary>

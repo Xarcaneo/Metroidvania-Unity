@@ -1,6 +1,7 @@
 using PixelCrushers.DialogueSystem;
 using UnityEngine;
 using System.Collections;
+using UnityCore.AudioManager;
 
 /// <summary>
 /// Represents a basic SpellHotbar system that can assign multiple spells
@@ -132,6 +133,9 @@ public class SpellHotbar : MonoBehaviour
         // Assign the new spell to the target slot
         DialogueLua.SetVariable($"{StatePrefix}{slotID}", spellID);
         hotbarSlots[slotID].AssignSpell(newSpell);
+
+        // Play spell assign sound
+        AudioManager.instance.PlayUISound(AudioEventId.UI_Spell_Assign);
     }
 
     /// <summary>

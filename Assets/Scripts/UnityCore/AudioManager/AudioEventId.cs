@@ -22,5 +22,9 @@ namespace UnityCore.AudioManager
         UI_Button_Focus = 13,
         UI_Button_Press = 14,
         UI_Slider_Move = 15,
+        UI_Slot_Navigate = 16,
+        UI_Spell_Assign = 17,
+        UI_Tab_Next = 18,
+        UI_Tooltip_Close = 19,
     }
 }
