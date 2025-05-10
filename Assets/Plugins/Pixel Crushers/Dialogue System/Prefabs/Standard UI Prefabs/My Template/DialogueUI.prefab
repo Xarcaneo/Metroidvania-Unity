@@ -2024,6 +2024,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputAction: {fileID: 0}
+  cooldownDuration: 0.5
   key: 32
   buttonName: 
   anyKeyOrButton: 0
@@ -2217,12 +2218,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputAction: {fileID: 3899905137862735241, guid: 4670f0957538c94499ccaa88a47110f7, type: 3}
+  cooldownDuration: 0.5
   key: 0
   buttonName: 
   anyKeyOrButton: 0
   skipIfBeingClickedBySubmit: 1
   simulateButtonClick: 1
-  simulateButtonDownDuration: 0.1
+  simulateButtonDownDuration: 0.2
 --- !u!1 &9056189804324932992
 GameObject:
   m_ObjectHideFlags: 0

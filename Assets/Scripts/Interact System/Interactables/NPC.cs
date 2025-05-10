@@ -1,5 +1,6 @@
 using PixelCrushers.DialogueSystem;
 using UnityEngine;
+using System.Collections;
 
 /// <summary>
 /// Handles NPC (Non-Player Character) functionality for dialogue interactions.
@@ -24,6 +25,13 @@ public class NPC : Interactable
     /// Cached for efficient access and cleanup.
     /// </summary>
     private GameEvents m_gameEvents;
+    
+    /// <summary>
+    /// Delay in seconds before processing dialogue completion
+    /// </summary>
+    [SerializeField]
+    [Tooltip("Delay in seconds before processing dialogue completion")]
+    private float dialogueCompletionDelay = 0.5f;
     #endregion
 
     #region Unity Lifecycle
@@ -78,8 +86,22 @@ public class NPC : Interactable
     {
         if (!value)
         {
-            CallInteractionCompletedEvent();
+            // Add a delay before processing the dialogue completion
+            StartCoroutine(DelayedDialogueCompletion());
         }
+    }
+    
+    /// <summary>
+    /// Coroutine to delay dialogue completion processing
+    /// </summary>
+    private IEnumerator DelayedDialogueCompletion()
+    {
+        // Wait for the specified delay
+        yield return new WaitForSeconds(dialogueCompletionDelay);
+        
+        // Now process the dialogue completion
+        Debug.Log($"[{gameObject.name}] Processing dialogue completion after {dialogueCompletionDelay}s delay");
+        CallInteractionCompletedEvent();
     }
     #endregion
 
