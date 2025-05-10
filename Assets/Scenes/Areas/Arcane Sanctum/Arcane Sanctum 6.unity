@@ -15303,6 +15303,12 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1040482522}
     m_Modifications:
+    - target: {fileID: 1882352925356022904, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
+      propertyPath: m_text
+      value: Hold <color="red">{UseSpell.1}</color>, <color="red">{UseSpell.2}</color>,
+        or <color="red">{UseSpell.3}</color> to cast assigned spells. Open your spellbook
+        to equip them first!
+      objectReference: {fileID: 0}
     - target: {fileID: 3174573140201782222, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
       propertyPath: m_Name
       value: HintTrigger

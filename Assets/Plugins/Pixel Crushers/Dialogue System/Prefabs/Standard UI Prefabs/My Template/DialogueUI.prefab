@@ -2024,7 +2024,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputAction: {fileID: 0}
-  cooldownDuration: 0.5
   key: 32
   buttonName: 
   anyKeyOrButton: 0
@@ -2204,7 +2203,7 @@ MonoBehaviour:
   hideContinueButtonOnContinue: 0
   continueSubtitlePanel: 1
   continueAlertPanel: 1
-  fastForwardCooldown: 0.2
+  fastForwardCooldown: 0.3
 --- !u!114 &3389261842174386232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2218,7 +2217,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputAction: {fileID: 3899905137862735241, guid: 4670f0957538c94499ccaa88a47110f7, type: 3}
-  cooldownDuration: 0.5
   key: 0
   buttonName: 
   anyKeyOrButton: 0

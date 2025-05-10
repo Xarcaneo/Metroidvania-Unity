@@ -1,13 +1,11 @@
 using UnityEngine;
 using TMPro;
-using System.Collections;
-using PixelCrushers;
-using PixelCrushers.DialogueSystem;
 using System;
+using System.Collections;
 
 /// <summary>
 /// Manages a UI hint box that displays contextual help text to the player.
-/// Supports localization and dynamic keybinding display.
+/// Supports dynamic keybinding display without relying on localization.
 /// </summary>
 public class HintBox : MonoBehaviour
 {
@@ -28,24 +26,13 @@ public class HintBox : MonoBehaviour
     /// Supports rich text and keybinding placeholders.
     /// </summary>
     [SerializeField] public TextMeshProUGUI hintText;
-
-    /// <summary>
-    /// Handles translation of hint text to different languages.
-    /// </summary>
-    [SerializeField] private LocalizeUI localization;
-    #endregion
-
-    #region Private Fields
-    /// <summary>
-    /// Stores the initial hint text before any modifications.
-    /// Used to preserve the original text with placeholders.
-    /// </summary>
-    private string initialHintText;
+    
+    // We'll use the text directly from the TextMeshProUGUI component instead of a separate field
     #endregion
 
     #region Public Methods
     /// <summary>
-    /// Updates the hint text with current language and keybindings.
+    /// Updates the hint text with current keybindings.
     /// Replaces placeholders (e.g., {Attack}) with actual key names.
     /// </summary>
     /// <remarks>
@@ -54,24 +41,23 @@ public class HintBox : MonoBehaviour
     /// </remarks>
     public void SetHintText()
     {
-        if (string.IsNullOrEmpty(initialHintText))
-        {
-            Debug.LogWarning("[HintBox] Trying to set text but initialHintText is empty on " + gameObject.name);
-            return;
-        }
-
         if (hintText == null)
         {
-            Debug.LogError("[HintBox] Trying to set text but hintText component is null on " + gameObject.name);
+            Debug.LogError($"[HintBox] TextMeshProUGUI component is missing on {gameObject.name}");
+            return;
+        }
+        
+        // Store the original text from the TextMeshProUGUI component
+        string originalText = hintText.text;
+        
+        if (string.IsNullOrEmpty(originalText))
+        {
+            Debug.LogWarning($"[HintBox] No text set in TextMeshProUGUI component on {gameObject.name}");
             return;
         }
 
-        if (localization != null)
-        {
-            localization.enabled = true;
-        }
-
-        string modifiedText = initialHintText;
+        string modifiedText = originalText;
+        Debug.Log($"[HintBox] Processing text: '{originalText}' on {gameObject.name}");
 
         try
         {
@@ -109,7 +95,7 @@ public class HintBox : MonoBehaviour
         }
         catch (Exception e)
         {
-            Debug.LogError($"[HintBox] Error setting text: {e.Message}\nText was: {initialHintText}");
+            Debug.LogError($"[HintBox] Error setting text: {e.Message}\nText was: {originalText}");
         }
     }
 
@@ -127,6 +113,9 @@ public class HintBox : MonoBehaviour
         {
             spriteRenderer.enabled = true;
         }
+        
+        // Make sure text is set
+        SetHintText();
     }
 
     /// <summary>
@@ -159,7 +148,7 @@ public class HintBox : MonoBehaviour
             return;
         }
 
-        // Hide initially until text is ready
+        // Hide initially
         HideHintBox();
 
         // Subscribe to events if available
@@ -168,14 +157,6 @@ public class HintBox : MonoBehaviour
             GameEvents.Instance.onPauseTrigger += HandlePauseTrigger;
             GameEvents.Instance.onLanguageChanged += OnLanguageChanged;
         }
-
-        // Start text initialization
-        if (localization != null)
-        {
-            localization.enabled = true;
-        }
-        
-        StartCoroutine(WaitForText());
     }
 
     /// <summary>
@@ -193,27 +174,12 @@ public class HintBox : MonoBehaviour
 
     #region Private Methods
     /// <summary>
-    /// Handles the language change event by updating the initial text.
+    /// Handles the language change event by updating the hint text.
     /// </summary>
-    private void OnLanguageChanged() => initialHintText = hintText.text;
-
-    /// <summary>
-    /// Waits for the text component to be initialized with content.
-    /// </summary>
-    private IEnumerator WaitForText()
+    private void OnLanguageChanged()
     {
-        // Wait until either the TMP text is available and not empty
-        while (hintText == null || string.IsNullOrEmpty(hintText.text))
-        {
-            yield return null;
-        }
-        
-        // Store initial text only if we have valid text
-        if (!string.IsNullOrEmpty(hintText.text))
-        {
-            initialHintText = hintText.text;
-            SetHintText();
-        }
+        // Re-process the text when language changes
+        SetHintText();
     }
 
     /// <summary>
@@ -222,8 +188,9 @@ public class HintBox : MonoBehaviour
     /// <param name="isPaused">True if game is paused, false otherwise.</param>
     private void HandlePauseTrigger(bool isPaused)
     {
-        if (!isPaused && !string.IsNullOrEmpty(initialHintText))
+        if (!isPaused)
         {
+            // Re-process the text when unpausing
             SetHintText();
         }
     }

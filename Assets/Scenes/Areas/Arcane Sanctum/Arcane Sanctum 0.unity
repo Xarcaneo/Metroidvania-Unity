@@ -1097,9 +1097,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1882352925356022904, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
       propertyPath: m_text
-      value: '
-
-'
+      value: Dash with <color="red>{Action}</color> to conquer obstacles when jumping
+        <color="red>{Jump}</color>.
       objectReference: {fileID: 0}
     - target: {fileID: 3174573140201782222, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
       propertyPath: m_Name
@@ -1856,7 +1855,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1882352925356022904, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
       propertyPath: m_text
-      value: 
+      value: Light all rune fields with the <color="red">flame</color>! Move it using
+        <color="red">{Movement.up}</color>, <color="red">{Movement.down}</color>,
+        <color="red">{Movement.left}</color>, <color="red">{Movement.right}</color>.
       objectReference: {fileID: 0}
     - target: {fileID: 3174573140201782222, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
       propertyPath: m_Name

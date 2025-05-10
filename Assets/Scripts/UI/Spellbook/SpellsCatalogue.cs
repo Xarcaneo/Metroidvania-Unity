@@ -41,7 +41,6 @@ public class SpellsCatalogue : ScriptableObject
         }
         
         instance = catalogue;
-        Debug.Log("SpellsCatalogue initialized successfully!");
     }
 
     /// <summary>

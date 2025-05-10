@@ -203,6 +203,11 @@ PrefabInstance:
       propertyPath: m_PresetInfoIsWorld
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1882352925356022904, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
+      propertyPath: m_text
+      value: 'Approach the edge: Jump near a ledge with <color="red">{Jump}</color>
+        to automatically grasp it'
+      objectReference: {fileID: 0}
     - target: {fileID: 3174573140201782222, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
       propertyPath: m_Name
       value: HintTrigger
@@ -1478,7 +1483,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1882352925356022904, guid: 03c08986f50c0b1408e4210bec90ca33, type: 3}
       propertyPath: m_text
-      value: 
+      value: LOYAL SERVANT
       objectReference: {fileID: 0}
     - target: {fileID: 3174573140201782222, guid: 03c08986f50c0b1408e4210bec90ca33, type: 3}
       propertyPath: m_Name
@@ -1576,7 +1581,12 @@ PrefabInstance:
       propertyPath: m_fieldName
       value: Sign/Loyal_Servant
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 9199568107838055050, guid: 03c08986f50c0b1408e4210bec90ca33, type: 3}
+      propertyPath: m_textTable
+      value: 
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 9199568107838055050, guid: 03c08986f50c0b1408e4210bec90ca33, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 03c08986f50c0b1408e4210bec90ca33, type: 3}
 --- !u!224 &759296068 stripped
 RectTransform:
@@ -64309,9 +64319,57 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4446896425111213063, guid: defb7506c30a7594bbc60764333b9643, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4446896425111213063, guid: defb7506c30a7594bbc60764333b9643, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4446896425111213063, guid: defb7506c30a7594bbc60764333b9643, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4446896425111213063, guid: defb7506c30a7594bbc60764333b9643, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6159363638474043647, guid: defb7506c30a7594bbc60764333b9643, type: 3}
       propertyPath: m_Name
       value: Reaver
+      objectReference: {fileID: 0}
+    - target: {fileID: 7816038366079404411, guid: defb7506c30a7594bbc60764333b9643, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7816038366079404411, guid: defb7506c30a7594bbc60764333b9643, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7816038366079404411, guid: defb7506c30a7594bbc60764333b9643, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7816038366079404411, guid: defb7506c30a7594bbc60764333b9643, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8482261497180255004, guid: defb7506c30a7594bbc60764333b9643, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8482261497180255004, guid: defb7506c30a7594bbc60764333b9643, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8482261497180255004, guid: defb7506c30a7594bbc60764333b9643, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8482261497180255004, guid: defb7506c30a7594bbc60764333b9643, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: defb7506c30a7594bbc60764333b9643, type: 3}
@@ -64531,6 +64589,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1736984323}
     m_Modifications:
+    - target: {fileID: 1882352925356022904, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
+      propertyPath: m_text
+      value: Defend with <color="red>{Block}</color> to repel enemy attacks
+      objectReference: {fileID: 0}
     - target: {fileID: 3174573140201782222, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
       propertyPath: m_Name
       value: HintTrigger (1)
