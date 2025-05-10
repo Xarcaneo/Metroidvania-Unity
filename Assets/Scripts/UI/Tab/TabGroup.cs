@@ -103,7 +103,7 @@ public class TabGroup : MonoBehaviour
     private void NextTab()
     {
         if (tabButtons == null || index + 1 >= tabButtons.Count) return;
-        AudioManager.instance.PlayUISound(AudioEventId.UI_Tab_Next);
+        AudioManager.instance.PlaySound(AudioEventId.UI_Tab_Next);
         OnTabSelected(tabButtons[index + 1]);
     }
 
@@ -113,7 +113,7 @@ public class TabGroup : MonoBehaviour
     private void PreviousTab()
     {
         if (tabButtons == null || index - 1 < 0) return;
-        AudioManager.instance.PlayUISound(AudioEventId.UI_Tab_Next);
+        AudioManager.instance.PlaySound(AudioEventId.UI_Tab_Next);
         OnTabSelected(tabButtons[index - 1]);
     }
 

@@ -62,7 +62,7 @@ public class MySlider : MonoBehaviour, ISelectHandler
     {
         if (!muteSound)
         {
-            AudioManager.instance.PlayUISound(onSelectSound);
+            AudioManager.instance.PlaySound(onSelectSound);
         }
         OnSelectAction();
     }
@@ -75,7 +75,7 @@ public class MySlider : MonoBehaviour, ISelectHandler
     {
         if (!muteSound)
         {
-            AudioManager.instance.PlayUISound(onSlideSound);
+            AudioManager.instance.PlaySound(onSlideSound);
         }
         OnSlideAction(value);
     }

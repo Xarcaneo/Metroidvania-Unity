@@ -29,6 +29,12 @@ MonoBehaviour:
       eventPath: event:/UI/Buttons/UI_Tooltip_Close
     - id: UI_Spell_Assign
       eventPath: event:/UI/Buttons/UI_Spell_Assign
+    - id: Audio_UI_QuestComplete
+      eventPath: event:/UI/Game/Audio_UI_QuestComplete
+    - id: Audio_UI_NewQuest
+      eventPath: event:/UI/Game/Audio_UI_NewQuest
+    - id: Audio_UI_QuestUpdated
+      eventPath: event:/UI/Game/Audio_UI_QuestUpdated
   - groupName: Player
     events:
     - id: Player_Attack
@@ -55,3 +61,11 @@ MonoBehaviour:
       eventPath: event:/Characters/Player/Status/Player_Death
     - id: Player_Hurt
       eventPath: event:/Characters/Player/Status/Player_Hurt
+  - groupName: Effects
+    events:
+    - id: Effect_Spell_Teleport
+      eventPath: event:/Effects/Spells/Effect_Spell_Teleport.wav
+  - groupName: Music
+    events:
+    - id: Main_Menu_Theme
+      eventPath: event:/Music/Menu/Main_Menu_Theme

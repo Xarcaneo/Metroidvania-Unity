@@ -50,7 +50,7 @@ public class QuestButtonAudioHandler : MonoBehaviour, ISelectHandler
         // Play select sound when button is selected (except for first selection)
         if (!QuestUIAudioState.IsFirstSelection)
         {
-            AudioManager.instance.PlayUISound(m_SelectSound);
+            AudioManager.instance.PlaySound(m_SelectSound);
         }
         QuestUIAudioState.MarkSelectionMade();
     }

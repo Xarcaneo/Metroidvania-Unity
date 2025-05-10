@@ -46,7 +46,7 @@ public class MyButton : MonoBehaviour, ISelectHandler
     {
         if (!muteSound)
         {
-            AudioManager.instance.PlayUISound(onSelectSound);
+            AudioManager.instance.PlaySound(onSelectSound);
         }
         OnSelectAction();
     }
@@ -59,7 +59,7 @@ public class MyButton : MonoBehaviour, ISelectHandler
     {
         if (!muteSound)
         {
-            AudioManager.instance.PlayUISound(onPressedSound);
+            AudioManager.instance.PlaySound(onPressedSound);
         }
         OnPressedAction();
     }

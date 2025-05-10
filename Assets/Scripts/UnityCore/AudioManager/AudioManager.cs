@@ -519,7 +519,7 @@ public class AudioManager : MonoBehaviour
     /// Plays a one-shot sound at the camera's position (useful for UI sounds)
     /// </summary>
     /// <param name="eventId">The ID of the audio event to play</param>
-    public void PlayUISound(AudioEventId eventId)
+    public void PlaySound(AudioEventId eventId)
     {
         if (Camera.main != null)
         {

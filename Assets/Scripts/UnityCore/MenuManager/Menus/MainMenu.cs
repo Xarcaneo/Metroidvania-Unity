@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using PixelCrushers;
-using FMODUnity;
+using UnityCore.AudioManager;
 
 namespace Menu
 {
@@ -11,11 +11,7 @@ namespace Menu
     /// </summary>
     public class MainMenu : Menu<MainMenu>
     {
-        /// <summary>
-        /// The music event reference for the main menu background music.
-        /// </summary>
-        [field: Header("Music")]
-        [field: SerializeField] public EventReference music { get; private set; }
+        // Music is now handled through AudioEventId
 
         /// <summary>
         /// The title screen component to manage title screen transitions.
@@ -44,7 +40,7 @@ namespace Menu
 
                 if (AudioManager.instance != null)
                 {
-                    AudioManager.instance.PlayMusic(music);
+                    AudioManager.instance.PlayMusic(AudioEventId.Main_Menu_Theme);
                 }
                 else
                 {

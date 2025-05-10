@@ -78,14 +78,14 @@ public class ActionButtonAudioHandler : MonoBehaviour
         // If enough time has passed since enabling, this is a real user selection
         if (Time.unscaledTime - lastSelectionTime > 0.1f)
         {
-            AudioManager.instance.PlayUISound(m_SelectSound);
+            AudioManager.instance.PlaySound(m_SelectSound);
         }
         lastSelectionTime = Time.unscaledTime;
     }
 
     private void OnButtonSubmit()
     {
-        AudioManager.instance.PlayUISound(m_ClickSound);
+        AudioManager.instance.PlaySound(m_ClickSound);
     }
 
     private IEnumerator CheckIfRealSelection()

@@ -271,7 +271,6 @@ GameObject:
   - component: {fileID: 4884631998513632681}
   - component: {fileID: 3191345299900708303}
   - component: {fileID: 8520030593786961985}
-  - component: {fileID: 8915163578391352842}
   m_Layer: 5
   m_Name: FullscreenButton
   m_TagString: Untagged
@@ -486,23 +485,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   muteSound: 0
-  onSelectSoundPath: event:/UI/Buttons/UI_Button_Focus_01
-  onPressedSoundPath: event:/UI/Buttons/UI_Button_Press_01
---- !u!114 &8915163578391352842
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3004809112490626640}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7de41b4a04bc3284e8796e536bc4acbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_textTable: {fileID: 11400000, guid: 6e81d7d258335c64ebe2b9085326655e, type: 2}
-  m_localizedFonts: {fileID: 0}
-  m_fieldName: Fullscreen
+  onSelectSound: 13
+  onPressedSound: 14
 --- !u!1 &8154912150062678836
 GameObject:
   m_ObjectHideFlags: 0
@@ -729,26 +713,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c713f5b6c091565438e3ad9a96fe2390, type: 3}
---- !u!1 &2663044206931146139 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3043450135494684264, guid: c713f5b6c091565438e3ad9a96fe2390, type: 3}
-  m_PrefabInstance: {fileID: 1065533820424199155}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2225302251670398183
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2663044206931146139}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7de41b4a04bc3284e8796e536bc4acbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_textTable: {fileID: 11400000, guid: 6e81d7d258335c64ebe2b9085326655e, type: 2}
-  m_localizedFonts: {fileID: 0}
-  m_fieldName: Graphic
 --- !u!224 &9089581446522060748 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8137203495970350143, guid: c713f5b6c091565438e3ad9a96fe2390, type: 3}

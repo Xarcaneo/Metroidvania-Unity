@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1195727601214729329}
   - component: {fileID: 1195727601214729328}
   - component: {fileID: 8862181570474664251}
+  - component: {fileID: 1195727602742476088}
   m_Layer: 0
   m_Name: Void Particle
   m_TagString: Untagged
@@ -75,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: -1976142529
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1795705763, guid: 011ade2fa772bac4ea24c5c6ad81ce4a, type: 3}
+  m_Sprite: {fileID: -1929361859, guid: fbd8e640c9a32414c91ea7b5ac509114, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -99,8 +100,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canInteract: 1
-  spellUnlockID: 
-  collectEffect: {fileID: 0}
+  spellUnlockID: TeleportToCheckpoint
+--- !u!95 &1195727602742476088
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1195727601214729331}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c707dbfc5bed2de4cb307569cfd58836, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1001 &3888745458927963216
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -118,7 +138,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 809836684806532773, guid: 55187ab96d3c4fa42b7efdbc97ee1486, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.43
+      value: 2.8556247
       objectReference: {fileID: 0}
     - target: {fileID: 1799607720511194773, guid: 55187ab96d3c4fa42b7efdbc97ee1486, type: 3}
       propertyPath: m_Name

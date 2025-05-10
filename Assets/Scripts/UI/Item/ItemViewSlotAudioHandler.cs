@@ -52,7 +52,7 @@ public class ItemViewSlotAudioHandler : MonoBehaviour, ISelectHandler
         // Play select sound when slot is selected (except for first selection)
         if (!InventoryAudioState.IsFirstSelection)
         {
-            AudioManager.instance.PlayUISound(m_SelectSound);
+            AudioManager.instance.PlaySound(m_SelectSound);
         }
         InventoryAudioState.MarkSelectionMade();
     }

@@ -198,7 +198,6 @@ GameObject:
   - component: {fileID: 6161120886521596819}
   - component: {fileID: 6161120886521596817}
   - component: {fileID: 6161120886521596816}
-  - component: {fileID: 1318603344610474297}
   m_Layer: 5
   m_Name: ActionNameText
   m_TagString: Untagged
@@ -268,21 +267,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Move Left
---- !u!114 &1318603344610474297
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6161120886521596818}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7de41b4a04bc3284e8796e536bc4acbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_textTable: {fileID: 11400000, guid: 6e81d7d258335c64ebe2b9085326655e, type: 2}
-  m_localizedFonts: {fileID: 0}
-  m_fieldName: 
 --- !u!1 &9036998901590055969
 GameObject:
   m_ObjectHideFlags: 0
@@ -444,6 +428,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   muteSound: 0
-  onSelectSoundPath: event:/UI/Buttons/UI_Button_Focus_01
-  onPressedSoundPath: event:/UI/Buttons/UI_Button_Press_01
+  onSelectSound: 13
+  onPressedSound: 14
   m_rebindingPanel: {fileID: 0}

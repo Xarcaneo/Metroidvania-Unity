@@ -145,7 +145,7 @@ public class SlotManager : MonoBehaviour
         // Play sound for all selections except the first one when opening spellbook
         if (!isFirstSelection)
         {
-            AudioManager.instance.PlayUISound(AudioEventId.UI_Slot_Navigate);
+            AudioManager.instance.PlaySound(AudioEventId.UI_Slot_Navigate);
         }
         isFirstSelection = false;
 

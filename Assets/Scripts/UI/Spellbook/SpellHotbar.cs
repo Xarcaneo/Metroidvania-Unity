@@ -135,7 +135,7 @@ public class SpellHotbar : MonoBehaviour
         hotbarSlots[slotID].AssignSpell(newSpell);
 
         // Play spell assign sound
-        AudioManager.instance.PlayUISound(AudioEventId.UI_Spell_Assign);
+        AudioManager.instance.PlaySound(AudioEventId.UI_Spell_Assign);
     }
 
     /// <summary>

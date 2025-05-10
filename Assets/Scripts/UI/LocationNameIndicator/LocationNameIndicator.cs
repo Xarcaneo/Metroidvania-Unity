@@ -102,14 +102,14 @@ public class LocationNameIndicator : MonoBehaviour
     /// <param name="areaName">Name of the new area</param>
     private void OnAreaChanged(string areaName)
     {
-        if (string.IsNullOrEmpty(areaName)) return;
+        //if (string.IsNullOrEmpty(areaName)) return;
 
-        string localizedName = myTextTable.GetFieldTextForLanguage(areaName, Localization.Language);
-        if (string.IsNullOrEmpty(localizedName)) return;
+        //string localizedName = myTextTable.GetFieldTextForLanguage(areaName, Localization.Language);
+        //if (string.IsNullOrEmpty(localizedName)) return;
 
-        if (locationName.text != localizedName)
+        if (locationName.text != areaName)
         {
-            locationName.text = localizedName;
+            locationName.text = areaName;
             StartFadeCoroutine();
         }
     }

@@ -26,5 +26,7 @@ namespace UnityCore.AudioManager
         UI_Spell_Assign = 17,
         UI_Tab_Next = 18,
         UI_Tooltip_Close = 19,
+        Effect_Spell_Teleport = 20,
+        Main_Menu_Theme = 21,
     }
 }

@@ -352,26 +352,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c713f5b6c091565438e3ad9a96fe2390, type: 3}
---- !u!1 &3583915938377536984 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3043450135494684264, guid: c713f5b6c091565438e3ad9a96fe2390, type: 3}
-  m_PrefabInstance: {fileID: 1981620443158477744}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &3665369431908352298
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3583915938377536984}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7de41b4a04bc3284e8796e536bc4acbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_textTable: {fileID: 11400000, guid: 6e81d7d258335c64ebe2b9085326655e, type: 2}
-  m_localizedFonts: {fileID: 0}
-  m_fieldName: Audio
 --- !u!224 &7740850192517029775 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8137203495970350143, guid: c713f5b6c091565438e3ad9a96fe2390, type: 3}
@@ -669,8 +649,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   muteSound: 0
-  onSelectSoundPath: event:/UI/Buttons/UI_Button_Focus_01
-  onSlideSoundPath: event:/UI/Buttons/UI_Slider_Move_01
+  onSelectSound: 13
+  onSlideSound: 15
 --- !u!1001 &7371611663372561403
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -961,8 +941,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   muteSound: 0
-  onSelectSoundPath: event:/UI/Buttons/UI_Button_Focus_01
-  onSlideSoundPath: event:/UI/Buttons/UI_Slider_Move_01
+  onSelectSound: 13
+  onSlideSound: 15
 --- !u!224 &3975216540868515520 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5865929312796622139, guid: 071dca8e4d204d8489bdcbff2cf0f7be, type: 3}
@@ -1342,8 +1322,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   muteSound: 0
-  onSelectSoundPath: event:/UI/Buttons/UI_Button_Focus_01
-  onSlideSoundPath: event:/UI/Buttons/UI_Slider_Move_01
+  onSelectSound: 13
+  onSlideSound: 15
 --- !u!224 &2826629364439538851 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5865929312796622139, guid: 071dca8e4d204d8489bdcbff2cf0f7be, type: 3}

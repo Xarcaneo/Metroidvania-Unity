@@ -83,7 +83,7 @@ public class SpellCategorySlot : MonoBehaviour
         // Play tab change sound when selecting category (except for first selection)
         if (!isFirstSelection)
         {
-            AudioManager.instance.PlayUISound(AudioEventId.UI_Tab_Next);
+            AudioManager.instance.PlaySound(AudioEventId.UI_Tab_Next);
         }
     }
 
