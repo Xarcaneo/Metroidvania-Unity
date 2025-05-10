@@ -20,6 +20,7 @@ namespace UnityCore.AudioManager
         Oculon_Death = 36,
         Optikira_Death = 34,
         Player_Attack = 1,
+        Player_Collect_Item = 37,
         Player_Dash = 2,
         Player_Death = 3,
         Player_Footstep = 4,

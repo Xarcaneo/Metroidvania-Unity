@@ -61,6 +61,8 @@ MonoBehaviour:
       eventPath: event:/Characters/Player/Status/Player_Death
     - id: Player_Hurt
       eventPath: event:/Characters/Player/Status/Player_Hurt
+    - id: Player_Collect_Item
+      eventPath: event:/Characters/Player/Other/Player_Collect_Item
   - groupName: Effects
     events:
     - id: Effect_Spell_Teleport

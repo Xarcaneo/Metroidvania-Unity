@@ -66,6 +66,7 @@ GameObject:
   - component: {fileID: 9189063681371784612}
   - component: {fileID: -9124422921146538447}
   - component: {fileID: 1548055269362122733}
+  - component: {fileID: 257527188034863873}
   m_Layer: 27
   m_Name: Item Pickup Template
   m_TagString: Item
@@ -181,7 +182,7 @@ MonoBehaviour:
     m_ItemAmount:
       m_Amount: 0
       m_Item:
-        m_ID: 1950635039
+        m_ID: 4289299433
         m_Name: 
         m_ItemDefinitionID: 0
         m_ItemDefinition: {fileID: 0}
@@ -205,7 +206,19 @@ MonoBehaviour:
   - {fileID: 1680893575274521658}
   m_OnPickupSuccess:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 257527188034863873}
+        m_TargetAssemblyTypeName: SimpleAudioPlayer, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_AudioClip: {fileID: 0}
   m_AudioConfig: {fileID: 0}
   m_OnPickupFail:
@@ -270,6 +283,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentName: PoolContainer
+--- !u!114 &257527188034863873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4814415899790352498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e2d8010331a71d41a8e223f38a683f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AudioEvent: 37
+  m_PlayOnEnable: 0
 --- !u!1 &4828985783154798544
 GameObject:
   m_ObjectHideFlags: 0
