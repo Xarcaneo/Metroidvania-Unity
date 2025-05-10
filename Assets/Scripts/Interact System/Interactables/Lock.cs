@@ -1,6 +1,7 @@
 using Opsive.UltimateInventorySystem.Core;
 using PixelCrushers.DialogueSystem;
 using System.Collections;
+using UnityCore.AudioManager;
 using UnityEngine;
 
 /// <summary>
@@ -56,6 +57,7 @@ public class Lock : InteractableState
             if (itemInfo.HasValue)
             {
                 // Remove the key item from inventory using the actual item instance
+                AudioManager.instance.PlaySound(AudioEventId.Interact_Lock_Unlock);
                 inventory.RemoveItem(itemInfo.Value.Item, 1);
                 UnlockAndNotify();
             }

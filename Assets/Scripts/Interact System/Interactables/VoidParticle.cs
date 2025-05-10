@@ -1,6 +1,7 @@
 using UnityEngine;
 using PixelCrushers.DialogueSystem;
 using System.Collections;
+using UnityCore.AudioManager;
 
 /// <summary>
 /// Represents a void particle that can be collected to unlock a spell.
@@ -38,6 +39,8 @@ public class VoidParticle : Interactable
         // Set the spell as unlocked in Lua
         string fullVariableName = SpellData.SPELL_PREFIX + spellUnlockID;
         DialogueLua.SetVariable(fullVariableName, true);
+
+        AudioManager.instance.PlaySound(AudioEventId.Interact_Pickup_VoidParticle);
 
         // Notify any listeners that interaction is complete
         CallInteractionCompletedEvent();

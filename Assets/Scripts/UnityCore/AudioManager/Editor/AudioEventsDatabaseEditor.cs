@@ -3,6 +3,7 @@ using UnityEditor;
 using System.Text;
 using System.IO;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace UnityCore.AudioManager.Editor
 {
@@ -29,7 +30,35 @@ namespace UnityCore.AudioManager.Editor
             
             // Collect all unique IDs
             var allIds = database.GetAllEventIds().Where(id => !string.IsNullOrEmpty(id)).ToList();
-            allIds.Sort(); // Sort alphabetically
+            
+            // Try to load existing enum values to preserve them
+            Dictionary<string, int> existingEnumValues = new Dictionary<string, int>();
+            int nextAvailableValue = 1;
+            
+            if (File.Exists(enumFilePath))
+            {
+                string[] lines = File.ReadAllLines(enumFilePath);
+                foreach (string line in lines)
+                {
+                    string trimmedLine = line.Trim();
+                    if (trimmedLine.Contains("=") && trimmedLine.EndsWith(","))
+                    {
+                        string[] parts = trimmedLine.Split('=');
+                        if (parts.Length == 2)
+                        {
+                            string enumName = parts[0].Trim();
+                            if (enumName == "None") continue; // Skip None which is always 0
+                            
+                            string valueStr = parts[1].Trim(' ', ',');
+                            if (int.TryParse(valueStr, out int value))
+                            {
+                                existingEnumValues[enumName] = value;
+                                nextAvailableValue = Mathf.Max(nextAvailableValue, value + 1);
+                            }
+                        }
+                    }
+                }
+            }
 
             // Generate enum content
             StringBuilder enumContent = new StringBuilder();
@@ -43,11 +72,27 @@ namespace UnityCore.AudioManager.Editor
             enumContent.AppendLine("    {");
             enumContent.AppendLine("        None = 0,");
 
+            // Sort alphabetically for display only, but preserve values
+            allIds.Sort();
+            
             // Add each ID as an enum value
-            for (int i = 0; i < allIds.Count; i++)
+            foreach (string id in allIds)
             {
-                string enumName = FormatEnumName(allIds[i]);
-                enumContent.AppendLine($"        {enumName} = {i + 1},");
+                string enumName = FormatEnumName(id);
+                
+                // Use existing value if available, otherwise assign a new one
+                int enumValue;
+                if (existingEnumValues.TryGetValue(enumName, out enumValue))
+                {
+                    // Use existing value
+                }
+                else
+                {
+                    // Assign new value
+                    enumValue = nextAvailableValue++;
+                }
+                
+                enumContent.AppendLine($"        {enumName} = {enumValue},");
             }
 
             enumContent.AppendLine("    }");
@@ -57,7 +102,7 @@ namespace UnityCore.AudioManager.Editor
             File.WriteAllText(enumFilePath, enumContent.ToString());
             AssetDatabase.Refresh();
 
-            Debug.Log("Generated AudioEventId enum with " + allIds.Count + " entries");
+            Debug.Log("Generated AudioEventId enum with " + allIds.Count + " entries (preserving existing values)");
         }
 
         private string FormatEnumName(string id)

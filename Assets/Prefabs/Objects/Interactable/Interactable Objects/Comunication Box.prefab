@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2009670133}
   - component: {fileID: 2009670134}
   - component: {fileID: 2218417745934521934}
+  - component: {fileID: 1755839133010138410}
   m_Layer: 0
   m_Name: Comunication Box
   m_TagString: Untagged
@@ -122,6 +123,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canInteract: 1
   dialogue_ID: 0000
+  communicationBox_ID: 
   LoyalServantImage: 1
 --- !u!114 &2218417745934521934
 MonoBehaviour:
@@ -196,6 +198,22 @@ MonoBehaviour:
   m_completedQuestDialogueMode: 0
   m_questDialogueUI: {fileID: 0}
   m_cooldownCheckFrequency: 0
+--- !u!114 &1755839133010138410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6933501647880065554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e2fd1edb66619f469a1e9e236c27199, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  muteSounds: 0
+  useWorldPosition: 1
+  soundOffset: {x: 0, y: 0, z: 0}
+  logDebugInfo: 0
 --- !u!1001 &1585028421758401303
 PrefabInstance:
   m_ObjectHideFlags: 0

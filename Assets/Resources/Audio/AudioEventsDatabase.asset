@@ -29,12 +29,12 @@ MonoBehaviour:
       eventPath: event:/UI/Buttons/UI_Tooltip_Close
     - id: UI_Spell_Assign
       eventPath: event:/UI/Buttons/UI_Spell_Assign
-    - id: Audio_UI_QuestComplete
-      eventPath: event:/UI/Game/Audio_UI_QuestComplete
-    - id: Audio_UI_NewQuest
-      eventPath: event:/UI/Game/Audio_UI_NewQuest
-    - id: Audio_UI_QuestUpdated
-      eventPath: event:/UI/Game/Audio_UI_QuestUpdated
+    - id: UI_Game_QuestComplete
+      eventPath: event:/UI/Game/UI_Game_QuestComplete
+    - id: UI_Game_NewQuest
+      eventPath: event:/UI/Game/UI_Game_NewQuest
+    - id: UI_Game_QuestUpdated
+      eventPath: event:/UI/Game/UI_Game_QuestUpdated
   - groupName: Player
     events:
     - id: Player_Attack
@@ -69,3 +69,21 @@ MonoBehaviour:
     events:
     - id: Main_Menu_Theme
       eventPath: event:/Music/Menu/Main_Menu_Theme
+  - groupName: Interactable
+    events:
+    - id: Interact_Gate
+      eventPath: event:/Interactable/Interact_Gate
+    - id: Interact_Portal_Enter
+      eventPath: event:/Interactable/Interact_Portal_Enter
+    - id: Interact_Checkpoint_Activated
+      eventPath: event:/Interactable/Interact_Checkpoint_Activated
+    - id: Interact_Chest_Open
+      eventPath: event:/Interactable/Interact_Chest_Open
+    - id: Interact_Lock_Unlock
+      eventPath: event:/Interactable/Interact_Lock_Unlock
+    - id: Interact_Pickup_Essence
+      eventPath: event:/Interactable/Interact_Pickup_Essence
+    - id: Interact_CommunicationBox_Start
+      eventPath: event:/Interactable/Interact_CommunicationBox_Start
+    - id: Interact_Pickup_VoidParticle
+      eventPath: event:/Interactable/Interact_Pickup_VoidParticle

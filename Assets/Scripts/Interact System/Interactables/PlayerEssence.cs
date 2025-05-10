@@ -1,3 +1,4 @@
+using UnityCore.AudioManager;
 using UnityEngine;
 
 /// <summary>
@@ -127,11 +128,7 @@ public class PlayerEssence : Interactable
     /// </summary>
     private void PlayCollectionEffects()
     {
-        // Play sound effect if assigned
-        if (m_collectionSound != null)
-        {
-            m_collectionSound.Play();
-        }
+        AudioManager.instance.PlaySound(AudioEventId.Interact_Pickup_Essence);
     }
 
     /// <summary>
