@@ -87,3 +87,19 @@ MonoBehaviour:
       eventPath: event:/Interactable/Interact_CommunicationBox_Start
     - id: Interact_Pickup_VoidParticle
       eventPath: event:/Interactable/Interact_Pickup_VoidParticle
+  - groupName: Skeleton
+    events:
+    - id: Skeleton_Death
+      eventPath: event:/Characters/Skeleton/Status/Skeleton_Death
+  - groupName: Optikira
+    events:
+    - id: Optikira_Death
+      eventPath: event:/Characters/Optikira/Status/Optikira_Death
+  - groupName: Reaver
+    events:
+    - id: Reaver_Death
+      eventPath: event:/Characters/Reaver/Status/Reaver_Death
+  - groupName: Oculon
+    events:
+    - id: Oculon_Death
+      eventPath: event:/Characters/Oculon/Status/Oculon_Death
