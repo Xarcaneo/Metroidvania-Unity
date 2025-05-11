@@ -21,29 +21,29 @@ AnimationClip:
   - curve:
     - time: 0
       value: {fileID: -2119935636, guid: 8219bb1cab70cf140aecb7e83c5465e0, type: 3}
-    - time: 0.0625
+    - time: 0.05
       value: {fileID: 2027108324, guid: 8219bb1cab70cf140aecb7e83c5465e0, type: 3}
-    - time: 0.125
+    - time: 0.1
       value: {fileID: -488871633, guid: 8219bb1cab70cf140aecb7e83c5465e0, type: 3}
-    - time: 0.1875
+    - time: 0.15
       value: {fileID: 516085016, guid: 8219bb1cab70cf140aecb7e83c5465e0, type: 3}
-    - time: 0.25
+    - time: 0.2
       value: {fileID: -1185939480, guid: 8219bb1cab70cf140aecb7e83c5465e0, type: 3}
-    - time: 0.3125
+    - time: 0.25
       value: {fileID: 1941243547, guid: 8219bb1cab70cf140aecb7e83c5465e0, type: 3}
-    - time: 0.375
+    - time: 0.3
       value: {fileID: -1899823151, guid: 8219bb1cab70cf140aecb7e83c5465e0, type: 3}
-    - time: 0.4375
+    - time: 0.35
       value: {fileID: -722744434, guid: 8219bb1cab70cf140aecb7e83c5465e0, type: 3}
-    - time: 0.5
+    - time: 0.4
       value: {fileID: -1060777339, guid: 8219bb1cab70cf140aecb7e83c5465e0, type: 3}
-    - time: 0.5625
+    - time: 0.45
       value: {fileID: -1537082925, guid: 8219bb1cab70cf140aecb7e83c5465e0, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
     script: {fileID: 0}
-  m_SampleRate: 16
+  m_SampleRate: 20
   m_WrapMode: 0
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
@@ -73,7 +73,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.625
+    m_StopTime: 0.5
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -93,21 +93,14 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 0.25
+  - time: 0.2
     functionName: AnimationActionTrigger
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.5625
-    functionName: AnimationActionTrigger
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.5625
+  - time: 0.45
     functionName: AnimationFinishTrigger
     data: 
     objectReferenceParameter: {fileID: 0}
