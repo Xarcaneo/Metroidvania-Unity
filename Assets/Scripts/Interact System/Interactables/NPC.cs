@@ -100,7 +100,6 @@ public class NPC : Interactable
         yield return new WaitForSeconds(dialogueCompletionDelay);
         
         // Now process the dialogue completion
-        Debug.Log($"[{gameObject.name}] Processing dialogue completion after {dialogueCompletionDelay}s delay");
         CallInteractionCompletedEvent();
     }
     #endregion

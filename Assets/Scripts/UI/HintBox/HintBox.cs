@@ -57,7 +57,6 @@ public class HintBox : MonoBehaviour
         }
 
         string modifiedText = originalText;
-        Debug.Log($"[HintBox] Processing text: '{originalText}' on {gameObject.name}");
 
         try
         {

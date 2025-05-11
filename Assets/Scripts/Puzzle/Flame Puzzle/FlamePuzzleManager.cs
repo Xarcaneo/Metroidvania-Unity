@@ -144,7 +144,6 @@ public class FlamePuzzleManager : MonoBehaviour
             if (puzzleId >= 0 && puzzleId < puzzlePrefabs.Length)
             {
                 currentPuzzleInstance = Instantiate(puzzlePrefabs[puzzleId]);
-                Debug.Log($"Loading puzzle {currentPuzzleIndex + 1} of {remainingPuzzleIds.Length} (ID: {puzzleId})");
 
                 // Fade in
                 LeanTween.value(fadePanel.gameObject, 1f, 0f, fadeTime)

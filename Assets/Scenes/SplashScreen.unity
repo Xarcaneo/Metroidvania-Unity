@@ -709,12 +709,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1011389609565602845, guid: a4fe6e0e7760a9046951747c538d245f, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1011389609565602845, guid: a4fe6e0e7760a9046951747c538d245f, type: 3}
       propertyPath: _keyConfig
       value: 
       objectReference: {fileID: 11400000, guid: 090da11157287de47ae5c615b8ed3cf9, type: 2}
     - target: {fileID: 1011389609565602845, guid: a4fe6e0e7760a9046951747c538d245f, type: 3}
       propertyPath: _singletonMode
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1011389609565602845, guid: a4fe6e0e7760a9046951747c538d245f, type: 3}
+      propertyPath: _supportedState
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1011389609565602845, guid: a4fe6e0e7760a9046951747c538d245f, type: 3}
       propertyPath: _activateOnStartup
@@ -3244,7 +3252,7 @@ PrefabInstance:
     - target: {fileID: 4435197654466733201, guid: 0a9d6e3ad31e6dc4cb3b3c4fd3d64bcb, type: 3}
       propertyPath: m_PointAction
       value: 
-      objectReference: {fileID: 5764861178186299437, guid: d7f13e266802caa4e91dd8bab45e7b96, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 4435197654466733201, guid: 0a9d6e3ad31e6dc4cb3b3c4fd3d64bcb, type: 3}
       propertyPath: m_ActionsAsset
       value: 
@@ -3260,19 +3268,19 @@ PrefabInstance:
     - target: {fileID: 4435197654466733201, guid: 0a9d6e3ad31e6dc4cb3b3c4fd3d64bcb, type: 3}
       propertyPath: m_LeftClickAction
       value: 
-      objectReference: {fileID: 5415043497204467976, guid: d7f13e266802caa4e91dd8bab45e7b96, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 4435197654466733201, guid: 0a9d6e3ad31e6dc4cb3b3c4fd3d64bcb, type: 3}
       propertyPath: m_RightClickAction
       value: 
-      objectReference: {fileID: 8489172688579093235, guid: d7f13e266802caa4e91dd8bab45e7b96, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 4435197654466733201, guid: 0a9d6e3ad31e6dc4cb3b3c4fd3d64bcb, type: 3}
       propertyPath: m_MiddleClickAction
       value: 
-      objectReference: {fileID: -6698564186850673208, guid: d7f13e266802caa4e91dd8bab45e7b96, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 4435197654466733201, guid: 0a9d6e3ad31e6dc4cb3b3c4fd3d64bcb, type: 3}
       propertyPath: m_ScrollWheelAction
       value: 
-      objectReference: {fileID: 7532861217628066250, guid: d7f13e266802caa4e91dd8bab45e7b96, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 4435197654466733201, guid: 0a9d6e3ad31e6dc4cb3b3c4fd3d64bcb, type: 3}
       propertyPath: m_TrackedDevicePositionAction
       value: 

@@ -127,7 +127,6 @@ public class FlamePuzzleTrigger : InteractableState
     {
         if (!isLastPuzzle) return; // Only unlock gate when all puzzles are completed
         
-        Debug.Log("All puzzles completed, unlocking gate...");
         UnlockAndNotify();
         UpdateVisuals(true);
         isCompleted = true;

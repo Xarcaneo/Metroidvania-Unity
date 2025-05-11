@@ -252,7 +252,6 @@ GameObject:
   - component: {fileID: 2519342192112234214}
   - component: {fileID: 5220771486402089580}
   - component: {fileID: 1882352925356022904}
-  - component: {fileID: 9199568107838055050}
   m_Layer: 28
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -377,21 +376,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &9199568107838055050
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4932581111953748171}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7de41b4a04bc3284e8796e536bc4acbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_textTable: {fileID: 11400000, guid: 675cb714681ca7f49aa4fd753d0696cd, type: 2}
-  m_localizedFonts: {fileID: 0}
-  m_fieldName: '#001'
 --- !u!1 &6091079642748705375
 GameObject:
   m_ObjectHideFlags: 0
@@ -507,4 +491,3 @@ MonoBehaviour:
   canvas: {fileID: 5026309734435150519}
   spriteRenderer: {fileID: 6618469573403853303}
   hintText: {fileID: 1882352925356022904}
-  localization: {fileID: 9199568107838055050}
