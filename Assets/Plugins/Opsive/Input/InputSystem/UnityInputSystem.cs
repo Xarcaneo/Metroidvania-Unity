@@ -1,4 +1,4 @@
-﻿/// ---------------------------------------------
+/// ---------------------------------------------
 /// Opsive Shared
 /// Copyright (c) Opsive. All Rights Reserved.
 /// https://www.opsive.com
@@ -91,11 +91,11 @@ namespace Opsive.Shared.Integrations.InputSystem
                 }
             }
 #if UNITY_EDITOR
-            // The cursor should be visible when the game is paused.
-            if (!Cursor.visible && Time.deltaTime == 0) {
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
-            }
+            // Commented out to prevent showing cursor when paused
+            // if (!Cursor.visible && Time.deltaTime == 0) {
+            //     Cursor.lockState = CursorLockMode.None;
+            //     Cursor.visible = true;
+            // }
 #endif
         }
 #endif
