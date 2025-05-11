@@ -58,10 +58,10 @@ Camera:
   m_FocalLength: 0.86602545
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.17812501
-    y: 0.0037037036
-    width: 0.33333334
-    height: 0.3333333
+    x: 0.24322918
+    y: 0.028703703
+    width: 0.16666667
+    height: 0.16666666
   near clip plane: 0.1
   far clip plane: 1000
   field of view: 60
@@ -231,6 +231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nonRigidbodyVelocity: 0
   attenuationObject: {fileID: 0}
 --- !u!1001 &7379752776707238806
 PrefabInstance:
@@ -243,10 +244,18 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 7015856279492186317}
+    - target: {fileID: 22478583891113949, guid: ca1a88fa4bd9bfa4fa64afb18eb09151, type: 3}
+      propertyPath: paralaxEffect
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 536438209136349644, guid: ca1a88fa4bd9bfa4fa64afb18eb09151, type: 3}
       propertyPath: cam
       value: 
       objectReference: {fileID: 7015856279492186317}
+    - target: {fileID: 536438209136349644, guid: ca1a88fa4bd9bfa4fa64afb18eb09151, type: 3}
+      propertyPath: paralaxEffect
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5452614600586249789, guid: ca1a88fa4bd9bfa4fa64afb18eb09151, type: 3}
       propertyPath: m_Name
       value: Background
@@ -255,6 +264,10 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 7015856279492186317}
+    - target: {fileID: 6269780104706076210, guid: ca1a88fa4bd9bfa4fa64afb18eb09151, type: 3}
+      propertyPath: paralaxEffect
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8506527630601557071, guid: ca1a88fa4bd9bfa4fa64afb18eb09151, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -269,7 +282,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8506527630601557071, guid: ca1a88fa4bd9bfa4fa64afb18eb09151, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8506527630601557071, guid: ca1a88fa4bd9bfa4fa64afb18eb09151, type: 3}
       propertyPath: m_LocalRotation.w
@@ -303,6 +316,10 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 7015856279492186317}
+    - target: {fileID: 8525373507259775962, guid: ca1a88fa4bd9bfa4fa64afb18eb09151, type: 3}
+      propertyPath: paralaxEffect
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ca1a88fa4bd9bfa4fa64afb18eb09151, type: 3}
 --- !u!4 &1182027512274452441 stripped
