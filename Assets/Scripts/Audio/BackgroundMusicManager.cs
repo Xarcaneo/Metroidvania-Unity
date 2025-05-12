@@ -31,6 +31,9 @@ public class BackgroundMusicManager : MonoBehaviour
     [Tooltip("Should music loop continuously?")]
     [SerializeField] private bool loopMusic = true;
     
+    [Tooltip("Should music stop completely when game is paused? If false, it will pause and resume.")]
+    [SerializeField] private bool stopMusicOnPause = false;
+    
     // Tracking variables for playback
     private int currentTrackIndex = -1;
     private List<int> playedTrackIndices = new List<int>();
@@ -113,28 +116,52 @@ public class BackgroundMusicManager : MonoBehaviour
         
         if (!isPlaying) return;
         
-        if (currentEventInstance.isValid())
+        if (isPaused)
         {
-            if (isPaused)
+            if (stopMusicOnPause)
             {
-                // Store current playback state before pausing
-                currentEventInstance.getPlaybackState(out lastPlaybackState);
-                currentEventInstance.setPaused(true);
+                // Stop the music completely when paused
+                StopBackgroundMusic();
             }
             else
             {
-                // Only resume if it was playing before
-                if (lastPlaybackState == PLAYBACK_STATE.PLAYING)
+                // Just pause the music
+                if (currentEventInstance.isValid())
                 {
-                    currentEventInstance.setPaused(false);
+                    // Store current playback state before pausing
+                    currentEventInstance.getPlaybackState(out lastPlaybackState);
+                    currentEventInstance.setPaused(true);
+                }
+                
+                // Also pause the next track if it's currently fading in/out
+                if (nextEventInstance.isValid())
+                {
+                    nextEventInstance.setPaused(true);
                 }
             }
         }
-        
-        // Also handle the next track if it's currently fading in/out
-        if (nextEventInstance.isValid())
+        else
         {
-            nextEventInstance.setPaused(isPaused);
+            // Only handle unpausing if we're not stopping on pause
+            if (!stopMusicOnPause)
+            {
+                // Resume the current track if it was playing before
+                if (currentEventInstance.isValid() && lastPlaybackState == PLAYBACK_STATE.PLAYING)
+                {
+                    currentEventInstance.setPaused(false);
+                }
+                
+                // Also resume the next track if it exists
+                if (nextEventInstance.isValid())
+                {
+                    nextEventInstance.setPaused(false);
+                }
+            }
+            else if (!isPlaying)
+            {
+                // If we stopped on pause, start playing again when unpaused
+                StartBackgroundMusic();
+            }
         }
     }
     
