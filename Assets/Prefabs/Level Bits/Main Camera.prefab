@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 7015856279492186311}
   - component: {fileID: 7015856279492186305}
   - component: {fileID: 7015856279492186307}
-  - component: {fileID: 7015856279492186306}
   - component: {fileID: 5491530082688238785}
   - component: {fileID: 9204994131240477009}
   - component: {fileID: 6452655939724013412}
+  - component: {fileID: 8277110019924919444}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -58,10 +58,10 @@ Camera:
   m_FocalLength: 0.86602545
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.24322918
-    y: 0.028703703
-    width: 0.16666667
-    height: 0.16666666
+    x: 0.4625
+    y: 0.03875
+    width: 0.26666668
+    height: 0.225
   near clip plane: 0.1
   far clip plane: 1000
   field of view: 60
@@ -126,43 +126,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targets: []
---- !u!114 &7015856279492186306
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7015856279492186317}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6903f12ac8ae44a41ba2a44700ec60ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _pc2D: {fileID: 7015856279492186305}
-  _serializedAxis: 0
-  UseNumericBoundaries: 1
-  UseTopBoundary: 1
-  TopBoundary: 40
-  TargetTopBoundary: 0
-  UseBottomBoundary: 1
-  BottomBoundary: 2
-  TargetBottomBoundary: 0
-  UseLeftBoundary: 1
-  LeftBoundary: 0
-  TargetLeftBoundary: 0
-  UseRightBoundary: 1
-  RightBoundary: 40
-  TargetRightBoundary: 0
-  IsCameraPositionHorizontallyBounded: 0
-  IsCameraPositionVerticallyBounded: 0
-  CurrentBoundariesTrigger: {fileID: 0}
-  HasFiredTransitionStarted: 0
-  HasFiredTransitionFinished: 0
-  UseSoftBoundaries: 0
-  Softness: 0.5
-  SoftAreaSize: 0.1
-  UseBoundaryDelayOnEnterScene: 0
-  BoundaryDelayFrames: 10
 --- !u!114 &5491530082688238785
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -233,6 +196,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nonRigidbodyVelocity: 0
   attenuationObject: {fileID: 0}
+--- !u!114 &8277110019924919444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7015856279492186317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e2837ac55671f042b3fe9e8f038fea3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UseLeftBoundary: 1
+  UseRightBoundary: 1
+  UseTopBoundary: 1
+  UseBottomBoundary: 1
+  LeftBoundary: 0
+  RightBoundary: 10
+  TopBoundary: 10
+  BottomBoundary: 0
+  BoundaryColor: {r: 1, g: 0.5, b: 0.5, a: 0.8}
+  ShowCameraFrustum: 1
+  FrustumColor: {r: 0.5, g: 1, b: 0.5, a: 0.5}
+  DebugLogs: 0
 --- !u!1001 &7379752776707238806
 PrefabInstance:
   m_ObjectHideFlags: 0

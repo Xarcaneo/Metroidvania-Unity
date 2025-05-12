@@ -1097,8 +1097,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1882352925356022904, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
       propertyPath: m_text
-      value: Dash with <color="red>{Action}</color> to conquer obstacles when jumping
-        <color="red>{Jump}</color>.
+      value: Roll with <color="red>{Action}</color> while on the ground to dodge
+        incoming damage!
       objectReference: {fileID: 0}
     - target: {fileID: 3174573140201782222, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
       propertyPath: m_Name
@@ -1654,6 +1654,14 @@ PrefabInstance:
     - target: {fileID: 7015856279492186317, guid: dff480a3d10170046876e8d1d3b637ea, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8277110019924919444, guid: dff480a3d10170046876e8d1d3b637ea, type: 3}
+      propertyPath: TopBoundary
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 8277110019924919444, guid: dff480a3d10170046876e8d1d3b637ea, type: 3}
+      propertyPath: RightBoundary
+      value: 40
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dff480a3d10170046876e8d1d3b637ea, type: 3}
