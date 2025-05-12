@@ -31,9 +31,6 @@ public class BackgroundMusicManager : MonoBehaviour
     [Tooltip("Should music loop continuously?")]
     [SerializeField] private bool loopMusic = true;
     
-    [Tooltip("Should music stop completely when game is paused? If false, it will pause and resume.")]
-    [SerializeField] private bool stopMusicOnPause = false;
-    
     // Tracking variables for playback
     private int currentTrackIndex = -1;
     private List<int> playedTrackIndices = new List<int>();
@@ -43,8 +40,6 @@ public class BackgroundMusicManager : MonoBehaviour
     private Coroutine delayCoroutine;
     private Coroutine musicPlayerCoroutine;
     private bool isPlaying = false;
-    private bool isPaused = false;
-    private PLAYBACK_STATE lastPlaybackState;
     
     // Tracking variables for playback
     
@@ -54,7 +49,6 @@ public class BackgroundMusicManager : MonoBehaviour
         // Subscribe to game events
         GameEvents.Instance.onNewSession += OnNewSession;
         GameEvents.Instance.onEndSession += OnEndSession;
-        GameEvents.Instance.onPauseTrigger += OnGamePaused;
     }
     
     private void OnDestroy()
@@ -64,7 +58,6 @@ public class BackgroundMusicManager : MonoBehaviour
         {
             GameEvents.Instance.onNewSession -= OnNewSession;
             GameEvents.Instance.onEndSession -= OnEndSession;
-            GameEvents.Instance.onPauseTrigger -= OnGamePaused;
         }
         
         // Clean up any FMOD instances
@@ -106,64 +99,7 @@ public class BackgroundMusicManager : MonoBehaviour
         StopAllMusic();
     }
     
-    /// <summary>
-    /// Handles game pause state changes.
-    /// </summary>
-    /// <param name="isPaused">Whether the game is paused</param>
-    private void OnGamePaused(bool isPaused)
-    {
-        this.isPaused = isPaused;
-        
-        if (!isPlaying) return;
-        
-        if (isPaused)
-        {
-            if (stopMusicOnPause)
-            {
-                // Stop the music completely when paused
-                StopBackgroundMusic();
-            }
-            else
-            {
-                // Just pause the music
-                if (currentEventInstance.isValid())
-                {
-                    // Store current playback state before pausing
-                    currentEventInstance.getPlaybackState(out lastPlaybackState);
-                    currentEventInstance.setPaused(true);
-                }
-                
-                // Also pause the next track if it's currently fading in/out
-                if (nextEventInstance.isValid())
-                {
-                    nextEventInstance.setPaused(true);
-                }
-            }
-        }
-        else
-        {
-            // Only handle unpausing if we're not stopping on pause
-            if (!stopMusicOnPause)
-            {
-                // Resume the current track if it was playing before
-                if (currentEventInstance.isValid() && lastPlaybackState == PLAYBACK_STATE.PLAYING)
-                {
-                    currentEventInstance.setPaused(false);
-                }
-                
-                // Also resume the next track if it exists
-                if (nextEventInstance.isValid())
-                {
-                    nextEventInstance.setPaused(false);
-                }
-            }
-            else if (!isPlaying)
-            {
-                // If we stopped on pause, start playing again when unpaused
-                StartBackgroundMusic();
-            }
-        }
-    }
+
     
     /// <summary>
     /// Starts playing background music in random order.
@@ -221,7 +157,6 @@ public class BackgroundMusicManager : MonoBehaviour
     private void StopAllMusic()
     {
         isPlaying = false;
-        isPaused = false;
         
         // Stop any running coroutines
         if (fadeCoroutine != null)
@@ -536,7 +471,5 @@ public class BackgroundMusicManager : MonoBehaviour
                 currentEventInstance.setVolume(volume);
             }
         }
-        
-        // We don't need to update the next instance that's fading out
     }
 }
