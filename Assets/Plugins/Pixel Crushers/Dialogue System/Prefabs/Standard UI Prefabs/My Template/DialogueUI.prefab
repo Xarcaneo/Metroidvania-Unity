@@ -924,6 +924,7 @@ GameObject:
   - component: {fileID: 7948918153572391669}
   - component: {fileID: 513544215845460160}
   - component: {fileID: 6228404733634947097}
+  - component: {fileID: 8338752898574791993}
   m_Layer: 5
   m_Name: Subtitle Text (TMP)
   m_TagString: Untagged
@@ -1076,7 +1077,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rightToLeft: 0
-  charactersPerSecond: 50
+  charactersPerSecond: 20
   audioClip: {fileID: 0}
   alternateAudioClips: []
   audioSource: {fileID: 0}
@@ -1106,6 +1107,31 @@ MonoBehaviour:
   onEnd:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8338752898574791993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5197397904494412482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ada96ff463317e545ba8bc1523c0773a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  typewriterSoundEvent:
+    Guid:
+      Data1: -679010040
+      Data2: 1306757548
+      Data3: 331585929
+      Data4: 1986728599
+    Path: event:/UI/Game/UI_Game_Typing_Effect
+  alternativeSoundEvents: []
+  silentCharacters: ' ,.;:!?"''()[]{}<>'
+  typewriterEffect: {fileID: 6228404733634947097}
+  playFrequency: 4
+  minTimeBetweenSounds: 0.05
+  maxSimultaneousSounds: 3
 --- !u!1 &5726856570341012159
 GameObject:
   m_ObjectHideFlags: 0
