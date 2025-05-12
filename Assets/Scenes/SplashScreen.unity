@@ -238,10 +238,10 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
+    x: 0.1
+    y: 0.1625
+    width: 0.8
+    height: 0.675
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -2873,23 +2873,6 @@ MonoBehaviour:
     m_stringAsset: {fileID: 0}
     m_textTable: {fileID: 0}
     m_textTableFieldID: 0
---- !u!1 &742150509 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5061013718271642380, guid: 592146c428350224590dcdab77a2f152, type: 3}
-  m_PrefabInstance: {fileID: 3940678142284665342}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &742150512
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 742150509}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8ab6f5f79cf517498d24ce0b9336c04, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &957204673 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 657163957, guid: a4fe6e0e7760a9046951747c538d245f, type: 3}
@@ -3419,34 +3402,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 742150511, guid: 592146c428350224590dcdab77a2f152, type: 3}
-      propertyPath: audioEventsDatabase
-      value: 
-      objectReference: {fileID: 11400000, guid: dac01231fa27ef742be117d0cd389e07, type: 2}
-    - target: {fileID: 1661247026, guid: 592146c428350224590dcdab77a2f152, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1661247028, guid: 592146c428350224590dcdab77a2f152, type: 3}
-      propertyPath: <music>k__BackingField.Path
-      value: event:/Music/MainMenuTheme
-      objectReference: {fileID: 0}
-    - target: {fileID: 1661247028, guid: 592146c428350224590dcdab77a2f152, type: 3}
-      propertyPath: <music>k__BackingField.Guid.Data1
-      value: 820134847
-      objectReference: {fileID: 0}
-    - target: {fileID: 1661247028, guid: 592146c428350224590dcdab77a2f152, type: 3}
-      propertyPath: <music>k__BackingField.Guid.Data2
-      value: 1092090208
-      objectReference: {fileID: 0}
-    - target: {fileID: 1661247028, guid: 592146c428350224590dcdab77a2f152, type: 3}
-      propertyPath: <music>k__BackingField.Guid.Data3
-      value: 1288513465
-      objectReference: {fileID: 0}
-    - target: {fileID: 1661247028, guid: 592146c428350224590dcdab77a2f152, type: 3}
-      propertyPath: <music>k__BackingField.Guid.Data4
-      value: -2091242368
-      objectReference: {fileID: 0}
     - target: {fileID: 2616963576419815640, guid: 592146c428350224590dcdab77a2f152, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -3495,9 +3450,133 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioManager
       objectReference: {fileID: 0}
-    - target: {fileID: 5061013718271642380, guid: 592146c428350224590dcdab77a2f152, type: 3}
-      propertyPath: m_IsActive
-      value: 1
+    - target: {fileID: 8711684706259148708, guid: 592146c428350224590dcdab77a2f152, type: 3}
+      propertyPath: volumeDecibels
+      value: -20
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711684706259148708, guid: 592146c428350224590dcdab77a2f152, type: 3}
+      propertyPath: musicEvents.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711684706259148708, guid: 592146c428350224590dcdab77a2f152, type: 3}
+      propertyPath: musicEvents.Array.data[0].Path
+      value: event:/Music/Game Soundtracks/Embark at Dusk Full
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711684706259148708, guid: 592146c428350224590dcdab77a2f152, type: 3}
+      propertyPath: musicEvents.Array.data[1].Path
+      value: event:/Music/Game Soundtracks/Embark at Dusk Loopable
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711684706259148708, guid: 592146c428350224590dcdab77a2f152, type: 3}
+      propertyPath: musicEvents.Array.data[2].Path
+      value: event:/Music/Game Soundtracks/Fury of the Druid Initial
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711684706259148708, guid: 592146c428350224590dcdab77a2f152, type: 3}
+      propertyPath: musicEvents.Array.data[3].Path
+      value: event:/Music/Game Soundtracks/Fury of the Druid Second and Subsequent
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711684706259148708, guid: 592146c428350224590dcdab77a2f152, type: 3}
+      propertyPath: musicEvents.Array.data[4].Path
+      value: event:/Music/Game Soundtracks/Place of Shadows
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711684706259148708, guid: 592146c428350224590dcdab77a2f152, type: 3}
+      propertyPath: musicEvents.Array.data[5].Path
+      value: event:/Music/Game Soundtracks/This is Elven Land
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711684706259148708, guid: 592146c428350224590dcdab77a2f152, type: 3}
+      propertyPath: musicEvents.Array.data[0].Guid.Data1
+      value: -264601868
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711684706259148708, guid: 592146c428350224590dcdab77a2f152, type: 3}
+      propertyPath: musicEvents.Array.data[0].Guid.Data2
+      value: 1315924511
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711684706259148708, guid: 592146c428350224590dcdab77a2f152, type: 3}
+      propertyPath: musicEvents.Array.data[0].Guid.Data3
+      value: 1310877627
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711684706259148708, guid: 592146c428350224590dcdab77a2f152, type: 3}
+      propertyPath: musicEvents.Array.data[0].Guid.Data4
+      value: 611015040
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711684706259148708, guid: 592146c428350224590dcdab77a2f152, type: 3}
+      propertyPath: musicEvents.Array.data[1].Guid.Data1
+      value: 114919447
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711684706259148708, guid: 592146c428350224590dcdab77a2f152, type: 3}
+      propertyPath: musicEvents.Array.data[1].Guid.Data2
+      value: 1287978503
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711684706259148708, guid: 592146c428350224590dcdab77a2f152, type: 3}
+      propertyPath: musicEvents.Array.data[1].Guid.Data3
+      value: -2067913818
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711684706259148708, guid: 592146c428350224590dcdab77a2f152, type: 3}
+      propertyPath: musicEvents.Array.data[1].Guid.Data4
+      value: -824730796
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711684706259148708, guid: 592146c428350224590dcdab77a2f152, type: 3}
+      propertyPath: musicEvents.Array.data[2].Guid.Data1
+      value: -107725374
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711684706259148708, guid: 592146c428350224590dcdab77a2f152, type: 3}
+      propertyPath: musicEvents.Array.data[2].Guid.Data2
+      value: 1178229740
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711684706259148708, guid: 592146c428350224590dcdab77a2f152, type: 3}
+      propertyPath: musicEvents.Array.data[2].Guid.Data3
+      value: 1404276383
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711684706259148708, guid: 592146c428350224590dcdab77a2f152, type: 3}
+      propertyPath: musicEvents.Array.data[2].Guid.Data4
+      value: -157111735
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711684706259148708, guid: 592146c428350224590dcdab77a2f152, type: 3}
+      propertyPath: musicEvents.Array.data[3].Guid.Data1
+      value: 1124256828
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711684706259148708, guid: 592146c428350224590dcdab77a2f152, type: 3}
+      propertyPath: musicEvents.Array.data[3].Guid.Data2
+      value: 1205328044
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711684706259148708, guid: 592146c428350224590dcdab77a2f152, type: 3}
+      propertyPath: musicEvents.Array.data[3].Guid.Data3
+      value: 1041540018
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711684706259148708, guid: 592146c428350224590dcdab77a2f152, type: 3}
+      propertyPath: musicEvents.Array.data[3].Guid.Data4
+      value: 343289487
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711684706259148708, guid: 592146c428350224590dcdab77a2f152, type: 3}
+      propertyPath: musicEvents.Array.data[4].Guid.Data1
+      value: -312261180
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711684706259148708, guid: 592146c428350224590dcdab77a2f152, type: 3}
+      propertyPath: musicEvents.Array.data[4].Guid.Data2
+      value: 1176487945
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711684706259148708, guid: 592146c428350224590dcdab77a2f152, type: 3}
+      propertyPath: musicEvents.Array.data[4].Guid.Data3
+      value: -307101012
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711684706259148708, guid: 592146c428350224590dcdab77a2f152, type: 3}
+      propertyPath: musicEvents.Array.data[4].Guid.Data4
+      value: -1954022964
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711684706259148708, guid: 592146c428350224590dcdab77a2f152, type: 3}
+      propertyPath: musicEvents.Array.data[5].Guid.Data1
+      value: 388947222
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711684706259148708, guid: 592146c428350224590dcdab77a2f152, type: 3}
+      propertyPath: musicEvents.Array.data[5].Guid.Data2
+      value: 1278001908
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711684706259148708, guid: 592146c428350224590dcdab77a2f152, type: 3}
+      propertyPath: musicEvents.Array.data[5].Guid.Data3
+      value: -918282105
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711684706259148708, guid: 592146c428350224590dcdab77a2f152, type: 3}
+      propertyPath: musicEvents.Array.data[5].Guid.Data4
+      value: 1426102275
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 592146c428350224590dcdab77a2f152, type: 3}

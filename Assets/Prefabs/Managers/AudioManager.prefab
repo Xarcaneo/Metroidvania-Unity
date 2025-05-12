@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2616963576419815640}
   - component: {fileID: 742150511}
+  - component: {fileID: 8711684706259148708}
+  - component: {fileID: 742150512}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -44,7 +46,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61fe51d7805265a4a93af11786221b25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  masterVolume: 1
-  musicVolume: 1
-  ambienceVolume: 1
-  SFXVolume: 1
+  volumeSettings:
+    master: 1
+    music: 1
+    sfx: 1
+    sfx2: 1
+  logDebugInfo: 0
+  audioEventsDatabase: {fileID: 11400000, guid: dac01231fa27ef742be117d0cd389e07, type: 2}
+--- !u!114 &8711684706259148708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5061013718271642380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8834eaff2fb331c4ba2a4370d7c93f6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  musicEvents:
+  - Guid:
+      Data1: 28406184
+      Data2: 1191182626
+      Data3: -911382900
+      Data4: -1442085769
+    Path: event:/Music/Menu/Main_Menu_Theme
+  volumeMultiplier: 0.7
+  fadeTime: 2
+  delayBetweenTracks: 3
+  loopMusic: 1
+--- !u!114 &742150512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5061013718271642380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8ab6f5f79cf517498d24ce0b9336c04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
