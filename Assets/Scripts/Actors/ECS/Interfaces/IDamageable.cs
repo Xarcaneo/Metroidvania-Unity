@@ -35,6 +35,11 @@ public interface IDamageable
         /// Whether this damage can be blocked
         /// </summary>
         public bool CanBlock { get; set; }
+        
+        /// <summary>
+        /// Whether this damage can be parried after being blocked
+        /// </summary>
+        public bool CanParry { get; set; }
 
         /// <summary>
         /// Sets the basic damage data.
@@ -45,6 +50,8 @@ public interface IDamageable
         {
             DamageAmount = damageAmount;
             Source = source;
+            CanBlock = true;  // Default to blockable
+            CanParry = true;  // Default to parryable
         }
     }
 }

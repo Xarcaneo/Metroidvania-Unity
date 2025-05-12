@@ -35,6 +35,11 @@ public class PlayerPrepareBlockState : PlayerAbilityState
     /// Indicates whether a block was successfully performed
     /// </summary>
     private bool successfulBlock = false;
+    
+    /// <summary>
+    /// Indicates whether the blocked attack can be parried
+    /// </summary>
+    private bool canParryBlock = false;
 
     private float blockTimer;
     #endregion
@@ -106,6 +111,8 @@ public class PlayerPrepareBlockState : PlayerAbilityState
 
         if (successfulBlock)
         {
+            // Pass the canParryBlock flag to the BlockState
+            player.BlockState.SetCanParry(canParryBlock);
             stateMachine.ChangeState(player.BlockState);
         }
         else if (isAnimationFinished)
@@ -124,10 +131,14 @@ public class PlayerPrepareBlockState : PlayerAbilityState
     /// </summary>
     /// <remarks>
     /// Sets the successful block flag to trigger state transition
+    /// and checks if the blocked attack can be parried
     /// </remarks>
     private void OnSuccesfullBlock()
     {
         successfulBlock = true;
+        
+        // Check if the blocked attack can be parried
+        canParryBlock = DamageReceiver.CanParryLastBlock;
     }
 
     /// <summary>

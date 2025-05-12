@@ -24,12 +24,13 @@ public class Optikira_RangedAttackState : RangedAttackState
 
     /// <summary>
     /// Called when entering the ranged attack state.
-    /// Sets up the attack properties, making it unblockable.
+    /// Sets up the attack properties, making it blockable but not parryable.
     /// </summary>
     public override void Enter()
     {
         base.Enter();
-        m_damageData.CanBlock = false;
+        m_damageData.CanBlock = true;  // Can be blocked
+        m_damageData.CanParry = false; // But cannot be parried
     }
 
     /// <summary>

@@ -26,7 +26,20 @@ public class PlayerBlockState : PlayerState
     /// </remarks>
     private Movement Movement { get => movement ?? core.GetCoreComponent(ref movement); }
     private Movement movement;
+    
+    /// <summary>
+    /// Reference to the DamageReceiver component, lazily loaded
+    /// </summary>
+    private DamageReceiver DamageReceiver { get => damageReceiver ?? core.GetCoreComponent(ref damageReceiver); }
+    private DamageReceiver damageReceiver;
 
+    #endregion
+    
+    #region State Variables
+    /// <summary>
+    /// Indicates whether a parryable attack was blocked
+    /// </summary>
+    private bool canParry = false;
     #endregion
 
     /// <summary>
@@ -47,11 +60,11 @@ public class PlayerBlockState : PlayerState
     /// <remarks>
     /// Sets up the blocking state by:
     /// 1. Calling base class Enter method
-    /// 2. Any additional block-specific setup can be added here
     /// </remarks>
     public override void Enter()
     {
         base.Enter();
+        // canParry is now set by PrepareBlockState via SetCanParry
     }
 
     /// <summary>
@@ -60,11 +73,14 @@ public class PlayerBlockState : PlayerState
     /// <remarks>
     /// Cleans up the blocking state by:
     /// 1. Calling base class Exit method
-    /// 2. Any additional block-specific cleanup can be added here
+    /// 2. Resetting state variables
     /// </remarks>
     public override void Exit()
     {
         base.Exit();
+        
+        // Reset state variables
+        canParry = false;
     }
 
     /// <summary>
@@ -76,9 +92,9 @@ public class PlayerBlockState : PlayerState
     /// 2. Ensure player remains stationary during block
     /// 3. Check for state transition conditions
     /// 
-    /// The state will transition to CounterAttackState when:
-    /// - The player is not currently exiting the state AND
-    /// - The block animation has finished
+    /// The state will transition to:
+    /// - CounterAttackState: When the block animation has finished AND a parryable attack was blocked
+    /// - IdleState: When the block animation has finished but no parryable attack was blocked
     /// </remarks>
     public override void LogicUpdate()
     {
@@ -89,7 +105,25 @@ public class PlayerBlockState : PlayerState
 
         if (!isExitingState && isAnimationFinished)
         {
-            stateMachine.ChangeState(player.CounterAttackState);
+            if (canParry)
+            {
+                // Transition to counter attack if a parryable attack was blocked
+                stateMachine.ChangeState(player.CounterAttackState);
+            }
+            else
+            {
+                // Transition to idle if no parryable attack was blocked
+                stateMachine.ChangeState(player.IdleState);
+            }
         }
+    }
+    
+    /// <summary>
+    /// Sets whether the player can parry after this block
+    /// </summary>
+    /// <param name="canParry">Whether the player can parry</param>
+    public void SetCanParry(bool canParry)
+    {
+        this.canParry = canParry;
     }
 }

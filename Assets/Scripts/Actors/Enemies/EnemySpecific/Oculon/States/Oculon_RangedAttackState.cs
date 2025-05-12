@@ -29,7 +29,7 @@ public class Oculon_RangedAttackState : RangedAttackState
     public override void Enter()
     {
         base.Enter();
-        m_damageData.CanBlock = false;
+        m_damageData.CanParry = false;
     }
 
     /// <summary>
