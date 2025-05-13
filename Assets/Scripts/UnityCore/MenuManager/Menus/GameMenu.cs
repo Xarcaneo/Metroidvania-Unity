@@ -139,7 +139,7 @@ namespace Menu
         public override void OnReturnInput()
         {
             // Only handle return input for keyboard
-            if (GameManager.Instance.CurrentInputDevice == GameManager.InputDeviceType.Keyboard)
+            if (InputDeviceDetector.CurrentInputDevice == InputDeviceDetector.InputDeviceType.Keyboard)
             {
                 OnPausePressed();
             }
@@ -152,7 +152,7 @@ namespace Menu
         public override void OnPauseInput()
         {
             // Only handle pause input for gamepad
-            if (GameManager.Instance.CurrentInputDevice == GameManager.InputDeviceType.Gamepad)
+            if (InputDeviceDetector.CurrentInputDevice == InputDeviceDetector.InputDeviceType.Gamepad)
             {
                 OnPausePressed();
             }

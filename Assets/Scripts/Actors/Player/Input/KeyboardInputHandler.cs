@@ -204,7 +204,6 @@ public class KeyboardInputHandler : BaseInputHandler
 
         // Update the last used hotbar slot
         playerInputHandler.HotbarState.SetLastSlot(slotIndex);
-        Debug.Log($"Keyboard spell hotbar set to: {slotIndex}");
     }
 
     protected override void ProcessJumpInput(InputAction.CallbackContext context)
