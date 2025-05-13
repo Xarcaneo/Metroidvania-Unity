@@ -7,9 +7,9 @@ using UnityEngine.InputSystem.Controls;
 /// <summary>
 /// Handles gamepad specific input processing
 /// </summary>
-public class GamepadInputHandler : IInputHandler
+public class GamepadInputHandler : BaseInputHandler
 {
-    private PlayerInputHandler playerInputHandler;
+    // playerInputHandler is now in the base class
 
     // Flags to track if inputs have been processed to prevent double-triggering with analog triggers
     private bool actionInputProcessed = false;
@@ -28,61 +28,16 @@ public class GamepadInputHandler : IInputHandler
     /// </summary>
     private bool SpellModifierActive => Gamepad.current != null && Gamepad.current.leftTrigger.ReadValue() > GamepadControls.TriggerThreshold;
 
-    public GamepadInputHandler(PlayerInputHandler playerInputHandler)
+    public GamepadInputHandler(PlayerInputHandler playerInputHandler) : base(playerInputHandler)
     {
-        this.playerInputHandler = playerInputHandler;
     }
 
-    /// <summary>
-    /// Process input from gamepad
-    /// </summary>
-    public void ProcessInput(InputAction.CallbackContext context, string actionName)
-    {
-        if (playerInputHandler.DisableInput)
-            return;
-
-        switch (actionName)
-        {
-            case "Attack":
-                ProcessAttackInput(context);
-                break;
-            case "Block":
-                ProcessBlockInput(context);
-                break;
-            case "HotbarAction":
-                ProcessHotbarActionInput(context);
-                break;
-            case "ItemSwitchLeft":
-                ProcessItemSwitchLeftInput(context);
-                break;
-            case "ItemSwitchRight":
-                ProcessItemSwitchRightInput(context);
-                break;
-            case "Move":
-                ProcessMoveInput(context);
-                break;
-            case "UseSpell":
-                ProcessUseSpellInput(context);
-                break;
-            case "Jump":
-                ProcessJumpInput(context);
-                break;
-            case "Dash":
-                ProcessDashInput(context);
-                break;
-            case "Interact":
-                ProcessInteractInput(context);
-                break;
-            case "PlayerMenu":
-                ProcessPlayerMenuInput(context);
-                break;
-        }
-    }
+    // ProcessInput is now implemented in the base class
 
     /// <summary>
     /// Update method called every frame
     /// </summary>
-    public void Update()
+    public override void Update()
     {
         CheckSpellModifierReleased();
     }
@@ -111,7 +66,7 @@ public class GamepadInputHandler : IInputHandler
     }
 
     #region Input Processing Methods
-    private void ProcessAttackInput(InputAction.CallbackContext context)
+    protected override void ProcessAttackInput(InputAction.CallbackContext context)
     {
         if (context.started && !attackInputProcessed)
         {
@@ -125,7 +80,7 @@ public class GamepadInputHandler : IInputHandler
         }
     }
 
-    private void ProcessBlockInput(InputAction.CallbackContext context)
+    protected override void ProcessBlockInput(InputAction.CallbackContext context)
     {
         if (context.started && !blockInputProcessed)
         {
@@ -139,7 +94,7 @@ public class GamepadInputHandler : IInputHandler
         }
     }
 
-    private void ProcessHotbarActionInput(InputAction.CallbackContext context)
+    protected override void ProcessHotbarActionInput(InputAction.CallbackContext context)
     {
         if (context.started && !hotbarActionInputProcessed)
         {
@@ -153,7 +108,7 @@ public class GamepadInputHandler : IInputHandler
         }
     }
 
-    private void ProcessItemSwitchLeftInput(InputAction.CallbackContext context)
+    protected override void ProcessItemSwitchLeftInput(InputAction.CallbackContext context)
     {
         if (context.started && !itemSwitchLeftInputProcessed)
         {
@@ -167,7 +122,7 @@ public class GamepadInputHandler : IInputHandler
         }
     }
 
-    private void ProcessItemSwitchRightInput(InputAction.CallbackContext context)
+    protected override void ProcessItemSwitchRightInput(InputAction.CallbackContext context)
     {
         if (context.started && !itemSwitchRightInputProcessed)
         {
@@ -181,7 +136,7 @@ public class GamepadInputHandler : IInputHandler
         }
     }
 
-    private void ProcessMoveInput(InputAction.CallbackContext context)
+    protected override void ProcessMoveInput(InputAction.CallbackContext context)
     {
         Vector2 rawMovementInput = context.ReadValue<Vector2>();
         playerInputHandler.RawMovementInput = rawMovementInput;
@@ -197,7 +152,7 @@ public class GamepadInputHandler : IInputHandler
         }
     }
 
-    private void ProcessUseSpellInput(InputAction.CallbackContext context)
+    protected override void ProcessUseSpellInput(InputAction.CallbackContext context)
     {
         // Get the index of the triggered binding
         var bindingIndex = context.action.GetBindingIndexForControl(context.control);
@@ -264,7 +219,7 @@ public class GamepadInputHandler : IInputHandler
         }
     }
 
-    private void ProcessJumpInput(InputAction.CallbackContext context)
+    protected override void ProcessJumpInput(InputAction.CallbackContext context)
     {
         if (context.started && !jumpInputProcessed)
         {
@@ -280,7 +235,7 @@ public class GamepadInputHandler : IInputHandler
         }
     }
 
-    private void ProcessDashInput(InputAction.CallbackContext context)
+    protected override void ProcessDashInput(InputAction.CallbackContext context)
     {
         if (context.started && !actionInputProcessed)
         {
@@ -295,7 +250,7 @@ public class GamepadInputHandler : IInputHandler
         }
     }
 
-    private void ProcessInteractInput(InputAction.CallbackContext context)
+    protected override void ProcessInteractInput(InputAction.CallbackContext context)
     {
         if (context.started && !interactInputProcessed)
         {
@@ -309,7 +264,7 @@ public class GamepadInputHandler : IInputHandler
         }
     }
 
-    private void ProcessPlayerMenuInput(InputAction.CallbackContext context)
+    protected override void ProcessPlayerMenuInput(InputAction.CallbackContext context)
     {
         if (!playerInputHandler.IsDialogueActive)
         {

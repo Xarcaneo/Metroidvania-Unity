@@ -199,6 +199,10 @@ public class PlayerInputHandler : MonoBehaviour
     #endregion
 
     #region Unity Callback Functions
+    // Add a cooldown timer to prevent rapid switching between input devices
+    private float inputDeviceSwitchCooldown = 0.5f; // Half-second cooldown
+    private float lastInputDeviceSwitch = 0f;
+    
     private void Start()
     {
         playerInput = GetComponent<PlayerInput>();
@@ -213,6 +217,9 @@ public class PlayerInputHandler : MonoBehaviour
         
         // Set initial input handler based on current device
         currentInputHandler = CurrentInputDevice == InputDevice.Keyboard ? keyboardInputHandler : gamepadInputHandler;
+        
+        // Initialize the cooldown timer
+        lastInputDeviceSwitch = Time.time;
     }
 
     private void OnDestroy()
@@ -235,32 +242,67 @@ public class PlayerInputHandler : MonoBehaviour
     /// </summary>
     private void DetectCurrentInputDevice()
     {
-        // Check if gamepad is connected and has recent input
+        // Don't switch devices if we're within the cooldown period
+        if (Time.time - lastInputDeviceSwitch < inputDeviceSwitchCooldown)
+            return;
+            
+        // Track if we need to switch devices
+        bool shouldSwitchToGamepad = false;
+        bool shouldSwitchToKeyboard = false;
+        
+        // Check if gamepad is connected and has significant input
         if (Gamepad.current != null)
         {        
-            // Check for any gamepad button or stick input
+            // Check for any gamepad button or stick input with significant values
+            // This helps filter out noise and phantom inputs
             if (Gamepad.current.wasUpdatedThisFrame)
             {
-                if (CurrentInputDevice != InputDevice.Gamepad)
+                // Look for significant stick movement or button presses
+                if (Vector2.SqrMagnitude(Gamepad.current.leftStick.ReadValue()) > 0.25f ||
+                    Vector2.SqrMagnitude(Gamepad.current.rightStick.ReadValue()) > 0.25f ||
+                    Gamepad.current.buttonSouth.isPressed || Gamepad.current.buttonNorth.isPressed ||
+                    Gamepad.current.buttonEast.isPressed || Gamepad.current.buttonWest.isPressed ||
+                    Gamepad.current.leftTrigger.ReadValue() > 0.5f || Gamepad.current.rightTrigger.ReadValue() > 0.5f ||
+                    Gamepad.current.leftShoulder.isPressed || Gamepad.current.rightShoulder.isPressed)
                 {
-                    CurrentInputDevice = InputDevice.Gamepad;
-                    currentInputHandler = gamepadInputHandler;
-                    Debug.Log("Switched to Gamepad input");
+                    shouldSwitchToGamepad = true;
                 }
-                return;
             }
         }
         
-        // Check for keyboard/mouse input
-        if (Keyboard.current != null && Keyboard.current.wasUpdatedThisFrame || 
-            Mouse.current != null && Mouse.current.wasUpdatedThisFrame)
+        // Check for significant keyboard/mouse input
+        if (Keyboard.current != null && Keyboard.current.wasUpdatedThisFrame)
         {
-            if (CurrentInputDevice != InputDevice.Keyboard)
+            // Look for actual key presses, not just noise
+            if (Keyboard.current.anyKey.isPressed)
             {
-                CurrentInputDevice = InputDevice.Keyboard;
-                currentInputHandler = keyboardInputHandler;
-                Debug.Log("Switched to Keyboard input");
+                shouldSwitchToKeyboard = true;
             }
+        }
+        else if (Mouse.current != null && Mouse.current.wasUpdatedThisFrame)
+        {            
+            // Check for significant mouse movement or clicks
+            if (Mouse.current.delta.ReadValue().sqrMagnitude > 1.0f ||
+                Mouse.current.leftButton.isPressed || Mouse.current.rightButton.isPressed)
+            {
+                shouldSwitchToKeyboard = true;
+            }
+        }
+        
+        // Prioritize gamepad input if both are detected in the same frame
+        if (shouldSwitchToGamepad && CurrentInputDevice != InputDevice.Gamepad)
+        {
+            CurrentInputDevice = InputDevice.Gamepad;
+            currentInputHandler = gamepadInputHandler;
+            lastInputDeviceSwitch = Time.time;
+            Debug.Log("Switched to Gamepad input");
+        }
+        else if (shouldSwitchToKeyboard && !shouldSwitchToGamepad && CurrentInputDevice != InputDevice.Keyboard)
+        {
+            CurrentInputDevice = InputDevice.Keyboard;
+            currentInputHandler = keyboardInputHandler;
+            lastInputDeviceSwitch = Time.time;
+            Debug.Log("Switched to Keyboard input");
         }
     }
     

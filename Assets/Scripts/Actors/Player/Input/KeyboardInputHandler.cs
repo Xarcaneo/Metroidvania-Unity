@@ -6,11 +6,13 @@ using UnityEngine.InputSystem;
 /// <summary>
 /// Handles keyboard and mouse specific input processing
 /// </summary>
-public class KeyboardInputHandler : IInputHandler
+public class KeyboardInputHandler : BaseInputHandler
 {
-    private PlayerInputHandler playerInputHandler;
+    // playerInputHandler is now in the base class
 
     // Flags to track if inputs have been processed to prevent double-triggering
+    // For keyboard, these prevent multiple activations due to key repeat rates
+    // when a key is held down, which is different from the analog trigger issue on gamepads
     private bool actionInputProcessed = false;
     private bool attackInputProcessed = false;
     private bool blockInputProcessed = false;
@@ -22,67 +24,16 @@ public class KeyboardInputHandler : IInputHandler
     private bool interactInputProcessed = false;
     private bool playerMenuInputProcessed = false;
 
-    public KeyboardInputHandler(PlayerInputHandler playerInputHandler)
+    public KeyboardInputHandler(PlayerInputHandler playerInputHandler) : base(playerInputHandler)
     {
-        this.playerInputHandler = playerInputHandler;
     }
 
-    /// <summary>
-    /// Process input from keyboard/mouse
-    /// </summary>
-    public void ProcessInput(InputAction.CallbackContext context, string actionName)
-    {
-        if (playerInputHandler.DisableInput)
-            return;
+    // ProcessInput is now implemented in the base class
 
-        switch (actionName)
-        {
-            case "Attack":
-                ProcessAttackInput(context);
-                break;
-            case "Block":
-                ProcessBlockInput(context);
-                break;
-            case "HotbarAction":
-                ProcessHotbarActionInput(context);
-                break;
-            case "ItemSwitchLeft":
-                ProcessItemSwitchLeftInput(context);
-                break;
-            case "ItemSwitchRight":
-                ProcessItemSwitchRightInput(context);
-                break;
-            case "Move":
-                ProcessMoveInput(context);
-                break;
-            case "UseSpell":
-                ProcessUseSpellInput(context);
-                break;
-            case "Jump":
-                ProcessJumpInput(context);
-                break;
-            case "Dash":
-                ProcessDashInput(context);
-                break;
-            case "Interact":
-                ProcessInteractInput(context);
-                break;
-            case "PlayerMenu":
-                ProcessPlayerMenuInput(context);
-                break;
-        }
-    }
-
-    /// <summary>
-    /// Update method called every frame
-    /// </summary>
-    public void Update()
-    {
-        // No specific keyboard update logic needed
-    }
+    // Update is now implemented in the base class
 
     #region Input Processing Methods
-    private void ProcessAttackInput(InputAction.CallbackContext context)
+    protected override void ProcessAttackInput(InputAction.CallbackContext context)
     {
         if (context.started && !attackInputProcessed)
         {
@@ -96,7 +47,7 @@ public class KeyboardInputHandler : IInputHandler
         }
     }
 
-    private void ProcessBlockInput(InputAction.CallbackContext context)
+    protected override void ProcessBlockInput(InputAction.CallbackContext context)
     {
         if (context.started && !blockInputProcessed)
         {
@@ -110,7 +61,7 @@ public class KeyboardInputHandler : IInputHandler
         }
     }
 
-    private void ProcessHotbarActionInput(InputAction.CallbackContext context)
+    protected override void ProcessHotbarActionInput(InputAction.CallbackContext context)
     {
         if (context.started && !hotbarActionInputProcessed)
         {
@@ -124,7 +75,7 @@ public class KeyboardInputHandler : IInputHandler
         }
     }
 
-    private void ProcessItemSwitchLeftInput(InputAction.CallbackContext context)
+    protected override void ProcessItemSwitchLeftInput(InputAction.CallbackContext context)
     {
         if (context.started && !itemSwitchLeftInputProcessed)
         {
@@ -138,7 +89,7 @@ public class KeyboardInputHandler : IInputHandler
         }
     }
 
-    private void ProcessItemSwitchRightInput(InputAction.CallbackContext context)
+    protected override void ProcessItemSwitchRightInput(InputAction.CallbackContext context)
     {
         if (context.started && !itemSwitchRightInputProcessed)
         {
@@ -152,7 +103,7 @@ public class KeyboardInputHandler : IInputHandler
         }
     }
 
-    private void ProcessMoveInput(InputAction.CallbackContext context)
+    protected override void ProcessMoveInput(InputAction.CallbackContext context)
     {
         Vector2 rawMovementInput = context.ReadValue<Vector2>();
         playerInputHandler.RawMovementInput = rawMovementInput;
@@ -168,7 +119,7 @@ public class KeyboardInputHandler : IInputHandler
         }
     }
 
-    private void ProcessUseSpellInput(InputAction.CallbackContext context)
+    protected override void ProcessUseSpellInput(InputAction.CallbackContext context)
     {
         // Get the index of the triggered binding
         var bindingIndex = context.action.GetBindingIndexForControl(context.control);
@@ -210,7 +161,7 @@ public class KeyboardInputHandler : IInputHandler
         Debug.Log($"Keyboard spell hotbar set to: {hotbarSlot}");
     }
 
-    private void ProcessJumpInput(InputAction.CallbackContext context)
+    protected override void ProcessJumpInput(InputAction.CallbackContext context)
     {
         if (context.started && !jumpInputProcessed)
         {
@@ -226,7 +177,7 @@ public class KeyboardInputHandler : IInputHandler
         }
     }
 
-    private void ProcessDashInput(InputAction.CallbackContext context)
+    protected override void ProcessDashInput(InputAction.CallbackContext context)
     {
         if (context.started && !actionInputProcessed)
         {
@@ -241,7 +192,7 @@ public class KeyboardInputHandler : IInputHandler
         }
     }
 
-    private void ProcessInteractInput(InputAction.CallbackContext context)
+    protected override void ProcessInteractInput(InputAction.CallbackContext context)
     {
         if (context.started && !interactInputProcessed)
         {
@@ -255,7 +206,7 @@ public class KeyboardInputHandler : IInputHandler
         }
     }
 
-    private void ProcessPlayerMenuInput(InputAction.CallbackContext context)
+    protected override void ProcessPlayerMenuInput(InputAction.CallbackContext context)
     {
         if (!playerInputHandler.IsDialogueActive)
         {
