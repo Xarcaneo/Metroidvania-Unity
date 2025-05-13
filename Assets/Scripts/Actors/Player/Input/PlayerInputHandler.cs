@@ -37,18 +37,22 @@ public struct GamepadControls
 /// <summary>
 /// Handles all player input using the new Input System.
 /// Processes raw input data and provides normalized values for movement and actions.
+/// Delegates device-specific input handling to specialized input handlers.
 /// </summary>
 public class PlayerInputHandler : MonoBehaviour
 {
     #region Components
     private PlayerInput playerInput;
+    private IInputHandler keyboardInputHandler;
+    private IInputHandler gamepadInputHandler;
+    private IInputHandler currentInputHandler;
     #endregion
 
     #region Input Properties
     /// <summary>
     /// Raw movement input vector from input device
     /// </summary>
-    public Vector2 RawMovementInput { get; private set; }
+    public Vector2 RawMovementInput { get; set; }
 
     /// <summary>
     /// Flag to disable all input processing
@@ -70,80 +74,72 @@ public class PlayerInputHandler : MonoBehaviour
     public InputDevice CurrentInputDevice { get; private set; } = InputDevice.Keyboard;
 
     private bool isDialogueActive = false;
+    
+    /// <summary>
+    /// Public accessor for isDialogueActive for input handlers
+    /// </summary>
+    public bool IsDialogueActive => isDialogueActive;
 
-    // Flags to track if inputs have been processed to prevent double-triggering with analog triggers
-    private bool actionInputProcessed = false;
-    private bool attackInputProcessed = false;
-    private bool blockInputProcessed = false;
-    private bool hotbarActionInputProcessed = false;
-    private bool itemSwitchLeftInputProcessed = false;
-    private bool itemSwitchRightInputProcessed = false;
-    private bool jumpInputProcessed = false;
-    private bool spellCastInputProcessed = false;
-    private bool interactInputProcessed = false;
-    private bool playerMenuInputProcessed = false;
+    // Input flags are now managed by the individual input handlers
 
     /// <summary>
     /// Normalized X-axis input (-1, 0, 1)
     /// </summary>
-    public int NormInputX { get; private set; }
+    public int NormInputX { get; set; }
 
     /// <summary>
     /// Normalized Y-axis input (-1, 0, 1)
     /// </summary>
-    public int NormInputY { get; private set; }
+    public int NormInputY { get; set; }
 
     /// <summary>
     /// Jump button pressed state
     /// </summary>
-    public bool JumpInput { get; private set; }
+    public bool JumpInput { get; set; }
 
     /// <summary>
     /// Jump button released state
     /// </summary>
-    public bool JumpInputStop { get; private set; }
+    public bool JumpInputStop { get; set; }
 
     /// <summary>
     /// Action button (dash) pressed state
     /// </summary>
-    public bool ActionInput { get; private set; }
+    public bool ActionInput { get; set; }
 
     /// <summary>
     /// Attack button pressed state
     /// </summary>
-    public bool AttackInput { get; private set; }
+    public bool AttackInput { get; set; }
 
     /// <summary>
     /// Block button pressed state
     /// </summary>
-    public bool BlockInput { get; private set; }
+    public bool BlockInput { get; set; }
 
     /// <summary>
     /// Hotbar action button pressed state
     /// </summary>
-    public bool HotbarActionInput { get; private set; }
+    public bool HotbarActionInput { get; set; }
 
     /// <summary>
     /// Item switch left button pressed state
     /// </summary>
-    public bool ItemSwitchLeftInput { get; private set; }
+    public bool ItemSwitchLeftInput { get; set; }
 
     /// <summary>
     /// Item switch right button pressed state
     /// </summary>
-    public bool ItemSwitchRightInput { get; private set; }
+    public bool ItemSwitchRightInput { get; set; }
 
     /// <summary>
     /// Hotbar number currently triggered with activation state.
     /// Key: Activation state (true = active, false = inactive)
     /// Value: Hotbar number (0, 1, 2 for keyboard, 3, 4, 5 for gamepad)
     /// </summary>
-    public Dictionary<bool, int> UseSpellHotbarDictionary { get; private set; } = new Dictionary<bool, int>() { { false, 0 } };
+    public Dictionary<bool, int> UseSpellHotbarDictionary { get; set; } = new Dictionary<bool, int>() { { false, 0 } };
     
-    /// <summary>
-    /// Flag to track if the LT modifier is being held for gamepad spell casting
-    /// </summary>
-    private bool SpellModifierActive => Gamepad.current != null && Gamepad.current.leftTrigger.ReadValue() > GamepadControls.TriggerThreshold;
+    // SpellModifierActive is now handled by the GamepadInputHandler
     
     /// <summary>
     /// Gets the current hotbar number (for backward compatibility)
@@ -185,7 +181,7 @@ public class PlayerInputHandler : MonoBehaviour
     /// Set when any spell input is triggered. Used in conjunction with UseSpellType
     /// to determine which spell to cast.
     /// </remarks>
-    public bool SpellCastInput { get; private set; }
+    public bool SpellCastInput { get; set; }
     #endregion
 
     #region Input Settings
@@ -196,6 +192,10 @@ public class PlayerInputHandler : MonoBehaviour
     #region Input Timers
     private float jumpInputStartTime;
     private float actionInputInputStartTime;
+    
+    // Methods to allow input handlers to set these values
+    public void SetJumpInputStartTime(float time) => jumpInputStartTime = time;
+    public void SetActionInputStartTime(float time) => actionInputInputStartTime = time;
     #endregion
 
     #region Unity Callback Functions
@@ -206,6 +206,13 @@ public class PlayerInputHandler : MonoBehaviour
         
         // Initialize the spell hotbar dictionary
         UseSpellHotbarDictionary = new Dictionary<bool, int>() { { false, 0 } };
+        
+        // Initialize input handlers
+        keyboardInputHandler = new KeyboardInputHandler(this);
+        gamepadInputHandler = new GamepadInputHandler(this);
+        
+        // Set initial input handler based on current device
+        currentInputHandler = CurrentInputDevice == InputDevice.Keyboard ? keyboardInputHandler : gamepadInputHandler;
     }
 
     private void OnDestroy()
@@ -217,8 +224,10 @@ public class PlayerInputHandler : MonoBehaviour
     {
         CheckJumpInputHoldTime();
         CheckDashInputHoldTime();
-        CheckSpellModifierReleased();
         DetectCurrentInputDevice();
+        
+        // Update the current input handler
+        currentInputHandler?.Update();
     }
     
     /// <summary>
@@ -235,6 +244,7 @@ public class PlayerInputHandler : MonoBehaviour
                 if (CurrentInputDevice != InputDevice.Gamepad)
                 {
                     CurrentInputDevice = InputDevice.Gamepad;
+                    currentInputHandler = gamepadInputHandler;
                     Debug.Log("Switched to Gamepad input");
                 }
                 return;
@@ -248,36 +258,13 @@ public class PlayerInputHandler : MonoBehaviour
             if (CurrentInputDevice != InputDevice.Keyboard)
             {
                 CurrentInputDevice = InputDevice.Keyboard;
+                currentInputHandler = keyboardInputHandler;
                 Debug.Log("Switched to Keyboard input");
             }
         }
     }
     
-    /// <summary>
-    /// Checks if the LT modifier has been released while a spell is active
-    /// Only applies to gamepad inputs
-    /// </summary>
-    private void CheckSpellModifierReleased()
-    {
-        // Only check for gamepad modifier release if we're using a gamepad
-        if (CurrentInputDevice != InputDevice.Gamepad)
-            return;
-            
-        // If we're casting a spell and the LT trigger is released, cancel the spell
-        if (SpellCastInput && UseSpellHotbarDictionary.ContainsKey(true) && !SpellModifierActive)
-        {
-            Debug.Log("Gamepad LT trigger released while spell was active - canceling spell");
-            SpellCastInput = false;
-            
-            // Update the dictionary with inactive state but keep the hotbar number
-            int lastSlot = UseSpellHotbarDictionary[true];
-            UseSpellHotbarDictionary[false] = lastSlot;
-            UseSpellHotbarDictionary.Remove(true);
-            
-            // Reset the processed flag to allow new inputs
-            spellCastInputProcessed = false;
-        }
-    }
+    // CheckSpellModifierReleased is now handled by the GamepadInputHandler
     #endregion
 
     #region Event Management
@@ -319,19 +306,7 @@ public class PlayerInputHandler : MonoBehaviour
     /// </summary>
     public void OnAttackInput(InputAction.CallbackContext context)
     {
-        if (!DisableInput)
-        {
-            if (context.started && !attackInputProcessed)
-            {
-                AttackInput = true;
-                attackInputProcessed = true;
-            }
-            else if (context.canceled)
-            {
-                AttackInput = false;
-                attackInputProcessed = false;
-            }
-        }
+        currentInputHandler?.ProcessInput(context, "Attack");
     }
 
     /// <summary>
@@ -339,19 +314,7 @@ public class PlayerInputHandler : MonoBehaviour
     /// </summary>
     public void OnBlockInput(InputAction.CallbackContext context)
     {
-        if (!DisableInput)
-        {
-            if (context.started && !blockInputProcessed)
-            {
-                BlockInput = true;
-                blockInputProcessed = true;
-            }
-            else if (context.canceled)
-            {
-                BlockInput = false;
-                blockInputProcessed = false;
-            }
-        }
+        currentInputHandler?.ProcessInput(context, "Block");
     }
 
     /// <summary>
@@ -359,19 +322,7 @@ public class PlayerInputHandler : MonoBehaviour
     /// </summary>
     public void OnHotbarActionInput(InputAction.CallbackContext context)
     {
-        if (!DisableInput)
-        {
-            if (context.started && !hotbarActionInputProcessed)
-            {
-                HotbarActionInput = true;
-                hotbarActionInputProcessed = true;
-            }
-            else if (context.canceled)
-            {
-                HotbarActionInput = false;
-                hotbarActionInputProcessed = false;
-            }
-        }
+        currentInputHandler?.ProcessInput(context, "HotbarAction");
     }
 
     /// <summary>
@@ -379,19 +330,7 @@ public class PlayerInputHandler : MonoBehaviour
     /// </summary>
     public void OnItemSwitchLeftInput(InputAction.CallbackContext context)
     {
-        if (!DisableInput)
-        {
-            if (context.started && !itemSwitchLeftInputProcessed)
-            {
-                ItemSwitchLeftInput = true;
-                itemSwitchLeftInputProcessed = true;
-            }
-            else if (context.canceled)
-            {
-                ItemSwitchLeftInput = false;
-                itemSwitchLeftInputProcessed = false;
-            }
-        }
+        currentInputHandler?.ProcessInput(context, "ItemSwitchLeft");
     }
 
     /// <summary>
@@ -399,19 +338,7 @@ public class PlayerInputHandler : MonoBehaviour
     /// </summary>
     public void OnItemSwitchRightInput(InputAction.CallbackContext context)
     {
-        if (!DisableInput)
-        {
-            if (context.started && !itemSwitchRightInputProcessed)
-            {
-                ItemSwitchRightInput = true;
-                itemSwitchRightInputProcessed = true;
-            }
-            else if (context.canceled)
-            {
-                ItemSwitchRightInput = false;
-                itemSwitchRightInputProcessed = false;
-            }
-        }
+        currentInputHandler?.ProcessInput(context, "ItemSwitchRight");
     }
 
     /// <summary>
@@ -419,207 +346,29 @@ public class PlayerInputHandler : MonoBehaviour
     /// </summary>
     public void OnMoveInput(InputAction.CallbackContext context)
     {
-        if (!DisableInput)
-        {
-            RawMovementInput = context.ReadValue<Vector2>();
-            NormInputX = Mathf.RoundToInt(RawMovementInput.x);
-
-            if (Mathf.Abs(RawMovementInput.y) > 0.5f)
-            {
-                NormInputY = (int)(RawMovementInput * Vector2.up).normalized.y;
-            }
-            else
-            {
-                NormInputY = 0;
-            }
-        }
+        currentInputHandler?.ProcessInput(context, "Move");
     }
 
     // Removed the OnSpellModifierInput method as we're now directly checking the LT trigger in OnUseSpellInput
 
     /// <summary>
     /// Handles spell input events from the Input System.
-    /// Determines the spell type based on the binding index (e.g., first, second, third).
+    /// Delegates to the appropriate input handler based on current device.
     /// </summary>
     public void OnUseSpellInput(InputAction.CallbackContext context)
     {
-        if (!DisableInput)
-        {
-            // Get the index of the triggered binding
-            var bindingIndex = context.action.GetBindingIndexForControl(context.control);
-            
-            // Determine if this is a gamepad input
-            bool isGamepadInput = IsGamepadBindingIndex(bindingIndex);
-            
-            // Map the binding index to the appropriate hotbar slot based on input device
-            int actualSlot = MapBindingIndexToHotbarSlot(bindingIndex, isGamepadInput);
-            
-            Debug.Log($"Binding index {bindingIndex} mapped to slot {actualSlot}");
-            
-            // Process input based on the current device type
-            if (isGamepadInput)
-            {
-                HandleGamepadSpellInput(context, bindingIndex, actualSlot);
-            }
-            else
-            {
-                HandleKeyboardSpellInput(context, bindingIndex, actualSlot);
-            }
-        }
+        currentInputHandler?.ProcessInput(context, "UseSpell");
     }
     
-    /// <summary>
-    /// Determines if a binding index corresponds to a gamepad input
-    /// </summary>
-    private bool IsGamepadBindingIndex(int bindingIndex)
-    {
-        return bindingIndex >= GamepadControls.FirstButtonIndex && 
-               bindingIndex <= GamepadControls.ThirdButtonIndex;
-    }
-    
-    /// <summary>
-    /// Maps a binding index to the appropriate hotbar slot based on input device
-    /// </summary>
-    private int MapBindingIndexToHotbarSlot(int bindingIndex, bool isGamepadInput)
-    {
-        if (isGamepadInput)
-        {
-            // Map gamepad binding indices to specific slots
-            switch (bindingIndex)
-            {
-                case GamepadControls.FirstButtonIndex: // Index 3
-                    return GamepadControls.FirstButtonSlot; // Maps to slot 0
-                case GamepadControls.SecondButtonIndex: // Index 4
-                    return GamepadControls.SecondButtonSlot; // Maps to slot 0
-                case GamepadControls.ThirdButtonIndex: // Index 5
-                    return GamepadControls.ThirdButtonSlot; // Maps to slot 1
-                default: 
-                    return 0;
-            }
-        }
-        else
-        {
-            // Keyboard bindings map directly
-            return bindingIndex;
-        }
-    }
-    
-    /// <summary>
-    /// Handles keyboard-specific spell input logic
-    /// </summary>
-    private void HandleKeyboardSpellInput(InputAction.CallbackContext context, int bindingIndex, int hotbarSlot)
-    {
-        if (context.started && !spellCastInputProcessed)
-        {
-            SpellCastInput = true;
-            spellCastInputProcessed = true;
-            
-            // Update the dictionary with active state and current hotbar number
-            UseSpellHotbarDictionary[true] = hotbarSlot;
-            Debug.Log($"Keyboard spell activated: Hotbar {hotbarSlot}, Active: {true}");
-        }
-        else if (context.canceled)
-        {
-            // Only reset SpellCastInput if this is the key we're currently using
-            if (UseSpellHotbarDictionary.ContainsKey(true) && hotbarSlot == UseSpellHotbarDictionary[true])
-            {
-                SpellCastInput = false;
-                
-                // Update the dictionary with inactive state but keep the hotbar number
-                UseSpellHotbarDictionary[false] = hotbarSlot;
-                if (UseSpellHotbarDictionary.ContainsKey(true))
-                {
-                    UseSpellHotbarDictionary.Remove(true);
-                }
-                Debug.Log($"Keyboard spell deactivated: Hotbar {hotbarSlot}, Active: {false}");
-            }
-            spellCastInputProcessed = false;
-            return;
-        }
-
-        // Update the hotbar number
-        UseSpellHotbarDictionary[false] = hotbarSlot;
-        Debug.Log($"Keyboard spell hotbar set to: {hotbarSlot}");
-    }
-    
-    /// <summary>
-    /// Handles gamepad-specific spell input logic
-    /// </summary>
-    private void HandleGamepadSpellInput(InputAction.CallbackContext context, int bindingIndex, int hotbarSlot)
-    {
-        // Debug the LT trigger value
-        float ltValue = Gamepad.current != null ? Gamepad.current.leftTrigger.ReadValue() : 0f;
-        Debug.Log($"LT Trigger Value: {ltValue}");
-        
-        if (context.started && !spellCastInputProcessed)
-        {
-            // For gamepad inputs, only activate if the modifier is active
-            Debug.Log($"Gamepad spell button check - Button: {bindingIndex}, ModifierActive: {SpellModifierActive}, LT Value: {ltValue}");
-            
-            if (!SpellModifierActive)
-            {
-                Debug.Log($"Gamepad spell button pressed without modifier: {bindingIndex}");
-                return; // Don't process this input without the modifier
-            }
-            
-            SpellCastInput = true;
-            spellCastInputProcessed = true;
-            
-            // Update the dictionary with active state and current hotbar number
-            UseSpellHotbarDictionary[true] = hotbarSlot;
-            Debug.Log($"Gamepad spell activated: Hotbar {hotbarSlot}, Active: {true}");
-        }
-        else if (context.canceled)
-        {
-            // Only reset SpellCastInput if this is the button we're currently using
-            if (UseSpellHotbarDictionary.ContainsKey(true) && hotbarSlot == UseSpellHotbarDictionary[true])
-            {
-                SpellCastInput = false;
-                
-                // Update the dictionary with inactive state but keep the hotbar number
-                UseSpellHotbarDictionary[false] = hotbarSlot;
-                if (UseSpellHotbarDictionary.ContainsKey(true))
-                {
-                    UseSpellHotbarDictionary.Remove(true);
-                }
-                Debug.Log($"Gamepad spell deactivated: Hotbar {hotbarSlot}, Active: {false}");
-            }
-            spellCastInputProcessed = false;
-            return;
-        }
-
-        // Only update the hotbar number if the modifier is active
-        if (SpellModifierActive)
-        {
-            UseSpellHotbarDictionary[false] = hotbarSlot;
-            Debug.Log($"Gamepad spell hotbar set to: {hotbarSlot}");
-        }
-        else
-        {
-            Debug.Log($"Ignoring hotbar update for gamepad button {bindingIndex} without modifier");            
-        }
-    }
+    // IsGamepadBindingIndex, MapBindingIndexToHotbarSlot, HandleKeyboardSpellInput, and HandleGamepadSpellInput
+    // have been moved to their respective input handler classes
 
     /// <summary>
     /// Handles jump input events from the Input System
     /// </summary>
     public void OnJumpInput(InputAction.CallbackContext context)
     {
-        if (!DisableInput)
-        {
-            if (context.started && !jumpInputProcessed)
-            {
-                JumpInput = true;
-                JumpInputStop = false;
-                jumpInputStartTime = Time.time;
-                jumpInputProcessed = true;
-            }
-            else if (context.canceled)
-            {
-                JumpInputStop = true;
-                jumpInputProcessed = false;
-            }
-        }
+        currentInputHandler?.ProcessInput(context, "Jump");
     }
 
     /// <summary>
@@ -627,20 +376,7 @@ public class PlayerInputHandler : MonoBehaviour
     /// </summary>
     public void OnDashInput(InputAction.CallbackContext context)
     {
-        if (!DisableInput)
-        {
-            if (context.started && !actionInputProcessed)
-            {
-                ActionInput = true;
-                actionInputProcessed = true;
-                actionInputInputStartTime = Time.time;
-            }
-            else if (context.canceled)
-            {
-                ActionInput = false;
-                actionInputProcessed = false;
-            }
-        }
+        currentInputHandler?.ProcessInput(context, "Dash");
     }
 
     /// <summary>
@@ -648,38 +384,15 @@ public class PlayerInputHandler : MonoBehaviour
     /// </summary>
     public void OnInteractInput(InputAction.CallbackContext context)
     {
-        if (!DisableInput)
-        {
-            if (context.started && !interactInputProcessed)
-            {
-                GameEvents.Instance.InteractTrigger(true);
-                interactInputProcessed = true;
-            }
-            else if (context.canceled)
-            {
-                GameEvents.Instance.InteractTrigger(false);
-                interactInputProcessed = false;
-            }
-        }
+        currentInputHandler?.ProcessInput(context, "Interact");
     }
 
     /// <summary>
-    /// Handles interact input events from the Input System
+    /// Handles player menu input events from the Input System
     /// </summary>
     public void OnPlayerMenuInput(InputAction.CallbackContext context)
     {
-        if (!isDialogueActive)
-        {
-            if (context.started && !playerMenuInputProcessed)
-            {
-                GameEvents.Instance.PlayerMenuOpen();
-                playerMenuInputProcessed = true;
-            }
-            else if (context.canceled)
-            {
-                playerMenuInputProcessed = false;
-            }
-        }
+        currentInputHandler?.ProcessInput(context, "PlayerMenu");
     }
     #endregion
 
