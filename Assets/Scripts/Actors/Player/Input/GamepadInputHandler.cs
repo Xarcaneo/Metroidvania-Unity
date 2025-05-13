@@ -23,10 +23,7 @@ public class GamepadInputHandler : BaseInputHandler
     private bool interactInputProcessed = false;
     private bool playerMenuInputProcessed = false;
 
-    /// <summary> 
-    /// Flag to track if the LT modifier is being held for gamepad spell casting
-    /// </summary>
-    private bool SpellModifierActive => Gamepad.current != null && Gamepad.current.leftTrigger.ReadValue() > GamepadControls.TriggerThreshold;
+    // Use the global SpellModifierActive flag from PlayerInputHandler instead of local logic
 
     public GamepadInputHandler(PlayerInputHandler playerInputHandler) : base(playerInputHandler)
     {
@@ -44,12 +41,12 @@ public class GamepadInputHandler : BaseInputHandler
     }
     
     /// <summary>
-    /// Updates the spell casting priority based on the modifier state
+    /// Updates the spell casting priority based on the global modifier state
     /// </summary>
     private void UpdateSpellCastingPriority()
     {
-        // Check if the LT modifier is active
-        bool modifierActive = SpellModifierActive;
+        // Use the global SpellModifierActive flag from PlayerInputHandler
+        bool modifierActive = playerInputHandler.SpellModifierActive;
         
         // Set priority directly based on modifier state - no cooldown
         prioritizeSpellCasting = modifierActive;
@@ -57,7 +54,7 @@ public class GamepadInputHandler : BaseInputHandler
         // Debug only when state changes
         if (prioritizeSpellCasting != lastPrioritizeSpellCasting)
         {
-            Debug.Log($"Spell casting priority: {prioritizeSpellCasting} (Modifier active: {modifierActive})");
+            Debug.Log($"Spell casting priority: {prioritizeSpellCasting} (Global modifier active: {modifierActive})");
             lastPrioritizeSpellCasting = prioritizeSpellCasting;
         }
     }
@@ -91,16 +88,16 @@ public class GamepadInputHandler : BaseInputHandler
     }
 
     /// <summary>
-    /// Checks if the LT modifier has been released while a spell is active
+    /// Checks if the spell modifier has been released while a spell is active
     /// </summary>
     private void CheckSpellModifierReleased()
     {
-        // If we're casting a spell and the LT trigger is released, cancel the spell
+        // If we're casting a spell and the spell modifier is released, cancel the spell
         if (playerInputHandler.SpellCastInput && 
             playerInputHandler.HotbarState.IsSpellActive && 
-            !SpellModifierActive)
+            !playerInputHandler.SpellModifierActive)
         {
-            Debug.Log("Gamepad LT trigger released while spell was active - canceling spell");
+            Debug.Log("Spell modifier released while spell was active - canceling spell");
             playerInputHandler.SpellCastInput = false;
             
             // Deactivate the hotbar slot
@@ -110,12 +107,34 @@ public class GamepadInputHandler : BaseInputHandler
             spellCastInputProcessed = false;
         }
     }
+    
+    /// <summary>
+    /// Processes the spell modifier input (e.g., LT button on gamepad)
+    /// </summary>
+    protected override void ProcessSpellModifierInput(InputAction.CallbackContext context)
+    {
+        // The global SpellModifierActive flag is already updated by PlayerInputHandler.OnSpellModifierInput
+        // Here we can add any gamepad-specific logic for the spell modifier
+        
+        if (context.started || context.performed)
+        {
+            Debug.Log("GamepadInputHandler: Spell modifier activated");
+            // Update priority immediately
+            prioritizeSpellCasting = true;
+        }
+        else if (context.canceled)
+        {
+            Debug.Log("GamepadInputHandler: Spell modifier deactivated");
+            // Update priority immediately
+            prioritizeSpellCasting = false;
+        }
+    }
 
     #region Input Processing Methods
     protected override void ProcessAttackInput(InputAction.CallbackContext context)
     {
         // Check the current state of the spell modifier
-        bool modifierActive = SpellModifierActive;
+        bool modifierActive = playerInputHandler.SpellModifierActive;
         
         // If we're prioritizing spell casting, ignore attack input
         if (modifierActive || prioritizeSpellCasting)
@@ -139,7 +158,7 @@ public class GamepadInputHandler : BaseInputHandler
     protected override void ProcessBlockInput(InputAction.CallbackContext context)
     {
         // Check the current state of the spell modifier
-        bool modifierActive = SpellModifierActive;
+        bool modifierActive = playerInputHandler.SpellModifierActive;
         
         // If we're prioritizing spell casting, ignore block input
         if (modifierActive || prioritizeSpellCasting)
@@ -307,19 +326,20 @@ public class GamepadInputHandler : BaseInputHandler
         // Convert action type to slot index
         int slotIndex = GetSlotIndexFromActionType(actionType);
         
-        // Debug the LT trigger value, priority state, and input details
-        float ltValue = Gamepad.current != null ? Gamepad.current.leftTrigger.ReadValue() : 0f;
-        Debug.Log($"Spell slot {slotIndex} - LT Trigger Value: {ltValue}, Priority: {prioritizeSpellCasting}");
+        // Check if the spell modifier is active (either from the global flag or the priority flag)
+        bool hasSpellPriority = playerInputHandler.SpellModifierActive || prioritizeSpellCasting;
+        
+        Debug.Log($"Spell slot {slotIndex} - Modifier Active: {playerInputHandler.SpellModifierActive}, Priority: {prioritizeSpellCasting}");
         Debug.Log($"Input details - Phase: {context.phase}, Control: {context.control?.path}, Action: {context.action?.name}, ActionType: {actionType}");
         
         if (context.started && !spellCastInputProcessed)
         {
-            // For gamepad inputs, only activate if we have priority (LT is active)
-            Debug.Log($"Gamepad spell slot {slotIndex} check - Priority: {prioritizeSpellCasting}, LT Value: {ltValue}");
+            // For gamepad inputs, check if we should prioritize spell casting
+            Debug.Log($"Gamepad spell slot {slotIndex} check - Has Priority: {hasSpellPriority}");
             
-            if (!prioritizeSpellCasting)
+            if (!hasSpellPriority)
             {
-                Debug.Log($"Gamepad spell slot {slotIndex} pressed without priority");
+                Debug.Log($"Gamepad spell slot {slotIndex} pressed without priority - use the SpellModifier key first");
                 return; // Don't process this input without priority
             }
             
@@ -360,7 +380,7 @@ public class GamepadInputHandler : BaseInputHandler
     protected override void ProcessJumpInput(InputAction.CallbackContext context)
     {
         // Check the current state of the spell modifier
-        bool modifierActive = SpellModifierActive;
+        bool modifierActive = playerInputHandler.SpellModifierActive;
         
         // If we're prioritizing spell casting, ignore jump input
         if (modifierActive || prioritizeSpellCasting)
@@ -386,7 +406,7 @@ public class GamepadInputHandler : BaseInputHandler
     protected override void ProcessDashInput(InputAction.CallbackContext context)
     {
         // Check the current state of the spell modifier
-        bool modifierActive = SpellModifierActive;
+        bool modifierActive = playerInputHandler.SpellModifierActive;
         
         // If we're prioritizing spell casting, ignore dash input
         if (modifierActive || prioritizeSpellCasting)
@@ -411,7 +431,7 @@ public class GamepadInputHandler : BaseInputHandler
     protected override void ProcessInteractInput(InputAction.CallbackContext context)
     {
         // Check the current state of the spell modifier
-        bool modifierActive = SpellModifierActive;
+        bool modifierActive = playerInputHandler.SpellModifierActive;
         
         // If we're prioritizing spell casting, ignore interact input
         if (modifierActive || prioritizeSpellCasting)

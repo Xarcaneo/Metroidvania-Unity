@@ -999,8 +999,24 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: 12b7c726-9abd-4ab4-9550-657539817072
-    m_ActionName: Gameplay/SpellSlot2[/XInputControllerWindows/buttonEast,/XInputControllerWindows/leftTrigger,/Keyboard/3]
+    m_ActionId: 15615977-0d8d-47ed-aaaa-1c76fef82f08
+    m_ActionName: Gameplay/SpellSlot2[/Keyboard/3,/XInputControllerWindows/buttonEast]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5445145942140402602}
+        m_TargetAssemblyTypeName: PlayerInputHandler, Assembly-CSharp
+        m_MethodName: OnSpellModifierInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 4861bf38-74c6-4d55-a44e-e6da4b9a6a29
+    m_ActionName: Gameplay/SpellModifierInpu[/XInputControllerWindows/leftTrigger]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay

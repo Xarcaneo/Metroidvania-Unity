@@ -67,6 +67,9 @@ public abstract class BaseInputHandler : IInputHandler
             case InputActionType.PlayerMenu:
                 ProcessPlayerMenuInput(context);
                 break;
+            case InputActionType.SpellModifier:
+                ProcessSpellModifierInput(context);
+                break;
         }
     }
 
@@ -99,4 +102,13 @@ public abstract class BaseInputHandler : IInputHandler
     protected abstract void ProcessDashInput(InputAction.CallbackContext context);
     protected abstract void ProcessInteractInput(InputAction.CallbackContext context);
     protected abstract void ProcessPlayerMenuInput(InputAction.CallbackContext context);
+    
+    /// <summary>
+    /// Processes spell modifier input (e.g., LT button on gamepad)
+    /// </summary>
+    protected virtual void ProcessSpellModifierInput(InputAction.CallbackContext context)
+    {
+        // Base implementation is empty
+        // Derived classes can override this to provide specific behavior
+    }
 }

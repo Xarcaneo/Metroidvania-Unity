@@ -19,5 +19,6 @@ public enum InputActionType
     PlayerMenu,
     HotbarAction,
     ItemSwitchLeft,
-    ItemSwitchRight
+    ItemSwitchRight,
+    SpellModifier    // Modifier key to prioritize spell casting (e.g., LT on gamepad)
 }

@@ -59,6 +59,11 @@ public class PlayerInputHandler : MonoBehaviour
     /// </summary>
     public bool IsDialogueActive => isDialogueActive;
 
+    /// <summary>
+    /// Flag to track if the spell modifier is active (used to prioritize spell casting)
+    /// </summary>
+    public bool SpellModifierActive { get; private set; } = false;
+
     // Input flags are now managed by the individual input handlers
 
     /// <summary>
@@ -400,6 +405,27 @@ public class PlayerInputHandler : MonoBehaviour
     public void OnPlayerMenuInput(InputAction.CallbackContext context)
     {
         currentInputHandler?.ProcessInput(context, InputActionType.PlayerMenu);
+    }
+    
+    /// <summary>
+    /// Handles spell modifier input events from the Input System (e.g., LT button on gamepad)
+    /// </summary>
+    public void OnSpellModifierInput(InputAction.CallbackContext context)
+    {
+        // Update the global SpellModifierActive flag based on input state
+        if (context.started || context.performed)
+        {
+            SpellModifierActive = true;
+            Debug.Log("Spell modifier activated");
+        }
+        else if (context.canceled)
+        {
+            SpellModifierActive = false;
+            Debug.Log("Spell modifier deactivated");
+        }
+        
+        // Also pass to the current input handler for device-specific handling
+        currentInputHandler?.ProcessInput(context, InputActionType.SpellModifier);
     }
     #endregion
 

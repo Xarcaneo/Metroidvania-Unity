@@ -121,6 +121,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "SpellModifierInpu",
+                    "type": "Button",
+                    "id": "4861bf38-74c6-4d55-a44e-e6da4b9a6a29",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -400,37 +409,15 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "1",
-                    "id": "b4670d3d-e7fa-41c8-a3ea-0149874a1c9e",
-                    "path": "OneModifier",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SpellSlot0",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "modifier",
-                    "id": "25205488-c4a7-4263-87c1-cec65242fcde",
+                    "name": "",
+                    "id": "bd781897-475c-43c6-94af-05ec5f922b69",
                     "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "SpellSlot0",
                     "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "binding",
-                    "id": "17e30707-3f1b-478b-8d5f-bfb8af4ca476",
-                    "path": "<Gamepad>/leftTrigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SpellSlot0",
-                    "isComposite": false,
-                    "isPartOfComposite": true
+                    "isPartOfComposite": false
                 },
                 {
                     "name": "",
@@ -444,37 +431,15 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "2",
-                    "id": "2f5d02bc-362e-4597-96d0-6ada633ca458",
-                    "path": "OneModifier",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SpellSlot1",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "modifier",
-                    "id": "fe6459ee-c8d8-4b6a-8b3d-4e558fe0d746",
+                    "name": "",
+                    "id": "4e6cbd52-c0a7-4a9b-b60c-5e71ce99fb82",
                     "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "SpellSlot1",
                     "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "binding",
-                    "id": "48862469-e7ad-475b-8c5e-7a04813ce28f",
-                    "path": "<Gamepad>/leftTrigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SpellSlot1",
-                    "isComposite": false,
-                    "isPartOfComposite": true
+                    "isPartOfComposite": false
                 },
                 {
                     "name": "",
@@ -488,37 +453,26 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "3",
-                    "id": "863c34db-8b50-46e7-a7de-4b19a4b8789d",
-                    "path": "OneModifier",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SpellSlot2",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "modifier",
-                    "id": "bdd4aa44-b99f-445e-81d2-f2f14a1023f9",
+                    "name": "",
+                    "id": "072f1da6-6a02-4912-ab33-80a4594e2182",
                     "path": "<Gamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "SpellSlot2",
                     "isComposite": false,
-                    "isPartOfComposite": true
+                    "isPartOfComposite": false
                 },
                 {
-                    "name": "binding",
-                    "id": "08d68f76-be0d-427e-8070-f416992de3c2",
+                    "name": "",
+                    "id": "6b08c4a6-7ae1-4d33-83ad-d39b12522ebc",
                     "path": "<Gamepad>/leftTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "SpellSlot2",
+                    "action": "SpellModifierInpu",
                     "isComposite": false,
-                    "isPartOfComposite": true
+                    "isPartOfComposite": false
                 }
             ]
         }
