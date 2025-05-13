@@ -119,6 +119,8 @@ public class KeyboardInputHandler : BaseInputHandler
         }
     }
 
+    // Legacy method - will be replaced by individual slot methods
+    [System.Obsolete("This method is deprecated. Use ProcessUseSpellSlot0, ProcessUseSpellSlot1, or ProcessUseSpellSlot2 instead.")]
     protected override void ProcessUseSpellInput(InputAction.CallbackContext context)
     {
         // Get the index of the triggered binding
@@ -155,6 +157,54 @@ public class KeyboardInputHandler : BaseInputHandler
         // Update the last used hotbar slot
         playerInputHandler.HotbarState.SetLastSlot(hotbarSlot);
         Debug.Log($"Keyboard spell hotbar set to: {hotbarSlot}");
+    }
+    
+    // New individual spell slot methods
+    protected override void ProcessUseSpellSlot0(InputAction.CallbackContext context)
+    {
+        ProcessSpellSlotInput(context, 0);
+    }
+    
+    protected override void ProcessUseSpellSlot1(InputAction.CallbackContext context)
+    {
+        ProcessSpellSlotInput(context, 1);
+    }
+    
+    protected override void ProcessUseSpellSlot2(InputAction.CallbackContext context)
+    {
+        ProcessSpellSlotInput(context, 2);
+    }
+    
+    private void ProcessSpellSlotInput(InputAction.CallbackContext context, int slotIndex)
+    {
+        if (context.started && !spellCastInputProcessed)
+        {
+            playerInputHandler.SpellCastInput = true;
+            spellCastInputProcessed = true;
+            
+            // Activate the hotbar slot
+            playerInputHandler.HotbarState.ActivateSlot(slotIndex);
+            Debug.Log($"Keyboard spell activated: Hotbar {slotIndex}");
+        }
+        else if (context.canceled)
+        {
+            // Only reset SpellCastInput if this is the key we're currently using
+            if (playerInputHandler.HotbarState.IsSpellActive && 
+                slotIndex == playerInputHandler.HotbarState.CurrentSlot)
+            {
+                playerInputHandler.SpellCastInput = false;
+                
+                // Deactivate the hotbar slot
+                playerInputHandler.HotbarState.DeactivateSlot();
+                Debug.Log($"Keyboard spell deactivated: Hotbar {slotIndex}");
+            }
+            spellCastInputProcessed = false;
+            return;
+        }
+
+        // Update the last used hotbar slot
+        playerInputHandler.HotbarState.SetLastSlot(slotIndex);
+        Debug.Log($"Keyboard spell hotbar set to: {slotIndex}");
     }
 
     protected override void ProcessJumpInput(InputAction.CallbackContext context)

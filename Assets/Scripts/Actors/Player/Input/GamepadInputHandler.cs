@@ -23,7 +23,7 @@ public class GamepadInputHandler : BaseInputHandler
     private bool interactInputProcessed = false;
     private bool playerMenuInputProcessed = false;
 
-    /// <summary>
+    /// <summary> 
     /// Flag to track if the LT modifier is being held for gamepad spell casting
     /// </summary>
     private bool SpellModifierActive => Gamepad.current != null && Gamepad.current.leftTrigger.ReadValue() > GamepadControls.TriggerThreshold;
@@ -40,7 +40,36 @@ public class GamepadInputHandler : BaseInputHandler
     public override void Update()
     {
         CheckSpellModifierReleased();
+        UpdateSpellCastingPriority();
     }
+    
+    /// <summary>
+    /// Updates the spell casting priority based on the modifier state
+    /// </summary>
+    private void UpdateSpellCastingPriority()
+    {
+        // Check if the LT modifier is active
+        bool modifierActive = SpellModifierActive;
+        
+        // Set priority directly based on modifier state - no cooldown
+        prioritizeSpellCasting = modifierActive;
+        
+        // Debug only when state changes
+        if (prioritizeSpellCasting != lastPrioritizeSpellCasting)
+        {
+            Debug.Log($"Spell casting priority: {prioritizeSpellCasting} (Modifier active: {modifierActive})");
+            lastPrioritizeSpellCasting = prioritizeSpellCasting;
+        }
+    }
+    
+    private bool lastPrioritizeSpellCasting = false;
+    
+    /// <summary>
+    /// Flag to track if we should prioritize spell casting over other actions
+    /// </summary>
+    private bool prioritizeSpellCasting = false;
+    
+    // Removed spellModifierActivationTime and priority cooldown to allow for immediate switching between spell casting and other actions
 
     /// <summary>
     /// Checks if the LT modifier has been released while a spell is active
@@ -66,6 +95,16 @@ public class GamepadInputHandler : BaseInputHandler
     #region Input Processing Methods
     protected override void ProcessAttackInput(InputAction.CallbackContext context)
     {
+        // Check the current state of the spell modifier
+        bool modifierActive = SpellModifierActive;
+        
+        // If we're prioritizing spell casting, ignore attack input
+        if (modifierActive || prioritizeSpellCasting)
+        {
+            Debug.Log($"Ignoring attack input due to spell casting priority (Modifier: {modifierActive}, Priority: {prioritizeSpellCasting})");
+            return;
+        }
+        
         if (context.started && !attackInputProcessed)
         {
             playerInputHandler.AttackInput = true;
@@ -80,6 +119,16 @@ public class GamepadInputHandler : BaseInputHandler
 
     protected override void ProcessBlockInput(InputAction.CallbackContext context)
     {
+        // Check the current state of the spell modifier
+        bool modifierActive = SpellModifierActive;
+        
+        // If we're prioritizing spell casting, ignore block input
+        if (modifierActive || prioritizeSpellCasting)
+        {
+            Debug.Log($"Ignoring block input due to spell casting priority (Modifier: {modifierActive}, Priority: {prioritizeSpellCasting})");
+            return;
+        }
+        
         if (context.started && !blockInputProcessed)
         {
             playerInputHandler.BlockInput = true;
@@ -150,71 +199,109 @@ public class GamepadInputHandler : BaseInputHandler
         }
     }
 
+    // Replace the single ProcessUseSpellInput with separate methods for each slot
+    
+    /// <summary>
+    /// Processes input for spell slot 0 (first slot)
+    /// </summary>
+    protected override void ProcessUseSpellSlot0(InputAction.CallbackContext context)
+    {
+        ProcessSpellSlotInput(context, 0);
+    }
+    
+    /// <summary>
+    /// Processes input for spell slot 1 (second slot)
+    /// </summary>
+    protected override void ProcessUseSpellSlot1(InputAction.CallbackContext context)
+    {
+        ProcessSpellSlotInput(context, 1);
+    }
+    
+    /// <summary>
+    /// Processes input for spell slot 2 (third slot)
+    /// </summary>
+    protected override void ProcessUseSpellSlot2(InputAction.CallbackContext context)
+    {
+        ProcessSpellSlotInput(context, 2);
+    }
+    
+    /// <summary>
+    /// Legacy method for processing spell input - will be replaced by individual slot methods
+    /// </summary>
+    [System.Obsolete("This method is deprecated. Use ProcessUseSpellSlot0, ProcessUseSpellSlot1, or ProcessUseSpellSlot2 instead.")]
     protected override void ProcessUseSpellInput(InputAction.CallbackContext context)
     {
-        // Get the index of the triggered binding
-        var bindingIndex = context.action.GetBindingIndexForControl(context.control);
-        
-        // Check if this is a gamepad binding index
-        bool isGamepadInput = IsGamepadBindingIndex(bindingIndex);
-        if (!isGamepadInput)
-            return;
-            
-        // Map the binding index to the appropriate hotbar slot
-        int hotbarSlot = MapGamepadBindingIndexToHotbarSlot(bindingIndex);
-        
-        // Debug the LT trigger value
+        // This is a legacy method that will be replaced by the individual slot methods
+        // For backward compatibility, we'll map this to slot 0
+        ProcessSpellSlotInput(context, 0);
+    }
+    
+    /// <summary>
+    /// Common method to handle spell slot input for a specific slot
+    /// </summary>
+    private void ProcessSpellSlotInput(InputAction.CallbackContext context, int slotIndex)
+    {
+        // Debug the LT trigger value and priority state
         float ltValue = Gamepad.current != null ? Gamepad.current.leftTrigger.ReadValue() : 0f;
-        Debug.Log($"LT Trigger Value: {ltValue}");
+        Debug.Log($"Spell slot {slotIndex} - LT Trigger Value: {ltValue}, Priority: {prioritizeSpellCasting}");
         
         if (context.started && !spellCastInputProcessed)
         {
-            // For gamepad inputs, only activate if the modifier is active
-            Debug.Log($"Gamepad spell button check - Button: {bindingIndex}, ModifierActive: {SpellModifierActive}, LT Value: {ltValue}");
+            // For gamepad inputs, only activate if we have priority (LT is active)
+            Debug.Log($"Gamepad spell slot {slotIndex} check - Priority: {prioritizeSpellCasting}, LT Value: {ltValue}");
             
-            if (!SpellModifierActive)
+            if (!prioritizeSpellCasting)
             {
-                Debug.Log($"Gamepad spell button pressed without modifier: {bindingIndex}");
-                return; // Don't process this input without the modifier
+                Debug.Log($"Gamepad spell slot {slotIndex} pressed without priority");
+                return; // Don't process this input without priority
             }
             
             playerInputHandler.SpellCastInput = true;
             spellCastInputProcessed = true;
             
             // Activate the hotbar slot
-            playerInputHandler.HotbarState.ActivateSlot(hotbarSlot);
-            Debug.Log($"Gamepad spell activated: Hotbar {hotbarSlot}");
+            playerInputHandler.HotbarState.ActivateSlot(slotIndex);
+            Debug.Log($"Gamepad spell activated: Hotbar {slotIndex}");
         }
         else if (context.canceled)
         {
-            // Only reset SpellCastInput if this is the button we're currently using
+            // Only reset SpellCastInput if this is the slot we're currently using
             if (playerInputHandler.HotbarState.IsSpellActive && 
-                hotbarSlot == playerInputHandler.HotbarState.CurrentSlot)
+                slotIndex == playerInputHandler.HotbarState.CurrentSlot)
             {
                 playerInputHandler.SpellCastInput = false;
                 
                 // Deactivate the hotbar slot
                 playerInputHandler.HotbarState.DeactivateSlot();
-                Debug.Log($"Gamepad spell deactivated: Hotbar {hotbarSlot}");
+                Debug.Log($"Gamepad spell deactivated: Hotbar {slotIndex}");
             }
             spellCastInputProcessed = false;
-            return;
         }
 
-        // Only update the hotbar number if the modifier is active
-        if (SpellModifierActive)
+        // Only update the hotbar number if we have priority
+        if (prioritizeSpellCasting)
         {
-            playerInputHandler.HotbarState.SetLastSlot(hotbarSlot);
-            Debug.Log($"Gamepad spell hotbar set to: {hotbarSlot}");
+            playerInputHandler.HotbarState.SetLastSlot(slotIndex);
+            Debug.Log($"Gamepad spell hotbar set to: {slotIndex}");
         }
         else
         {
-            Debug.Log($"Ignoring hotbar update for gamepad button {bindingIndex} without modifier");            
+            Debug.Log($"Ignoring hotbar update for slot {slotIndex} without priority");            
         }
     }
 
     protected override void ProcessJumpInput(InputAction.CallbackContext context)
     {
+        // Check the current state of the spell modifier
+        bool modifierActive = SpellModifierActive;
+        
+        // If we're prioritizing spell casting, ignore jump input
+        if (modifierActive || prioritizeSpellCasting)
+        {
+            Debug.Log($"Ignoring jump input due to spell casting priority (Modifier: {modifierActive}, Priority: {prioritizeSpellCasting})");
+            return;
+        }
+        
         if (context.started && !jumpInputProcessed)
         {
             playerInputHandler.JumpInput = true;
@@ -231,6 +318,16 @@ public class GamepadInputHandler : BaseInputHandler
 
     protected override void ProcessDashInput(InputAction.CallbackContext context)
     {
+        // Check the current state of the spell modifier
+        bool modifierActive = SpellModifierActive;
+        
+        // If we're prioritizing spell casting, ignore dash input
+        if (modifierActive || prioritizeSpellCasting)
+        {
+            Debug.Log($"Ignoring dash input due to spell casting priority (Modifier: {modifierActive}, Priority: {prioritizeSpellCasting})");
+            return;
+        }
+        
         if (context.started && !actionInputProcessed)
         {
             playerInputHandler.ActionInput = true;
@@ -246,6 +343,16 @@ public class GamepadInputHandler : BaseInputHandler
 
     protected override void ProcessInteractInput(InputAction.CallbackContext context)
     {
+        // Check the current state of the spell modifier
+        bool modifierActive = SpellModifierActive;
+        
+        // If we're prioritizing spell casting, ignore interact input
+        if (modifierActive || prioritizeSpellCasting)
+        {
+            Debug.Log($"Ignoring interact input due to spell casting priority (Modifier: {modifierActive}, Priority: {prioritizeSpellCasting})");
+            return;
+        }
+        
         if (context.started && !interactInputProcessed)
         {
             GameEvents.Instance.InteractTrigger(true);
@@ -276,32 +383,5 @@ public class GamepadInputHandler : BaseInputHandler
     #endregion
 
     #region Helper Methods
-    /// <summary>
-    /// Determines if a binding index corresponds to a gamepad input
-    /// </summary>
-    private bool IsGamepadBindingIndex(int bindingIndex)
-    {
-        return bindingIndex >= GamepadControls.FirstButtonIndex && 
-               bindingIndex <= GamepadControls.ThirdButtonIndex;
-    }
-    
-    /// <summary>
-    /// Maps a gamepad binding index to the appropriate hotbar slot
-    /// </summary>
-    private int MapGamepadBindingIndexToHotbarSlot(int bindingIndex)
-    {
-        // Map gamepad binding indices to specific slots
-        switch (bindingIndex)
-        {
-            case GamepadControls.FirstButtonIndex: // Index 3
-                return GamepadControls.FirstButtonSlot; // Maps to slot 0
-            case GamepadControls.SecondButtonIndex: // Index 4
-                return GamepadControls.SecondButtonSlot; // Maps to slot 0
-            case GamepadControls.ThirdButtonIndex: // Index 5
-                return GamepadControls.ThirdButtonSlot; // Maps to slot 1
-            default: 
-                return 0;
-        }
-    }
     #endregion
 }

@@ -5,31 +5,10 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 
 /// <summary>
-/// Struct that defines keyboard control mappings
-/// </summary>
-public struct KeyboardControls
-{
-    // Keyboard hotbar slots map directly to indices 0, 1, 2
-    public const int FirstSpellSlot = 0;
-    public const int SecondSpellSlot = 1;
-    public const int ThirdSpellSlot = 2;
-}
-
-/// <summary>
-/// Struct that defines gamepad control mappings
+/// Struct that defines gamepad control constants
 /// </summary>
 public struct GamepadControls
 {
-    // Gamepad binding indices in the input system
-    public const int FirstButtonIndex = 3;
-    public const int SecondButtonIndex = 4;
-    public const int ThirdButtonIndex = 5;
-    
-    // Mapping from gamepad binding indices to hotbar slots
-    public const int FirstButtonSlot = 0;
-    public const int SecondButtonSlot = 0; // Changed to 0 as per user requirement
-    public const int ThirdButtonSlot = 1; // Changed to 1 as per user requirement
-    
     // Threshold for trigger activation
     public const float TriggerThreshold = 0.5f;
 }
@@ -361,15 +340,28 @@ public class PlayerInputHandler : MonoBehaviour
         currentInputHandler?.ProcessInput(context, InputActionType.Move);
     }
 
-    // Removed the OnSpellModifierInput method as we're now directly checking the LT trigger in OnUseSpellInput
-
     /// <summary>
-    /// Handles spell input events from the Input System.
-    /// Delegates to the appropriate input handler based on current device.
+    /// Handles input events for spell slot 0 (first slot)
     /// </summary>
-    public void OnUseSpellInput(InputAction.CallbackContext context)
+    public void OnUseSpellSlot0(InputAction.CallbackContext context)
     {
-        currentInputHandler?.ProcessInput(context, InputActionType.UseSpell);
+        currentInputHandler?.ProcessInput(context, InputActionType.UseSpellSlot0);
+    }
+    
+    /// <summary>
+    /// Handles input events for spell slot 1 (second slot)
+    /// </summary>
+    public void OnUseSpellSlot1(InputAction.CallbackContext context)
+    {
+        currentInputHandler?.ProcessInput(context, InputActionType.UseSpellSlot1);
+    }
+    
+    /// <summary>
+    /// Handles input events for spell slot 2 (third slot)
+    /// </summary>
+    public void OnUseSpellSlot2(InputAction.CallbackContext context)
+    {
+        currentInputHandler?.ProcessInput(context, InputActionType.UseSpellSlot2);
     }
     
     // IsGamepadBindingIndex, MapBindingIndexToHotbarSlot, HandleKeyboardSpellInput, and HandleGamepadSpellInput
