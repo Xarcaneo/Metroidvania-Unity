@@ -25,6 +25,15 @@ public class PlayerInputHandler : MonoBehaviour
 
     private bool isDialogueActive = false;
 
+    // Flags to track if inputs have been processed to prevent double-triggering with analog triggers
+    private bool actionInputProcessed = false;
+    private bool attackInputProcessed = false;
+    private bool blockInputProcessed = false;
+    private bool hotbarActionInputProcessed = false;
+    private bool itemSwitchLeftInputProcessed = false;
+    private bool itemSwitchRightInputProcessed = false;
+    private bool jumpInputProcessed = false;
+
     /// <summary>
     /// Normalized X-axis input (-1, 0, 1)
     /// </summary>
@@ -160,13 +169,15 @@ public class PlayerInputHandler : MonoBehaviour
     {
         if (!DisableInput)
         {
-            if (context.started)
+            if (context.started && !attackInputProcessed)
             {
                 AttackInput = true;
+                attackInputProcessed = true;
             }
             else if (context.canceled)
             {
                 AttackInput = false;
+                attackInputProcessed = false;
             }
         }
     }
@@ -178,13 +189,15 @@ public class PlayerInputHandler : MonoBehaviour
     {
         if (!DisableInput)
         {
-            if (context.started)
+            if (context.started && !blockInputProcessed)
             {
                 BlockInput = true;
+                blockInputProcessed = true;
             }
             else if (context.canceled)
             {
                 BlockInput = false;
+                blockInputProcessed = false;
             }
         }
     }
@@ -196,13 +209,15 @@ public class PlayerInputHandler : MonoBehaviour
     {
         if (!DisableInput)
         {
-            if (context.started)
+            if (context.started && !hotbarActionInputProcessed)
             {
                 HotbarActionInput = true;
+                hotbarActionInputProcessed = true;
             }
             else if (context.canceled)
             {
                 HotbarActionInput = false;
+                hotbarActionInputProcessed = false;
             }
         }
     }
@@ -214,13 +229,15 @@ public class PlayerInputHandler : MonoBehaviour
     {
         if (!DisableInput)
         {
-            if (context.started)
+            if (context.started && !itemSwitchLeftInputProcessed)
             {
                 ItemSwitchLeftInput = true;
+                itemSwitchLeftInputProcessed = true;
             }
             else if (context.canceled)
             {
                 ItemSwitchLeftInput = false;
+                itemSwitchLeftInputProcessed = false;
             }
         }
     }
@@ -232,13 +249,15 @@ public class PlayerInputHandler : MonoBehaviour
     {
         if (!DisableInput)
         {
-            if (context.started)
+            if (context.started && !itemSwitchRightInputProcessed)
             {
                 ItemSwitchRightInput = true;
+                itemSwitchRightInputProcessed = true;
             }
             else if (context.canceled)
             {
                 ItemSwitchRightInput = false;
+                itemSwitchRightInputProcessed = false;
             }
         }
     }
@@ -315,15 +334,17 @@ public class PlayerInputHandler : MonoBehaviour
     {
         if (!DisableInput)
         {
-            if (context.started)
+            if (context.started && !jumpInputProcessed)
             {
                 JumpInput = true;
                 JumpInputStop = false;
                 jumpInputStartTime = Time.time;
+                jumpInputProcessed = true;
             }
             else if (context.canceled)
             {
                 JumpInputStop = true;
+                jumpInputProcessed = false;
             }
         }
     }
@@ -335,10 +356,16 @@ public class PlayerInputHandler : MonoBehaviour
     {
         if (!DisableInput)
         {
-            if (context.started)
+            if (context.started && !actionInputProcessed)
             {
                 ActionInput = true;
+                actionInputProcessed = true;
                 actionInputInputStartTime = Time.time;
+            }
+            else if (context.canceled)
+            {
+                ActionInput = false;
+                actionInputProcessed = false;
             }
         }
     }
