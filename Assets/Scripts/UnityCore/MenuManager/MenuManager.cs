@@ -23,7 +23,8 @@ namespace Menu
         [SerializeField] private PauseMenu pauseMenuPrefab;
         [SerializeField] private PlayMenu playMenuPrefab;
         [SerializeField] private GameSettingsMenu gameSettingsMenuPrefab;
-        [SerializeField] private ControlsMenu controlsMenuPrefab;
+        [SerializeField] private KeyboardControlsMenu keyboardControlsMenuPrefab;
+        [SerializeField] private GamepadControlsMenu gamepadControlsMenuPrefab;
         [SerializeField] private GraphicSettingsMenu graphicSettingsMenu;
         [SerializeField] private ResolutionSettingsMenu resolutionSettingsMenu;
         [SerializeField] private AudioSettingsMenu audioSettingsMenu;

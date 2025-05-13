@@ -25,17 +25,32 @@ namespace Menu
         }
 
         /// <summary>
-        /// Opens the controls settings menu if available.
+        /// Opens the keyboard controls settings menu if available.
         /// </summary>
-        public void OnControlsPressed()
+        public void OnKeyboardControlsPressed()
         {
-            if (ControlsMenu.Instance != null)
+            if (KeyboardControlsMenu.Instance != null)
             {
-                ControlsMenu.Open();
+                KeyboardControlsMenu.Open();
             }
             else
             {
-                Debug.LogError("ControlsMenu is not available.");
+                Debug.LogError("KeyboardControlsMenu is not available.");
+            }
+        }
+        
+        /// <summary>
+        /// Opens the gamepad controls settings menu if available.
+        /// </summary>
+        public void OnGamepadControlsPressed()
+        {
+            if (GamepadControlsMenu.Instance != null)
+            {
+                GamepadControlsMenu.Open();
+            }
+            else
+            {
+                Debug.LogError("GamepadControlsMenu is not available.");
             }
         }
 

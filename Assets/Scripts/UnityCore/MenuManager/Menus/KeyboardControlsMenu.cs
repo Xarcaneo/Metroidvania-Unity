@@ -5,9 +5,9 @@ using UnityEngine;
 namespace Menu
 {
     /// <summary>
-    /// Handles the controls settings menu, allowing players to adjust control-related settings.
+    /// Handles the keyboard controls settings menu, allowing players to adjust keyboard-related settings.
     /// </summary>
-    public class ControlsMenu : Menu<ControlsMenu>
+    public class KeyboardControlsMenu : Menu<KeyboardControlsMenu>
     {
         /// <summary>
         /// Handles the back button press.

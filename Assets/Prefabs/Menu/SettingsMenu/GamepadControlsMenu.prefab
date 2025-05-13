@@ -90,9 +90,9 @@ GameObject:
   - component: {fileID: 2618614831822615010}
   - component: {fileID: 2618614831822615011}
   - component: {fileID: 2618614831822615012}
-  - component: {fileID: 7912072195383310810}
+  - component: {fileID: 7352061692915990811}
   m_Layer: 5
-  m_Name: ControlsMenu
+  m_Name: GamepadControlsMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -180,7 +180,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &7912072195383310810
+--- !u!114 &7352061692915990811
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -189,7 +189,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2618614831822615013}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b58a29dfaab057419caaba47c843fd7, type: 3}
+  m_Script: {fileID: 11500000, guid: c53a058389dd07642a8a8f622b4992bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   buttonToFocus: {fileID: 9004115146976036091}
@@ -378,7 +378,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 45481291541515329, guid: 84881b05181c82d409872416ad5758cf, type: 3}
       propertyPath: m_Text
-      value: LMB
+      value: F
       objectReference: {fileID: 0}
     - target: {fileID: 1318603344610474297, guid: 84881b05181c82d409872416ad5758cf, type: 3}
       propertyPath: m_fieldName
@@ -1091,7 +1091,7 @@ PrefabInstance:
     - target: {fileID: 6161120886177336341, guid: 84881b05181c82d409872416ad5758cf, type: 3}
       propertyPath: m_Action
       value: 
-      objectReference: {fileID: 9085489762409358468, guid: 4670f0957538c94499ccaa88a47110f7, type: 3}
+      objectReference: {fileID: -522680406279831422, guid: 4670f0957538c94499ccaa88a47110f7, type: 3}
     - target: {fileID: 6161120886177336341, guid: 84881b05181c82d409872416ad5758cf, type: 3}
       propertyPath: m_BindingId
       value: db1113c7-1a2f-490b-8487-ebe4fe5309d8
@@ -2535,7 +2535,7 @@ PrefabInstance:
     - target: {fileID: 6161120886177336341, guid: 84881b05181c82d409872416ad5758cf, type: 3}
       propertyPath: m_Action
       value: 
-      objectReference: {fileID: 9085489762409358468, guid: 4670f0957538c94499ccaa88a47110f7, type: 3}
+      objectReference: {fileID: 3677563496216366188, guid: 4670f0957538c94499ccaa88a47110f7, type: 3}
     - target: {fileID: 6161120886177336341, guid: 84881b05181c82d409872416ad5758cf, type: 3}
       propertyPath: m_BindingId
       value: 11107f83-95d2-4cef-8407-cd8b574b2644
