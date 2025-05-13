@@ -133,46 +133,16 @@ public class PlayerInputHandler : MonoBehaviour
     public bool ItemSwitchRightInput { get; set; }
 
     /// <summary>
-    /// Hotbar number currently triggered with activation state.
-    /// Key: Activation state (true = active, false = inactive)
-    /// Value: Hotbar number (0, 1, 2 for keyboard, 3, 4, 5 for gamepad)
+    /// Manages the state of the spell hotbar
     /// </summary>
-    public Dictionary<bool, int> UseSpellHotbarDictionary { get; set; } = new Dictionary<bool, int>() { { false, 0 } };
+    public HotbarStateManager HotbarState { get; private set; }
     
     // SpellModifierActive is now handled by the GamepadInputHandler
     
     /// <summary>
     /// Gets the current hotbar number (for backward compatibility)
     /// </summary>
-    public int UseSpellHotbarNumber
-    {
-        get
-        {
-            int result = 0;
-            
-            // If there's an active spell, return that hotbar number
-            if (UseSpellHotbarDictionary.ContainsKey(true))
-            {
-                int slot = UseSpellHotbarDictionary[true];
-                // Convert gamepad slots (3,4,5) to keyboard slots (0,1,2) for backward compatibility
-                result = slot;
-                Debug.Log($"UseSpellHotbarNumber returning active slot: {result}");
-                return result;
-            }
-            // Otherwise return the last selected hotbar number
-            if (UseSpellHotbarDictionary.ContainsKey(false))
-            {
-                int slot = UseSpellHotbarDictionary[false];
-                // Convert gamepad slots (3,4,5) to keyboard slots (0,1,2) for backward compatibility
-                result = slot;
-                Debug.Log($"UseSpellHotbarNumber returning inactive slot: {result}");
-                return result;
-            }
-            
-            Debug.Log($"UseSpellHotbarNumber returning default: {result}");
-            return result;
-        }
-    }
+    public int UseSpellHotbarNumber => HotbarState.UseSpellHotbarNumber;
 
     /// <summary>
     /// Flag indicating if spell cast button is pressed
@@ -208,8 +178,8 @@ public class PlayerInputHandler : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         SubscribeToEvents();
         
-        // Initialize the spell hotbar dictionary
-        UseSpellHotbarDictionary = new Dictionary<bool, int>() { { false, 0 } };
+        // Initialize the hotbar state manager
+        HotbarState = new HotbarStateManager();
         
         // Initialize input handlers
         keyboardInputHandler = new KeyboardInputHandler(this);
@@ -506,18 +476,16 @@ public class PlayerInputHandler : MonoBehaviour
     /// Consumes the spell cast input
     /// </summary>
     /// <remarks>
-    /// Resets both SpellCastInput and UseSpellType to prevent unintended spell casting
+    /// Resets both SpellCastInput and hotbar state to prevent unintended spell casting
     /// </remarks>
     public void UseSpellCastInput()
     {
         SpellCastInput = false;
         
-        // Reset the spell hotbar state to inactive but keep the last used number
-        int lastHotbarNumber = UseSpellHotbarDictionary.ContainsKey(false) ? UseSpellHotbarDictionary[false] : 0;
-        UseSpellHotbarDictionary.Clear();
-        UseSpellHotbarDictionary[false] = lastHotbarNumber;
+        // Deactivate the current spell slot but remember it
+        HotbarState.DeactivateSlot();
         
-        Debug.Log($"Spell cast consumed: Hotbar {lastHotbarNumber}, Active: {false}");
+        Debug.Log($"Spell cast consumed: Hotbar {HotbarState.CurrentSlot}, Active: {false}");
         // Don't reset spellCastInputProcessed here as it should be reset on button release
     }
 

@@ -132,32 +132,28 @@ public class KeyboardInputHandler : BaseInputHandler
             playerInputHandler.SpellCastInput = true;
             spellCastInputProcessed = true;
             
-            // Update the dictionary with active state and current hotbar number
-            playerInputHandler.UseSpellHotbarDictionary[true] = hotbarSlot;
-            Debug.Log($"Keyboard spell activated: Hotbar {hotbarSlot}, Active: {true}");
+            // Activate the hotbar slot
+            playerInputHandler.HotbarState.ActivateSlot(hotbarSlot);
+            Debug.Log($"Keyboard spell activated: Hotbar {hotbarSlot}");
         }
         else if (context.canceled)
         {
             // Only reset SpellCastInput if this is the key we're currently using
-            if (playerInputHandler.UseSpellHotbarDictionary.ContainsKey(true) && 
-                hotbarSlot == playerInputHandler.UseSpellHotbarDictionary[true])
+            if (playerInputHandler.HotbarState.IsSpellActive && 
+                hotbarSlot == playerInputHandler.HotbarState.CurrentSlot)
             {
                 playerInputHandler.SpellCastInput = false;
                 
-                // Update the dictionary with inactive state but keep the hotbar number
-                playerInputHandler.UseSpellHotbarDictionary[false] = hotbarSlot;
-                if (playerInputHandler.UseSpellHotbarDictionary.ContainsKey(true))
-                {
-                    playerInputHandler.UseSpellHotbarDictionary.Remove(true);
-                }
-                Debug.Log($"Keyboard spell deactivated: Hotbar {hotbarSlot}, Active: {false}");
+                // Deactivate the hotbar slot
+                playerInputHandler.HotbarState.DeactivateSlot();
+                Debug.Log($"Keyboard spell deactivated: Hotbar {hotbarSlot}");
             }
             spellCastInputProcessed = false;
             return;
         }
 
-        // Update the hotbar number
-        playerInputHandler.UseSpellHotbarDictionary[false] = hotbarSlot;
+        // Update the last used hotbar slot
+        playerInputHandler.HotbarState.SetLastSlot(hotbarSlot);
         Debug.Log($"Keyboard spell hotbar set to: {hotbarSlot}");
     }
 

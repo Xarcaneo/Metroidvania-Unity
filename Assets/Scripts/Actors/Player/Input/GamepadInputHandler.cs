@@ -49,16 +49,14 @@ public class GamepadInputHandler : BaseInputHandler
     {
         // If we're casting a spell and the LT trigger is released, cancel the spell
         if (playerInputHandler.SpellCastInput && 
-            playerInputHandler.UseSpellHotbarDictionary.ContainsKey(true) && 
+            playerInputHandler.HotbarState.IsSpellActive && 
             !SpellModifierActive)
         {
             Debug.Log("Gamepad LT trigger released while spell was active - canceling spell");
             playerInputHandler.SpellCastInput = false;
             
-            // Update the dictionary with inactive state but keep the hotbar number
-            int lastSlot = playerInputHandler.UseSpellHotbarDictionary[true];
-            playerInputHandler.UseSpellHotbarDictionary[false] = lastSlot;
-            playerInputHandler.UseSpellHotbarDictionary.Remove(true);
+            // Deactivate the hotbar slot
+            playerInputHandler.HotbarState.DeactivateSlot();
             
             // Reset the processed flag to allow new inputs
             spellCastInputProcessed = false;
@@ -183,25 +181,21 @@ public class GamepadInputHandler : BaseInputHandler
             playerInputHandler.SpellCastInput = true;
             spellCastInputProcessed = true;
             
-            // Update the dictionary with active state and current hotbar number
-            playerInputHandler.UseSpellHotbarDictionary[true] = hotbarSlot;
-            Debug.Log($"Gamepad spell activated: Hotbar {hotbarSlot}, Active: {true}");
+            // Activate the hotbar slot
+            playerInputHandler.HotbarState.ActivateSlot(hotbarSlot);
+            Debug.Log($"Gamepad spell activated: Hotbar {hotbarSlot}");
         }
         else if (context.canceled)
         {
             // Only reset SpellCastInput if this is the button we're currently using
-            if (playerInputHandler.UseSpellHotbarDictionary.ContainsKey(true) && 
-                hotbarSlot == playerInputHandler.UseSpellHotbarDictionary[true])
+            if (playerInputHandler.HotbarState.IsSpellActive && 
+                hotbarSlot == playerInputHandler.HotbarState.CurrentSlot)
             {
                 playerInputHandler.SpellCastInput = false;
                 
-                // Update the dictionary with inactive state but keep the hotbar number
-                playerInputHandler.UseSpellHotbarDictionary[false] = hotbarSlot;
-                if (playerInputHandler.UseSpellHotbarDictionary.ContainsKey(true))
-                {
-                    playerInputHandler.UseSpellHotbarDictionary.Remove(true);
-                }
-                Debug.Log($"Gamepad spell deactivated: Hotbar {hotbarSlot}, Active: {false}");
+                // Deactivate the hotbar slot
+                playerInputHandler.HotbarState.DeactivateSlot();
+                Debug.Log($"Gamepad spell deactivated: Hotbar {hotbarSlot}");
             }
             spellCastInputProcessed = false;
             return;
@@ -210,7 +204,7 @@ public class GamepadInputHandler : BaseInputHandler
         // Only update the hotbar number if the modifier is active
         if (SpellModifierActive)
         {
-            playerInputHandler.UseSpellHotbarDictionary[false] = hotbarSlot;
+            playerInputHandler.HotbarState.SetLastSlot(hotbarSlot);
             Debug.Log($"Gamepad spell hotbar set to: {hotbarSlot}");
         }
         else
