@@ -249,14 +249,14 @@ public class PlayerInputHandler : MonoBehaviour
             CurrentInputDevice = InputDevice.Gamepad;
             currentInputHandler = gamepadInputHandler;
             lastInputDeviceSwitch = Time.time;
-            Debug.Log("Switched to Gamepad input");
+
         }
         else if (shouldSwitchToKeyboard && !shouldSwitchToGamepad && CurrentInputDevice != InputDevice.Keyboard)
         {
             CurrentInputDevice = InputDevice.Keyboard;
             currentInputHandler = keyboardInputHandler;
             lastInputDeviceSwitch = Time.time;
-            Debug.Log("Switched to Keyboard input");
+
         }
     }
     
@@ -350,7 +350,6 @@ public class PlayerInputHandler : MonoBehaviour
     /// </summary>
     public void OnUseSpellSlot0(InputAction.CallbackContext context)
     {
-        Debug.Log($"OnUseSpellSlot0 called - Phase: {context.phase}, Control: {context.control?.path}, Action: {context.action?.name}");
         currentInputHandler?.ProcessInput(context, InputActionType.UseSpellSlot0);
     }
     
@@ -359,7 +358,6 @@ public class PlayerInputHandler : MonoBehaviour
     /// </summary>
     public void OnUseSpellSlot1(InputAction.CallbackContext context)
     {
-        Debug.Log($"OnUseSpellSlot1 called - Phase: {context.phase}, Control: {context.control?.path}, Action: {context.action?.name}");
         currentInputHandler?.ProcessInput(context, InputActionType.UseSpellSlot1);
     }
     
@@ -368,7 +366,6 @@ public class PlayerInputHandler : MonoBehaviour
     /// </summary>
     public void OnUseSpellSlot2(InputAction.CallbackContext context)
     {
-        Debug.Log($"OnUseSpellSlot2 called - Phase: {context.phase}, Control: {context.control?.path}, Action: {context.action?.name}");
         currentInputHandler?.ProcessInput(context, InputActionType.UseSpellSlot2);
     }
     
@@ -416,12 +413,10 @@ public class PlayerInputHandler : MonoBehaviour
         if (context.started || context.performed)
         {
             SpellModifierActive = true;
-            Debug.Log("Spell modifier activated");
         }
         else if (context.canceled)
         {
             SpellModifierActive = false;
-            Debug.Log("Spell modifier deactivated");
         }
         
         // Also pass to the current input handler for device-specific handling
@@ -505,9 +500,6 @@ public class PlayerInputHandler : MonoBehaviour
         
         // Deactivate the current spell slot but remember it
         HotbarState.DeactivateSlot();
-        
-        Debug.Log($"Spell cast consumed: Hotbar {HotbarState.CurrentSlot}, Active: {false}");
-        // Don't reset spellCastInputProcessed here as it should be reset on button release
     }
 
     #endregion

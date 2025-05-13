@@ -30,7 +30,6 @@ public class HotbarStateManager
     public void ActivateSlot(int slot)
     {
         activeSlot = slot;
-        Debug.Log($"Hotbar slot activated: {slot}");
     }
 
     /// <summary>
@@ -42,7 +41,6 @@ public class HotbarStateManager
         {
             lastSlot = activeSlot.Value;
             activeSlot = null;
-            Debug.Log($"Hotbar slot deactivated, last slot: {lastSlot}");
         }
     }
 
@@ -52,7 +50,6 @@ public class HotbarStateManager
     public void SetLastSlot(int slot)
     {
         lastSlot = slot;
-        Debug.Log($"Hotbar last slot set to: {slot}");
     }
 
     /// <summary>

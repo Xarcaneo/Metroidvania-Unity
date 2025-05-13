@@ -148,7 +148,7 @@ public class KeyboardInputHandler : BaseInputHandler
                 
                 // Deactivate the hotbar slot
                 playerInputHandler.HotbarState.DeactivateSlot();
-                Debug.Log($"Keyboard spell deactivated: Hotbar {hotbarSlot}");
+
             }
             spellCastInputProcessed = false;
             return;
@@ -156,7 +156,7 @@ public class KeyboardInputHandler : BaseInputHandler
 
         // Update the last used hotbar slot
         playerInputHandler.HotbarState.SetLastSlot(hotbarSlot);
-        Debug.Log($"Keyboard spell hotbar set to: {hotbarSlot}");
+
     }
     
     // New individual spell slot methods
@@ -184,7 +184,7 @@ public class KeyboardInputHandler : BaseInputHandler
             
             // Activate the hotbar slot
             playerInputHandler.HotbarState.ActivateSlot(slotIndex);
-            Debug.Log($"Keyboard spell activated: Hotbar {slotIndex}");
+
         }
         else if (context.canceled)
         {
@@ -196,7 +196,7 @@ public class KeyboardInputHandler : BaseInputHandler
                 
                 // Deactivate the hotbar slot
                 playerInputHandler.HotbarState.DeactivateSlot();
-                Debug.Log($"Keyboard spell deactivated: Hotbar {slotIndex}");
+
             }
             spellCastInputProcessed = false;
             return;

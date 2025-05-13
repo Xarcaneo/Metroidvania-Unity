@@ -51,10 +51,9 @@ public class GamepadInputHandler : BaseInputHandler
         // Set priority directly based on modifier state - no cooldown
         prioritizeSpellCasting = modifierActive;
         
-        // Debug only when state changes
+        // Only update when state changes
         if (prioritizeSpellCasting != lastPrioritizeSpellCasting)
         {
-            Debug.Log($"Spell casting priority: {prioritizeSpellCasting} (Global modifier active: {modifierActive})");
             lastPrioritizeSpellCasting = prioritizeSpellCasting;
         }
     }
@@ -82,7 +81,6 @@ public class GamepadInputHandler : BaseInputHandler
             case InputActionType.UseSpellSlot2:
                 return 2;
             default:
-                Debug.LogError($"Unexpected action type for spell slot: {actionType}");
                 throw new System.ArgumentException($"Invalid action type for spell slot: {actionType}");
         }
     }
@@ -97,7 +95,6 @@ public class GamepadInputHandler : BaseInputHandler
             playerInputHandler.HotbarState.IsSpellActive && 
             !playerInputHandler.SpellModifierActive)
         {
-            Debug.Log("Spell modifier released while spell was active - canceling spell");
             playerInputHandler.SpellCastInput = false;
             
             // Deactivate the hotbar slot
@@ -118,13 +115,11 @@ public class GamepadInputHandler : BaseInputHandler
         
         if (context.started || context.performed)
         {
-            Debug.Log("GamepadInputHandler: Spell modifier activated");
             // Update priority immediately
             prioritizeSpellCasting = true;
         }
         else if (context.canceled)
         {
-            Debug.Log("GamepadInputHandler: Spell modifier deactivated");
             // Update priority immediately
             prioritizeSpellCasting = false;
         }
@@ -139,7 +134,6 @@ public class GamepadInputHandler : BaseInputHandler
         // If we're prioritizing spell casting, ignore attack input
         if (modifierActive || prioritizeSpellCasting)
         {
-            Debug.Log($"Ignoring attack input due to spell casting priority (Modifier: {modifierActive}, Priority: {prioritizeSpellCasting})");
             return;
         }
         
@@ -163,7 +157,6 @@ public class GamepadInputHandler : BaseInputHandler
         // If we're prioritizing spell casting, ignore block input
         if (modifierActive || prioritizeSpellCasting)
         {
-            Debug.Log($"Ignoring block input due to spell casting priority (Modifier: {modifierActive}, Priority: {prioritizeSpellCasting})");
             return;
         }
         
@@ -276,15 +269,11 @@ public class GamepadInputHandler : BaseInputHandler
         float ltValue = Gamepad.current != null ? Gamepad.current.leftTrigger.ReadValue() : 0f;
         int slotIndex = 0; // Legacy method always maps to slot 0
         
-        Debug.Log($"Legacy spell method - Slot {slotIndex} - LT Trigger Value: {ltValue}, Priority: {prioritizeSpellCasting}");
-        Debug.Log($"Input details - Phase: {context.phase}, Control: {context.control?.path}, Action: {context.action?.name}, ActionType: Legacy");
-        
         if (context.started && !spellCastInputProcessed)
         {
             // For gamepad inputs, only activate if we have priority (LT is active)
             if (!prioritizeSpellCasting)
             {
-                Debug.Log($"Legacy spell method - Slot {slotIndex} pressed without priority");
                 return; // Don't process this input without priority
             }
             
@@ -293,7 +282,6 @@ public class GamepadInputHandler : BaseInputHandler
             
             // Activate the hotbar slot
             playerInputHandler.HotbarState.ActivateSlot(slotIndex);
-            Debug.Log($"Legacy spell method - Hotbar {slotIndex} activated");
         }
         else if (context.canceled)
         {
@@ -305,7 +293,6 @@ public class GamepadInputHandler : BaseInputHandler
                 
                 // Deactivate the hotbar slot
                 playerInputHandler.HotbarState.DeactivateSlot();
-                Debug.Log($"Legacy spell method - Hotbar {slotIndex} deactivated");
             }
             spellCastInputProcessed = false;
         }
@@ -314,7 +301,6 @@ public class GamepadInputHandler : BaseInputHandler
         if (prioritizeSpellCasting)
         {
             playerInputHandler.HotbarState.SetLastSlot(slotIndex);
-            Debug.Log($"Legacy spell method - Hotbar set to: {slotIndex}");
         }
     }
     
@@ -329,17 +315,13 @@ public class GamepadInputHandler : BaseInputHandler
         // Check if the spell modifier is active (either from the global flag or the priority flag)
         bool hasSpellPriority = playerInputHandler.SpellModifierActive || prioritizeSpellCasting;
         
-        Debug.Log($"Spell slot {slotIndex} - Modifier Active: {playerInputHandler.SpellModifierActive}, Priority: {prioritizeSpellCasting}");
-        Debug.Log($"Input details - Phase: {context.phase}, Control: {context.control?.path}, Action: {context.action?.name}, ActionType: {actionType}");
+
         
         if (context.started && !spellCastInputProcessed)
         {
             // For gamepad inputs, check if we should prioritize spell casting
-            Debug.Log($"Gamepad spell slot {slotIndex} check - Has Priority: {hasSpellPriority}");
-            
             if (!hasSpellPriority)
             {
-                Debug.Log($"Gamepad spell slot {slotIndex} pressed without priority - use the SpellModifier key first");
                 return; // Don't process this input without priority
             }
             
@@ -348,7 +330,6 @@ public class GamepadInputHandler : BaseInputHandler
             
             // Activate the hotbar slot
             playerInputHandler.HotbarState.ActivateSlot(slotIndex);
-            Debug.Log($"Gamepad spell activated: Hotbar {slotIndex}");
         }
         else if (context.canceled)
         {
@@ -360,7 +341,6 @@ public class GamepadInputHandler : BaseInputHandler
                 
                 // Deactivate the hotbar slot
                 playerInputHandler.HotbarState.DeactivateSlot();
-                Debug.Log($"Gamepad spell deactivated: Hotbar {slotIndex}");
             }
             spellCastInputProcessed = false;
         }
@@ -369,11 +349,6 @@ public class GamepadInputHandler : BaseInputHandler
         if (prioritizeSpellCasting)
         {
             playerInputHandler.HotbarState.SetLastSlot(slotIndex);
-            Debug.Log($"Gamepad spell hotbar set to: {slotIndex}");
-        }
-        else
-        {
-            Debug.Log($"Ignoring hotbar update for slot {slotIndex} without priority");            
         }
     }
 
@@ -385,7 +360,6 @@ public class GamepadInputHandler : BaseInputHandler
         // If we're prioritizing spell casting, ignore jump input
         if (modifierActive || prioritizeSpellCasting)
         {
-            Debug.Log($"Ignoring jump input due to spell casting priority (Modifier: {modifierActive}, Priority: {prioritizeSpellCasting})");
             return;
         }
         
@@ -411,7 +385,6 @@ public class GamepadInputHandler : BaseInputHandler
         // If we're prioritizing spell casting, ignore dash input
         if (modifierActive || prioritizeSpellCasting)
         {
-            Debug.Log($"Ignoring dash input due to spell casting priority (Modifier: {modifierActive}, Priority: {prioritizeSpellCasting})");
             return;
         }
         
@@ -436,7 +409,6 @@ public class GamepadInputHandler : BaseInputHandler
         // If we're prioritizing spell casting, ignore interact input
         if (modifierActive || prioritizeSpellCasting)
         {
-            Debug.Log($"Ignoring interact input due to spell casting priority (Modifier: {modifierActive}, Priority: {prioritizeSpellCasting})");
             return;
         }
         
