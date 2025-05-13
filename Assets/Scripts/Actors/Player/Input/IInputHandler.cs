@@ -5,6 +5,6 @@ using UnityEngine.InputSystem;
 /// </summary>
 public interface IInputHandler
 {
-    void ProcessInput(InputAction.CallbackContext context, string actionName);
+    void ProcessInput(InputAction.CallbackContext context, InputActionType actionType);
     void Update();
 }

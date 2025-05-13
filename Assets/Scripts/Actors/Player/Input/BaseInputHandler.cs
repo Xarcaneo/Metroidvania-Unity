@@ -15,44 +15,44 @@ public abstract class BaseInputHandler : IInputHandler
     /// <summary>
     /// Process input from any input device
     /// </summary>
-    public virtual void ProcessInput(InputAction.CallbackContext context, string actionName)
+    public virtual void ProcessInput(InputAction.CallbackContext context, InputActionType actionType)
     {
         if (playerInputHandler.DisableInput)
             return;
 
-        switch (actionName)
+        switch (actionType)
         {
-            case "Attack":
+            case InputActionType.Attack:
                 ProcessAttackInput(context);
                 break;
-            case "Block":
+            case InputActionType.Block:
                 ProcessBlockInput(context);
                 break;
-            case "HotbarAction":
+            case InputActionType.HotbarAction:
                 ProcessHotbarActionInput(context);
                 break;
-            case "ItemSwitchLeft":
+            case InputActionType.ItemSwitchLeft:
                 ProcessItemSwitchLeftInput(context);
                 break;
-            case "ItemSwitchRight":
+            case InputActionType.ItemSwitchRight:
                 ProcessItemSwitchRightInput(context);
                 break;
-            case "Move":
+            case InputActionType.Move:
                 ProcessMoveInput(context);
                 break;
-            case "UseSpell":
+            case InputActionType.UseSpell:
                 ProcessUseSpellInput(context);
                 break;
-            case "Jump":
+            case InputActionType.Jump:
                 ProcessJumpInput(context);
                 break;
-            case "Dash":
+            case InputActionType.Dash:
                 ProcessDashInput(context);
                 break;
-            case "Interact":
+            case InputActionType.Interact:
                 ProcessInteractInput(context);
                 break;
-            case "PlayerMenu":
+            case InputActionType.PlayerMenu:
                 ProcessPlayerMenuInput(context);
                 break;
         }

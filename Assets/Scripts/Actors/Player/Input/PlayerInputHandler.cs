@@ -318,7 +318,7 @@ public class PlayerInputHandler : MonoBehaviour
     /// </summary>
     public void OnAttackInput(InputAction.CallbackContext context)
     {
-        currentInputHandler?.ProcessInput(context, "Attack");
+        currentInputHandler?.ProcessInput(context, InputActionType.Attack);
     }
 
     /// <summary>
@@ -326,7 +326,7 @@ public class PlayerInputHandler : MonoBehaviour
     /// </summary>
     public void OnBlockInput(InputAction.CallbackContext context)
     {
-        currentInputHandler?.ProcessInput(context, "Block");
+        currentInputHandler?.ProcessInput(context, InputActionType.Block);
     }
 
     /// <summary>
@@ -334,7 +334,7 @@ public class PlayerInputHandler : MonoBehaviour
     /// </summary>
     public void OnHotbarActionInput(InputAction.CallbackContext context)
     {
-        currentInputHandler?.ProcessInput(context, "HotbarAction");
+        currentInputHandler?.ProcessInput(context, InputActionType.HotbarAction);
     }
 
     /// <summary>
@@ -342,7 +342,7 @@ public class PlayerInputHandler : MonoBehaviour
     /// </summary>
     public void OnItemSwitchLeftInput(InputAction.CallbackContext context)
     {
-        currentInputHandler?.ProcessInput(context, "ItemSwitchLeft");
+        currentInputHandler?.ProcessInput(context, InputActionType.ItemSwitchLeft);
     }
 
     /// <summary>
@@ -350,7 +350,7 @@ public class PlayerInputHandler : MonoBehaviour
     /// </summary>
     public void OnItemSwitchRightInput(InputAction.CallbackContext context)
     {
-        currentInputHandler?.ProcessInput(context, "ItemSwitchRight");
+        currentInputHandler?.ProcessInput(context, InputActionType.ItemSwitchRight);
     }
 
     /// <summary>
@@ -358,7 +358,7 @@ public class PlayerInputHandler : MonoBehaviour
     /// </summary>
     public void OnMoveInput(InputAction.CallbackContext context)
     {
-        currentInputHandler?.ProcessInput(context, "Move");
+        currentInputHandler?.ProcessInput(context, InputActionType.Move);
     }
 
     // Removed the OnSpellModifierInput method as we're now directly checking the LT trigger in OnUseSpellInput
@@ -369,7 +369,7 @@ public class PlayerInputHandler : MonoBehaviour
     /// </summary>
     public void OnUseSpellInput(InputAction.CallbackContext context)
     {
-        currentInputHandler?.ProcessInput(context, "UseSpell");
+        currentInputHandler?.ProcessInput(context, InputActionType.UseSpell);
     }
     
     // IsGamepadBindingIndex, MapBindingIndexToHotbarSlot, HandleKeyboardSpellInput, and HandleGamepadSpellInput
@@ -380,7 +380,7 @@ public class PlayerInputHandler : MonoBehaviour
     /// </summary>
     public void OnJumpInput(InputAction.CallbackContext context)
     {
-        currentInputHandler?.ProcessInput(context, "Jump");
+        currentInputHandler?.ProcessInput(context, InputActionType.Jump);
     }
 
     /// <summary>
@@ -388,7 +388,7 @@ public class PlayerInputHandler : MonoBehaviour
     /// </summary>
     public void OnDashInput(InputAction.CallbackContext context)
     {
-        currentInputHandler?.ProcessInput(context, "Dash");
+        currentInputHandler?.ProcessInput(context, InputActionType.Dash);
     }
 
     /// <summary>
@@ -396,7 +396,7 @@ public class PlayerInputHandler : MonoBehaviour
     /// </summary>
     public void OnInteractInput(InputAction.CallbackContext context)
     {
-        currentInputHandler?.ProcessInput(context, "Interact");
+        currentInputHandler?.ProcessInput(context, InputActionType.Interact);
     }
 
     /// <summary>
@@ -404,7 +404,7 @@ public class PlayerInputHandler : MonoBehaviour
     /// </summary>
     public void OnPlayerMenuInput(InputAction.CallbackContext context)
     {
-        currentInputHandler?.ProcessInput(context, "PlayerMenu");
+        currentInputHandler?.ProcessInput(context, InputActionType.PlayerMenu);
     }
     #endregion
 
