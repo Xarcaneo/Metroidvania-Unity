@@ -33,6 +33,9 @@ public class PlayerInputHandler : MonoBehaviour
     private bool itemSwitchLeftInputProcessed = false;
     private bool itemSwitchRightInputProcessed = false;
     private bool jumpInputProcessed = false;
+    private bool spellCastInputProcessed = false;
+    private bool interactInputProcessed = false;
+    private bool playerMenuInputProcessed = false;
 
     /// <summary>
     /// Normalized X-axis input (-1, 0, 1)
@@ -294,9 +297,10 @@ public class PlayerInputHandler : MonoBehaviour
             // Get the index of the triggered binding
             var bindingIndex = context.action.GetBindingIndexForControl(context.control);
 
-            if (context.started)
+            if (context.started && !spellCastInputProcessed)
             {
                 SpellCastInput = true;
+                spellCastInputProcessed = true;
             }
             else if (context.canceled)
             {
@@ -305,6 +309,7 @@ public class PlayerInputHandler : MonoBehaviour
                 {
                     SpellCastInput = false;
                 }
+                spellCastInputProcessed = false;
                 return;
             }
 
@@ -377,7 +382,16 @@ public class PlayerInputHandler : MonoBehaviour
     {
         if (!DisableInput)
         {
-            GameEvents.Instance.InteractTrigger(context.started);
+            if (context.started && !interactInputProcessed)
+            {
+                GameEvents.Instance.InteractTrigger(true);
+                interactInputProcessed = true;
+            }
+            else if (context.canceled)
+            {
+                GameEvents.Instance.InteractTrigger(false);
+                interactInputProcessed = false;
+            }
         }
     }
 
@@ -388,8 +402,15 @@ public class PlayerInputHandler : MonoBehaviour
     {
         if (!isDialogueActive)
         {
-            if (context.started)
+            if (context.started && !playerMenuInputProcessed)
+            {
                 GameEvents.Instance.PlayerMenuOpen();
+                playerMenuInputProcessed = true;
+            }
+            else if (context.canceled)
+            {
+                playerMenuInputProcessed = false;
+            }
         }
     }
     #endregion
@@ -398,37 +419,65 @@ public class PlayerInputHandler : MonoBehaviour
     /// <summary>
     /// Consumes the jump input
     /// </summary>
-    public void UseJumpInput() => JumpInput = false;
+    public void UseJumpInput()
+    {
+        JumpInput = false;
+        // Don't reset jumpInputProcessed here as it should be reset on button release
+    }
 
     /// <summary>
     /// Consumes the dash input
     /// </summary>
-    public void UseDashInput() => ActionInput = false;
+    public void UseDashInput()
+    {
+        ActionInput = false;
+        // Don't reset actionInputProcessed here as it should be reset on button release
+    }
 
     /// <summary>
     /// Consumes the attack input
     /// </summary>
-    public void UseAttackInput() => AttackInput = false;
+    public void UseAttackInput()
+    {
+        AttackInput = false;
+        // Don't reset attackInputProcessed here as it should be reset on button release
+    }
 
     /// <summary>
     /// Consumes the block input
     /// </summary>
-    public void UseBlockInput() => BlockInput = false;
+    public void UseBlockInput()
+    {
+        BlockInput = false;
+        // Don't reset blockInputProcessed here as it should be reset on button release
+    }
 
     /// <summary>
     /// Consumes the hotbar action input
     /// </summary>
-    public void UseHotbarActionInput() => HotbarActionInput = false;
+    public void UseHotbarActionInput()
+    {
+        HotbarActionInput = false;
+        // Don't reset hotbarActionInputProcessed here as it should be reset on button release
+    }
 
     /// <summary>
     /// Consumes the item switch left input
     /// </summary>
-    public void UseItemSwitchLeftInput() => ItemSwitchLeftInput = false;
+    public void UseItemSwitchLeftInput()
+    {
+        ItemSwitchLeftInput = false;
+        // Don't reset itemSwitchLeftInputProcessed here as it should be reset on button release
+    }
 
     /// <summary>
     /// Consumes the item switch right input
     /// </summary>
-    public void UseItemSwitchRightInput() => ItemSwitchRightInput = false;
+    public void UseItemSwitchRightInput()
+    {
+        ItemSwitchRightInput = false;
+        // Don't reset itemSwitchRightInputProcessed here as it should be reset on button release
+    }
 
     /// <summary>
     /// Consumes the spell cast input
@@ -440,6 +489,7 @@ public class PlayerInputHandler : MonoBehaviour
     {
         SpellCastInput = false;
         UseSpellHotbarNumber = 0;
+        // Don't reset spellCastInputProcessed here as it should be reset on button release
     }
 
     #endregion
