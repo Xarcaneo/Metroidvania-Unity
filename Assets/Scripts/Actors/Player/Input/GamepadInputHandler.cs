@@ -72,6 +72,25 @@ public class GamepadInputHandler : BaseInputHandler
     // Removed spellModifierActivationTime and priority cooldown to allow for immediate switching between spell casting and other actions
 
     /// <summary>
+    /// Converts an InputActionType to the corresponding hotbar slot index
+    /// </summary>
+    private int GetSlotIndexFromActionType(InputActionType actionType)
+    {
+        switch (actionType)
+        {
+            case InputActionType.UseSpellSlot0:
+                return 0;
+            case InputActionType.UseSpellSlot1:
+                return 1;
+            case InputActionType.UseSpellSlot2:
+                return 2;
+            default:
+                Debug.LogError($"Unexpected action type for spell slot: {actionType}");
+                throw new System.ArgumentException($"Invalid action type for spell slot: {actionType}");
+        }
+    }
+
+    /// <summary>
     /// Checks if the LT modifier has been released while a spell is active
     /// </summary>
     private void CheckSpellModifierReleased()
@@ -206,7 +225,7 @@ public class GamepadInputHandler : BaseInputHandler
     /// </summary>
     protected override void ProcessUseSpellSlot0(InputAction.CallbackContext context)
     {
-        ProcessSpellSlotInput(context, 0);
+        ProcessSpellSlotInput(context, InputActionType.UseSpellSlot0);
     }
     
     /// <summary>
@@ -214,7 +233,7 @@ public class GamepadInputHandler : BaseInputHandler
     /// </summary>
     protected override void ProcessUseSpellSlot1(InputAction.CallbackContext context)
     {
-        ProcessSpellSlotInput(context, 1);
+        ProcessSpellSlotInput(context, InputActionType.UseSpellSlot1);
     }
     
     /// <summary>
@@ -222,7 +241,7 @@ public class GamepadInputHandler : BaseInputHandler
     /// </summary>
     protected override void ProcessUseSpellSlot2(InputAction.CallbackContext context)
     {
-        ProcessSpellSlotInput(context, 2);
+        ProcessSpellSlotInput(context, InputActionType.UseSpellSlot2);
     }
     
     /// <summary>
@@ -232,18 +251,66 @@ public class GamepadInputHandler : BaseInputHandler
     protected override void ProcessUseSpellInput(InputAction.CallbackContext context)
     {
         // This is a legacy method that will be replaced by the individual slot methods
-        // For backward compatibility, we'll map this to slot 0
-        ProcessSpellSlotInput(context, 0);
+        // For backward compatibility, we'll handle it directly with slot index 0
+        
+        // Debug the LT trigger value, priority state, and input details
+        float ltValue = Gamepad.current != null ? Gamepad.current.leftTrigger.ReadValue() : 0f;
+        int slotIndex = 0; // Legacy method always maps to slot 0
+        
+        Debug.Log($"Legacy spell method - Slot {slotIndex} - LT Trigger Value: {ltValue}, Priority: {prioritizeSpellCasting}");
+        Debug.Log($"Input details - Phase: {context.phase}, Control: {context.control?.path}, Action: {context.action?.name}, ActionType: Legacy");
+        
+        if (context.started && !spellCastInputProcessed)
+        {
+            // For gamepad inputs, only activate if we have priority (LT is active)
+            if (!prioritizeSpellCasting)
+            {
+                Debug.Log($"Legacy spell method - Slot {slotIndex} pressed without priority");
+                return; // Don't process this input without priority
+            }
+            
+            playerInputHandler.SpellCastInput = true;
+            spellCastInputProcessed = true;
+            
+            // Activate the hotbar slot
+            playerInputHandler.HotbarState.ActivateSlot(slotIndex);
+            Debug.Log($"Legacy spell method - Hotbar {slotIndex} activated");
+        }
+        else if (context.canceled)
+        {
+            // Only reset SpellCastInput if this is the slot we're currently using
+            if (playerInputHandler.HotbarState.IsSpellActive && 
+                slotIndex == playerInputHandler.HotbarState.CurrentSlot)
+            {
+                playerInputHandler.SpellCastInput = false;
+                
+                // Deactivate the hotbar slot
+                playerInputHandler.HotbarState.DeactivateSlot();
+                Debug.Log($"Legacy spell method - Hotbar {slotIndex} deactivated");
+            }
+            spellCastInputProcessed = false;
+        }
+
+        // Only update the hotbar number if we have priority
+        if (prioritizeSpellCasting)
+        {
+            playerInputHandler.HotbarState.SetLastSlot(slotIndex);
+            Debug.Log($"Legacy spell method - Hotbar set to: {slotIndex}");
+        }
     }
     
     /// <summary>
-    /// Common method to handle spell slot input for a specific slot
+    /// Common method to handle spell slot input for a specific action type
     /// </summary>
-    private void ProcessSpellSlotInput(InputAction.CallbackContext context, int slotIndex)
+    private void ProcessSpellSlotInput(InputAction.CallbackContext context, InputActionType actionType)
     {
-        // Debug the LT trigger value and priority state
+        // Convert action type to slot index
+        int slotIndex = GetSlotIndexFromActionType(actionType);
+        
+        // Debug the LT trigger value, priority state, and input details
         float ltValue = Gamepad.current != null ? Gamepad.current.leftTrigger.ReadValue() : 0f;
         Debug.Log($"Spell slot {slotIndex} - LT Trigger Value: {ltValue}, Priority: {prioritizeSpellCasting}");
+        Debug.Log($"Input details - Phase: {context.phase}, Control: {context.control?.path}, Action: {context.action?.name}, ActionType: {actionType}");
         
         if (context.started && !spellCastInputProcessed)
         {

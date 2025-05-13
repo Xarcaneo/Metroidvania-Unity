@@ -272,8 +272,34 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
             action.Disable();
 
             // Configure the rebind.
-            m_RebindOperation = action.PerformInteractiveRebinding(bindingIndex)
+            var rebindOperation = action.PerformInteractiveRebinding(bindingIndex)
+                // Prevent these controls from being bound to any action
+                .WithControlsExcluding("<Keyboard>/escape")
+                .WithControlsExcluding("<Gamepad>/select")
+                // Use these controls to cancel the rebinding operation
                 .WithCancelingThrough("<Keyboard>/escape")
+                .WithCancelingThrough("<Gamepad>/select")
+                
+                // Restrict bindings based on the device type of the current binding
+                .OnMatchWaitForAnother(0.1f);
+                
+            // Check if this is a keyboard or gamepad binding and restrict accordingly
+            string currentBindingPath = action.bindings[bindingIndex].effectivePath;
+            if (currentBindingPath.Contains("<Keyboard>") || currentBindingPath.Contains("<Mouse>"))
+            {
+                // This is a keyboard/mouse binding, so only allow keyboard and mouse inputs
+                rebindOperation.WithControlsHavingToMatchPath("<Keyboard>/*")
+                               .WithControlsHavingToMatchPath("<Mouse>/*");
+                Debug.Log("Restricting rebinding to keyboard/mouse inputs only");
+            }
+            else if (currentBindingPath.Contains("<Gamepad>"))
+            {
+                // This is a gamepad binding, so only allow gamepad inputs
+                rebindOperation.WithControlsHavingToMatchPath("<Gamepad>/*");
+                Debug.Log("Restricting rebinding to gamepad inputs only");
+            }
+            
+            m_RebindOperation = rebindOperation
                 .OnCancel(
                     operation =>
                     {

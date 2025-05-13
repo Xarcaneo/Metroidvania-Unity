@@ -345,6 +345,7 @@ public class PlayerInputHandler : MonoBehaviour
     /// </summary>
     public void OnUseSpellSlot0(InputAction.CallbackContext context)
     {
+        Debug.Log($"OnUseSpellSlot0 called - Phase: {context.phase}, Control: {context.control?.path}, Action: {context.action?.name}");
         currentInputHandler?.ProcessInput(context, InputActionType.UseSpellSlot0);
     }
     
@@ -353,6 +354,7 @@ public class PlayerInputHandler : MonoBehaviour
     /// </summary>
     public void OnUseSpellSlot1(InputAction.CallbackContext context)
     {
+        Debug.Log($"OnUseSpellSlot1 called - Phase: {context.phase}, Control: {context.control?.path}, Action: {context.action?.name}");
         currentInputHandler?.ProcessInput(context, InputActionType.UseSpellSlot1);
     }
     
@@ -361,6 +363,7 @@ public class PlayerInputHandler : MonoBehaviour
     /// </summary>
     public void OnUseSpellSlot2(InputAction.CallbackContext context)
     {
+        Debug.Log($"OnUseSpellSlot2 called - Phase: {context.phase}, Control: {context.control?.path}, Action: {context.action?.name}");
         currentInputHandler?.ProcessInput(context, InputActionType.UseSpellSlot2);
     }
     
