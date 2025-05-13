@@ -134,8 +134,29 @@ namespace Menu
 
         /// <summary>
         /// Handles the return input to pause the game.
+        /// Only responds to keyboard input.
         /// </summary>
-        public override void OnReturnInput() => OnPausePressed();
+        public override void OnReturnInput()
+        {
+            // Only handle return input for keyboard
+            if (GameManager.Instance.CurrentInputDevice == GameManager.InputDeviceType.Keyboard)
+            {
+                OnPausePressed();
+            }
+        }
+        
+        /// <summary>
+        /// Handles the pause input to pause the game.
+        /// Only responds to gamepad input.
+        /// </summary>
+        public override void OnPauseInput()
+        {
+            // Only handle pause input for gamepad
+            if (GameManager.Instance.CurrentInputDevice == GameManager.InputDeviceType.Gamepad)
+            {
+                OnPausePressed();
+            }
+        }
 
         /// <summary>
         /// Opens the player menu when the player menu input is triggered.

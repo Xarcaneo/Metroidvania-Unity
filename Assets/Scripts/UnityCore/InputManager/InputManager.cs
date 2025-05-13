@@ -32,6 +32,11 @@ public class InputManager : MonoBehaviour
     /// </summary>
     public event Action OnMenuReturn;
 
+    /// <summary>
+    /// Event triggered when the pause input is activated.
+    /// </summary>
+    public event Action OnPause;
+
     public event Action OnMenuPreviousTab;
     public event Action OnMenuNextTab;
     public event Action OnMenuDelete;
@@ -106,6 +111,7 @@ public class InputManager : MonoBehaviour
         if (!isInputActive || menuInput == null) return;
 
         if (menuInput.actions["Return"].triggered) OnMenuReturn?.Invoke();
+        if (menuInput.actions["Pause"].triggered) OnPause?.Invoke();
         if (menuInput.actions["PreviousTab"].triggered) OnMenuPreviousTab?.Invoke();
         if (menuInput.actions["NextTab"].triggered) OnMenuNextTab?.Invoke();
         if (menuInput.actions["Delete"].triggered) OnMenuDelete?.Invoke();

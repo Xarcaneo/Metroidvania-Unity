@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
+using UnityCore.GameManager;
 
 /// <summary>
 /// Struct that defines gamepad control constants
@@ -51,6 +52,28 @@ public class PlayerInputHandler : MonoBehaviour
     /// The current input device being used
     /// </summary>
     public InputDevice CurrentInputDevice { get; private set; } = InputDevice.Keyboard;
+    
+    /// <summary>
+    /// Updates the current input device and notifies the GameManager
+    /// </summary>
+    /// <param name="device">The new input device</param>
+    private void UpdateCurrentInputDevice(InputDevice device)
+    {
+        if (CurrentInputDevice != device)
+        {
+            CurrentInputDevice = device;
+            
+            // Update the GameManager with the new input device type
+            if (GameManager.Instance != null)
+            {
+                var gameManagerDeviceType = device == InputDevice.Keyboard 
+                    ? GameManager.InputDeviceType.Keyboard 
+                    : GameManager.InputDeviceType.Gamepad;
+                    
+                GameManager.Instance.UpdateInputDeviceType(gameManagerDeviceType);
+            }
+        }
+    }
 
     private bool isDialogueActive = false;
     
@@ -246,17 +269,15 @@ public class PlayerInputHandler : MonoBehaviour
         // Prioritize gamepad input if both are detected in the same frame
         if (shouldSwitchToGamepad && CurrentInputDevice != InputDevice.Gamepad)
         {
-            CurrentInputDevice = InputDevice.Gamepad;
+            UpdateCurrentInputDevice(InputDevice.Gamepad);
             currentInputHandler = gamepadInputHandler;
             lastInputDeviceSwitch = Time.time;
-
         }
         else if (shouldSwitchToKeyboard && !shouldSwitchToGamepad && CurrentInputDevice != InputDevice.Keyboard)
         {
-            CurrentInputDevice = InputDevice.Keyboard;
+            UpdateCurrentInputDevice(InputDevice.Keyboard);
             currentInputHandler = keyboardInputHandler;
             lastInputDeviceSwitch = Time.time;
-
         }
     }
     

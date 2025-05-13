@@ -1,4 +1,5 @@
 using PixelCrushers.DialogueSystem;
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -30,6 +31,44 @@ public class GameManager : MonoBehaviour
     /// Used for managing multiple save files.
     /// </summary>
     public int currentSaveSlot;
+    
+    /// <summary>
+    /// Enum representing the current input device being used by the player.
+    /// </summary>
+    public enum InputDeviceType
+    {
+        Keyboard,
+        Gamepad
+    }
+    
+    /// <summary>
+    /// The current input device being used by the player.
+    /// Provides global access to input device information for UI and gameplay systems.
+    /// </summary>
+    public InputDeviceType CurrentInputDevice { get; private set; } = InputDeviceType.Keyboard;
+    
+    /// <summary>
+    /// Updates the current input device type.
+    /// Called by the PlayerInputHandler when the input device changes.
+    /// </summary>
+    /// <param name="deviceType">The new input device type</param>
+    public void UpdateInputDeviceType(InputDeviceType deviceType)
+    {
+        if (CurrentInputDevice != deviceType)
+        {
+            CurrentInputDevice = deviceType;
+            // Notify any listeners about the input device change
+            OnInputDeviceChanged?.Invoke(deviceType);
+
+            Debug.Log($"Input device changed to: {deviceType}");
+        }
+    }
+    
+    /// <summary>
+    /// Event triggered when the input device changes.
+    /// UI elements can subscribe to this to update their appearance.
+    /// </summary>
+    public event Action<InputDeviceType> OnInputDeviceChanged;
     #endregion
 
     #region Singleton Pattern
