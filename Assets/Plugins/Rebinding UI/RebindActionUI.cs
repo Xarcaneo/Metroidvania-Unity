@@ -51,6 +51,19 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
                 UpdateBindingDisplay();
             }
         }
+        
+        /// <summary>
+        /// Allow binding keys that are already used by other actions.
+        /// By default, the system prevents duplicate bindings.
+        /// </summary>
+        [Tooltip("Allow binding keys that are already used by other actions. By default, the system prevents duplicate bindings.")]
+        [SerializeField] // Make it visible in the Inspector
+        private bool m_AllowDuplicateBindings = false;
+        public bool allowDuplicateBindings
+        {
+            get => m_AllowDuplicateBindings;
+            set => m_AllowDuplicateBindings = value;
+        }
 
         /// <summary>
         /// Text component that receives the name of the action. Optional.
@@ -317,7 +330,8 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
                         m_RebindOverlay?.SetActive(false);
                         m_RebindStopEvent?.Invoke(this, operation);
 
-                        if (CheckDuplicateBindings(action, bindingIndex, allCompositeParts))
+                        // Only check for duplicate bindings if allowDuplicateBindings is false
+                        if (!m_AllowDuplicateBindings && CheckDuplicateBindings(action, bindingIndex, allCompositeParts))
                         {
                             rebindError = true;
                             action.ApplyBindingOverride(bindingIndex, originalBinding);
@@ -371,29 +385,55 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
         private bool CheckDuplicateBindings(InputAction action, int bindingIndex, bool allCompositeParts = false)
         {
             InputBinding newBinding = action.bindings[bindingIndex];
-
-            for (int i = 0; i < action.bindings.Count; i++)
+            
+            // If this action is a spell slot, we allow it to have duplicate bindings
+            // This is a special case for our game's spell system
+            bool isSpellAction = action.name != null && (action.name.Contains("SpellSlot") || action.name.Contains("Spell_"));
+            
+            // If this is a spell action, we don't need to check for duplicates within the same action
+            if (!isSpellAction)
             {
-                InputBinding binding = action.bindings[i];
-          
-                if (i == bindingIndex)
-                { 
-                    continue;
-                }
-                if (binding.effectivePath == newBinding.effectivePath)
+                // Check for duplicates within the same action
+                for (int i = 0; i < action.bindings.Count; i++)
                 {
-                    return true;
+                    InputBinding binding = action.bindings[i];
+              
+                    if (i == bindingIndex)
+                    { 
+                        continue;
+                    }
+                    if (binding.effectivePath == newBinding.effectivePath)
+                    {
+                        return true;
+                    }
                 }
             }
 
+            // Check for duplicates with other actions
             foreach (InputBinding binding in action.actionMap.bindings)
             {
                 if (binding.action == newBinding.action)
                 {
                     continue; 
                 }
+                
                 if (binding.effectivePath == newBinding.effectivePath)
                 {
+                    // If this is a spell action, we allow it to use bindings from other actions
+                    if (isSpellAction)
+                    {
+                        continue;
+                    }
+                    
+                    // If the other action is a spell action, we allow this action to use its binding
+                    bool isOtherSpellAction = binding.action != null && 
+                                             (binding.action.Contains("SpellSlot") || binding.action.Contains("Spell_"));
+                    if (isOtherSpellAction)
+                    {
+                        continue;
+                    }
+                    
+                    // Otherwise, this is a duplicate binding that's not allowed
                     return true;
                 } 
             }
