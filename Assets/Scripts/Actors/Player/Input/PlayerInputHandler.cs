@@ -216,20 +216,23 @@ public class PlayerInputHandler : MonoBehaviour
     /// </summary>
     private void DetectCurrentInputDevice()
     {
-        // Use the InputDeviceDetector to detect the current input device
-        bool deviceSwitched = InputDeviceDetector.DetectCurrentInputDevice(inputDeviceSwitchCooldown);
-    
-        // If the device changed, update our input handler
-        if (deviceSwitched)
+        // Always run detection
+        InputDeviceDetector.DetectCurrentInputDevice(inputDeviceSwitchCooldown);
+
+        // Sync the handler even if the device did not "switch" this frame
+        var detectedDevice = InputDeviceDetector.CurrentInputDevice;
+
+        if (detectedDevice == InputDeviceDetector.InputDeviceType.Gamepad)
         {
-            if (InputDeviceDetector.CurrentInputDevice == InputDeviceDetector.InputDeviceType.Gamepad && 
-                CurrentInputDevice != InputDevice.Gamepad)
+            if (CurrentInputDevice != InputDevice.Gamepad || currentInputHandler != gamepadInputHandler)
             {
                 UpdateCurrentInputDevice(InputDevice.Gamepad);
                 currentInputHandler = gamepadInputHandler;
             }
-            else if (InputDeviceDetector.CurrentInputDevice == InputDeviceDetector.InputDeviceType.Keyboard && 
-                     CurrentInputDevice != InputDevice.Keyboard)
+        }
+        else if (detectedDevice == InputDeviceDetector.InputDeviceType.Keyboard)
+        {
+            if (CurrentInputDevice != InputDevice.Keyboard || currentInputHandler != keyboardInputHandler)
             {
                 UpdateCurrentInputDevice(InputDevice.Keyboard);
                 currentInputHandler = keyboardInputHandler;
