@@ -121,16 +121,19 @@ public class InputManager : MonoBehaviour
         // Handle hotbar assignment
         if (menuInput.actions["AssignSpellToHotbar"].triggered)
         {
-            // Loop through the possible hotbar slots and check which key was pressed
-            if (Keyboard.current.digit1Key.wasPressedThisFrame)
+            // Check for keyboard keys or gamepad buttons
+            if (Keyboard.current != null && Keyboard.current.digit1Key.wasPressedThisFrame || 
+                Gamepad.current != null && Gamepad.current.buttonNorth.wasPressedThisFrame) // Y button
             {
                 OnAssignSpellToHotbar?.Invoke(0);
             }
-            else if (Keyboard.current.digit2Key.wasPressedThisFrame)
+            else if (Keyboard.current != null && Keyboard.current.digit2Key.wasPressedThisFrame || 
+                     Gamepad.current != null && Gamepad.current.buttonWest.wasPressedThisFrame) // X button
             {
                 OnAssignSpellToHotbar?.Invoke(1);
             }
-            else if (Keyboard.current.digit3Key.wasPressedThisFrame)
+            else if (Keyboard.current != null && Keyboard.current.digit3Key.wasPressedThisFrame || 
+                     Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame) // A button
             {
                 OnAssignSpellToHotbar?.Invoke(2);
             }
