@@ -65,6 +65,11 @@ namespace Menu
         /// Handles the player menu input to resume the game.
         /// </summary>
         public override void OnPlayerMenuInput() => OnResumePressed();
+        
+        /// <summary>
+        /// Override the back button behavior to ensure it unpauses the game
+        /// </summary>
+        public override void OnBackPressed() => OnResumePressed();
 
         /// <summary>
         /// Resumes the game by unpausing and closing the menu.
@@ -72,6 +77,10 @@ namespace Menu
         public void OnResumePressed()
         {
             SetPauseState(false);
+            
+            // Trigger the player menu close event to reset input flags
+            GameEvents.Instance.PlayerMenuClose();
+            
             base.OnBackPressed();
         }
 
