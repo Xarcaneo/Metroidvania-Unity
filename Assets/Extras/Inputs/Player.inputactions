@@ -96,13 +96,40 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "UseSpell",
+                    "name": "SpellSlot0",
                     "type": "Button",
                     "id": "0986cf0f-daf5-4db4-844d-14d50460d5b7",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "SpellSlot1",
+                    "type": "Button",
+                    "id": "4b1dc772-491b-4915-bef2-fd0323e377ae",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "SpellSlot2",
+                    "type": "Button",
+                    "id": "15615977-0d8d-47ed-aaaa-1c76fef82f08",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "SpellModifierInput",
+                    "type": "Button",
+                    "id": "4861bf38-74c6-4d55-a44e-e6da4b9a6a29",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -377,7 +404,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "UseSpell",
+                    "action": "SpellSlot0",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bd781897-475c-43c6-94af-05ec5f922b69",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SpellSlot0",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -388,7 +426,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "UseSpell",
+                    "action": "SpellSlot1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4e6cbd52-c0a7-4a9b-b60c-5e71ce99fb82",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SpellSlot1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -399,7 +448,29 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "UseSpell",
+                    "action": "SpellSlot2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "072f1da6-6a02-4912-ab33-80a4594e2182",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SpellSlot2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6b08c4a6-7ae1-4d33-83ad-d39b12522ebc",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SpellModifierInput",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

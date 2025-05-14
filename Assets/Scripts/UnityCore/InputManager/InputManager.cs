@@ -32,6 +32,11 @@ public class InputManager : MonoBehaviour
     /// </summary>
     public event Action OnMenuReturn;
 
+    /// <summary>
+    /// Event triggered when the pause input is activated.
+    /// </summary>
+    public event Action OnPause;
+
     public event Action OnMenuPreviousTab;
     public event Action OnMenuNextTab;
     public event Action OnMenuDelete;
@@ -106,6 +111,7 @@ public class InputManager : MonoBehaviour
         if (!isInputActive || menuInput == null) return;
 
         if (menuInput.actions["Return"].triggered) OnMenuReturn?.Invoke();
+        if (menuInput.actions["Pause"].triggered) OnPause?.Invoke();
         if (menuInput.actions["PreviousTab"].triggered) OnMenuPreviousTab?.Invoke();
         if (menuInput.actions["NextTab"].triggered) OnMenuNextTab?.Invoke();
         if (menuInput.actions["Delete"].triggered) OnMenuDelete?.Invoke();
@@ -115,16 +121,19 @@ public class InputManager : MonoBehaviour
         // Handle hotbar assignment
         if (menuInput.actions["AssignSpellToHotbar"].triggered)
         {
-            // Loop through the possible hotbar slots and check which key was pressed
-            if (Keyboard.current.digit1Key.wasPressedThisFrame)
+            // Check for keyboard keys or gamepad buttons
+            if (Keyboard.current != null && Keyboard.current.digit1Key.wasPressedThisFrame || 
+                Gamepad.current != null && Gamepad.current.buttonNorth.wasPressedThisFrame) // Y button
             {
                 OnAssignSpellToHotbar?.Invoke(0);
             }
-            else if (Keyboard.current.digit2Key.wasPressedThisFrame)
+            else if (Keyboard.current != null && Keyboard.current.digit2Key.wasPressedThisFrame || 
+                     Gamepad.current != null && Gamepad.current.buttonWest.wasPressedThisFrame) // X button
             {
                 OnAssignSpellToHotbar?.Invoke(1);
             }
-            else if (Keyboard.current.digit3Key.wasPressedThisFrame)
+            else if (Keyboard.current != null && Keyboard.current.digit3Key.wasPressedThisFrame || 
+                     Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame) // A button
             {
                 OnAssignSpellToHotbar?.Invoke(2);
             }

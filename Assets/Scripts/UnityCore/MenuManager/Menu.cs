@@ -161,6 +161,7 @@ namespace Menu
 
             // Subscribe to input events
             InputManager.Instance.OnMenuReturn += OnReturnInput;
+            InputManager.Instance.OnPause += OnPauseInput;
             GameEvents.Instance.onPlayerMenuOpen += OnPlayerMenuInput;
             InputManager.Instance.OnMenuDelete += OnPlayerDeleteInput;
         }
@@ -173,6 +174,7 @@ namespace Menu
             if (InputManager.Instance != null)
             {
                 InputManager.Instance.OnMenuReturn -= OnReturnInput;
+                InputManager.Instance.OnPause -= OnPauseInput;
                 InputManager.Instance.OnMenuDelete -= OnPlayerDeleteInput;
             }
 
@@ -206,6 +208,7 @@ namespace Menu
 
         // Input handling virtual methods
         public virtual void OnReturnInput() => OnBackPressed();
+        public virtual void OnPauseInput() => OnBackPressed(); // Default pause behavior is same as return/back
         public virtual void OnPlayerMenuInput() { }
         public virtual void OnPlayerDeleteInput() { }
 

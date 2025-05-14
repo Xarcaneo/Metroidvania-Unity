@@ -946,7 +946,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000061035156, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 380, y: 144}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &299796785852338112
@@ -2480,6 +2480,7 @@ GameObject:
   - component: {fileID: 6058590625884196054}
   - component: {fileID: 2077297089997702657}
   - component: {fileID: 8153602416725338300}
+  - component: {fileID: 7538596490216894486}
   m_Layer: 5
   m_Name: Right Text (TMP)
   m_TagString: Untagged
@@ -2562,8 +2563,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 12
-  m_fontSizeBase: 12
+  m_fontSize: 15
+  m_fontSizeBase: 15
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2604,6 +2605,25 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &7538596490216894486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 838538523390211516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bcb475e21be930488edb89c5a0c7441, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputBindings:
+  - key: 0
+    actionReference: {fileID: -575864127857178915, guid: d7f13e266802caa4e91dd8bab45e7b96, type: 3}
+    keyboardPath: 
+    gamepadPath: 
+  tmpText: {fileID: 8153602416725338300}
+  originalText: <0>
 --- !u!1 &845257977416033357
 GameObject:
   m_ObjectHideFlags: 0
@@ -2826,6 +2846,7 @@ GameObject:
   - component: {fileID: 5823385994896179876}
   - component: {fileID: 4067003880761464576}
   - component: {fileID: 1909281406755553307}
+  - component: {fileID: 8972869806093966680}
   m_Layer: 5
   m_Name: Right Text (TMP)
   m_TagString: Untagged
@@ -2908,8 +2929,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 12
-  m_fontSizeBase: 12
+  m_fontSize: 15
+  m_fontSizeBase: 15
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2950,6 +2971,25 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &8972869806093966680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 881415989053314811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bcb475e21be930488edb89c5a0c7441, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputBindings:
+  - key: 0
+    actionReference: {fileID: -575864127857178915, guid: d7f13e266802caa4e91dd8bab45e7b96, type: 3}
+    keyboardPath: 
+    gamepadPath: 
+  tmpText: {fileID: 1909281406755553307}
+  originalText: <0>
 --- !u!1 &950511660548418996
 GameObject:
   m_ObjectHideFlags: 0
@@ -3715,6 +3755,7 @@ GameObject:
   - component: {fileID: 8776427886695226070}
   - component: {fileID: 4332127128323060948}
   - component: {fileID: 3875016146430387555}
+  - component: {fileID: 5979006254945865714}
   m_Layer: 5
   m_Name: Left Text (TMP)
   m_TagString: Untagged
@@ -3839,6 +3880,25 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5979006254945865714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1193285549388135753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bcb475e21be930488edb89c5a0c7441, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputBindings:
+  - key: 0
+    actionReference: {fileID: 6282081717143538861, guid: d7f13e266802caa4e91dd8bab45e7b96, type: 3}
+    keyboardPath: 
+    gamepadPath: 
+  tmpText: {fileID: 3875016146430387555}
+  originalText: <0>
 --- !u!1 &1238915701794246012
 GameObject:
   m_ObjectHideFlags: 0
@@ -3953,7 +4013,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -4.200012, y: 0}
+  m_AnchoredPosition: {x: -4.199951, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1247917204460560089
@@ -7505,7 +7565,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.000030517578}
+  m_AnchoredPosition: {x: 0, y: 0.0000076293945}
   m_SizeDelta: {x: 0, y: 72}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &1273778577311447865
@@ -8708,8 +8768,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1273778577306540123}
   m_HandleRect: {fileID: 1273778577311143223}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 1
+  m_Value: 0
+  m_Size: 0.99996805
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -10476,7 +10536,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.25, y: -1.2000122}
+  m_AnchoredPosition: {x: 0.25, y: -1.1999512}
   m_SizeDelta: {x: -380, y: -144}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1228796279363453650
@@ -14823,6 +14883,7 @@ GameObject:
   - component: {fileID: 4945912886280290483}
   - component: {fileID: 5410378870891756748}
   - component: {fileID: 3780815646123028456}
+  - component: {fileID: 8427454193764415599}
   m_Layer: 5
   m_Name: Left Text (TMP)
   m_TagString: Untagged
@@ -14947,6 +15008,25 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &8427454193764415599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2658662576409910922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bcb475e21be930488edb89c5a0c7441, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputBindings:
+  - key: 0
+    actionReference: {fileID: 6282081717143538861, guid: d7f13e266802caa4e91dd8bab45e7b96, type: 3}
+    keyboardPath: 
+    gamepadPath: 
+  tmpText: {fileID: 3780815646123028456}
+  originalText: <0>
 --- !u!1 &2662777701763768190
 GameObject:
   m_ObjectHideFlags: 0
@@ -18291,6 +18371,7 @@ GameObject:
   - component: {fileID: 3494882404808497386}
   - component: {fileID: 427467288144468535}
   - component: {fileID: 7226343942254722348}
+  - component: {fileID: 3756340146855480695}
   m_Layer: 5
   m_Name: Right Text (TMP)
   m_TagString: Untagged
@@ -18373,8 +18454,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 12
-  m_fontSizeBase: 12
+  m_fontSize: 15
+  m_fontSizeBase: 15
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -18415,6 +18496,25 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3756340146855480695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3457780222772272926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bcb475e21be930488edb89c5a0c7441, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputBindings:
+  - key: 0
+    actionReference: {fileID: -575864127857178915, guid: d7f13e266802caa4e91dd8bab45e7b96, type: 3}
+    keyboardPath: 
+    gamepadPath: 
+  tmpText: {fileID: 7226343942254722348}
+  originalText: <0>
 --- !u!1 &3476251087520494073
 GameObject:
   m_ObjectHideFlags: 0
@@ -22752,6 +22852,7 @@ GameObject:
   - component: {fileID: 6171153705269754291}
   - component: {fileID: 1198910461270462476}
   - component: {fileID: 1614851878881842597}
+  - component: {fileID: 8919012074100068247}
   m_Layer: 5
   m_Name: Right Text (TMP)
   m_TagString: Untagged
@@ -22834,8 +22935,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 12
-  m_fontSizeBase: 12
+  m_fontSize: 15
+  m_fontSizeBase: 15
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -22876,6 +22977,25 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &8919012074100068247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4630554749667963914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bcb475e21be930488edb89c5a0c7441, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputBindings:
+  - key: 0
+    actionReference: {fileID: -575864127857178915, guid: d7f13e266802caa4e91dd8bab45e7b96, type: 3}
+    keyboardPath: 
+    gamepadPath: 
+  tmpText: {fileID: 1614851878881842597}
+  originalText: <0>
 --- !u!1 &4670527337548099155
 GameObject:
   m_ObjectHideFlags: 0
@@ -27078,6 +27198,7 @@ GameObject:
   - component: {fileID: 3264937170813142056}
   - component: {fileID: 7485890758347754122}
   - component: {fileID: 4662312212909107323}
+  - component: {fileID: 1529648479385433401}
   m_Layer: 5
   m_Name: Left Text (TMP)
   m_TagString: Untagged
@@ -27202,6 +27323,25 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1529648479385433401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6253599432770359186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bcb475e21be930488edb89c5a0c7441, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputBindings:
+  - key: 0
+    actionReference: {fileID: 6282081717143538861, guid: d7f13e266802caa4e91dd8bab45e7b96, type: 3}
+    keyboardPath: 
+    gamepadPath: 
+  tmpText: {fileID: 4662312212909107323}
+  originalText: <0>
 --- !u!1 &6271721966056993501
 GameObject:
   m_ObjectHideFlags: 0
@@ -33119,6 +33259,7 @@ GameObject:
   - component: {fileID: 3848575743438408034}
   - component: {fileID: 8018673718723294656}
   - component: {fileID: 6683440992118834959}
+  - component: {fileID: 8765971734132575017}
   m_Layer: 5
   m_Name: Left Text (TMP)
   m_TagString: Untagged
@@ -33243,6 +33384,25 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &8765971734132575017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8105404270900594565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bcb475e21be930488edb89c5a0c7441, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputBindings:
+  - key: 0
+    actionReference: {fileID: 6282081717143538861, guid: d7f13e266802caa4e91dd8bab45e7b96, type: 3}
+    keyboardPath: 
+    gamepadPath: 
+  tmpText: {fileID: 6683440992118834959}
+  originalText: <0>
 --- !u!1 &8118456803868584372
 GameObject:
   m_ObjectHideFlags: 0
@@ -36783,6 +36943,7 @@ GameObject:
   - component: {fileID: 2721174483980510448}
   - component: {fileID: 4519876971313243555}
   - component: {fileID: 5623935093907059326}
+  - component: {fileID: 2694601689884191214}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -36805,10 +36966,10 @@ RectTransform:
   m_Father: {fileID: 468240726616548370}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -2.5, y: -7.5135}
-  m_SizeDelta: {x: -31, y: -15.027}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 130, y: -24}
+  m_SizeDelta: {x: 210, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4519876971313243555
 CanvasRenderer:
@@ -36840,7 +37001,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: "Press <color=#FFD700>1</color>, <color=#FFD700>2</color>, or <color=#FFD700>3</color>
     to assign a spell  \r\nUse <color=#FFD700>F</color> and <color=#FFD700>G</color>
-    to switch categories\r\n"
+    to switch categories\r"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 316027bc35bf2d9418e482f66709901e, type: 2}
   m_sharedMaterial: {fileID: 4431155284346702290, guid: 316027bc35bf2d9418e482f66709901e, type: 2}
@@ -36909,6 +37070,43 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2694601689884191214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8893358939435605586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bcb475e21be930488edb89c5a0c7441, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputBindings:
+  - key: assignSpell0
+    actionReference: {fileID: -3041755381553592254, guid: d7f13e266802caa4e91dd8bab45e7b96, type: 3}
+    keyboardPath: <Keyboard>/1
+    gamepadPath: <Gamepad>/buttonNorth
+  - key: assignSpell1
+    actionReference: {fileID: -3041755381553592254, guid: d7f13e266802caa4e91dd8bab45e7b96, type: 3}
+    keyboardPath: <Keyboard>/2
+    gamepadPath: <Gamepad>/buttonWest
+  - key: assignSpell2
+    actionReference: {fileID: -3041755381553592254, guid: d7f13e266802caa4e91dd8bab45e7b96, type: 3}
+    keyboardPath: <Keyboard>/3
+    gamepadPath: <Gamepad>/buttonSouth
+  - key: switchCategory0
+    actionReference: {fileID: 384847667476608058, guid: d7f13e266802caa4e91dd8bab45e7b96, type: 3}
+    keyboardPath: 
+    gamepadPath: 
+  - key: switchCategory1
+    actionReference: {fileID: 5683895310721362714, guid: d7f13e266802caa4e91dd8bab45e7b96, type: 3}
+    keyboardPath: 
+    gamepadPath: 
+  tmpText: {fileID: 5623935093907059326}
+  originalText: 'Press <color=#FFD700><assignSpell0></color>, <color=#FFD700><assignSpell1></color>,
+    or <color=#FFD700><assignSpell2></color> to assign a spell Use <color=#FFD700><switchCategory0></color>
+    and <color=#FFD700><switchCategory1></color> to switch categories  '
 --- !u!1 &9018421584967478458
 GameObject:
   m_ObjectHideFlags: 0

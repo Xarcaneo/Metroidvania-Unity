@@ -1,4 +1,4 @@
-﻿// Copyright (c) Pixel Crushers. All rights reserved.
+// Copyright (c) Pixel Crushers. All rights reserved.
 
 using System.Collections;
 using UnityEngine;
@@ -33,6 +33,9 @@ namespace PixelCrushers
 
         [Tooltip("Visually show UI Button in pressed state when triggered.")]
         public bool simulateButtonClick = true;
+
+        [Tooltip("Allow binding keys that are already used by other actions. By default, the system prevents duplicate bindings.")]
+        public bool allowDuplicateBindings = false;
 
         [Tooltip("Show pressed state for this duration in seconds.")]
         public float simulateButtonDownDuration = 0.1f;

@@ -57,6 +57,11 @@ namespace Menu
         /// Handles the return input to resume the game.
         /// </summary>
         public override void OnReturnInput() => OnResumePressed();
+        
+        /// <summary>
+        /// Handles the pause input to resume the game when the pause menu is already open.
+        /// </summary>
+        public override void OnPauseInput() => OnResumePressed();
 
         /// <summary>
         /// Resumes the game by unpausing and closing the menu.

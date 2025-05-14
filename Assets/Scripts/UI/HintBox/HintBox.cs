@@ -58,44 +58,44 @@ public class HintBox : MonoBehaviour
 
         string modifiedText = originalText;
 
-        try
-        {
-            int startIndex = 0;
-            while (true)
-            {
-                // Find next placeholder
-                int startPlaceholderIndex = modifiedText.IndexOf('{', startIndex);
-                if (startPlaceholderIndex == -1) break; // No more placeholders
+        //try
+        //{
+        //    int startIndex = 0;
+        //    while (true)
+        //    {
+        //        // Find next placeholder
+        //        int startPlaceholderIndex = modifiedText.IndexOf('{', startIndex);
+        //        if (startPlaceholderIndex == -1) break; // No more placeholders
 
-                int endPlaceholderIndex = modifiedText.IndexOf('}', startPlaceholderIndex);
-                if (endPlaceholderIndex == -1) // No closing brace
-                {
-                    Debug.LogWarning($"[HintBox] Missing closing brace in text: {modifiedText}");
-                    break;
-                }
+        //        int endPlaceholderIndex = modifiedText.IndexOf('}', startPlaceholderIndex);
+        //        if (endPlaceholderIndex == -1) // No closing brace
+        //        {
+        //            Debug.LogWarning($"[HintBox] Missing closing brace in text: {modifiedText}");
+        //            break;
+        //        }
 
-                // Extract placeholder and get keybinding
-                string placeholder = modifiedText.Substring(startPlaceholderIndex + 1, 
-                    endPlaceholderIndex - startPlaceholderIndex - 1);
-                string keybinding = GameManager.Instance != null ? 
-                    GameManager.Instance.GetKeybindingForAction(placeholder) : 
-                    placeholder;
+        //        // Extract placeholder and get keybinding
+        //        string placeholder = modifiedText.Substring(startPlaceholderIndex + 1, 
+        //            endPlaceholderIndex - startPlaceholderIndex - 1);
+        //        string keybinding = GameManager.Instance != null ? 
+        //            GameManager.Instance.GetKeybindingForAction(placeholder) : 
+        //            placeholder;
 
-                // Replace this instance of the placeholder
-                modifiedText = modifiedText.Remove(startPlaceholderIndex, 
-                    endPlaceholderIndex - startPlaceholderIndex + 1)
-                    .Insert(startPlaceholderIndex, keybinding);
+        //        // Replace this instance of the placeholder
+        //        modifiedText = modifiedText.Remove(startPlaceholderIndex, 
+        //            endPlaceholderIndex - startPlaceholderIndex + 1)
+        //            .Insert(startPlaceholderIndex, keybinding);
 
-                // Move start index past this replacement
-                startIndex = startPlaceholderIndex + keybinding.Length;
-            }
+        //        // Move start index past this replacement
+        //        startIndex = startPlaceholderIndex + keybinding.Length;
+        //    }
 
-            hintText.SetText(modifiedText);
-        }
-        catch (Exception e)
-        {
-            Debug.LogError($"[HintBox] Error setting text: {e.Message}\nText was: {originalText}");
-        }
+        hintText.SetText(modifiedText);
+        //}
+        //catch (Exception e)
+        //{
+        //    Debug.LogError($"[HintBox] Error setting text: {e.Message}\nText was: {originalText}");
+        //}
     }
 
     /// <summary>

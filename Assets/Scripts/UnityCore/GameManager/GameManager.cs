@@ -1,4 +1,5 @@
 using PixelCrushers.DialogueSystem;
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -18,6 +19,15 @@ public class GameManager : MonoBehaviour
     [Header("Input Settings")]
     [Tooltip("Reference to the Input Action Asset containing all input bindings")]
     [SerializeField] private InputActionAsset actions;
+    
+    /// <summary>
+    /// Gets the input action asset for use by other systems.
+    /// </summary>
+    /// <returns>The input action asset</returns>
+    public InputActionAsset GetInputActions()
+    {
+        return actions;
+    }
 
     [Header("Game Systems")]
     [Tooltip("Reference to the SpellsCatalogue ScriptableObject")]
@@ -30,6 +40,52 @@ public class GameManager : MonoBehaviour
     /// Used for managing multiple save files.
     /// </summary>
     public int currentSaveSlot;
+    
+    /// <summary>
+    /// The current input device being used by the player.
+    /// Provides global access to input device information for UI and gameplay systems.
+    /// </summary>
+    public InputDeviceDetector.InputDeviceType CurrentInputDevice => InputDeviceDetector.CurrentInputDevice;
+    
+    /// <summary>
+    /// Event triggered when the input device changes.
+    /// UI elements can subscribe to this to update their appearance.
+    /// </summary>
+    public event Action<InputDeviceDetector.InputDeviceType> OnInputDeviceChanged;
+    
+    /// <summary>
+    /// Checks for input device changes and updates the current device.
+    /// </summary>
+    private void CheckInputDevice()
+    {
+        // Let the InputDeviceDetector handle the detection
+        InputDeviceDetector.DetectCurrentInputDevice();
+    }
+    
+    /// <summary>
+    /// Subscribes to InputDeviceDetector events and forwards them to GameManager events.
+    /// </summary>
+    private void OnEnable()
+    {
+        // Forward input device change events from the detector to GameManager subscribers
+        InputDeviceDetector.OnInputDeviceChanged += ForwardInputDeviceChanged;
+    }
+    
+    /// <summary>
+    /// Unsubscribes from InputDeviceDetector events.
+    /// </summary>
+    private void OnDisable()
+    {
+        InputDeviceDetector.OnInputDeviceChanged -= ForwardInputDeviceChanged;
+    }
+    
+    /// <summary>
+    /// Forwards input device change events from the detector to GameManager subscribers.
+    /// </summary>
+    private void ForwardInputDeviceChanged(InputDeviceDetector.InputDeviceType deviceType)
+    {
+        OnInputDeviceChanged?.Invoke(deviceType);
+    }
     #endregion
 
     #region Singleton Pattern
@@ -88,6 +144,15 @@ public class GameManager : MonoBehaviour
             InputSystem.onDeviceChange -= OnDeviceChange;
             _instance = null;
         }
+    }
+    
+    /// <summary>
+    /// Regularly checks for input device changes.
+    /// </summary>
+    private void Update()
+    {
+        // Check for input device changes every frame
+        CheckInputDevice();
     }
     #endregion
 

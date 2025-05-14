@@ -296,8 +296,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1882352925356022904, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
       propertyPath: m_text
-      value: Access your Toolkit by hitting <color="red>I</color>, and navigate with
-        <color="red>J</color> and <color="red>K</color>.
+      value: 'Access your Toolkit by hitting <color="red"><openInventory></color>,
+        and navigate with <color="red"><navigateLeft></color> and <color="red"><navigateRight></color>.
+
+'
       objectReference: {fileID: 0}
     - target: {fileID: 3174573140201782222, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
       propertyPath: m_Name
@@ -395,6 +397,39 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7358399790495594536, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
+      propertyPath: originalText
+      value: 'Access your Toolkit by hitting <color="red"><openInventory></color>,
+        and navigate with <color="red"><navigateLeft></color> and <color="red"><navigateRight></color>. '
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358399790495594536, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
+      propertyPath: inputBindings.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358399790495594536, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
+      propertyPath: inputBindings.Array.data[0].key
+      value: openInventory
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358399790495594536, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
+      propertyPath: inputBindings.Array.data[1].key
+      value: navigateLeft
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358399790495594536, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
+      propertyPath: inputBindings.Array.data[2].key
+      value: navigateRight
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358399790495594536, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
+      propertyPath: inputBindings.Array.data[0].actionReference
+      value: 
+      objectReference: {fileID: -1060613615031520099, guid: 4670f0957538c94499ccaa88a47110f7, type: 3}
+    - target: {fileID: 7358399790495594536, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
+      propertyPath: inputBindings.Array.data[1].actionReference
+      value: 
+      objectReference: {fileID: 6282081717143538861, guid: d7f13e266802caa4e91dd8bab45e7b96, type: 3}
+    - target: {fileID: 7358399790495594536, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
+      propertyPath: inputBindings.Array.data[2].actionReference
+      value: 
+      objectReference: {fileID: -575864127857178915, guid: d7f13e266802caa4e91dd8bab45e7b96, type: 3}
     - target: {fileID: 9199568107838055050, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
       propertyPath: m_fieldName
       value: HINT_AccessToolkit
@@ -1267,7 +1302,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1882352925356022904, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
       propertyPath: m_text
-      value: 'Leap off platforms: <color="red">{Movement.down}</color> and <color="red">{Jump}</color>
+      value: 'Leap off platforms: <color="red"><Movement></color> and <color="red"><Jump></color>
         together!'
       objectReference: {fileID: 0}
     - target: {fileID: 3174573140201782222, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
@@ -1366,6 +1401,43 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7358399790495594536, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
+      propertyPath: originalText
+      value: 'Leap off platforms: <color="red"><Movement></color> and <color="red"><Jump></color>
+        together!'
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358399790495594536, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
+      propertyPath: inputBindings.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358399790495594536, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
+      propertyPath: inputBindings.Array.data[0].key
+      value: Movement
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358399790495594536, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
+      propertyPath: inputBindings.Array.data[1].key
+      value: Jump
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358399790495594536, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
+      propertyPath: inputBindings.Array.data[0].gamepadPath
+      value: "\u2193"
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358399790495594536, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
+      propertyPath: inputBindings.Array.data[0].keyboardPath
+      value: <Keyboard>/s
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358399790495594536, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
+      propertyPath: inputBindings.Array.data[1].keyboardPath
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358399790495594536, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
+      propertyPath: inputBindings.Array.data[0].actionReference
+      value: 
+      objectReference: {fileID: -895323950014874539, guid: 4670f0957538c94499ccaa88a47110f7, type: 3}
+    - target: {fileID: 7358399790495594536, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
+      propertyPath: inputBindings.Array.data[1].actionReference
+      value: 
+      objectReference: {fileID: 6980594421817151976, guid: 4670f0957538c94499ccaa88a47110f7, type: 3}
     - target: {fileID: 9199568107838055050, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
       propertyPath: m_fieldName
       value: HINT_LeapPlatforms
