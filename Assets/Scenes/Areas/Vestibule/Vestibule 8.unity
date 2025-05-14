@@ -205,7 +205,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1882352925356022904, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
       propertyPath: m_text
-      value: 'Approach the edge: Jump near a ledge with <color="red">{Jump}</color>
+      value: 'Approach the edge: Jump near a ledge with <color="red"><Jump></color>
         to automatically grasp it'
       objectReference: {fileID: 0}
     - target: {fileID: 3174573140201782222, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
@@ -296,6 +296,23 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7358399790495594536, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
+      propertyPath: originalText
+      value: 'Approach the edge: Jump near a ledge with <color="red"><Jump></color>
+        to automatically grasp it'
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358399790495594536, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
+      propertyPath: inputBindings.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358399790495594536, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
+      propertyPath: inputBindings.Array.data[0].key
+      value: Jump
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358399790495594536, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
+      propertyPath: inputBindings.Array.data[0].actionReference
+      value: 
+      objectReference: {fileID: 6980594421817151976, guid: 4670f0957538c94499ccaa88a47110f7, type: 3}
     - target: {fileID: 9199568107838055050, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
       propertyPath: m_fieldName
       value: HINT_AutoLedgeGrab
@@ -64599,7 +64616,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1882352925356022904, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
       propertyPath: m_text
-      value: Defend with <color="red>{Block}</color> to repel enemy attacks
+      value: Defend with <color="red><Block></color> to repel enemy attacks
       objectReference: {fileID: 0}
     - target: {fileID: 3174573140201782222, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
       propertyPath: m_Name
@@ -64689,6 +64706,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7358399790495594536, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
+      propertyPath: originalText
+      value: Defend with <color="red><Block></color> to repel enemy attacks
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358399790495594536, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
+      propertyPath: inputBindings.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358399790495594536, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
+      propertyPath: inputBindings.Array.data[0].key
+      value: Block
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358399790495594536, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
+      propertyPath: inputBindings.Array.data[0].actionReference
+      value: 
+      objectReference: {fileID: 4830210489183688944, guid: 4670f0957538c94499ccaa88a47110f7, type: 3}
     - target: {fileID: 9199568107838055050, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
       propertyPath: m_fieldName
       value: HINT_Defend

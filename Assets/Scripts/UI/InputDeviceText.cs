@@ -35,8 +35,11 @@ public class InputDeviceText : MonoBehaviour
     [Tooltip("The TextMeshProUGUI component to update")]
     [SerializeField] private TextMeshProUGUI tmpText;
     
-    [Tooltip("The original text with input markers <inputKey>")]
+    [Tooltip("The original text with input markers <inputKey> (used for keyboard/mouse)")]
     [SerializeField] private string originalText;
+    
+    [Tooltip("Alternative text with input markers for gamepad (if null, originalText will be used)")]
+    [SerializeField] private string gamepadText;
 
     private void Awake()
     {
@@ -84,6 +87,7 @@ public class InputDeviceText : MonoBehaviour
     /// <summary>
     /// Updates the displayed text based on the current input device.
     /// Replaces all input markers in the original text with their corresponding bindings.
+    /// If gamepadText is set and a gamepad is detected, uses that instead of originalText.
     /// </summary>
     /// <param name="deviceType">The current input device type</param>
     public void UpdateTextForInputDevice(InputDeviceDetector.InputDeviceType deviceType)
@@ -98,8 +102,22 @@ public class InputDeviceText : MonoBehaviour
             originalText = tmpText.text;
         }
         
-        // Start with the original text
-        string processedText = originalText;
+        // Determine which text to use based on device type
+        string baseText;
+        
+        if (deviceType == InputDeviceDetector.InputDeviceType.Gamepad && !string.IsNullOrEmpty(gamepadText))
+        {
+            // Use gamepad-specific text if available
+            baseText = gamepadText;
+        }
+        else
+        {
+            // Otherwise use the original text
+            baseText = originalText;
+        }
+        
+        // Start with the selected text
+        string processedText = baseText;
         
         // Replace each input marker with its binding
         foreach (var binding in inputBindings)
@@ -156,6 +174,8 @@ public class InputDeviceText : MonoBehaviour
         // Case 1: Use specific binding path if provided
         if (!string.IsNullOrEmpty(bindingPath))
         {
+            bool pathFound = false;
+            
             foreach (var binding in bindings)
             {
                 if (binding.effectivePath.Contains(bindingPath))
@@ -164,8 +184,15 @@ public class InputDeviceText : MonoBehaviour
                     string shortName = deviceType == InputDeviceDetector.InputDeviceType.Keyboard ? 
                         InputNameUtility.GetShortKeyboardName(bindingString) : 
                         InputNameUtility.GetShortGamepadName(bindingString);
+                    pathFound = true;
                     return shortName;
                 }
+            }
+            
+            // If path is not found but there is a string in this field, use it directly as the key string
+            if (!pathFound)
+            {
+                return bindingPath; // Return the path string as-is without modification
             }
         }
         

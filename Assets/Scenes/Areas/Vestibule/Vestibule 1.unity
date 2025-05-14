@@ -17388,6 +17388,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7358399790495594536, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
+      propertyPath: tmpText
+      value: 
+      objectReference: {fileID: 1853735862}
+    - target: {fileID: 7358399790495594536, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
+      propertyPath: originalText
+      value: Interact with objects using <color="red><Interact></color>.
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358399790495594536, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
+      propertyPath: inputBindings.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358399790495594536, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
+      propertyPath: inputBindings.Array.data[0].key
+      value: Interact
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358399790495594536, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
+      propertyPath: inputBindings.Array.data[0].actionReference
+      value: 
+      objectReference: {fileID: 3899905137862735241, guid: 4670f0957538c94499ccaa88a47110f7, type: 3}
     - target: {fileID: 9199568107838055050, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
       propertyPath: m_fieldName
       value: HINT_Interact
@@ -17399,6 +17419,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6226381068075814910, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
   m_PrefabInstance: {fileID: 1853735860}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1853735862 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1882352925356022904, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
+  m_PrefabInstance: {fileID: 1853735860}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1988141716
 GameObject:
   m_ObjectHideFlags: 0

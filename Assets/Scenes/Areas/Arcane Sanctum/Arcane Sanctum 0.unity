@@ -1097,7 +1097,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1882352925356022904, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
       propertyPath: m_text
-      value: Roll with <color="red>{Action}</color> while on the ground to dodge
+      value: Roll with <color="red><Action></color> while on the ground to dodge
         incoming damage!
       objectReference: {fileID: 0}
     - target: {fileID: 3174573140201782222, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
@@ -1188,6 +1188,23 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7358399790495594536, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
+      propertyPath: originalText
+      value: Roll with <color="red><Action></color> while on the ground to dodge
+        incoming damage!
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358399790495594536, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
+      propertyPath: inputBindings.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358399790495594536, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
+      propertyPath: inputBindings.Array.data[0].key
+      value: Action
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358399790495594536, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
+      propertyPath: inputBindings.Array.data[0].actionReference
+      value: 
+      objectReference: {fileID: 2632838633164332591, guid: 4670f0957538c94499ccaa88a47110f7, type: 3}
     - target: {fileID: 9199568107838055050, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
       propertyPath: m_fieldName
       value: HINT_GroundRollToDodge
@@ -1864,8 +1881,7 @@ PrefabInstance:
     - target: {fileID: 1882352925356022904, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
       propertyPath: m_text
       value: Light all rune fields with the <color="red">flame</color>! Move it using
-        <color="red">{Movement.up}</color>, <color="red">{Movement.down}</color>,
-        <color="red">{Movement.left}</color>, <color="red">{Movement.right}</color>.
+        movement controlls
       objectReference: {fileID: 0}
     - target: {fileID: 3174573140201782222, guid: c1275833e31b742458bdc2b020ad666f, type: 3}
       propertyPath: m_Name
