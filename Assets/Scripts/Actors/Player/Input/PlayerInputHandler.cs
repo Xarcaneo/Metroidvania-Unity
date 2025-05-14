@@ -83,6 +83,12 @@ public class PlayerInputHandler : MonoBehaviour
     /// Flag to track if the spell modifier is active (used to prioritize spell casting)
     /// </summary>
     public bool SpellModifierActive { get; private set; } = false;
+    
+    /// <summary>
+    /// Flag to track if the player menu input is being processed
+    /// This is a global flag used by all input handlers to prevent double-triggering
+    /// </summary>
+    private bool playerMenuInputProcessed = false;
 
     // Input flags are now managed by the individual input handlers
 
@@ -381,7 +387,19 @@ public class PlayerInputHandler : MonoBehaviour
     /// </summary>
     public void OnPlayerMenuInput(InputAction.CallbackContext context)
     {
-        currentInputHandler?.ProcessInput(context, InputActionType.PlayerMenu);
+        if (!IsDialogueActive)
+        {
+            if (context.started && !playerMenuInputProcessed)
+            {
+                // Handle player menu input directly instead of delegating to input handlers
+                GameEvents.Instance.PlayerMenuOpen();
+                playerMenuInputProcessed = true;
+            }
+            else if (context.canceled)
+            {
+                playerMenuInputProcessed = false;
+            }
+        }
     }
     
     /// <summary>

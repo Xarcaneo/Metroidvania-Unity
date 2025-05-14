@@ -78,9 +78,6 @@ namespace Menu
         {
             SetPauseState(false);
             
-            // Trigger the player menu close event to reset input flags
-            GameEvents.Instance.PlayerMenuClose();
-            
             base.OnBackPressed();
         }
 
