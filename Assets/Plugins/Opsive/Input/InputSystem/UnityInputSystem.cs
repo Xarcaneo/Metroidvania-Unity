@@ -77,13 +77,13 @@ namespace Opsive.Shared.Integrations.InputSystem
         private void LateUpdate()
         {
             // Enable the cursor if the escape key is pressed. Disable the cursor if it is visbile but should be disabled upon press.
-            if (m_EnableCursorWithEscape && Keyboard.current.escapeKey.wasPressedThisFrame) {
+            if (m_EnableCursorWithEscape && Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame) {
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
                 if (m_PreventLookVectorChanges) {
                     OnApplicationFocus(false);
                 }
-            } else if (Cursor.visible && m_DisableCursor && !IsPointerOverUI() && (Mouse.current.leftButton.wasPressedThisFrame || Mouse.current.leftButton.wasPressedThisFrame)) {
+            } else if (Cursor.visible && m_DisableCursor && !IsPointerOverUI() && Mouse.current != null && (Mouse.current.leftButton.wasPressedThisFrame || Mouse.current.leftButton.wasPressedThisFrame)) {
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
                 if (m_PreventLookVectorChanges) {
