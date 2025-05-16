@@ -387,7 +387,8 @@ public class PlayerInputHandler : MonoBehaviour
     /// </summary>
     public void OnPlayerMenuInput(InputAction.CallbackContext context)
     {
-        if (!IsDialogueActive)
+        // Check both dialogue state and if input is active in InputManager
+        if (!IsDialogueActive && (InputManager.Instance == null || InputManager.Instance.isInputActive))
         {
             if (context.started && !playerMenuInputProcessed)
             {
