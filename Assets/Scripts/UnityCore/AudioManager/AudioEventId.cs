@@ -7,6 +7,7 @@ namespace UnityCore.AudioManager
     public enum AudioEventId
     {
         None = 0,
+        Effect_Shoot = 38,
         Effect_Spell_Teleport = 20,
         Interact_Checkpoint_Activated = 26,
         Interact_Chest_Open = 27,
